@@ -24,17 +24,20 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="我没有为你伤春悲秋不配有憾事">
-<meta property="og:type" content="website">
-<meta property="og:title" content="HahのBlog">
-<meta property="og:url" content="http://example.com/archives/index.html">
+  <meta name="description" content="重写类方法是指在子类中定义一个和父类或接口中同名、同参数的方法，以覆盖父类或接口中的方法。重写类方法的目的是为了实现多态，即根据对象的实际类型，调用不同的方法实现，从而实现不同的行为。例如，在RentableCar类中，我们重写了Car类中的showInfo方法，以显示RentableCar类特有的信息，而不是Car类通用的信息。当我们使用RentableCar对象调用showInfo方法时，就会">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java中重写类方法">
+<meta property="og:url" content="http://example.com/2023/04/17/post1/index.html">
 <meta property="og:site_name" content="HahのBlog">
-<meta property="og:description" content="我没有为你伤春悲秋不配有憾事">
+<meta property="og:description" content="重写类方法是指在子类中定义一个和父类或接口中同名、同参数的方法，以覆盖父类或接口中的方法。重写类方法的目的是为了实现多态，即根据对象的实际类型，调用不同的方法实现，从而实现不同的行为。例如，在RentableCar类中，我们重写了Car类中的showInfo方法，以显示RentableCar类特有的信息，而不是Car类通用的信息。当我们使用RentableCar对象调用showInfo方法时，就会">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-17T09:14:03.000Z">
+<meta property="article:modified_time" content="2023-04-17T09:18:36.336Z">
 <meta property="article:author" content="Hah">
+<meta property="article:tag" content="java @Override">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/archives/">
+<link rel="canonical" href="http://example.com/2023/04/17/post1/">
 
 
 <script id="page-configurations">
@@ -42,12 +45,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>归档 | HahのBlog</title>
+  <title>java中重写类方法 | HahのBlog</title>
   
 
 
@@ -189,76 +192,140 @@
         <div class="content-wrap">
           
 
-          <div class="content archive">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 2 篇日志。 继续努力。</span>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/17/post1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          java中重写类方法
+        </h1>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-04-17 17:14:03 / 修改时间：17:18:36" itemprop="dateCreated datePublished" datetime="2023-04-17T17:14:03+08:00">2023-04-17</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2023</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-04-17T17:14:03+08:00"
-              content="2023-04-17">
-          04-17
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/04/17/post1/" itemprop="url">
-            <span itemprop="name">java中重写类方法</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2023-04-05T13:52:03+08:00"
-              content="2023-04-05">
-          04-05
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2023/04/05/My-New-Post/" itemprop="url">
-            <span itemprop="name">春秋</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
+        <p>重写类方法是指在子类中定义一个和父类或接口中同名、同参数的方法，以覆盖父类或接口中的方法。<br>重写类方法的目的是为了实现多态，即根据对象的实际类型，调用不同的方法实现，从而实现不同的行为。<br>例如，在RentableCar类中，我们重写了Car类中的showInfo方法，以显示RentableCar类特有的信息，<br>而不是Car类通用的信息。当我们使用RentableCar对象调用showInfo方法时，就会执行RentableCar类中<br>的showInfo方法，而不是Car类中的showInfo方法。这样就实现了多态，即不同类型的汽车对象可以显示不同类型的信息。<br>•	什么是重写类方法？重写类方法是指在子类中定义一个和父类或接口中同名、同参数的方法，以覆盖父类或接口中的方法。<br>例如，Car类中有一个showInfo方法，它的定义如下：<br>public void showInfo() {<br>    System.out.println(“汽车信息：”);<br>    System.out.println(“品牌：” + getBrand());<br>    System.out.println(“型号：” + getModel());<br>    System.out.println(“颜色：” + getColor());<br>    System.out.println(“价格：” + getPrice());<br>}<br>这个方法可以显示任何汽车对象的信息。<br>但是，如果我们想要显示RentableCar对象的信息，我们可能需要显示更多的信息，例如租金。<br>这时，我们就可以在RentableCar类中重写showInfo方法，它的定义如下：<br>@Override<br>public void showInfo() {<br>    System.out.println(“汽车信息：”);<br>    System.out.println(“品牌：” + getBrand());<br>    System.out.println(“型号：” + getModel());<br>    System.out.println(“颜色：” + getColor());<br>    System.out.println(“价格：” + getPrice());<br>    System.out.println(“租金：” + calcRent(1));<br>}<br>这个方法可以显示RentableCar对象特有的信息。<br>注意，我们在方法前面加了一个@Override注解，表示这个方法是重写了父类中的方法。<br>•	为什么要重写类方法？重写类方法的目的是为了实现多态，即根据对象的实际类型，<br>调用不同的方法实现，从而实现不同的行为。<br>例如，我们有一个Vehicle类，它是Car类和Bike类的父类，它有一个run方法，它的定义如下：<br>public void run() {<br>    System.out.println(“Vehicle is running”);<br>}<br>这个方法可以表示任何交通工具运行的行为。<br>但是，如果我们想要表示Car对象和Bike对象运行的行为，我们可能需要更具体的描述。<br>这时，我们就可以在Car类和Bike类中重写run方法，它们的定义如下：<br>@Override<br>public void run() {<br>    System.out.println(“Car is running fast”);<br>}</p>
+<p>@Override<br>public void run() {<br>    System.out.println(“Bike is running slow”);<br>}<br>这两个方法可以表示Car对象和Bike对象特有的运行行为。<br>注意，我们在方法前面加了一个@Override注解，表示这两个方法都是重写了父类中的方法。<br>现在，如果我们有一个Vehicle类型的变量v，它可以指向任何Vehicle子类的对象。<br>例如：<br>Vehicle v &#x3D; new Car();<br>或者<br>Vehicle v &#x3D; new Bike();<br>当我们使用v调用run方法时，就会执行v所指向对象的实际类型所对应的run方法。例如：<br>v.run();<br>如果v指向Car对象，就会输出“Car is running fast”。如果v指向Bike对象，就会输出“Bike is running slow”。这样就实现了多态，<br>即不同类型的交通工具对象可以表现出不同类型的运行行为。<br>怎么样才能重写类方法？重写类方法需要遵循一些规则，否则编译器会报错。这些规则包括：<br>重写方法必须和被重写方法有相同的名称和参数列表。<br>重写方法不能有比被重写方法更严格的访问权限。<br>重写方法不能抛出比被重写方法更多或更广泛的异常。<br>重写方法不能有比被重写方法不同类型或更低级别的返回值。<br>重写方法必须在子类中定义，并且子子类和父类或接口之间必须有继承或实现的关系。<br>重写方法可以使用@Override注解来标记，以便编译器检查是否正确地重写了父类或接口中的方法。</p>
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+    
+     <div>
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hah
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://example.com/2023/04/17/post1/" title="java中重写类方法">http://example.com/2023/04/17/post1/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java-Override/" rel="tag"># java @Override</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/04/05/My-New-Post/" rel="prev" title="春秋">
+      <i class="fa fa-chevron-left"></i> 春秋
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
 
           </div>
           
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81ODMwOS8zNDc3Mg=="></div>
+  </div>
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -551,6 +618,21 @@ window.addEventListener('pjax:success', () => {
 
   
 
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
 
     </div>
 </body>

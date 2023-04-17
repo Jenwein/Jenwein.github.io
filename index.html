@@ -195,6 +195,82 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/17/post1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/04/17/post1/" class="post-title-link" itemprop="url">java中重写类方法</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-04-17 17:14:03 / 修改时间：17:18:36" itemprop="dateCreated datePublished" datetime="2023-04-17T17:14:03+08:00">2023-04-17</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>重写类方法是指在子类中定义一个和父类或接口中同名、同参数的方法，以覆盖父类或接口中的方法。<br>重写类方法的目的是为了实现多态，即根据对象的实际类型，调用不同的方法实现，从而实现不同的行为。<br>例如，在RentableCar类中，我们重写了Car类中的showInfo方法，以显示RentableCar类特有的信息，<br>而不是Car类通用的信息。当我们使用RentableCar对象调用showInfo方法时，就会执行RentableCar类中<br>的showInfo方法，而不是Car类中的showInfo方法。这样就实现了多态，即不同类型的汽车对象可以显示不同类型的信息。<br>•	什么是重写类方法？重写类方法是指在子类中定义一个和父类或接口中同名、同参数的方法，以覆盖父类或接口中的方法。<br>例如，Car类中有一个showInfo方法，它的定义如下：<br>public void showInfo() {<br>    System.out.println(“汽车信息：”);<br>    System.out.println(“品牌：” + getBrand());<br>    System.out.println(“型号：” + getModel());<br>    System.out.println(“颜色：” + getColor());<br>    System.out.println(“价格：” + getPrice());<br>}<br>这个方法可以显示任何汽车对象的信息。<br>但是，如果我们想要显示RentableCar对象的信息，我们可能需要显示更多的信息，例如租金。<br>这时，我们就可以在RentableCar类中重写showInfo方法，它的定义如下：<br>@Override<br>public void showInfo() {<br>    System.out.println(“汽车信息：”);<br>    System.out.println(“品牌：” + getBrand());<br>    System.out.println(“型号：” + getModel());<br>    System.out.println(“颜色：” + getColor());<br>    System.out.println(“价格：” + getPrice());<br>    System.out.println(“租金：” + calcRent(1));<br>}<br>这个方法可以显示RentableCar对象特有的信息。<br>注意，我们在方法前面加了一个@Override注解，表示这个方法是重写了父类中的方法。<br>•	为什么要重写类方法？重写类方法的目的是为了实现多态，即根据对象的实际类型，<br>调用不同的方法实现，从而实现不同的行为。<br>例如，我们有一个Vehicle类，它是Car类和Bike类的父类，它有一个run方法，它的定义如下：<br>public void run() {<br>    System.out.println(“Vehicle is running”);<br>}<br>这个方法可以表示任何交通工具运行的行为。<br>但是，如果我们想要表示Car对象和Bike对象运行的行为，我们可能需要更具体的描述。<br>这时，我们就可以在Car类和Bike类中重写run方法，它们的定义如下：<br>@Override<br>public void run() {<br>    System.out.println(“Car is running fast”);<br>}</p>
+<p>@Override<br>public void run() {<br>    System.out.println(“Bike is running slow”);<br>}<br>这两个方法可以表示Car对象和Bike对象特有的运行行为。<br>注意，我们在方法前面加了一个@Override注解，表示这两个方法都是重写了父类中的方法。<br>现在，如果我们有一个Vehicle类型的变量v，它可以指向任何Vehicle子类的对象。<br>例如：<br>Vehicle v &#x3D; new Car();<br>或者<br>Vehicle v &#x3D; new Bike();<br>当我们使用v调用run方法时，就会执行v所指向对象的实际类型所对应的run方法。例如：<br>v.run();<br>如果v指向Car对象，就会输出“Car is running fast”。如果v指向Bike对象，就会输出“Bike is running slow”。这样就实现了多态，<br>即不同类型的交通工具对象可以表现出不同类型的运行行为。<br>怎么样才能重写类方法？重写类方法需要遵循一些规则，否则编译器会报错。这些规则包括：<br>重写方法必须和被重写方法有相同的名称和参数列表。<br>重写方法不能有比被重写方法更严格的访问权限。<br>重写方法不能抛出比被重写方法更多或更广泛的异常。<br>重写方法不能有比被重写方法不同类型或更低级别的返回值。<br>重写方法必须在子类中定义，并且子子类和父类或接口之间必须有继承或实现的关系。<br>重写方法可以使用@Override注解来标记，以便编译器检查是否正确地重写了父类或接口中的方法。</p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2023/04/05/My-New-Post/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -350,14 +426,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -404,12 +480,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">0k</span>
+    <span title="站点总字数">2k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1 分钟</span>
+    <span title="站点阅读时长">2 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
