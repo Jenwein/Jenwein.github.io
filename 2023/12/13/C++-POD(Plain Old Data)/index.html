@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!--pjax：防止跳转页面音乐暂停-->
+ <script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/sword1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/sword2.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="POD(Plain Old Data)是什么 C++ 诞生之后，出现了继承、派生这样新的概念，于是就诞生了一些新的数据结构。比如某个派生类，C 语言中哪有派生的概念啊，遇到这种数据编译器就不认识了。可是我们的计算机世界里，主要的系统还是用 C 写的啊，为了和旧的 C 数据相兼容，C++ 就提出了 POD 数据结构概念。 POD, C++ 定义的一类数据结构概念，比如 int、float 等都是 P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="POD(Plain Old Data)">
+<meta property="og:url" content="http://yoursite.com/2023/12/13/C++-POD(Plain%20Old%20Data)/index.html">
+<meta property="og:site_name" content="HahのBlog">
+<meta property="og:description" content="POD(Plain Old Data)是什么 C++ 诞生之后，出现了继承、派生这样新的概念，于是就诞生了一些新的数据结构。比如某个派生类，C 语言中哪有派生的概念啊，遇到这种数据编译器就不认识了。可是我们的计算机世界里，主要的系统还是用 C 写的啊，为了和旧的 C 数据相兼容，C++ 就提出了 POD 数据结构概念。 POD, C++ 定义的一类数据结构概念，比如 int、float 等都是 P">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic4.zhimg.com/80/v2-a296190aae436aa921527d5484b63f9f_720w.webp">
+<meta property="article:published_time" content="2023-12-13T04:00:00.000Z">
+<meta property="article:modified_time" content="2024-01-13T03:38:08.451Z">
+<meta property="article:author" content="Hah">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic4.zhimg.com/80/v2-a296190aae436aa921527d5484b63f9f_720w.webp">
+
+<link rel="canonical" href="http://yoursite.com/2023/12/13/C++-POD(Plain%20Old%20Data)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>POD(Plain Old Data) | HahのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Jenwein" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#fff; color:#151513; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">HahのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2023/12/13/C++-POD(Plain%20Old%20Data)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          POD(Plain Old Data)
+        </h1>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-12-13 12:00:00" itemprop="dateCreated datePublished" datetime="2023-12-13T12:00:00+08:00">2023-12-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-13 11:38:08" itemprop="dateModified" datetime="2024-01-13T11:38:08+08:00">2024-01-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/%E5%85%B6%E4%BB%96/POD/" itemprop="url" rel="index"><span itemprop="name">POD</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="POD-Plain-Old-Data"><a href="#POD-Plain-Old-Data" class="headerlink" title="POD(Plain Old Data)"></a>POD(Plain Old Data)</h1><h2 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h2><p> C++ 诞生之后，出现了继承、派生这样新的概念，于是就诞生了一些新的数据结构。比如某个派生类，C 语言中哪有派生的概念啊，遇到这种数据编译器就不认识了。可是我们的计算机世界里，主要的系统还是用 C 写的啊，为了和旧的 C 数据相兼容，C++ 就提出了 POD 数据结构概念。</p>
+<p>POD, C++ 定义的一类数据结构概念，比如 int、float 等都是 POD 类型的。Plain 代表它是一个普通类型，Old 代表它是旧的，与几十年前的 C 语言兼容，那么就意味着可以使用 memcpy() 这种最原始的函数进行操作。两个系统进行交换数据，如果没有办法对数据进行语义检查和解释，那就只能以非常底层的数据形式进行交互，而拥有 POD 特征的类或者结构体通过二进制拷贝后依然能保持数据结构不变。</p>
+<p>POD（Plain Old Data，普通旧数据）类型是从 C++11 开始引入的概念</p>
+<ul>
+<li>Plain 代表一个对象是一个普通类型</li>
+<li>Old 代表一个对象可以与 C 兼容</li>
+</ul>
+<p>通俗地讲，一个类、结构、共用体对象或非构造类型对象能通过二进制拷贝（如 memcpy()）后还能保持其数据不变正常使用的就是POD类型的对象。</p>
+<p>严格来讲，一个对象既是普通类型（Trivial Type）又是标准布局类型（Standard-layout Type）那么这个对象就是 POD 类型。</p>
+<p>不同类型的对象意味着对象的成员在内存中的布局是不同的。</p>
+<p>在某些情况下，布局是有规范明确的定义，但如果类或结构包含某些 C++ 语言功能，如虚拟基类、 虚函数、 具有不同的访问控制的成员，则不同编译器会有不同的布局实现，具体取决于编译器对代码的优化方式，比如实现内存对齐，减少访存指令周期。</p>
+<p>C++ 给定对象类型取决于其特定的内存布局方式，一个对象是普通、标准布局还是 POD 类型，可以根据标准库函数模板来判断：(需要包含头文件<code>&lt;type_traits&gt;</code>)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">is_trivial&lt;T&gt; </span><br><span class="line">is_standard_layout&lt;T&gt; </span><br><span class="line">is_pod&lt;T&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="普通类型"><a href="#普通类型" class="headerlink" title="普通类型"></a>普通类型</h2><p>当类或结构体同时满足如下几个条件时是普通类型：</p>
+<ol>
+<li>没有虚函数或虚基类；</li>
+<li>由C++编译器提供默认的特殊成员函数（默认的构造函数、拷贝构造函数、移动构造函数、赋值运算符、移动赋值运算符和析构函数）；</li>
+<li>数据成员同样需要满足条件（1）和（2）。</li>
+</ol>
+<p>注意，普通类型可以具有不同的访问说明符（private等）。下面我们使用模版类std::is_trivial<T>::value来判断数据类型是否为普通类型。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span> &#123; <span class="built_in">A</span>() &#123;&#125; &#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span> &#123; <span class="built_in">B</span>(B&amp;) &#123;&#125; &#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span> &#123; <span class="built_in">C</span>(C&amp;&amp;) &#123;&#125; &#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">D</span> &#123; D <span class="keyword">operator</span>=(D&amp;) &#123;&#125; &#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">E</span> &#123; E <span class="keyword">operator</span>=(E&amp;&amp;) &#123;&#125; &#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">F</span> &#123; ~<span class="built_in">F</span>() &#123;&#125; &#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">G</span> &#123; <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">foo</span><span class="params">()</span> </span>= <span class="number">0</span>; &#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">H</span> : <span class="keyword">virtual</span> F&#123;&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">I</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;A&gt;::value ;  <span class="comment">//有自定义构造函数</span></span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;B&gt;::value;  <span class="comment">//有自定义的拷贝构造函数</span></span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;C&gt;::value;  <span class="comment">//有自定义的移动构造运算符</span></span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;D&gt;::value;  <span class="comment">//有自定义的赋值运算符</span></span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;E&gt;::value;  <span class="comment">//有自定义的移动赋值运算符</span></span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;F&gt;::value;  <span class="comment">//有自定义的析构函数</span></span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;G&gt;::value;  <span class="comment">//有虚函数</span></span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;H&gt;::value;  <span class="comment">//有虚基类</span></span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;I&gt;::value ;   <span class="comment">//普通的类return 0;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序输出结果如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">000000001</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="标准布局类型"><a href="#标准布局类型" class="headerlink" title="标准布局类型"></a>标准布局类型</h2><p>当类或结构体同时满足如下几个条件时是标准布局类型：</p>
+<ol>
+<li>没有虚函数或虚基类；</li>
+<li>所有非静态数据成员都具有相同的访问说明符；</li>
+<li>在继承体系中最多只有一个类中有非静态数据成员；</li>
+<li><strong>子类中的第一个非静态成员的类型与其基类不同</strong>；此规则是因为 C++ 允许优化不包含成员基类而产生的。在 C++ 标准中，如果基类没有任何数据成员，基类应不占用空间，为了体现这一点，C++ 标准允许派生类的第一个成员与基类共享同一地址空间。但是如果派生类的第一个非静态成员的类型和基类相同，由于 C++ 标准要求相同类型的对象的地址必须不同，编译器就会为基类分派一个字节的地址空间。比如下面的代码：</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">B1</span>&#123;&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B2</span>&#123;&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">D1</span>: <span class="keyword">public</span> B1</span><br><span class="line">&#123;</span><br><span class="line">    B1 b;</span><br><span class="line">    <span class="type">int</span> i ;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">D2</span>: <span class="keyword">public</span> B1</span><br><span class="line">&#123;</span><br><span class="line">    B2 b ;</span><br><span class="line">	<span class="type">int</span> i ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>D1 和 D2 类型的对象内存布局应该是相同的，但实际上是不同的，因为 D1 中基类 B1 和对象 b 都占用了 1 个字节，D2 中基类 B1 为空，并不占用内存空间。D1 和 D2 的内容布局从左至右如下图所示：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-a296190aae436aa921527d5484b63f9f_720w.webp" alt="img"></p>
+<p>注意，这条规定 GNU C++ 遵守，Visual C++ 并不遵守。</p>
+<p>5.所有非静态数据成员同样需要满足条件（1）、（2）、（3）和（4）。</p>
+<p>考察如下程序：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span> &#123; <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">foo</span><span class="params">()</span> </span>= <span class="number">0</span>; &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">int</span> a;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="type">int</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C1</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> x1;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span>:C1</span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> x;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">D1</span> &#123;&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">D</span> : D1</span><br><span class="line">&#123;</span><br><span class="line">	D1 d1;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">E</span> : <span class="keyword">virtual</span> C1 &#123;&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">F</span> &#123; B x; &#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">G</span> :C1, D1 &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::cout &lt;&lt; std::is_standard_layout&lt;A&gt;::value ;  <span class="comment">// 有虚函数  </span></span><br><span class="line">	std::cout &lt;&lt; std::is_standard_layout&lt;B&gt;::value ;  <span class="comment">// 成员a和b具有不同的访问权限  </span></span><br><span class="line">	std::cout &lt;&lt; std::is_standard_layout&lt;C&gt;::value ;  <span class="comment">// 继承树有非静态数据成员的类超过1个  </span></span><br><span class="line">	std::cout &lt;&lt; std::is_standard_layout&lt;D&gt;::value ;  <span class="comment">// 第一个非静态成员是基类类型</span></span><br><span class="line">	std::cout &lt;&lt; std::is_standard_layout&lt;E&gt;::value ;  <span class="comment">// 有虚基类</span></span><br><span class="line">	std::cout &lt;&lt; std::is_standard_layout&lt;F&gt;::value ;  <span class="comment">// 非静态成员x不符合标准布局类型</span></span><br><span class="line">	std::cout &lt;&lt; std::is_standard_layout&lt;G&gt;::value ;  <span class="comment">// return 1</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序运行结果：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00000001</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="POD-类型简介"><a href="#POD-类型简介" class="headerlink" title="POD 类型简介"></a>POD 类型简介</h2><p>一个对象既是普通类型（Trivial Type）又是标准布局类型（Standard-layout Type）那么这个对象就是POD类型。为什么我们需要 POD 类型满足这些条件呢，POD 类型在源码层级的操作上兼容于 ANSI C。POD 对象与 C 语言中的对象具有一些共同的特性，包括初始化、复制、内存布局与寻址：</p>
+<ol>
+<li>可以使用字节赋值，比如用 memset、memcpy 对 POD 类型进行赋值操作；</li>
+<li>对 C 内存布局兼容，POD 类型的数据可以使用 C 函数进行操作且总是安全的；</li>
+<li>保证了静态初始化的安全有效，静态初始化可以提高性能，如将 POD 类型对象放入 BSS 段默认初始化为 0。</li>
+</ol>
+<p>下面看一下 POD 类型的二进制拷贝示例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span> </span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="type">int</span> x;</span><br><span class="line">	<span class="type">double</span> y;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (std::is_pod&lt;A&gt;::value)</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;before&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">		A a;</span><br><span class="line">		a.x = <span class="number">8</span>;</span><br><span class="line">		a.y = <span class="number">10.5</span>;</span><br><span class="line">		std::cout &lt;&lt; a.x &lt;&lt; std::endl;</span><br><span class="line">		std::cout &lt;&lt; a.y &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">		<span class="type">size_t</span> size = <span class="built_in">sizeof</span>(a);</span><br><span class="line">		<span class="type">char</span> *p = <span class="keyword">new</span> <span class="type">char</span>[size];</span><br><span class="line">		<span class="built_in">memcpy</span>(p, &amp;a, size);</span><br><span class="line">		A *pA = (A*)p;</span><br><span class="line"></span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;after&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">		std::cout &lt;&lt; pA-&gt;x &lt;&lt; std::endl;</span><br><span class="line">		std::cout &lt;&lt; pA-&gt;y &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">delete</span> p;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>程序运行结果如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">before</span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">10.5</span></span><br><span class="line">after</span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">10.5</span></span><br></pre></td></tr></table></figure>
+
+<p>可见，POD 类型使用字节拷贝可以正常进行赋值操作。</p>
+<p>事实上，如果对象是普通类型，不是标准布局，例如类同时有 public 与 private 的非静态数据成员，也可以使用 memcpy 进行字节拷贝赋值。如果对象是标准布局类型，不是普通类型，例如类有复杂的 move 与 copy 构造函数，也可以使用 C 函数进行操作。</p>
+<p>来自：<a target="_blank" rel="noopener" href="https://blog.csdn.net/K346K346/article/details/81534100">https://blog.csdn.net/K346K346/article/details/81534100</a></p>
+
+    </div>
+
+    
+    
+    
+    
+     <div>
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hah
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://yoursite.com/2023/12/13/C++-POD(Plain%20Old%20Data)/" title="POD(Plain Old Data)">http://yoursite.com/2023/12/13/C++-POD(Plain Old Data)/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/12/13/C++-STL_list/" rel="prev" title="STL-list(链表)">
+      <i class="fa fa-chevron-left"></i> STL-list(链表)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/12/13/C++-Constant%20Folding/" rel="next" title="Constant Folding(常量折叠)">
+      Constant Folding(常量折叠) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81ODMwOS8zNDc3Mg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=188550&auto=1&height=66"></iframe>
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#POD-Plain-Old-Data"><span class="nav-number">1.</span> <span class="nav-text">POD(Plain Old Data)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.</span> <span class="nav-text">是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%99%AE%E9%80%9A%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.2.</span> <span class="nav-text">普通类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E5%87%86%E5%B8%83%E5%B1%80%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">标准布局类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POD-%E7%B1%BB%E5%9E%8B%E7%AE%80%E4%BB%8B"><span class="nav-number">1.4.</span> <span class="nav-text">POD 类型简介</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hah"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Hah</p>
+  <div class="site-description" itemprop="description">我没有为你伤春悲秋不配有憾事</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Jenwein" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Jenwein" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:rgw127310@gmail.com" title="E-Mail → mailto:rgw127310@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023-4 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hah</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">49k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">44 分钟</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+    </div>
+</body>
+</html>
