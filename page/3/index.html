@@ -195,6 +195,258 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/12/13/C++-Constant%20Folding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/13/C++-Constant%20Folding/" class="post-title-link" itemprop="url">ConstantFolding(常量折叠)</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-12-13 12:00:00" itemprop="dateCreated datePublished" datetime="2023-12-13T12:00:00+08:00">2023-12-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-19 19:36:19" itemprop="dateModified" datetime="2024-01-19T19:36:19+08:00">2024-01-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>常量折叠（Constant Folding）是编译器优化的一种技术，用于在编译时计算表达式的常量值，从而减少运行时的计算负担。这个优化过程主要针对包含常量操作的表达式，将这些常量操作在编译时计算出结果，然后用计算结果替代原始表达式中的常量部分。</p>
+<p>例如，考虑下面的表达式：</p>
+<p>int result &#x3D; 5 + 3 * 2;<br>在常量折叠的优化过程中，编译器可以在编译时计算出表达式的值，而不是在运行时进行计算。在这个例子中，编译器可以将表达式简化为：</p>
+<p>int result &#x3D; 11;<br>这样的优化可以提高程序的性能，因为在运行时避免了不必要的计算。常量折叠通常是编译器优化中的一部分，用于生成更有效率的目标代码。</p>
+<p>内容来自<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/381490718">https://zhuanlan.zhihu.com/p/381490718</a></p>
+<ol>
+<li>常量传播</li>
+</ol>
+<p>常量传播，就是说在编译期时，能够直接计算出结果（这个结果往往是常量）的变量，将被编译器由直接计算出的结果常量来替换这个变量。</p>
+<p>例：<br>代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123; </span><br><span class="line"></span><br><span class="line">   <span class="type">int</span> x = <span class="number">1</span>; </span><br><span class="line"></span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl; </span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上例种，编译器会直接用常量1替换变量x，优化成：<br>代码:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    std::cout&lt;&lt;<span class="number">1</span>&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>常量折叠</li>
+</ol>
+<p>常量折叠，就是说在编译期间，如果有可能，多个变量的计算可以最终替换为一个变量的计算，通常是多个变量的多级冗余计算被替换为一个变量的一级计算</p>
+<p>例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> x = a + b;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>常量折叠优化后：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">1</span> + <span class="number">2</span>;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，可以再进行进一步的常量替换优化：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    std::cout&lt;&lt;<span class="number">3</span>&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通常，编译优化是一件综合且连贯一致的复杂事情，下文就不再赘述了。</p>
+<ol start="3">
+<li>复写传播</li>
+</ol>
+<p>复写传播，就是编译器用一个变量替换两个或多个相同的变量。</p>
+<p>例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> y = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> x = y;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>优化后：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">1</span>;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上例有两个变量y和x，但是其实是两个相同的变量，并且其它地方并未区分它们两个，所以它们是重复的，可称为“复写”，编译器可以将其优化，将x“传播”给y，只剩下一个变量x，当然，反过来优化掉x只剩下一个y也是可以的。</p>
+<ol start="4">
+<li>公共子表式消除</li>
+</ol>
+<p>公共子表达式消除是说，如果一个表达式E已经计算过了，并且从先前的计算到现在的E中的变量都没有发生变化，那么E的此次出现就成为了公共子表达式，因此，编译器可判断其不需要再次进行计算浪费性能。</p>
+<p>例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> x = （a+b) * <span class="number">2</span> + (b+a) * <span class="number">6</span>;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>优化后：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> E = a + b;</span><br><span class="line">    <span class="type">int</span> x = E * <span class="number">2</span> + E * <span class="number">6</span>;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，也有可能会直接变成：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> E = a + b;</span><br><span class="line">    <span class="type">int</span> x = E * <span class="number">8</span>;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>无用代码消除</li>
+</ol>
+<p>无用代码消除指的是永远不能被执行到的代码或者没有任何意义的代码会被清除掉，比如return之后的语句，变量自己给自己赋值等等。</p>
+<p>例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> x = x;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上例中，x变量自我赋值显然是无用代码，将会被优化掉：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">1</span>;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>数组范围检查消除</li>
+</ol>
+<p>如果开发语言是Java这种动态类型安全型的，那在访问数组时比如array[ ]时，Java不会像C&#x2F;C++那样只是存粹的裸指针访问，而是会在运行时访问数组元素前进行一次是否越界检查，这将会带来许多开销，如果即时编译器能根据数据流分析出变量的取值范围在[0,array.length]之间，那么在循环期间就可以把数组的上下边界检查消除，以减少不必要的性能损耗。</p>
+<ol start="7">
+<li>方法内联</li>
+</ol>
+<p>这种优化方法是将比较简短的函数或者方法代码直接粘贴到其调用者中，以减少函数调用时的开销，比较重要且常用，很容易理解，就比如C++的inline关键字一样，只不过inline是开发者的手动方法内联，而编译器在分析代码和数据流之后，也有可能做出自动inline的优化。</p>
+<ol start="8">
+<li>逃逸分析</li>
+</ol>
+<p>一个对象如果被其声明的方法之外的一个或多个函数所引用，那就被称为逃逸，可以通俗理解为，该对象逃逸了其原本的命名空间或者作用域，使得声明（或者定义）该对象的方法结束时，该对象不能被销毁。</p>
+<p>通常，一个函数里的局部变量其内存空间是在栈上分配的，而对象则是在堆上分配的内存空间，在函数调用结束时，局部变量会随着栈空间销毁而自动销毁，但堆上的空间要么是依赖类似JVM的垃圾内存自动回收机制（GC），要么就得像C&#x2F;C++那样的依赖开发者本身的记忆力，因此，堆上的内存分配与销毁一般开销会比栈上的大得多。</p>
+<p>逃逸分析的基本原理就是分析对象动态作用域。如果确定一个方法不会逃逸出方法之外，那让整个对象在栈上分配内存将会是一个很不错的主意，对象所占用的内存空间就可以随栈帧而销毁。在一般应用中，不会逃逸的局部对象所占用的比例很大，如果能在编译器优化时，为其在栈上分配内存空间，那大量的对象就会随着方法结束而自动销毁了，不用依赖前面讲的GC或者记忆力，系统的压力将会小很多。</p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/12/13/C++-STL_list/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/13/C++-STL_list/" class="post-title-link" itemprop="url">STL-list(链表)</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-12-13 12:00:00" itemprop="dateCreated datePublished" datetime="2023-12-13T12:00:00+08:00">2023-12-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-06 21:18:56" itemprop="dateModified" datetime="2024-01-06T21:18:56+08:00">2024-01-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/STL/" itemprop="url" rel="index"><span itemprop="name">STL</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="list"><a href="#list" class="headerlink" title="list"></a>list</h1>
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/12/13/C++-POD(Plain%20Old%20Data)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -354,7 +606,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/12/13/C++-STL_list/">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/12/13/C++-class%20VS%20struct/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -368,7 +620,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/12/13/C++-STL_list/" class="post-title-link" itemprop="url">STL-list(链表)</a>
+            <a href="/2023/12/13/C++-class%20VS%20struct/" class="post-title-link" itemprop="url">Class&Struct</a>
         </h2>
 
         <div class="post-meta">
@@ -386,7 +638,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-06 21:18:56" itemprop="dateModified" datetime="2024-01-06T21:18:56+08:00">2024-01-06</time>
+                <time title="修改时间：2024-01-19 19:37:04" itemprop="dateModified" datetime="2024-01-19T19:37:04+08:00">2024-01-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -398,7 +650,7 @@
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/STL/" itemprop="url" rel="index"><span itemprop="name">STL</span></a>
+                  <a href="/categories/C/class/" itemprop="url" rel="index"><span itemprop="name">class</span></a>
                 </span>
             </span>
 
@@ -408,14 +660,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4</span>
+              <span>1.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -427,7 +679,22 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="list"><a href="#list" class="headerlink" title="list"></a>list</h1>
+          <h1 id="Class-VS-Struct"><a href="#Class-VS-Struct" class="headerlink" title="Class VS Struct"></a>Class VS Struct</h1><p>​        C++中Struct与class的区别在本质上仅是区别于默认成全的属性，Struct中默认为public而Class中默认private，也可以进行struct B 继承 class A这种操作，就像</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">B</span>&#123;&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">A</span> :<span class="keyword">public</span> B&#123;&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span> :<span class="keyword">public</span> A&#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>但在使用上不会用struct来实现继承等操作，更多的对于POD类型或只包含一些变量的结构时使用struct（例如数学中的向量类），当然也可以在struct中创建成员函数来实现某些功能但不会像class中那样复杂。 </p>
+<ul>
+<li>C++中保留struct因为C中并没有Class，是为了与C更好的兼容</li>
+<li>class能实现的功能不用class也能实现，是为编程人员可以更方便操作</li>
+<li>class中也可以如本例中的Log类中用多一个public来讲不同部分的函数或变量区分开</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Log</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="type">const</span> <span class="type">int</span> LogLevelError = <span class="number">0</span>;</span><br><span class="line">	<span class="type">const</span> <span class="type">int</span> LogLevelWarning = <span class="number">1</span>;</span><br><span class="line">	<span class="type">const</span> <span class="type">int</span> LogLevelInfo = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">	<span class="comment">//设定Log级别,默认Info</span></span><br><span class="line">	<span class="type">int</span> m_LogLevel=LogLevelInfo;   <span class="comment">//&quot;m_&quot;表示是一个私有的类成员变量，归类便于查询</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">SetLevel</span><span class="params">(<span class="type">int</span> Level)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		m_LogLevel = Level;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Error</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* message)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (m_LogLevel &gt;= LogLevelError)</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;[ERROR]: &quot;</span> &lt;&lt; message &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Warn</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* message)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (m_LogLevel &gt;= LogLevelWarning)</span><br><span class="line">		std::cout &lt;&lt;<span class="string">&quot;[WARNING]: &quot;</span> &lt;&lt; message &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Info</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* message)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (m_LogLevel &gt;= LogLevelInfo)</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;[INFO]: &quot;</span> &lt;&lt; message &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Log log;</span><br><span class="line">	log.<span class="built_in">SetLevel</span>(log.LogLevelError);</span><br><span class="line"></span><br><span class="line">	log.<span class="built_in">Error</span>(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">	log.<span class="built_in">Warn</span>(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">	log.<span class="built_in">Info</span>(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line"></span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="enum"><a href="#enum" class="headerlink" title="enum"></a>enum</h2><p>在本例中的Level可以在Log中定义一个public的枚举类型来简化代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">Level</span> <span class="comment">//枚举类型，变量的集合，可单独赋值</span></span><br><span class="line">	&#123;</span><br><span class="line">		LevelError = <span class="number">0</span>, LevelWarning, LevelInfo<span class="comment">//自动递增</span></span><br><span class="line">	&#125;;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">	<span class="comment">//设定Log级别,默认Info</span></span><br><span class="line">	Level m_LogLevel = LevelInfo;   <span class="comment">//&quot;m_&quot;表示是一个私有的类成员变量，归类便于查询</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">SetLevel</span><span class="params">(Level level)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		m_LogLevel = level;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其余部分对应修改即可</p>
+
       
     </div>
 
@@ -557,7 +824,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/12/13/C++-class%20VS%20struct/">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/12/13/C++-constconstexpr/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -571,115 +838,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2023/12/13/C++-class%20VS%20struct/" class="post-title-link" itemprop="url">class vs struct</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-12-13 12:00:00" itemprop="dateCreated datePublished" datetime="2023-12-13T12:00:00+08:00">2023-12-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-27 16:22:57" itemprop="dateModified" datetime="2023-12-27T16:22:57+08:00">2023-12-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/class/" itemprop="url" rel="index"><span itemprop="name">class</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="Class-VS-Struct"><a href="#Class-VS-Struct" class="headerlink" title="Class VS Struct"></a>Class VS Struct</h1><p>​        C++中Struct与class的区别在本质上仅是区别于默认成全的属性，Struct中默认为public而Class中默认private，也可以进行struct B 继承 class A这种操作，就像</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">B</span>&#123;&#125;;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">A</span> :<span class="keyword">public</span> B&#123;&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span> :<span class="keyword">public</span> A&#123;&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>但在使用上不会用struct来实现继承等操作，更多的对于POD类型或只包含一些变量的结构时使用struct（例如数学中的向量类），当然也可以在struct中创建成员函数来实现某些功能但不会像class中那样复杂。 </p>
-<ul>
-<li>C++中保留struct因为C中并没有Class，是为了与C更好的兼容</li>
-<li>class能实现的功能不用class也能实现，是为编程人员可以更方便操作</li>
-<li>class中也可以如本例中的Log类中用多一个public来讲不同部分的函数或变量区分开</li>
-</ul>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Log</span></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="type">const</span> <span class="type">int</span> LogLevelError = <span class="number">0</span>;</span><br><span class="line">	<span class="type">const</span> <span class="type">int</span> LogLevelWarning = <span class="number">1</span>;</span><br><span class="line">	<span class="type">const</span> <span class="type">int</span> LogLevelInfo = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">	<span class="comment">//设定Log级别,默认Info</span></span><br><span class="line">	<span class="type">int</span> m_LogLevel=LogLevelInfo;   <span class="comment">//&quot;m_&quot;表示是一个私有的类成员变量，归类便于查询</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">SetLevel</span><span class="params">(<span class="type">int</span> Level)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		m_LogLevel = Level;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Error</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* message)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (m_LogLevel &gt;= LogLevelError)</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;[ERROR]: &quot;</span> &lt;&lt; message &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Warn</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* message)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (m_LogLevel &gt;= LogLevelWarning)</span><br><span class="line">		std::cout &lt;&lt;<span class="string">&quot;[WARNING]: &quot;</span> &lt;&lt; message &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Info</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* message)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (m_LogLevel &gt;= LogLevelInfo)</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;[INFO]: &quot;</span> &lt;&lt; message &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Log log;</span><br><span class="line">	log.<span class="built_in">SetLevel</span>(log.LogLevelError);</span><br><span class="line"></span><br><span class="line">	log.<span class="built_in">Error</span>(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">	log.<span class="built_in">Warn</span>(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line">	log.<span class="built_in">Info</span>(<span class="string">&quot;Hello&quot;</span>);</span><br><span class="line"></span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="enum"><a href="#enum" class="headerlink" title="enum"></a>enum</h2><p>在本例中的Level可以在Log中定义一个public的枚举类型来简化代码</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">Level</span> <span class="comment">//枚举类型，变量的集合，可单独赋值</span></span><br><span class="line">	&#123;</span><br><span class="line">		LevelError = <span class="number">0</span>, LevelWarning, LevelInfo<span class="comment">//自动递增</span></span><br><span class="line">	&#125;;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"></span><br><span class="line">	<span class="comment">//设定Log级别,默认Info</span></span><br><span class="line">	Level m_LogLevel = LevelInfo;   <span class="comment">//&quot;m_&quot;表示是一个私有的类成员变量，归类便于查询</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">SetLevel</span><span class="params">(Level level)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		m_LogLevel = level;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<p>其余部分对应修改即可</p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/12/13/C++-const%20constexpr/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/12/13/C++-const%20constexpr/" class="post-title-link" itemprop="url">constexpr</a>
+            <a href="/2023/12/13/C++-constconstexpr/" class="post-title-link" itemprop="url">constexpr</a>
         </h2>
 
         <div class="post-meta">
@@ -1155,7 +1314,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">29</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1212,12 +1371,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">49k</span>
+    <span title="站点总字数">53k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">44 分钟</span>
+    <span title="站点阅读时长">48 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
