@@ -195,6 +195,165 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/12/13/C++-Constant%20Folding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/13/C++-Constant%20Folding/" class="post-title-link" itemprop="url">ConstantFolding(常量折叠)</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-12-13 12:00:00" itemprop="dateCreated datePublished" datetime="2023-12-13T12:00:00+08:00">2023-12-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-19 19:36:19" itemprop="dateModified" datetime="2024-01-19T19:36:19+08:00">2024-01-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>常量折叠（Constant Folding）是编译器优化的一种技术，用于在编译时计算表达式的常量值，从而减少运行时的计算负担。这个优化过程主要针对包含常量操作的表达式，将这些常量操作在编译时计算出结果，然后用计算结果替代原始表达式中的常量部分。</p>
+<p>例如，考虑下面的表达式：</p>
+<p>int result &#x3D; 5 + 3 * 2;<br>在常量折叠的优化过程中，编译器可以在编译时计算出表达式的值，而不是在运行时进行计算。在这个例子中，编译器可以将表达式简化为：</p>
+<p>int result &#x3D; 11;<br>这样的优化可以提高程序的性能，因为在运行时避免了不必要的计算。常量折叠通常是编译器优化中的一部分，用于生成更有效率的目标代码。</p>
+<p>内容来自<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/381490718">https://zhuanlan.zhihu.com/p/381490718</a></p>
+<ol>
+<li>常量传播</li>
+</ol>
+<p>常量传播，就是说在编译期时，能够直接计算出结果（这个结果往往是常量）的变量，将被编译器由直接计算出的结果常量来替换这个变量。</p>
+<p>例：<br>代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123; </span><br><span class="line"></span><br><span class="line">   <span class="type">int</span> x = <span class="number">1</span>; </span><br><span class="line"></span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl; </span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上例种，编译器会直接用常量1替换变量x，优化成：<br>代码:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    std::cout&lt;&lt;<span class="number">1</span>&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>常量折叠</li>
+</ol>
+<p>常量折叠，就是说在编译期间，如果有可能，多个变量的计算可以最终替换为一个变量的计算，通常是多个变量的多级冗余计算被替换为一个变量的一级计算</p>
+<p>例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> x = a + b;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>常量折叠优化后：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">1</span> + <span class="number">2</span>;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，可以再进行进一步的常量替换优化：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    std::cout&lt;&lt;<span class="number">3</span>&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通常，编译优化是一件综合且连贯一致的复杂事情，下文就不再赘述了。</p>
+<ol start="3">
+<li>复写传播</li>
+</ol>
+<p>复写传播，就是编译器用一个变量替换两个或多个相同的变量。</p>
+<p>例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> y = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> x = y;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>优化后：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">1</span>;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上例有两个变量y和x，但是其实是两个相同的变量，并且其它地方并未区分它们两个，所以它们是重复的，可称为“复写”，编译器可以将其优化，将x“传播”给y，只剩下一个变量x，当然，反过来优化掉x只剩下一个y也是可以的。</p>
+<ol start="4">
+<li>公共子表式消除</li>
+</ol>
+<p>公共子表达式消除是说，如果一个表达式E已经计算过了，并且从先前的计算到现在的E中的变量都没有发生变化，那么E的此次出现就成为了公共子表达式，因此，编译器可判断其不需要再次进行计算浪费性能。</p>
+<p>例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> x = （a+b) * <span class="number">2</span> + (b+a) * <span class="number">6</span>;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>优化后：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> E = a + b;</span><br><span class="line">    <span class="type">int</span> x = E * <span class="number">2</span> + E * <span class="number">6</span>;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然，也有可能会直接变成：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">2</span>;</span><br><span class="line">    <span class="type">int</span> E = a + b;</span><br><span class="line">    <span class="type">int</span> x = E * <span class="number">8</span>;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>无用代码消除</li>
+</ol>
+<p>无用代码消除指的是永远不能被执行到的代码或者没有任何意义的代码会被清除掉，比如return之后的语句，变量自己给自己赋值等等。</p>
+<p>例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> x = x;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上例中，x变量自我赋值显然是无用代码，将会被优化掉：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> **argv)</span></span>&#123;</span><br><span class="line">    <span class="type">int</span> x = <span class="number">1</span>;</span><br><span class="line">    std::cout&lt;&lt;x&lt;&lt;std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>数组范围检查消除</li>
+</ol>
+<p>如果开发语言是Java这种动态类型安全型的，那在访问数组时比如array[ ]时，Java不会像C&#x2F;C++那样只是存粹的裸指针访问，而是会在运行时访问数组元素前进行一次是否越界检查，这将会带来许多开销，如果即时编译器能根据数据流分析出变量的取值范围在[0,array.length]之间，那么在循环期间就可以把数组的上下边界检查消除，以减少不必要的性能损耗。</p>
+<ol start="7">
+<li>方法内联</li>
+</ol>
+<p>这种优化方法是将比较简短的函数或者方法代码直接粘贴到其调用者中，以减少函数调用时的开销，比较重要且常用，很容易理解，就比如C++的inline关键字一样，只不过inline是开发者的手动方法内联，而编译器在分析代码和数据流之后，也有可能做出自动inline的优化。</p>
+<ol start="8">
+<li>逃逸分析</li>
+</ol>
+<p>一个对象如果被其声明的方法之外的一个或多个函数所引用，那就被称为逃逸，可以通俗理解为，该对象逃逸了其原本的命名空间或者作用域，使得声明（或者定义）该对象的方法结束时，该对象不能被销毁。</p>
+<p>通常，一个函数里的局部变量其内存空间是在栈上分配的，而对象则是在堆上分配的内存空间，在函数调用结束时，局部变量会随着栈空间销毁而自动销毁，但堆上的空间要么是依赖类似JVM的垃圾内存自动回收机制（GC），要么就得像C&#x2F;C++那样的依赖开发者本身的记忆力，因此，堆上的内存分配与销毁一般开销会比栈上的大得多。</p>
+<p>逃逸分析的基本原理就是分析对象动态作用域。如果确定一个方法不会逃逸出方法之外，那让整个对象在栈上分配内存将会是一个很不错的主意，对象所占用的内存空间就可以随栈帧而销毁。在一般应用中，不会逃逸的局部对象所占用的比例很大，如果能在编译器优化时，为其在栈上分配内存空间，那大量的对象就会随着方法结束而自动销毁了，不用依赖前面讲的GC或者记忆力，系统的压力将会小很多。</p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/12/13/C++-STL_list/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -269,6 +428,165 @@
 
       
           <h1 id="list"><a href="#list" class="headerlink" title="list"></a>list</h1>
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/12/13/C++-POD(Plain%20Old%20Data)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/13/C++-POD(Plain%20Old%20Data)/" class="post-title-link" itemprop="url">POD(Plain Old Data)</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-12-13 12:00:00" itemprop="dateCreated datePublished" datetime="2023-12-13T12:00:00+08:00">2023-12-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-13 11:38:08" itemprop="dateModified" datetime="2024-01-13T11:38:08+08:00">2024-01-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/%E5%85%B6%E4%BB%96/POD/" itemprop="url" rel="index"><span itemprop="name">POD</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="POD-Plain-Old-Data"><a href="#POD-Plain-Old-Data" class="headerlink" title="POD(Plain Old Data)"></a>POD(Plain Old Data)</h1><h2 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h2><p> C++ 诞生之后，出现了继承、派生这样新的概念，于是就诞生了一些新的数据结构。比如某个派生类，C 语言中哪有派生的概念啊，遇到这种数据编译器就不认识了。可是我们的计算机世界里，主要的系统还是用 C 写的啊，为了和旧的 C 数据相兼容，C++ 就提出了 POD 数据结构概念。</p>
+<p>POD, C++ 定义的一类数据结构概念，比如 int、float 等都是 POD 类型的。Plain 代表它是一个普通类型，Old 代表它是旧的，与几十年前的 C 语言兼容，那么就意味着可以使用 memcpy() 这种最原始的函数进行操作。两个系统进行交换数据，如果没有办法对数据进行语义检查和解释，那就只能以非常底层的数据形式进行交互，而拥有 POD 特征的类或者结构体通过二进制拷贝后依然能保持数据结构不变。</p>
+<p>POD（Plain Old Data，普通旧数据）类型是从 C++11 开始引入的概念</p>
+<ul>
+<li>Plain 代表一个对象是一个普通类型</li>
+<li>Old 代表一个对象可以与 C 兼容</li>
+</ul>
+<p>通俗地讲，一个类、结构、共用体对象或非构造类型对象能通过二进制拷贝（如 memcpy()）后还能保持其数据不变正常使用的就是POD类型的对象。</p>
+<p>严格来讲，一个对象既是普通类型（Trivial Type）又是标准布局类型（Standard-layout Type）那么这个对象就是 POD 类型。</p>
+<p>不同类型的对象意味着对象的成员在内存中的布局是不同的。</p>
+<p>在某些情况下，布局是有规范明确的定义，但如果类或结构包含某些 C++ 语言功能，如虚拟基类、 虚函数、 具有不同的访问控制的成员，则不同编译器会有不同的布局实现，具体取决于编译器对代码的优化方式，比如实现内存对齐，减少访存指令周期。</p>
+<p>C++ 给定对象类型取决于其特定的内存布局方式，一个对象是普通、标准布局还是 POD 类型，可以根据标准库函数模板来判断：(需要包含头文件<code>&lt;type_traits&gt;</code>)</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">is_trivial&lt;T&gt; </span><br><span class="line">is_standard_layout&lt;T&gt; </span><br><span class="line">is_pod&lt;T&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="普通类型"><a href="#普通类型" class="headerlink" title="普通类型"></a>普通类型</h2><p>当类或结构体同时满足如下几个条件时是普通类型：</p>
+<ol>
+<li>没有虚函数或虚基类；</li>
+<li>由C++编译器提供默认的特殊成员函数（默认的构造函数、拷贝构造函数、移动构造函数、赋值运算符、移动赋值运算符和析构函数）；</li>
+<li>数据成员同样需要满足条件（1）和（2）。</li>
+</ol>
+<p>注意，普通类型可以具有不同的访问说明符（private等）。下面我们使用模版类std::is_trivial<T>::value来判断数据类型是否为普通类型。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span> &#123; <span class="built_in">A</span>() &#123;&#125; &#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span> &#123; <span class="built_in">B</span>(B&amp;) &#123;&#125; &#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span> &#123; <span class="built_in">C</span>(C&amp;&amp;) &#123;&#125; &#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">D</span> &#123; D <span class="keyword">operator</span>=(D&amp;) &#123;&#125; &#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">E</span> &#123; E <span class="keyword">operator</span>=(E&amp;&amp;) &#123;&#125; &#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">F</span> &#123; ~<span class="built_in">F</span>() &#123;&#125; &#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">G</span> &#123; <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">foo</span><span class="params">()</span> </span>= <span class="number">0</span>; &#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">H</span> : <span class="keyword">virtual</span> F&#123;&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">I</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;A&gt;::value ;  <span class="comment">//有自定义构造函数</span></span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;B&gt;::value;  <span class="comment">//有自定义的拷贝构造函数</span></span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;C&gt;::value;  <span class="comment">//有自定义的移动构造运算符</span></span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;D&gt;::value;  <span class="comment">//有自定义的赋值运算符</span></span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;E&gt;::value;  <span class="comment">//有自定义的移动赋值运算符</span></span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;F&gt;::value;  <span class="comment">//有自定义的析构函数</span></span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;G&gt;::value;  <span class="comment">//有虚函数</span></span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;H&gt;::value;  <span class="comment">//有虚基类</span></span><br><span class="line">	std::cout &lt;&lt; std::is_trivial&lt;I&gt;::value ;   <span class="comment">//普通的类return 0;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序输出结果如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">000000001</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="标准布局类型"><a href="#标准布局类型" class="headerlink" title="标准布局类型"></a>标准布局类型</h2><p>当类或结构体同时满足如下几个条件时是标准布局类型：</p>
+<ol>
+<li>没有虚函数或虚基类；</li>
+<li>所有非静态数据成员都具有相同的访问说明符；</li>
+<li>在继承体系中最多只有一个类中有非静态数据成员；</li>
+<li><strong>子类中的第一个非静态成员的类型与其基类不同</strong>；此规则是因为 C++ 允许优化不包含成员基类而产生的。在 C++ 标准中，如果基类没有任何数据成员，基类应不占用空间，为了体现这一点，C++ 标准允许派生类的第一个成员与基类共享同一地址空间。但是如果派生类的第一个非静态成员的类型和基类相同，由于 C++ 标准要求相同类型的对象的地址必须不同，编译器就会为基类分派一个字节的地址空间。比如下面的代码：</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">B1</span>&#123;&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B2</span>&#123;&#125;;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">D1</span>: <span class="keyword">public</span> B1</span><br><span class="line">&#123;</span><br><span class="line">    B1 b;</span><br><span class="line">    <span class="type">int</span> i ;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">D2</span>: <span class="keyword">public</span> B1</span><br><span class="line">&#123;</span><br><span class="line">    B2 b ;</span><br><span class="line">	<span class="type">int</span> i ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>D1 和 D2 类型的对象内存布局应该是相同的，但实际上是不同的，因为 D1 中基类 B1 和对象 b 都占用了 1 个字节，D2 中基类 B1 为空，并不占用内存空间。D1 和 D2 的内容布局从左至右如下图所示：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-a296190aae436aa921527d5484b63f9f_720w.webp" alt="img"></p>
+<p>注意，这条规定 GNU C++ 遵守，Visual C++ 并不遵守。</p>
+<p>5.所有非静态数据成员同样需要满足条件（1）、（2）、（3）和（4）。</p>
+<p>考察如下程序：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span> &#123; <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">foo</span><span class="params">()</span> </span>= <span class="number">0</span>; &#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">int</span> a;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="type">int</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C1</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> x1;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span>:C1</span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> x;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">D1</span> &#123;&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">D</span> : D1</span><br><span class="line">&#123;</span><br><span class="line">	D1 d1;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">E</span> : <span class="keyword">virtual</span> C1 &#123;&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">F</span> &#123; B x; &#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">G</span> :C1, D1 &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::cout &lt;&lt; std::is_standard_layout&lt;A&gt;::value ;  <span class="comment">// 有虚函数  </span></span><br><span class="line">	std::cout &lt;&lt; std::is_standard_layout&lt;B&gt;::value ;  <span class="comment">// 成员a和b具有不同的访问权限  </span></span><br><span class="line">	std::cout &lt;&lt; std::is_standard_layout&lt;C&gt;::value ;  <span class="comment">// 继承树有非静态数据成员的类超过1个  </span></span><br><span class="line">	std::cout &lt;&lt; std::is_standard_layout&lt;D&gt;::value ;  <span class="comment">// 第一个非静态成员是基类类型</span></span><br><span class="line">	std::cout &lt;&lt; std::is_standard_layout&lt;E&gt;::value ;  <span class="comment">// 有虚基类</span></span><br><span class="line">	std::cout &lt;&lt; std::is_standard_layout&lt;F&gt;::value ;  <span class="comment">// 非静态成员x不符合标准布局类型</span></span><br><span class="line">	std::cout &lt;&lt; std::is_standard_layout&lt;G&gt;::value ;  <span class="comment">// return 1</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序运行结果：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">00000001</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="POD-类型简介"><a href="#POD-类型简介" class="headerlink" title="POD 类型简介"></a>POD 类型简介</h2><p>一个对象既是普通类型（Trivial Type）又是标准布局类型（Standard-layout Type）那么这个对象就是POD类型。为什么我们需要 POD 类型满足这些条件呢，POD 类型在源码层级的操作上兼容于 ANSI C。POD 对象与 C 语言中的对象具有一些共同的特性，包括初始化、复制、内存布局与寻址：</p>
+<ol>
+<li>可以使用字节赋值，比如用 memset、memcpy 对 POD 类型进行赋值操作；</li>
+<li>对 C 内存布局兼容，POD 类型的数据可以使用 C 函数进行操作且总是安全的；</li>
+<li>保证了静态初始化的安全有效，静态初始化可以提高性能，如将 POD 类型对象放入 BSS 段默认初始化为 0。</li>
+</ol>
+<p>下面看一下 POD 类型的二进制拷贝示例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span> </span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="type">int</span> x;</span><br><span class="line">	<span class="type">double</span> y;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (std::is_pod&lt;A&gt;::value)</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;before&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">		A a;</span><br><span class="line">		a.x = <span class="number">8</span>;</span><br><span class="line">		a.y = <span class="number">10.5</span>;</span><br><span class="line">		std::cout &lt;&lt; a.x &lt;&lt; std::endl;</span><br><span class="line">		std::cout &lt;&lt; a.y &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">		<span class="type">size_t</span> size = <span class="built_in">sizeof</span>(a);</span><br><span class="line">		<span class="type">char</span> *p = <span class="keyword">new</span> <span class="type">char</span>[size];</span><br><span class="line">		<span class="built_in">memcpy</span>(p, &amp;a, size);</span><br><span class="line">		A *pA = (A*)p;</span><br><span class="line"></span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;after&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">		std::cout &lt;&lt; pA-&gt;x &lt;&lt; std::endl;</span><br><span class="line">		std::cout &lt;&lt; pA-&gt;y &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">delete</span> p;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>程序运行结果如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">before</span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">10.5</span></span><br><span class="line">after</span><br><span class="line"><span class="number">8</span></span><br><span class="line"><span class="number">10.5</span></span><br></pre></td></tr></table></figure>
+
+<p>可见，POD 类型使用字节拷贝可以正常进行赋值操作。</p>
+<p>事实上，如果对象是普通类型，不是标准布局，例如类同时有 public 与 private 的非静态数据成员，也可以使用 memcpy 进行字节拷贝赋值。如果对象是标准布局类型，不是普通类型，例如类有复杂的 move 与 copy 构造函数，也可以使用 C 函数进行操作。</p>
+<p>来自：<a target="_blank" rel="noopener" href="https://blog.csdn.net/K346K346/article/details/81534100">https://blog.csdn.net/K346K346/article/details/81534100</a></p>
+
       
     </div>
 
@@ -1093,20 +1411,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">32</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-count">30</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1150,12 +1468,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">71k</span>
+    <span title="站点总字数">74k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:05</span>
+    <span title="站点阅读时长">1:07</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
