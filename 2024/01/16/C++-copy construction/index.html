@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://cdn.rhahr.icu/79db4b09668be018094db4ecb7ec3e0.png">
 <meta property="og:image" content="http://cdn.rhahr.icu/35055bba420bac5c19bade2439ea400.png">
 <meta property="article:published_time" content="2024-01-15T16:31:00.000Z">
-<meta property="article:modified_time" content="2024-01-19T11:34:43.507Z">
+<meta property="article:modified_time" content="2024-03-05T10:44:49.935Z">
 <meta property="article:author" content="Hah">
 <meta property="article:tag" content="复制及拷贝构造 深拷贝与浅拷贝">
 <meta name="twitter:card" content="summary">
@@ -234,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-19 19:34:43" itemprop="dateModified" datetime="2024-01-19T19:34:43+08:00">2024-01-19</time>
+                <time title="修改时间：2024-03-05 18:44:49" itemprop="dateModified" datetime="2024-03-05T18:44:49+08:00">2024-03-05</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -263,14 +263,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.9k</span>
+              <span>3.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -284,15 +284,14 @@
       
         <h2 id="copy"><a href="#copy" class="headerlink" title="copy"></a>copy</h2><p>ps：这一节将及其脑袋疼，但是很有趣</p>
 <p>作为一个资深“cv工程师”，ctrl-c(唱跳rap篮球-c)再熟悉不过，也就是复制， 平时的代码中到处都是复制，最常见“&#x3D;”就是在复制内容后赋值给左值，以及直接参数传递，也是复制，将传入的参数复制一遍再执行操作。看例子：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Vector2</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">float</span> x, y;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> PrintVector（Vector2 vector）</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//do something</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Vector2 a;<span class="comment">//简洁起见，不初始化了</span></span><br><span class="line">	Vector2 b = a;</span><br><span class="line">     </span><br><span class="line">    Vector2 c;</span><br><span class="line">	</span><br><span class="line">    Vector2* d=<span class="keyword">new</span> <span class="built_in">Vector2</span>();</span><br><span class="line">	Vector2* e = d;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">PrintVector</span>(c);</span><br><span class="line">    </span><br><span class="line">    std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Vector2</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">float</span> x, y;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> PrintVector（Vector2 vector）<span class="comment">//值传递</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//do something</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Vector2 a;<span class="comment">//简洁起见，不初始化了</span></span><br><span class="line">	Vector2 b = a;</span><br><span class="line">     </span><br><span class="line">    Vector2 c;</span><br><span class="line">	</span><br><span class="line">    Vector2* d=<span class="keyword">new</span> <span class="built_in">Vector2</span>();</span><br><span class="line">	Vector2* e = d;<span class="comment">//将上一行new的Vector2地址复制一份给e</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">PrintVector</span>(c);</span><br><span class="line">    </span><br><span class="line">    std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这个例子中出现的复制：（注：除引用外，“&#x3D;”总是在复制内容）</p>
 <ul>
 <li>将a中的内容复制给b，这里的a和b两个变量是两个独立的副本，各有不同的内存空间。</li>
 <li>将d中的内容（new的Vector2的地址）复制给e，这里的d和e两个变量指向的同一个内存空间。</li>
-<li>第19行的PrintVector(c);由于是直接传参，实际上是将c复制一个副本然后再执行函数内的操作</li>
+<li>第20行的PrintVector(c);由于是直接传参，实际上是将c复制一个副本然后再执行函数内的操作</li>
 </ul>
-<p>所以拷贝也有坏处。</p>
 <p>现在我们来通过一种原始方法来实现一个打印字符串，先写一个类String，具体自己实现:</p>
  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">String</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">char</span>* m_Buffer;      <span class="comment">//用于存储字符串数据</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> m_Size; <span class="comment">//用于存储字符串长度</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">String</span>(<span class="type">const</span> <span class="type">char</span>* string)    <span class="comment">// 构造函数，接受一个常量字符指针作为参数</span></span><br><span class="line">	&#123;</span><br><span class="line">		m_Size=<span class="built_in">strlen</span>(string);    <span class="comment">// 计算输入字符串的长度</span></span><br><span class="line">		m_Buffer = <span class="keyword">new</span> <span class="type">char</span>[m_Size+<span class="number">1</span>];<span class="comment">// 分配足够的内存来存储字符串和空终止符</span></span><br><span class="line">        <span class="comment">//因为char包括一个空终止符，所以要+1，或者直接使用strcpy，strcpy包括了空终止符</span></span><br><span class="line">		<span class="built_in">memcpy</span>(m_Buffer,string,m_Size+<span class="number">1</span>); <span class="comment">// 复制输入字符串到内部缓冲区，包括空终止符</span></span><br><span class="line">        <span class="comment">//+1是正确的，因为要复制空终止符</span></span><br><span class="line">	&#125;;</span><br><span class="line"><span class="comment">// 析构函数，负责释放内部缓冲区的内存</span></span><br><span class="line">	~<span class="built_in">String</span>()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">delete</span>[] m_Buffer;</span><br><span class="line">	&#125;</span><br><span class="line">   <span class="comment">// 友元函数，允许类外函数方法访问类内私有成员</span></span><br><span class="line">	<span class="keyword">friend</span> std::ostream&amp; <span class="keyword">operator</span>&lt;&lt;(std::ostream&amp; stream, <span class="type">const</span> String&amp; string);</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
@@ -308,13 +307,12 @@
 
 <p>打印发现正常输出两个hello，但是单击回车后触发了某种异常，从而执行了 <code>__debugbreak()</code></p>
 <p><img src="http://cdn.rhahr.icu/a75c747fe9b6e2707df0d7ae96edbc3.png"></p>
-<p>why？</p>
+<p>why？ </p>
 <p>接下来仔细分析代码，当我们复制string给second时，实际上是将string的m_Buffer的内容直接赋值给了second的m_Buffer，而m_Buffer是一个char<em>，并且保存的是在构造函数中new的那个char内存空间的地址，所以<strong>两个m_Buffer都是指向的同一个内存空间</strong>，在main中按下回车后作用域结束调用析构函数delete[] m_Buffer，string和second都会调用一次，所以*<em>同一个地址空间被delete了两次</em></em>,所以出现了这个错误。这就是个因为浅拷贝造成的内存错误。</p>
 <p>更直观的，打个断点发现它们是同一个内存地址</p>
 <p><img src="http://cdn.rhahr.icu/79db4b09668be018094db4ecb7ec3e0.png"></p>
-<h3 id="什么是浅拷贝呢"><a href="#什么是浅拷贝呢" class="headerlink" title="什么是浅拷贝呢"></a>什么是浅拷贝呢</h3><p>​        浅拷贝是创建一个新对象，其属性值是原始对象属性值的一份精确拷贝。如果属性是基本类型，拷贝的就是基本类型的值；如果属性是引用类型，拷贝的就是内存地址，因此如果其中一个对象改变了这个地址，就会影响到另一个对象。简单来说，浅拷贝只拷贝对象不拷贝引用</p>
-<p>​        如果你有一个包含引用类型成员的对象，并且你对这个对象进行浅拷贝，那么拷贝出来的对象中的引用类型成员仍然指向原始对象中的相同实例。这意味着，如果你修改了原始对象中的引用类型成员，拷贝出来的对象中的相应成员也会受到影响，因为它们指向的是同一个实例。</p>
-<p>​       所以在这个例子中，如果我们修改second的值，string也会受到影响，而我们真正想要的是完全复制一个新的String来存储sring中的值，我们希望第二个字符串拥有自己的指针，以拥有自己的内存块，想要做到这一点就涉及到一个深拷贝</p>
+<h3 id="什么是浅拷贝呢"><a href="#什么是浅拷贝呢" class="headerlink" title="什么是浅拷贝呢"></a>什么是浅拷贝呢</h3><p>​        拷贝是指在拷贝过程中，只会拷贝对象的基本类型，对于引用类型（如指针），只会拷贝引用，但不会拷贝引用的内容。这就意味着如果你修改了拷贝对象中的引用类型的内容，那么原始对象中对应的内容也会改变，因为它们的引用是同一个。</p>
+<p>​       所以在这个例子中，如果我们修改second的值，string也会受到影响，而我们真正想要的是完全复制一个新的String来存储string中的值，我们希望第二个字符串拥有自己的指针，以拥有自己的内存块，想要做到这一点就涉及到一个深拷贝</p>
 <h3 id="什么是深拷贝呢"><a href="#什么是深拷贝呢" class="headerlink" title="什么是深拷贝呢"></a>什么是深拷贝呢</h3><p>深拷贝不仅复制对象本身，还会复制对象中引用的所有对象，创建完全独立的副本。在深拷贝中，修改原始对象不会影响拷贝出来的对象，因为它们是完全独立的。</p>
 <p>C++其实默认提供了一个叫默认拷贝构造函数的东西，当你在进行拷贝初始化时就会调用这个函数</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//c++提供的默认拷贝构造函数，只提供浅拷贝，只复制指针而不复制指针指向的内存，second创建时调用了这个函数</span></span><br><span class="line">     <span class="built_in">String</span>(<span class="type">const</span> String&amp; other)</span><br><span class="line">		:<span class="built_in">m_Buffer</span>(other.m_Buffer),<span class="built_in">m_Size</span>(other.m_Size)</span><br><span class="line">	&#123;&#125;</span><br><span class="line">	<span class="comment">/*String(const String&amp; other)//还可以写成这个</span></span><br><span class="line"><span class="comment">	&#123;</span></span><br><span class="line"><span class="comment">		memcpy(this, &amp;other, m_Size);</span></span><br><span class="line"><span class="comment">	&#125;*/</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -466,20 +464,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -523,12 +521,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">96k</span>
+    <span title="站点总字数">104k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:27</span>
+    <span title="站点阅读时长">1:34</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

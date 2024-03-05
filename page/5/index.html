@@ -195,6 +195,324 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/12/28/C++-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/28/C++-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8/" class="post-title-link" itemprop="url">构造函数初始化列表</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-12-28 18:00:00" itemprop="dateCreated datePublished" datetime="2023-12-28T18:00:00+08:00">2023-12-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-01-11 13:16:13" itemprop="dateModified" datetime="2024-01-11T13:16:13+08:00">2024-01-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="构造函数初始化列表"><a href="#构造函数初始化列表" class="headerlink" title="构造函数初始化列表"></a>构造函数初始化列表</h2><p>滴滴：没有理由不使用这么好用的方法来构造函数，没有！！！！！</p>
+<p>是一种在创建类对象时给成员变量赋初值的方法，它可以提高代码的效率和简洁性。它的语法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">类名::构造函数(参数列表):成员变量1(参数1),成员变量2(参数2),...&#123;&#125; </span><br></pre></td></tr></table></figure>
+
+<p>其中，冒号<code>:</code>后面是一个以逗号分隔的成员变量列表，每个成员变量后面跟一个放在括号中的初始化式，表示用括号中的值来初始化该成员变量。例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span> &#123; </span><br><span class="line"><span class="keyword">public</span>:   <span class="comment">// 使用初始化列表来初始化x和y   </span></span><br><span class="line"><span class="built_in">Point</span>(<span class="type">int</span> x, <span class="type">int</span> y):<span class="built_in">m_x</span>(x), <span class="built_in">m_y</span>(y)&#123;&#125; </span><br><span class="line"><span class="keyword">private</span>: <span class="comment">// 两个成员变量，表示点的坐标  </span></span><br><span class="line"><span class="type">int</span> m_x;   </span><br><span class="line"><span class="type">int</span> m_y; </span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
+
+<p>这个例子中，Point类的构造函数接受两个int类型的参数x和y，表示点的坐标。在构造函数的初始化列表中，它用x的值来初始化m_x，用y的值来初始化m_y，表示将点的坐标赋值给m_x和m_y。这样，当我们创建一个Point对象时，我们可以传递两个整数给构造函数，然后构造函数会将这两个整数作为点的坐标存储在m_x和m_y中。</p>
+<p>构造函数初始化列表的优点是可以避免一些不必要的临时对象的创建和赋值操作，提高代码的效率和简洁性。例如，如果我们不使用初始化列表，而是在构造函数体内对成员变量赋值，那么代码可能是这样的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Point</span> &#123; </span><br><span class="line"><span class="keyword">public</span>:   <span class="comment">// 不使用初始化列表，而是在构造函数体内赋值   </span></span><br><span class="line">   <span class="built_in">Point</span>(<span class="type">int</span> x, <span class="type">int</span> y) </span><br><span class="line">   &#123;     </span><br><span class="line">   m_x = x;    </span><br><span class="line">   m_y = y;   </span><br><span class="line">   &#125; </span><br><span class="line"><span class="keyword">private</span>:   <span class="comment">// 两个成员变量，表示点的坐标   </span></span><br><span class="line">   <span class="type">int</span> m_x;   </span><br><span class="line">   <span class="type">int</span> m_y; </span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
+
+<p>这个例子中，Point类的构造函数仍然接受两个int类型的参数x和y，表示点的坐标。但是，在构造函数体内，它先创建了两个临时的int对象，然后用x和y的值来赋值给它们，再将它们赋值给m_x和m_y，表示将点的坐标赋值给m_x和m_y。这样，就多了两次赋值操作，而且还需要额外的内存空间来存储临时对象，这会降低代码的效率和简洁性。</p>
+<p>构造函数初始化列表还有一个重要的作用，那就是初始化const成员变量或引用类型的成员变量。因为const对象或引用类型只能初始化，不能对他们赋值。例如：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">VLA</span> &#123;</span><br><span class="line"><span class="keyword">private</span>:                <span class="comment">// 这是一个const成员变量，表示数组的长度   </span></span><br><span class="line">   <span class="type">const</span> <span class="type">int</span> m_len;     <span class="comment">// 这是一个指针类型的成员变量，表示数组的首地址   </span></span><br><span class="line">   <span class="type">int</span> * m_arr; </span><br><span class="line"><span class="keyword">public</span>:                 <span class="comment">// 必须使用初始化列表来初始化m_len   </span></span><br><span class="line">   <span class="built_in">VLA</span>(<span class="type">int</span> len):<span class="built_in">m_len</span>(len) </span><br><span class="line">   &#123;                    <span class="comment">// 在构造函数体内为m_arr分配内存空间     </span></span><br><span class="line">   m_arr = <span class="keyword">new</span> <span class="type">int</span>[len];   </span><br><span class="line">   &#125; </span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
+
+<p>这个例子中，VLA类的构造函数接受一个int类型的参数len，表示数组的长度。在构造函数的初始化列表中，它用len的值来初始化m_len，表示将数组的长度赋值给m_len**<u>。这是必须的，因为m_len是一个const变量，不能在构造函数体内对它赋值</u>**。然后，在构造函数体内，它为m_arr分配了一个长度为len的动态数组，表示将数组的首地址赋值给m_arr。</p>
+<p>例如</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dog</span>: <span class="keyword">public</span> Animal</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Dog</span>(<span class="type">int</span> weight,<span class="type">int</span> height,<span class="type">int</span> type):</span><br><span class="line">        <span class="built_in">Animal</span>(weight,height), <span class="comment">//用，分隔</span></span><br><span class="line">        <span class="built_in">LEGS</span>(<span class="number">4</span>)                <span class="comment">//必须在初始化列表中初始化</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//LEGS = 4;           //error</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> m_type;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> LEGS;<span class="comment">//在c++11中可以这样const int LEGS=4</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Jiangtagong/article/details/109010834">深入理解C++构造函数初始化列表与赋值_通过将值传递给初始化列表中的构造函数,可以避免为“m_filename”赋值。-CSDN博客</a> </p>
+<p>如果有Dog(14,23,2)给该构造函数传参，那么：</p>
+<ul>
+<li>14, 23, 2被用来传入Dog构造函数内，作为构造函数的参数。</li>
+<li>14, 23还被用来初始化Animal中的weight和height，因为Dog构造函数的初始化列表中调用了Animal构造函数，将这两个参数传递给基类。</li>
+<li>const变量LEGS直接用4来初始化，因为Dog构造函数的初始化列表中用4的值来初始化LEGS，这是必须的，因为LEGS是一个const成员变量，只能在初始化列表中进行初始化，不能在构造函数体内对它赋值。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Example</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Example</span>() </span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Created Entity!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">Example</span>(<span class="type">int</span> x)</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Created Entity with &quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot;!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Entity</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	std::string m_Name;</span><br><span class="line">	Example m_Example;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Entity</span>(): <span class="built_in">m_Example</span>(<span class="number">8</span>)<span class="comment">//或者m_Example(Example(8))</span></span><br><span class="line">	&#123;</span><br><span class="line">		m_Name = (<span class="string">&quot; Unknow &quot;</span>);</span><br><span class="line"><span class="comment">//		m_Example = Example(8);//如果在此处初始化，则会构造两次，浪费内存</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">Entity</span>(<span class="type">const</span> std::string &amp;name) </span><br><span class="line">	&#123;</span><br><span class="line">		m_Name = name;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="type">const</span> std::string&amp; <span class="title">Getname</span><span class="params">()</span><span class="type">const</span> </span>&#123; <span class="keyword">return</span> m_Name; &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	Entity e;</span><br><span class="line"><span class="comment">//	std::cout &lt;&lt; e.Getname() &lt;&lt; std::endl;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//	Entity e1(&quot; AAA &quot;);</span></span><br><span class="line"><span class="comment">//	std::cout &lt;&lt; e1.Getname() &lt;&lt; std::endl;</span></span><br><span class="line"></span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/12/27/C++-Construct%20and%20Destructor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/27/C++-Construct%20and%20Destructor/" class="post-title-link" itemprop="url">构造析构函数</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2023-12-27 12:00:00 / 修改时间：16:30:43" itemprop="dateCreated datePublished" datetime="2023-12-27T12:00:00+08:00">2023-12-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/s/" itemprop="url" rel="index"><span itemprop="name">s</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>963</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h2><p>一个在对象创建时会被调用的特殊的函数和方法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Entity</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="type">float</span> X, Y;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">Entity</span>(<span class="type">float</span> x,<span class="type">float</span> y)<span class="comment">//含参数的构造函数</span></span><br><span class="line">	&#123;</span><br><span class="line">		X = x; Y = y;</span><br><span class="line">	&#125;</span><br><span class="line">    </span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">Print</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		std::cout &lt;&lt; X &lt;&lt; <span class="string">&quot; . &quot;</span> &lt;&lt; Y &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">function</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">	Entity e;</span><br><span class="line"></span><br><span class="line">	e.<span class="built_in">Print</span>();</span><br><span class="line"></span><br><span class="line">	std::cout &lt;&lt; e.X &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">function</span>();</span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有的时候想要只允许使用Log的一些方法而不允许创建实例，则要删除默认构造函数（default constructor）<br>两种方法</p>
+<p><img src="http://cdn.rhahr.icu/5d27e239e4d56c840ffdc9b9bf81a09.png"></p>
+<h2 id="析构函数"><a href="#析构函数" class="headerlink" title="析构函数"></a>析构函数</h2><p>一个在对象销毁时会被调用的特殊的函数和方法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">	</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Entity</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Entity</span>()  <span class="comment">//构造函数</span></span><br><span class="line">	&#123;</span><br><span class="line">		X = <span class="number">0.0f</span>; Y = <span class="number">0.0f</span>;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Created Entity!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~<span class="built_in">Entity</span>()  <span class="comment">// 析构函数，当删除或者释放空间时自动调用</span></span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt;<span class="string">&quot;destroyed Entity!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;；</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">function</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Entity e;<span class="comment">//自动调用构造函数</span></span><br><span class="line"></span><br><span class="line">	e.<span class="built_in">Print</span>();</span><br><span class="line"></span><br><span class="line">	std::cout &lt;&lt; e.X &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">function</span>(); <span class="comment">//自动调用析构函数</span></span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;	</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>输出</p>
+<p><img src="http://cdn.rhahr.icu/2663a74f6dcbb952eca8bb5b10feca5.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/12/26/MS-MissingSemester/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/12/26/MS-MissingSemester/" class="post-title-link" itemprop="url">终端命令</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-12-26 12:00:00" itemprop="dateCreated datePublished" datetime="2023-12-26T12:00:00+08:00">2023-12-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-12-27 22:43:06" itemprop="dateModified" datetime="2023-12-27T22:43:06+08:00">2023-12-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Missing-Semester/" itemprop="url" rel="index"><span itemprop="name">Missing Semester</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Missing-Semester/Shell/" itemprop="url" rel="index"><span itemprop="name">Shell</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>185</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Missing-Semester"><a href="#Missing-Semester" class="headerlink" title="Missing Semester"></a>Missing Semester</h1><h3 id="逻辑命令"><a href="#逻辑命令" class="headerlink" title="逻辑命令"></a>逻辑命令</h3><p> || 或命令，如果第一个命令失败则bash将执行第二个命令<code>false || echo “A“</code> 将会打印出 A</p>
+<p>&amp;&amp; 与命令，只有在第一个命令没有错误的情况下才会执行第二个命令 <code>ture &amp;&amp; echo &quot;B&quot;</code> 将会打印出 B</p>
+<p>false ; echo “C” 无论什么情况都会打印</p>
+<p>日志手册</p>
+<p>man   tldr</p>
+<p>查找 </p>
+<p>ls  find</p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/12/13/C++-Constant%20Folding/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -638,7 +956,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-11 13:13:23" itemprop="dateModified" datetime="2024-01-11T13:13:23+08:00">2024-01-11</time>
+                <time title="修改时间：2024-03-04 10:22:53" itemprop="dateModified" datetime="2024-03-04T10:22:53+08:00">2024-03-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -680,7 +998,7 @@
 
       
           <h1 id="Static"><a href="#Static" class="headerlink" title="Static"></a>Static</h1><h2 id="在class-x2F-struct外"><a href="#在class-x2F-struct外" class="headerlink" title="在class&#x2F;struct外"></a>在class&#x2F;struct外</h2><p>使用static相当于在这个文件里的声明私有变量，就像class中的private</p>
-<p>static int s_variable &#x3D; 5;&#x2F;&#x2F;static 定义的函数和变量只对它的声明所在的cpp文件(编译单元)是“可见<br>的</p>
+<p><code>static int s_variable = 5;//static·</code>定义的函数和变量只对它的声明所在的cpp文件(编译单元)是“可见<br>的</p>
 <p>当从其他编译单元通过<code>extern int s_variable</code> 来查到变量的外部定义时，该变量不可见</p>
 <h2 id="在class-x2F-struct内"><a href="#在class-x2F-struct内" class="headerlink" title="在class&#x2F;struct内"></a>在class&#x2F;struct内</h2><p>如果在类或结构体内定义一个静态变量，表示在这个类的所有实例中，这个变量只有一个实例，也就是这个变量的全局实例，所以在实例中引用这个变量&#x2F;函数是没有意义的</p>
 <p>本例中都为非静态变量，Entity的两个实例 <strong>e,e1</strong> 可直接访问类内变量及函数</p>
@@ -696,6 +1014,9 @@
 <p><strong>这种做法方便跨类使用变量以及各实例共享变量.</strong></p>
 <h2 id="localstatic"><a href="#localstatic" class="headerlink" title="localstatic"></a>localstatic</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//在此处定义为全局变量则所有地方都可以访问i，在任意函数中都可以对其进行修改</span></span><br><span class="line"><span class="comment">//int i=0;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//暂时不懂QQQ</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Singleton</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">static</span> Singleton* s_Instance;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">static</span> Singleton&amp; <span class="title">Get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> *s_Instance;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">function</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//局部变量，仅作用在该函数周期，调用结束则释放</span></span><br><span class="line">	<span class="comment">//int i = 0;</span></span><br><span class="line"></span><br><span class="line">	<span class="type">static</span> <span class="type">int</span> i = <span class="number">0</span>; <span class="comment">//仅能在函数内被访问的静态局部变量</span></span><br><span class="line"></span><br><span class="line">	i++;</span><br><span class="line">	std::cout &lt;&lt; i &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">function</span>();</span><br><span class="line">	<span class="built_in">function</span>();</span><br><span class="line">	<span class="built_in">function</span>();</span><br><span class="line">	<span class="built_in">function</span>();</span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+<blockquote>
+<p>单例模式Singleton详见 </p>
+</blockquote>
 
       
     </div>
@@ -1026,324 +1347,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/12/13/CS-program%20execution/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/12/13/CS-program%20execution/" class="post-title-link" itemprop="url">程序执行</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-12-13 12:00:00" itemprop="dateCreated datePublished" datetime="2023-12-13T12:00:00+08:00">2023-12-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-25 22:32:16" itemprop="dateModified" datetime="2023-12-25T22:32:16+08:00">2023-12-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E8%AE%A1%E7%BB%84/" itemprop="url" rel="index"><span itemprop="name">计组</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>462</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="程序执行概述"><a href="#程序执行概述" class="headerlink" title="程序执行概述"></a>程序执行概述</h1><h2 id="程序和指令的关系"><a href="#程序和指令的关系" class="headerlink" title="程序和指令的关系"></a>程序和指令的关系</h2><ul>
-<li><p>指令周期：CPU取出并执行一条指令的时间</p>
-<p>时钟周期: 是CPU工作的最小时间单位，也称节拍脉冲或T周期，其值等于机器主频的倒数。</p>
-<p>机器周期: 早期的计算机有机器周期的概念，特指一个指令周期中的不同阶段操作所用时间</p>
-<p>存储周期: 是主存的一个指标，指主存进行连续两次独立的读或写操作所需的最小时间间隔</p>
-</li>
-<li><p>执行顺序：一般按存放顺序执行，可通过相应的转移指令改变执行流程</p>
-</li>
-<li><p>linux中通过反汇编<code>objdump -d filename</code>可得到汇编代码</p>
-<p><img src="http://cdn.rhahr.icu/addfunction.png"></p>
-</li>
-<li><p>对于指令<code>push %ebp</code>指令为 &#x3D;&#x3D;01010&#x3D;&#x3D; 101B，其中高亮部分为push指令操作码，101为EBP编号</p>
-</li>
-</ul>
-<h2 id="一条指令的执行"><a href="#一条指令的执行" class="headerlink" title="一条指令的执行"></a>一条指令的执行</h2><p>指令执行过程：</p>
-<ol>
-<li>取指令</li>
-<li>PC+ “ 1 ”（1指一条指令的长度，定长指令字每次都相同，变长可能不同）</li>
-<li>指令译码</li>
-<li>主存地址运算</li>
-<li>取操作数</li>
-<li>算术&#x2F;逻辑运算</li>
-<li>存结果</li>
-</ol>
-<p>以上每部都需要检测“异常”及“中断”请求，若有则自动跳转异常处理</p>
-<ul>
-<li>寄存器传送语言RTL eg：R[esp] &lt;–R[esp]-4    M[R[esp]]&lt;– R[ebp]</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/04/17/JAVA-Override/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/04/17/JAVA-Override/" class="post-title-link" itemprop="url">java中重写类方法</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-04-17 17:14:03" itemprop="dateCreated datePublished" datetime="2023-04-17T17:14:03+08:00">2023-04-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-24 21:24:42" itemprop="dateModified" datetime="2023-12-24T21:24:42+08:00">2023-12-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JAVA/" itemprop="url" rel="index"><span itemprop="name">JAVA</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>重写类方法是指在子类中定义一个和父类或接口中同名、同参数的方法，以覆盖父类或接口中的方法。<br>重写类方法的目的是为了实现多态，即根据对象的实际类型，调用不同的方法实现，从而实现不同的行为。<br>例如，在RentableCar类中，我们重写了Car类中的showInfo方法，以显示RentableCar类特有的信息，<br>而不是Car类通用的信息。当我们使用RentableCar对象调用showInfo方法时，就会执行RentableCar类中<br>的showInfo方法，而不是Car类中的showInfo方法。这样就实现了多态，即不同类型的汽车对象可以显示不同类型的信息。<br>•	什么是重写类方法？重写类方法是指在子类中定义一个和父类或接口中同名、同参数的方法，以覆盖父类或接口中的方法。<br>例如，Car类中有一个showInfo方法，它的定义如下：<br>public void showInfo() {<br>    System.out.println(“汽车信息：”);<br>    System.out.println(“品牌：” + getBrand());<br>    System.out.println(“型号：” + getModel());<br>    System.out.println(“颜色：” + getColor());<br>    System.out.println(“价格：” + getPrice());<br>}<br>这个方法可以显示任何汽车对象的信息。<br>但是，如果我们想要显示RentableCar对象的信息，我们可能需要显示更多的信息，例如租金。<br>这时，我们就可以在RentableCar类中重写showInfo方法，它的定义如下：<br>@Override<br>public void showInfo() {<br>    System.out.println(“汽车信息：”);<br>    System.out.println(“品牌：” + getBrand());<br>    System.out.println(“型号：” + getModel());<br>    System.out.println(“颜色：” + getColor());<br>    System.out.println(“价格：” + getPrice());<br>    System.out.println(“租金：” + calcRent(1));<br>}<br>这个方法可以显示RentableCar对象特有的信息。<br>注意，我们在方法前面加了一个@Override注解，表示这个方法是重写了父类中的方法。<br>•	为什么要重写类方法？重写类方法的目的是为了实现多态，即根据对象的实际类型，<br>调用不同的方法实现，从而实现不同的行为。<br>例如，我们有一个Vehicle类，它是Car类和Bike类的父类，它有一个run方法，它的定义如下：<br>public void run() {<br>    System.out.println(“Vehicle is running”);<br>}<br>这个方法可以表示任何交通工具运行的行为。<br>但是，如果我们想要表示Car对象和Bike对象运行的行为，我们可能需要更具体的描述。<br>这时，我们就可以在Car类和Bike类中重写run方法，它们的定义如下：<br>@Override<br>public void run() {<br>    System.out.println(“Car is running fast”);<br>}</p>
-<p>@Override<br>public void run() {<br>    System.out.println(“Bike is running slow”);<br>}<br>这两个方法可以表示Car对象和Bike对象特有的运行行为。<br>注意，我们在方法前面加了一个@Override注解，表示这两个方法都是重写了父类中的方法。<br>现在，如果我们有一个Vehicle类型的变量v，它可以指向任何Vehicle子类的对象。<br>例如：<br>Vehicle v &#x3D; new Car();<br>或者<br>Vehicle v &#x3D; new Bike();<br>当我们使用v调用run方法时，就会执行v所指向对象的实际类型所对应的run方法。例如：<br>v.run();<br>如果v指向Car对象，就会输出“Car is running fast”。如果v指向Bike对象，就会输出“Bike is running slow”。这样就实现了多态，<br>即不同类型的交通工具对象可以表现出不同类型的运行行为。<br>怎么样才能重写类方法？重写类方法需要遵循一些规则，否则编译器会报错。这些规则包括：<br>重写方法必须和被重写方法有相同的名称和参数列表。<br>重写方法不能有比被重写方法更严格的访问权限。<br>重写方法不能抛出比被重写方法更多或更广泛的异常。<br>重写方法不能有比被重写方法不同类型或更低级别的返回值。<br>重写方法必须在子类中定义，并且子子类和父类或接口之间必须有继承或实现的关系。<br>重写方法可以使用@Override注解来标记，以便编译器检查是否正确地重写了父类或接口中的方法。</p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2023/04/05/spring%20autumn/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2023/04/05/spring%20autumn/" class="post-title-link" itemprop="url">春秋</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2023-04-05 13:52:03" itemprop="dateCreated datePublished" datetime="2023-04-05T13:52:03+08:00">2023-04-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-12-24 21:08:59" itemprop="dateModified" datetime="2023-12-24T21:08:59+08:00">2023-12-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9D%82/" itemprop="url" rel="index"><span itemprop="name">杂</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>217</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>我没有为你伤春悲秋不配有憾事</p>
-<p>你没有共我踏过万里不够剧情延续故事</p>
-<p>头发未染霜 着凉亦错在我幼稚</p>
-<p>应快活像个天使</p>
-<p>有没有运气再扮弱者玩失意</p>
-<p>有没有道理为你落发必须得到世人同意</p>
-<p>心灰得极可耻 心伤得无新意</p>
-<p>那一线眼泪 欠大志 太没意思</p>
-<p>若自觉这叫痛苦未免过份容易</p>
-<p>我没有被你改写一生怎配有心事</p>
-<p>我没有被你害过恨过写成情史 变废纸</p>
-<p>春秋只转载要事 如果爱你欠意义</p>
-<p>这眼泪 无从安置</p>
-<p>我没有运气放大自私的失意</p>
-<p>更没有道理在这日你得到真爱制造恨意</p>
-<p>想心酸 还可以 想心底 留根刺</p>
-<p>至少要见面上万次</p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1411,20 +1418,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">39</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1468,12 +1475,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">96k</span>
+    <span title="站点总字数">104k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:27</span>
+    <span title="站点阅读时长">1:34</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
