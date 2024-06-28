@@ -32,7 +32,7 @@
 <meta property="og:description" content="函数指针什么是函数指针？函数指针是指向函数的指针变量。 因此“函数指针”本身首先应是指针变量，只不过该指针变量指向函数。这正如用指针变量可指向整型变量、字符型、数组一样，这里是指向函数。 函数指针的声明形式如下： 1return_type (*pointer_name)(parameter_types);  其中，return_type 是函数返回类型，pointer_name 是指针变量的名称，">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-02-02T14:00:00.000Z">
-<meta property="article:modified_time" content="2024-02-02T14:28:17.594Z">
+<meta property="article:modified_time" content="2024-06-14T11:47:14.978Z">
 <meta property="article:author" content="Hah">
 <meta property="article:tag" content="函数指针与匿名函数">
 <meta name="twitter:card" content="summary">
@@ -222,10 +222,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-02-02 22:00:00 / 修改时间：22:28:17" itemprop="dateCreated datePublished" datetime="2024-02-02T22:00:00+08:00">2024-02-02</time>
+              <time title="创建时间：2024-02-02 22:00:00" itemprop="dateCreated datePublished" datetime="2024-02-02T22:00:00+08:00">2024-02-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-14 19:47:14" itemprop="dateModified" datetime="2024-06-14T19:47:14+08:00">2024-06-14</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -253,14 +259,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>3.8k</span>
+              <span>6.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -286,15 +292,15 @@
 
 <h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>函数指针其实就像一个变量，但它存储的是函数的地址。通过函数指针，我们可以在程序运行时动态地选择调用哪个函数。</p>
 <p>想象一下你有两个不同的函数，但你希望在程序运行时决定到底调用哪个函数。这时候就可以用函数指针。让我用一个更简单的例子来解释：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">cppCopy code</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义两个简单的函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">sayHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Hello, &quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">sayWorld</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;World!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 声明一个函数指针，指向不接受参数也不返回任何值的函数</span></span><br><span class="line">    <span class="built_in">void</span> (*ptr)();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 根据需要，让函数指针指向不同的函数</span></span><br><span class="line">    ptr = sayHello;</span><br><span class="line">    <span class="built_in">ptr</span>();  <span class="comment">// 调用 sayHello 函数</span></span><br><span class="line"></span><br><span class="line">    ptr = sayWorld;</span><br><span class="line">    <span class="built_in">ptr</span>();  <span class="comment">// 调用 sayWorld 函数</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义两个简单的函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">sayHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Hello, &quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">sayWorld</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;World!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 声明一个函数指针，指向不接受参数也不返回任何值的函数</span></span><br><span class="line">    <span class="built_in">void</span> (*ptr)();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 根据需要，让函数指针指向不同的函数</span></span><br><span class="line">    ptr = sayHello;</span><br><span class="line">    <span class="built_in">ptr</span>();  <span class="comment">// 调用 sayHello 函数</span></span><br><span class="line"></span><br><span class="line">    ptr = sayWorld;</span><br><span class="line">    <span class="built_in">ptr</span>();  <span class="comment">// 调用 sayWorld 函数</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这个例子中，<code>ptr</code> 是一个函数指针，它可以指向 <code>sayHello</code> 或 <code>sayWorld</code> 中的任一个函数。通过改变 <code>ptr</code> 的指向，你可以在程序运行时选择调用不同的函数。</p>
-<p>函数指针通常用于实现一些高级的功能，比如回调函数、事件处理等。在大型项目中，函数指针也有助于实现灵活的代码结构。</p>
+<p>函数指针通常用于实现一些高级的功能，比如回调函数、事件处理等。在大型项目中，函数指针也有助于实现<strong>灵活的代码结构</strong>。</p>
 <p>还可以这样做，在之前的例子中再定义一个foreach函数，在函数里的for循环中通过一个函数来对传入的values操作，这个函数也可以由外部传入，是的，把函数当作一个参数传入另一个函数，（函数在最终的代码中也是存放在某个位置，所以可以传入它的指针），那么就在这个foreach的参数列表中定义一个void(*func)(int)来接受函数的指针</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">foreach</span><span class="params">(<span class="type">const</span> std::vector&lt;<span class="type">int</span>&gt;&amp;values，<span class="type">void</span>(*func)(<span class="type">int</span>))</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> value : values)</span><br><span class="line">		<span class="built_in">func</span>(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">foreach</span><span class="params">(<span class="type">const</span> std::vector&lt;<span class="type">int</span>&gt;&amp;values，<span class="type">void</span>(*func)(<span class="type">int</span>)）</span></span></span><br><span class="line"><span class="params"><span class="function">&#123;</span></span></span><br><span class="line"><span class="params"><span class="function">	<span class="keyword">for</span> (<span class="type">int</span> value : values)</span></span></span><br><span class="line"><span class="params"><span class="function">		func(value);</span></span></span><br><span class="line"><span class="params"><span class="function">&#125;</span></span></span><br></pre></td></tr></table></figure>
 
 <p>这样我们就可以在main中<code>foreach(values,PrintValue);</code> 意味着将values传入foreach中并对每个values进行进行PrintValue操作</p>
-<p>对于一个简单的操作再定义一个函数是比较麻烦的，所以有匿名函数( <a target="_blank" rel="noopener" href="https://search.bilibili.com/all?from_source=webcommentline_search&keyword=lamda">lamda</a>  函数)便于随用随定义，不用到其他地方去定义个函数 ↓ ↓ ↓</p>
+<p>对于一个简单的操作再定义一个函数是比较麻烦的，所以有匿名函数( <a target="_blank" rel="noopener" href="https://search.bilibili.com/all?from_source=webcommentline_search&keyword=lamda">lambda</a>  函数)便于随用随定义，不用到其他地方去定义个函数 ↓ ↓ ↓</p>
 <h2 id="lambda"><a href="#lambda" class="headerlink" title="lambda"></a>lambda</h2><h3 id="什么是lambda"><a href="#什么是lambda" class="headerlink" title="什么是lambda"></a>什么是lambda</h3><p>Lambda表达式是C++11引入的一个特性，它允许你在代码中定义匿名函数，通常用于需要传递函数作为参数的地方。Lambda表达式的语法相对简洁，特别适用于一些短小的函数功能。</p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/lambda#Lambda_capture">Lambda expressions (since C++11) - cppreference.com</a></p>
@@ -320,7 +326,10 @@
 <p>或者是写成</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> lambda = [=](<span class="type">int</span> value) &#123;std::cout &lt;&lt; value &lt;&lt; <span class="string">&quot; &quot;</span>; &#125;;</span><br><span class="line">	foreach(values, lambda);</span><br></pre></td></tr></table></figure>
 
-<p>这里传入的参数是lambda，所以不能使用原来的原始函数指针，而是使用<function>中的function来定义参数</p>
+<p>这里传入的参数是lambda，所以不能使用原来的原始函数指针，而是使用<function>中的function来定义参数，因为如果lambda不捕获外部变量的话是可以隐式转换为函数指针形式的，但是如果捕获外部变量的话，对应的函数指针并没有处理该变量的能力，所以不能接收。</p>
+<p>函数指针不能接收捕获外部变量的lambda表达式，原因在于lambda表达式和函数指针的本质区别。函数指针是指向函数的指针，它只能指向没有捕获任何外部变量的普通函数或没有捕获外部变量的lambda表达式。这是因为函数指针仅仅存储了函数的地址，而不包含任何上下文信息。</p>
+<p>当lambda表达式捕获了外部变量时，它实际上是一个包含了捕获列表的闭包对象。这个闭包对象不仅包含了函数体，还包含了捕获的变量的副本或引用。因此，它的类型不再是一个简单的函数指针，而是一个类的实例，这个类有一个重载的<code>operator()</code>方法。</p>
+<p>由于捕获的外部变量是闭包对象的一部分，这使得闭包对象的类型和函数指针的类型不兼容，因此不能将捕获外部变量的lambda表达式赋值给函数指针。如果需要以类似函数指针的方式使用lambda表达式，可以考虑使用<code>std::function</code>，它是一个模板类，能够存储和调用任何可调用对象，包括函数指针、成员函数指针、以及捕获外部变量的lambda表达式。</p>
 <p><code>void foreach(const std::vector&lt;int&gt;&amp;values,std::function&lt;void(int)&gt; func)&#123;//...&#125;</code> </p>
 <p><code>std::function</code> 提供了一种将不同类型的可调用对象包装成一个统一接口的方式，使得它们可以以相同的方式被调用，lambda</p>
 <blockquote>
@@ -331,6 +340,19 @@
 <blockquote>
 <p>[find_if| HahのBlog (rhahr.top)](&lt;<a target="_blank" rel="noopener" href="https://www.rhahr.top/2024/02/02/C++-find_if/">https://www.rhahr.top/2024/02/02/C++-find_if/</a>)</p>
 </blockquote>
+<h2 id="回调函数"><a href="#回调函数" class="headerlink" title="回调函数"></a>回调函数</h2><p>回调函数是一种在编程中常用的技术，它允许一个函数将另一个函数作为参数，并在适当的时候调用这个传入的函数。这种机制让程序在运行时能够动态地决定要执行的代码，增加了程序的灵活性和可扩展性。</p>
+<p>在 C++ 中，回调函数通常通过函数指针、函数对象或者 lambda 表达式来实现。以下是一个使用函数指针作为回调函数的例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 这是一个回调函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">onEventOccurred</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;事件发生了！&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这是一个接受回调函数作为参数的函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">registerEvent</span><span class="params">(<span class="type">void</span> (*callback)())</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 在适当的时候调用回调函数</span></span><br><span class="line">    <span class="built_in">callback</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 注册回调函数</span></span><br><span class="line">    <span class="built_in">registerEvent</span>(onEventOccurred);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>onEventOccurred</code> 是一个简单的函数，没有参数和返回值。<code>registerEvent</code> 函数接受一个函数指针作为参数，这个函数指针指向一个没有参数和返回值的函数。在 <code>main</code> 函数中，我们调用 <code>registerEvent</code> 并传入 <code>onEventOccurred</code> 作为回调函数。当 <code>registerEvent</code> 被调用时，它会在内部调用 <code>onEventOccurred</code>。</p>
+<p>回调函数的一个常见用途是在事件驱动的编程中。例如，在图形用户界面（GUI）编程中，你可能会注册一个回调函数来响应按钮点击事件。当用户点击按钮时，回调函数会被调用。</p>
+<p>回调函数也可以用于定制算法的行为。例如，你可以传递一个回调函数给排序算法，来定义排序的比较逻辑。</p>
+<p>提供了一种方式来将代码的一部分延迟到将来某个未知的时间点执行，或者将代码的执行委托给其他部分的程序。</p>
+<p>一个更复杂的示例,这个示例中我们将模拟一个简单的事件处理系统。在这个系统中，我们可以注册多个事件，并为每个事件指定不同的回调函数。当事件发生时，相应的回调函数会被调用。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 事件类型</span></span><br><span class="line"><span class="keyword">enum class</span> <span class="title class_">EventType</span> &#123;</span><br><span class="line">    ON_CLICK,</span><br><span class="line">    ON_HOVER,</span><br><span class="line">    ON_EXIT</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 事件监听器，它包含事件类型和对应的回调函数</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">EventListener</span> &#123;</span><br><span class="line">    EventType type;</span><br><span class="line">    std::function&lt;<span class="type">void</span>()&gt; callback;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 事件管理器类</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">EventManager</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 注册事件监听器</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">registerListener</span><span class="params">(<span class="type">const</span> EventListener&amp; listener)</span> </span>&#123;</span><br><span class="line">        listeners.<span class="built_in">push_back</span>(listener);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 触发特定类型的事件</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">triggerEvent</span><span class="params">(EventType type)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; listener : listeners) &#123;</span><br><span class="line">            <span class="keyword">if</span> (listener.type == type) &#123;</span><br><span class="line">                listener.<span class="built_in">callback</span>(); <span class="comment">// 调用回调函数</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    std::vector&lt;EventListener&gt; listeners;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    EventManager manager;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 注册点击事件的回调函数</span></span><br><span class="line">    manager.<span class="built_in">registerListener</span>(&#123;EventType::ON_CLICK,  &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;按钮被点击了！&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;&#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 注册悬停事件的回调函数</span></span><br><span class="line">    manager.<span class="built_in">registerListener</span>(&#123;EventType::ON_HOVER,  &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;鼠标悬停在按钮上！&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;&#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 注册退出事件的回调函数</span></span><br><span class="line">    manager.<span class="built_in">registerListener</span>(&#123;EventType::ON_EXIT,  &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;程序退出！&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;&#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 模拟事件触发</span></span><br><span class="line">    manager.<span class="built_in">triggerEvent</span>(EventType::ON_CLICK);</span><br><span class="line">    manager.<span class="built_in">triggerEvent</span>(EventType::ON_HOVER);</span><br><span class="line">    manager.<span class="built_in">triggerEvent</span>(EventType::ON_EXIT);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，我们定义了一个 <code>EventType</code> 枚举来表示不同的事件类型。<code>EventListener</code> 结构体用于存储事件类型和对应的回调函数。<code>EventManager</code> 类管理一个事件监听器列表，并提供了注册监听器和触发事件的方法。</p>
+<p>在 <code>main</code> 函数中，我们创建了一个 <code>EventManager</code> 实例，并注册了三个不同类型的事件及其回调函数。然后，我们通过调用 <code>triggerEvent</code> 方法来模拟事件的触发，这会导致对应的回调函数被执行。</p>
 
     </div>
 
@@ -375,12 +397,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/02/02/C++-find_if/" rel="prev" title="find_if">
-      <i class="fa fa-chevron-left"></i> find_if
+    <a href="/2024/02/02/C++-namespace/" rel="prev" title="命名空间namespace">
+      <i class="fa fa-chevron-left"></i> 命名空间namespace
     </a></div>
       <div class="post-nav-item">
-    <a href="/2024/02/06/C++-time/" rel="next" title="计时及基准测试">
-      计时及基准测试 <i class="fa fa-chevron-right"></i>
+    <a href="/2024/02/02/C++-function/" rel="next" title="function">
+      function <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -445,7 +467,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88"><span class="nav-number">1.</span> <span class="nav-text">函数指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">什么是函数指针？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda"><span class="nav-number">2.</span> <span class="nav-text">lambda</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFlambda"><span class="nav-number">2.1.</span> <span class="nav-text">什么是lambda</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88"><span class="nav-number">1.</span> <span class="nav-text">函数指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">什么是函数指针？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lambda"><span class="nav-number">2.</span> <span class="nav-text">lambda</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFlambda"><span class="nav-number">2.1.</span> <span class="nav-text">什么是lambda</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">回调函数</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -461,20 +483,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -518,12 +540,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">105k</span>
+    <span title="站点总字数">280k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:36</span>
+    <span title="站点阅读时长">4:14</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

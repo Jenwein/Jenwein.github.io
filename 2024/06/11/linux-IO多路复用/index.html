@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!--pjax：防止跳转页面音乐暂停-->
+ <script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/sword1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/sword2.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rhahr.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="IO多路复用IO多路复用（Input&#x2F;Output Multiplexing）是一种在单个线程中管理多个输入&#x2F;输出通道的技术2。它允许一个线程同时监听多个输入流（例如网络套接字、文件描述符等），并在有数据可读或可写时进行相应的处理，而不需要为每个通道创建一个独立的线程。常见的IO多路复用机制包括select、poll和epoll，这些机制通过将多个IO通道注册到一个事件管理器中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="I&#x2F;O多路复用">
+<meta property="og:url" content="http://rhahr.top/2024/06/11/linux-IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/index.html">
+<meta property="og:site_name" content="HahのBlog">
+<meta property="og:description" content="IO多路复用IO多路复用（Input&#x2F;Output Multiplexing）是一种在单个线程中管理多个输入&#x2F;输出通道的技术2。它允许一个线程同时监听多个输入流（例如网络套接字、文件描述符等），并在有数据可读或可写时进行相应的处理，而不需要为每个通道创建一个独立的线程。常见的IO多路复用机制包括select、poll和epoll，这些机制通过将多个IO通道注册到一个事件管理器中">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-11T11:00:00.000Z">
+<meta property="article:modified_time" content="2024-06-13T08:58:03.071Z">
+<meta property="article:author" content="Hah">
+<meta property="article:tag" content="多路复用">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://rhahr.top/2024/06/11/linux-IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>I/O多路复用 | HahのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Jenwein" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#fff; color:#151513; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">HahのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/11/linux-IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          I/O多路复用
+        </h1>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-11 19:00:00" itemprop="dateCreated datePublished" datetime="2024-06-11T19:00:00+08:00">2024-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-13 16:58:03" itemprop="dateModified" datetime="2024-06-13T16:58:03+08:00">2024-06-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">多路复用</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="IO多路复用"><a href="#IO多路复用" class="headerlink" title="IO多路复用"></a>IO多路复用</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_67318913/article/details/138442134">IO多路复用（Input&#x2F;Output Multiplexing）是一种在单个线程中管理多个输入&#x2F;输出通道的技术</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_67318913/article/details/138442134">2</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_67318913/article/details/138442134">。它允许一个线程同时监听多个输入流（例如网络套接字、文件描述符等），并在有数据可读或可写时进行相应的处理，而不需要为每个通道创建一个独立的线程。常见的IO多路复用机制包括select、poll和epoll，这些机制通过将多个IO通道注册到一个事件管理器中，然后通过阻塞方式等待事件的发生</a></p>
+<p>IO多路复用的工作原理是通过一种机制，允许单个进程监视多个文件描述符，一旦某个文件描述符就绪（例如，一个网络连接上有数据可读），就能够通知程序进行相应的读写操作。</p>
+<p>这里的“多路”指的是多个网络连接或文件流，“复用”指的是使用同一个进程或线程来处理多个流。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Squid87/article/details/123452472">在传统的阻塞IO模型中，每个IO操作通常需要一个独立的线程来处理，这在处理大量并发连接时会导致线程数量的增加，从而带来线程切换和上下文切换的开销。而IO多路复用通过使用一个线程来监听多个IO事件，避免了线程数量的增加，减少了这些开销</a></p>
+<p>常见的IO多路复用技术包括<code>select</code>、<code>poll</code>和<code>epoll</code></p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Squid87/article/details/123452472"><strong>select和poll</strong>：这两种机制都是通过告诉内核监视一系列的文件描述符，然后进程阻塞并等待内核通知它哪些文件描述符就绪了。<code>select</code>有最大文件描述符数量的限制，而<code>poll</code>没有这个限制。但它们都有一个共同的缺点，那就是当监视的文件描述符数量很多时，每次调用都需要遍历整个集合来检查状态，效率较低</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/Squid87/article/details/123452472">1</a>。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Squid87/article/details/123452472"><strong>epoll</strong>：与<code>select</code>和<code>poll</code>不同，<code>epoll</code>是在Linux 2.6及以上版本中提供的一种高效的IO事件通知机制。它不需要遍历整个文件描述符集合，而是当文件描述符状态发生变化时，就会将这个事件通知给应用程序。<code>epoll</code>可以处理数以万计的并发连接，而且效率不会随着文件描述符数量的增加而降低。<code>epoll</code>的另一个特点是它支持“边缘触发”和“水平触发”，前者只在状态变化时通知一次，而后者只要条件满足就会不断通知</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/Squid87/article/details/123452472">1</a></p>
+</li>
+</ul>
+<p>虽然<code>epoll</code>在处理大量并发连接时比<code>select</code>和<code>poll</code>更高效，但这并不意味着<code>select</code>和<code>poll</code>就完全没有用处了。<code>select</code>和<code>poll</code>在某些情况下仍然有其适用性和优势。</p>
+<h2 id="select-amp-poll"><a href="#select-amp-poll" class="headerlink" title="select&amp;poll"></a>select&amp;poll</h2><p>select与poll的逻辑相似，都是把要监听的socket存入一个数据结构中（select-bitmap）然后每次发生事件后循环遍历这个数据结构返回发生事件的socket，这里的事件可能是读事件&#x2F;写事件。都是水平触发( level-trigger)</p>
+<p>读事件：1）已连接队列中有已经准备好的socket（有新的客户端连上来了）；<br>              2）接收缓存中有数据可以读（对端发送的报文已到达）；<br>              3）tcp连接已断开（对端调用close()函数关闭了连接）。<br>写事件：发送缓冲区没有满，可以写入数据（可以向对端发送报文）。</p>
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><p>select 的实现思路很直接，假如程序同时监视sock1、sock2 和 sock3 三个socket，那么在调用select 之后，操作系统把进程分别加入这三个socket的等待队列中. 每次调用select都需要将进程加入到所有监视socket的等待队列，每次唤醒都需要从每个队列中移除。这里涉及了两次遍历，而且每次都要将整个 FDS 列表传递给内核，有一定的开销.正是因为遍历操作开销大，出于效率的考量，才会规定select 的最大监视数量，默认只能监视1024个socket。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化服务端的监听端口。</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">initserver</span><span class="params">(<span class="type">int</span> port)</span></span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 初始化服务端用于监听的socket。</span></span><br><span class="line">    <span class="type">int</span> listensock = <span class="built_in">initserver</span>(<span class="built_in">atoi</span>(argv[<span class="number">1</span>]));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;listensock=%d\n&quot;</span>,listensock);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (listensock &lt; <span class="number">0</span>) &#123; <span class="built_in">printf</span>(<span class="string">&quot;initserver() failed.\n&quot;</span>); <span class="keyword">return</span> <span class="number">-1</span>; &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    fd_set readfds;                         <span class="comment">// 需要监视读事件的socket的集合，大小为16字节（1024位）的bitmap。</span></span><br><span class="line">    <span class="built_in">FD_ZERO</span>(&amp;readfds);                <span class="comment">// 初始化readfds，把bitmap的每一位都置为0。</span></span><br><span class="line">    <span class="built_in">FD_SET</span>(listensock,&amp;readfds);  <span class="comment">// 把服务端用于监听的socket加入readfds。</span></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> maxfd=listensock;              <span class="comment">// readfds中socket的最大值。</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>)        <span class="comment">// 事件循环。</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 用于表示超时时间的结构体。</span></span><br><span class="line">        <span class="keyword">struct</span> <span class="title class_">timeval</span> timeout;     </span><br><span class="line">        timeout.tv_sec=<span class="number">10</span>;        <span class="comment">// 秒</span></span><br><span class="line">        timeout.tv_usec=<span class="number">0</span>;        <span class="comment">// 微秒。</span></span><br><span class="line"></span><br><span class="line">        fd_set tmpfds=readfds;      <span class="comment">// 在select()函数中，会修改bitmap，所以，要把readfds复制一份给tmpfds，再把tmpfds传给select()。</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 调用select() 等待事件的发生（监视哪些socket发生了事件)。</span></span><br><span class="line">        <span class="type">int</span> infds=<span class="built_in">select</span>(maxfd+<span class="number">1</span>,&amp;tmpfds,<span class="literal">NULL</span>,<span class="literal">NULL</span>,<span class="number">0</span>); </span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果infds&lt;0，表示调用select()失败。</span></span><br><span class="line">        <span class="keyword">if</span> (infds&lt;<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">perror</span>(<span class="string">&quot;select() failed&quot;</span>); <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果infds==0，表示select()超时。</span></span><br><span class="line">        <span class="keyword">if</span> (infds==<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;select() timeout.\n&quot;</span>); <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果infds&gt;0，表示有事件发生，infds存放了已发生事件的个数。</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> eventfd=<span class="number">0</span>;eventfd&lt;=maxfd;eventfd++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">FD_ISSET</span>(eventfd,&amp;tmpfds)==<span class="number">0</span>) <span class="keyword">continue</span>;   <span class="comment">// 如果eventfd在bitmap中的标志为0，表示它没有事件，continue</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 如果发生事件的是listensock，表示已连接队列中有已经准备好的socket（有新的客户端连上来了）。</span></span><br><span class="line">            <span class="keyword">if</span> (eventfd==listensock)</span><br><span class="line">            &#123;</span><br><span class="line">                 <span class="comment">// 处理事件</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 如果是客户端连接的socke有事件，表示接收缓存中有数据可以读（对端发送的报文已到达），或者有客户端已断开连接。</span></span><br><span class="line">           	    <span class="comment">// 处理事件</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化服务端用于监听的socket。</span></span><br><span class="line">    <span class="type">int</span> listensock = <span class="built_in">initserver</span>(<span class="built_in">atoi</span>(argv[<span class="number">1</span>]));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;listensock=%d\n&quot;</span>,listensock);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (listensock &lt; <span class="number">0</span>) &#123; <span class="built_in">printf</span>(<span class="string">&quot;initserver() failed.\n&quot;</span>); <span class="keyword">return</span> <span class="number">-1</span>; &#125;</span><br><span class="line"></span><br><span class="line">    pollfd fds[<span class="number">2048</span>];                 <span class="comment">// fds存放需要监视的socket。</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始化数组，把全部的socket设置为-1，如果数组中的socket的值为-1，那么，poll将忽略它。</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> ii=<span class="number">0</span>;ii&lt;<span class="number">2048</span>;ii++)             </span><br><span class="line">        fds[ii].fd=<span class="number">-1</span>;   </span><br><span class="line"></span><br><span class="line">    <span class="comment">// 打算让poll监视listensock读事件。</span></span><br><span class="line">    fds[listensock].fd=listensock;</span><br><span class="line">    fds[listensock].events=POLLIN;        <span class="comment">// POLLIN表示读事件，POLLOUT表示写事件。</span></span><br><span class="line">    <span class="comment">// fds[listensock].events=POLLIN|POLLOUT;</span></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> maxfd=listensock;        <span class="comment">// fds数组中需要监视的socket的实际大小。</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>)        <span class="comment">// 事件循环。</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 调用poll() 等待事件的发生（监视哪些socket发生了事件)。</span></span><br><span class="line">        <span class="type">int</span> infds=<span class="built_in">poll</span>(fds,maxfd+<span class="number">1</span>,<span class="number">10000</span>);      <span class="comment">// 超时时间为10秒。</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果infds&lt;0，表示调用poll()失败。</span></span><br><span class="line">        <span class="keyword">if</span> (infds &lt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">perror</span>(<span class="string">&quot;poll() failed&quot;</span>); <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果infds==0，表示poll()超时。</span></span><br><span class="line">        <span class="keyword">if</span> (infds == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;poll() timeout.\n&quot;</span>); <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果infds&gt;0，表示有事件发生，infds存放了已发生事件的个数。</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> eventfd=<span class="number">0</span>;eventfd&lt;=maxfd;eventfd++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (fds[eventfd].fd&lt;<span class="number">0</span>) <span class="keyword">continue</span>;                               <span class="comment">// 如果fd为负，忽略它。</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> ((fds[eventfd].revents&amp;POLLIN)==<span class="number">0</span>)  <span class="keyword">continue</span>;  <span class="comment">// 如果没有读事件，continue</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 如果发生事件的是listensock，表示已连接队列中有已经准备好的socket（有新的客户端连上来了）。</span></span><br><span class="line">            <span class="keyword">if</span> (eventfd==listensock)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//处理监听事件</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 如果是客户端连接的socke有事件，表示有报文发过来了或者连接已断开。</span></span><br><span class="line">                <span class="comment">// 处理事件</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h2><p>epoll是在select 出现 N 多年后才被发明的，是select 和 poll的增强版本。epoll通过以下一些措施来改进效率：</p>
+<p>1.功能分离</p>
+<p>​	select 低效的原因之一是将“维护等待队列”和“阻塞进程”两个步骤合二为一。</p>
+<p>epoll将这两个操作分开，先用epoll_ctl 维护等待队列，再调用epoll_wait 阻塞进程。显而易见，效率就能得到提升。</p>
+<p>2.就绪列表</p>
+<p>select低效的另一个原因在于程序不知道哪些socket收到数据，只能一个个遍历。如果内核维护一个“就绪列表”，引用收到数据的socket，就能避免遍历。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>当某个进程调用epoll_create方法时，内核会创建一个 eventpoll 对象（也就是程序中 epfd 所代表的对象）。eventpoll 对象也是文件系统中的一员，和socket一样，它也会有等待队列。</p>
+<p>创建一个代表该epoll的 eventpoll 对象是必须的，因为内核要维护“就绪列表”等数据，“就绪列表”可以作为 eventpoll 的成员。<strong>epoll使用双向链表来实现就绪队列，使用红黑树作为索引结构</strong></p>
+<p>创建epoll对象后，可以用epoll_ctl 添加或删除所要监听的socket。以添加socket为例。</p>
+<p>当socket收到数据后，中断程序会操作 eventpoll 对象，而不是直接操作进程。</p>
+<p>当socket收到数据后，中断程序会给 eventpoll 的“就绪列表”添加socket引用。</p>
+<p>eventpoll 对象相当于socket和进程之间的中介，socket的数据接收并不直接影响进程，而是通过改变 eventpoll 的就绪列表来改变进程状态。</p>
+<p>当程序执行到epoll_wait 时，如果rdlist 已经引用了socket，那么epoll_wait 直接返回，如果 rdlist 为空，阻塞进程。</p>
+<p>在实际的使用中，IO多路复用要求不能阻塞在任意环节，所以应该设置非阻塞</p>
+<blockquote>
+<p><strong>整体逻辑：将所有需要<code>epoll</code>监控的socket通过<code>epoll_event</code>（这个结构体更是为了设置socket的一个临时方法，并不存储实际事件，只用来保存当前要进行设置的fd）来设置其需要监视的事件类型（读&#x2F;写）以及触发方式（边缘触发&#x2F;水平触发），然后通过<code>epoll_ctl</code>指定<code>EPOLL_CTL_ADD</code>来加入到epoll的fd中，然后就可以用过<code>epoll_wait</code>开始监视事件，并返回发生事件的socket到第<code>epoll_wait</code>的二个参数中，处理事件后使用<code>epoll_ctl</code>指定<code>EPOLL_CTL_DEL</code>删除对应的socket。</strong></p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化服务端用于监听的socket。</span></span><br><span class="line">   <span class="type">int</span> listensock = <span class="built_in">initserver</span>(<span class="built_in">atoi</span>(argv[<span class="number">1</span>]));</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">&quot;listensock=%d\n&quot;</span>,listensock);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (listensock &lt; <span class="number">0</span>) &#123; <span class="built_in">printf</span>(<span class="string">&quot;initserver() failed.\n&quot;</span>); <span class="keyword">return</span> <span class="number">-1</span>; &#125;</span><br><span class="line">   <span class="built_in">setnonblocking</span>(listensock);<span class="comment">//设置为非阻塞</span></span><br><span class="line">   <span class="comment">//创建epoll句柄</span></span><br><span class="line">   <span class="type">int</span> epollfd = <span class="built_in">epoll_create</span>(<span class="number">1</span>);     </span><br><span class="line"></span><br><span class="line">   <span class="comment">//为服务端的listensock准备读事件</span></span><br><span class="line">   epoll_event ev;             <span class="comment">//声明事件的数据结构</span></span><br><span class="line">   ev.data.fd = listensock;    <span class="comment">//指定事件的自定义数据，会随着epoll_wait返回的事件一并返回</span></span><br><span class="line">   <span class="comment">//ev.events = EPOLLIN;        //指定epoll监视listen的读事件</span></span><br><span class="line">   ev.events = EPOLLIN|EPOLLET;        <span class="comment">//指定epoll监视listen的读事件</span></span><br><span class="line">   </span><br><span class="line">   <span class="built_in">epoll_ctl</span>(epollfd,EPOLL_CTL_ADD,listensock,&amp;ev);    <span class="comment">//把需要监视的socket和事件加入epollfd中</span></span><br><span class="line"></span><br><span class="line">   epoll_event evs[<span class="number">10</span>];        <span class="comment">//存放epoll返回的事件</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">   &#123;</span><br><span class="line">       <span class="comment">//等待监视的socket有事件发生</span></span><br><span class="line">       <span class="type">int</span> infds = <span class="built_in">epoll_wait</span>(epollfd,evs,<span class="number">10</span>,<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">       <span class="comment">//返回失败</span></span><br><span class="line">       <span class="keyword">if</span>(infds&lt;<span class="number">0</span>)</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="built_in">perror</span>(<span class="string">&quot;epoll() failed&quot;</span>);</span><br><span class="line">           <span class="keyword">break</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//超时</span></span><br><span class="line">       <span class="keyword">if</span>(infds == <span class="number">0</span>)</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">&quot;epoll() timeout&quot;</span>);</span><br><span class="line">           <span class="keyword">continue</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//如果infds&gt;0表示有时间发生，值为发生的事件的数量</span></span><br><span class="line">       <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;infds;i++)</span><br><span class="line">       &#123; </span><br><span class="line">           <span class="comment">//如果发生事件的是listensock，表示有新的连接</span></span><br><span class="line">           <span class="keyword">if</span>(evs[i].data.fd==listensock)</span><br><span class="line">           &#123;</span><br><span class="line">               <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">               &#123;</span><br><span class="line">                   <span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> client;</span><br><span class="line">                   <span class="type">socklen_t</span> len = <span class="built_in">sizeof</span>(client);</span><br><span class="line">                   <span class="type">int</span> clientsock = <span class="built_in">accept</span>(listensock,(<span class="keyword">struct</span> sockaddr*)&amp;client,&amp;len);</span><br><span class="line">                   <span class="keyword">if</span>(clientsock&lt;<span class="number">0</span>&amp;&amp;errno==EAGAIN) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">                   <span class="built_in">printf</span>(<span class="string">&quot;accept client(socket = %d) ok\n&quot;</span>,clientsock);</span><br><span class="line"></span><br><span class="line">                   <span class="comment">//为新客户端准备读事件</span></span><br><span class="line">                   ev.data.fd = clientsock;</span><br><span class="line">                   ev.events = EPOLLIN;</span><br><span class="line">                   <span class="built_in">epoll_ctl</span>(epollfd,EPOLL_CTL_ADD,clientsock,&amp;ev);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;    </span><br><span class="line">           <span class="keyword">else</span></span><br><span class="line">           &#123;</span><br><span class="line">               <span class="comment">//如果客户端连接的socket有时间表示有报文发来或连接已断开</span></span><br><span class="line">               <span class="type">char</span> buffer[<span class="number">1024</span>];</span><br><span class="line">               <span class="built_in">memset</span>(buffer,<span class="number">0</span>,<span class="built_in">sizeof</span>(buffer));</span><br><span class="line">               <span class="keyword">if</span> (<span class="built_in">recv</span>(evs[i].data.fd,buffer,<span class="built_in">sizeof</span>(buffer),<span class="number">0</span>)&lt;=<span class="number">0</span>)</span><br><span class="line">               &#123;</span><br><span class="line">                   <span class="comment">// 如果客户端的连接已断开。</span></span><br><span class="line">                   <span class="built_in">printf</span>(<span class="string">&quot;client(eventfd=%d) disconnected.\n&quot;</span>,evs[i].data.fd);</span><br><span class="line">                   <span class="built_in">close</span>(evs[i].data.fd);            <span class="comment">// 关闭客户端的socket</span></span><br><span class="line">                   <span class="comment">// 从epollfd中删除客户端的socket，如果socket被关闭了，会自动从epollfd中删除，所以，以下代码不必启用。</span></span><br><span class="line">                   <span class="comment">// epoll_ctl(epollfd,EPOLL_CTL_DEL,evs[ii].data.fd,0);     </span></span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">else</span></span><br><span class="line">               &#123;</span><br><span class="line">                   <span class="comment">// 如果客户端有报文发过来。</span></span><br><span class="line">                   <span class="built_in">printf</span>(<span class="string">&quot;recv(eventfd=%d):%s\n&quot;</span>,evs[i].data.fd,buffer);</span><br><span class="line"></span><br><span class="line">                   <span class="comment">// 把接收到的报文内容原封不动的发回去。</span></span><br><span class="line">                   <span class="built_in">send</span>(evs[i].data.fd,buffer,<span class="built_in">strlen</span>(buffer),<span class="number">0</span>);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">           </span><br><span class="line">       &#125;   </span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="epoll对定时器与信号的处理"><a href="#epoll对定时器与信号的处理" class="headerlink" title="epoll对定时器与信号的处理"></a>epoll对定时器与信号的处理</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//把定时器加入epoll。</span></span><br><span class="line"><span class="type">int</span> tfd=<span class="built_in">timerfd_create</span>(CLOCK_MONOTONIC,TFD_NONBLOCK|TFD_CLOEXEC);   <span class="comment">// 创建timerfd。</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">itimerspec</span> timeout;                                <span class="comment">// 定时时间的数据结构。</span></span><br><span class="line"><span class="built_in">memset</span>(&amp;timeout,<span class="number">0</span>,<span class="built_in">sizeof</span>(<span class="keyword">struct</span> itimerspec));</span><br><span class="line">timeout.it_value.tv_sec = <span class="number">10</span>;                            <span class="comment">// 定时时间为10秒。</span></span><br><span class="line">timeout.it_value.tv_nsec = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">timerfd_settime</span>(tfd,<span class="number">0</span>,&amp;timeout,<span class="number">0</span>);                  <span class="comment">// 开始计时。alarm(10)</span></span><br><span class="line">ev.data.fd=tfd;                                                  <span class="comment">// 为定时器准备事件。</span></span><br><span class="line">ev.events=EPOLLIN;</span><br><span class="line"><span class="built_in">epoll_ctl</span>(epollfd,EPOLL_CTL_ADD,tfd,&amp;ev);     <span class="comment">// 把定时器fd加入epoll。</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+    
+     <div>
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hah
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rhahr.top/2024/06/11/linux-IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" title="I&#x2F;O多路复用">http://rhahr.top/2024/06/11/linux-IO多路复用/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" rel="tag"># 多路复用</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/06/11/OOP-%E7%BB%A7%E6%89%BF/" rel="prev" title="继承的使用">
+      <i class="fa fa-chevron-left"></i> 继承的使用
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/06/22/C++-mutex/" rel="next" title="互斥锁">
+      互斥锁 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81ODMwOS8zNDc3Mg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=188550&auto=1&height=66"></iframe>
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">IO多路复用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#select-amp-poll"><span class="nav-number">1.1.</span> <span class="nav-text">select&amp;poll</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#select"><span class="nav-number">1.1.1.</span> <span class="nav-text">select</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#poll"><span class="nav-number">1.1.2.</span> <span class="nav-text">poll</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#epoll"><span class="nav-number">1.2.</span> <span class="nav-text">epoll</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.2.1.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#epoll%E5%AF%B9%E5%AE%9A%E6%97%B6%E5%99%A8%E4%B8%8E%E4%BF%A1%E5%8F%B7%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">epoll对定时器与信号的处理</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hah"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Hah</p>
+  <div class="site-description" itemprop="description">我没有为你伤春悲秋不配有憾事</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Jenwein" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Jenwein" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:rgw127310@gmail.com" title="E-Mail → mailto:rgw127310@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023-4 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hah</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">280k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:14</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+    </div>
+</body>
+</html>

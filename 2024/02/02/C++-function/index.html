@@ -24,15 +24,15 @@
     var CONFIG = {"hostname":"rhahr.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="&lt;functional&gt; 头文件主要包含了 C++ 标准库中与函数相关的一些组件，其中最重要的就是 std::function 类模板。以下是 &lt;functional&gt; 头文件中一些主要的组件：  std::function 类模板：  std::function 是一个通用的函数包装器，可以用于存储、传递和调用各种可调用对象，包括函数、函数指针、Lambda 表达式、成员">
+  <meta name="description" content="-functional&lt;functional&gt; 头文件主要包含了 C++ 标准库中与函数相关的一些组件，其中最重要的就是 std::function 类模板。以下是 &lt;functional&gt; 头文件中一些主要的组件： 还包括一些其他的功能，比如 std::reference_wrapper，它提供了引用包装器，允许你将引用作为可调用对象使用。 std::functionst">
 <meta property="og:type" content="article">
 <meta property="og:title" content="function">
 <meta property="og:url" content="http://rhahr.top/2024/02/02/C++-function/index.html">
 <meta property="og:site_name" content="HahのBlog">
-<meta property="og:description" content="&lt;functional&gt; 头文件主要包含了 C++ 标准库中与函数相关的一些组件，其中最重要的就是 std::function 类模板。以下是 &lt;functional&gt; 头文件中一些主要的组件：  std::function 类模板：  std::function 是一个通用的函数包装器，可以用于存储、传递和调用各种可调用对象，包括函数、函数指针、Lambda 表达式、成员">
+<meta property="og:description" content="-functional&lt;functional&gt; 头文件主要包含了 C++ 标准库中与函数相关的一些组件，其中最重要的就是 std::function 类模板。以下是 &lt;functional&gt; 头文件中一些主要的组件： 还包括一些其他的功能，比如 std::reference_wrapper，它提供了引用包装器，允许你将引用作为可调用对象使用。 std::functionst">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-02-02T14:00:00.000Z">
-<meta property="article:modified_time" content="2024-02-02T14:23:52.011Z">
+<meta property="article:modified_time" content="2024-06-21T10:46:45.633Z">
 <meta property="article:author" content="Hah">
 <meta property="article:tag" content="头文件function">
 <meta name="twitter:card" content="summary">
@@ -222,10 +222,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-02-02 22:00:00 / 修改时间：22:23:52" itemprop="dateCreated datePublished" datetime="2024-02-02T22:00:00+08:00">2024-02-02</time>
+              <time title="创建时间：2024-02-02 22:00:00" itemprop="dateCreated datePublished" datetime="2024-02-02T22:00:00+08:00">2024-02-02</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-21 18:46:45" itemprop="dateModified" datetime="2024-06-21T18:46:45+08:00">2024-06-21</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -253,14 +259,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>601</span>
+              <span>5.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>5 分钟</span>
             </span>
 
         </div>
@@ -272,33 +278,90 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><code>&lt;functional&gt;</code> 头文件主要包含了 C++ 标准库中与函数相关的一些组件，其中最重要的就是 <code>std::function</code> 类模板。以下是 <code>&lt;functional&gt;</code> 头文件中一些主要的组件：</p>
-<ol>
-<li><p><strong>std::function 类模板：</strong></p>
-<ul>
-<li><p><code>std::function</code> 是一个通用的函数包装器，可以用于存储、传递和调用各种可调用对象，包括函数、函数指针、Lambda 表达式、成员函数指针等。它提供了一种统一的接口，使得这些不同类型的可调用对象可以在相同的上下文中使用。</p>
-</li>
-<li><pre><code class="c++">std::function
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> 的模板声明如下：</span><br><span class="line"></span><br><span class="line">```c++</span><br><span class="line">template&lt;class R, class... Args&gt;</span><br><span class="line">class function&lt;R(Args...)&gt;;</span><br></pre></td></tr></table></figure>
-</code></pre>
-</li>
-<li><p>通过 <code>std::function</code>，可以实现泛型编程，使得函数接口更加灵活。</p>
-</li>
+        <h1 id="functional"><a href="#functional" class="headerlink" title="-functional"></a>-functional</h1><p><code>&lt;functional&gt;</code> 头文件主要包含了 C++ 标准库中与函数相关的一些组件，其中最重要的就是 <code>std::function</code> 类模板。以下是 <code>&lt;functional&gt;</code> 头文件中一些主要的组件：</p>
+<p>还包括一些其他的功能，比如 <code>std::reference_wrapper</code>，它提供了引用包装器，允许你将引用作为可调用对象使用。</p>
+<h2 id="std-function"><a href="#std-function" class="headerlink" title="std::function"></a>std::function</h2><p><code>std::function</code> 是 C++11 引入的一个通用、多态的函数封装器。它可以存储、复制和调用任何可调用对象，包括普通函数、lambda 表达式、函数指针、成员函数指针和函数对象。<code>std::function</code> 提供了一种类型安全的方式来处理这些可调用对象。</p>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p><code>std::function</code> 的基本语法如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span>  </span></span><br><span class="line">std::function&lt;返回类型(参数类型...)&gt; func;</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>以下是一些使用 <code>std::function</code> 的示例：</p>
+<h4 id="1-封装普通函数"><a href="#1-封装普通函数" class="headerlink" title="1. 封装普通函数"></a>1. 封装普通函数</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::function&lt;<span class="type">int</span>(<span class="type">int</span>, <span class="type">int</span>)&gt; func = add;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Result: &quot;</span> &lt;&lt; <span class="built_in">func</span>(<span class="number">2</span>, <span class="number">3</span>) &lt;&lt; std::endl; <span class="comment">// 输出 5</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-封装-lambda-表达式"><a href="#2-封装-lambda-表达式" class="headerlink" title="2. 封装 lambda 表达式"></a>2. 封装 lambda 表达式</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::function&lt;<span class="type">int</span>(<span class="type">int</span>, <span class="type">int</span>)&gt; func =  &#123;</span><br><span class="line">        <span class="keyword">return</span> a + b;</span><br><span class="line">    &#125;;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Result: &quot;</span> &lt;&lt; <span class="built_in">func</span>(<span class="number">2</span>, <span class="number">3</span>) &lt;&lt; std::endl; <span class="comment">// 输出 5</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="3-封装函数对象（仿函数）"><a href="#3-封装函数对象（仿函数）" class="headerlink" title="3. 封装函数对象（仿函数）"></a>3. 封装函数对象（仿函数）</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Add</span> &#123;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a + b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::function&lt;<span class="type">int</span>(<span class="type">int</span>, <span class="type">int</span>)&gt; func = <span class="built_in">Add</span>();</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Result: &quot;</span> &lt;&lt; <span class="built_in">func</span>(<span class="number">2</span>, <span class="number">3</span>) &lt;&lt; std::endl; <span class="comment">// 输出 5</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-封装成员函数"><a href="#4-封装成员函数" class="headerlink" title="4. 封装成员函数"></a>4. 封装成员函数</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> a + b;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    MyClass obj;</span><br><span class="line">    std::function&lt;<span class="type">int</span>(MyClass&amp;, <span class="type">int</span>, <span class="type">int</span>)&gt; func = &amp;MyClass::add;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Result: &quot;</span> &lt;&lt; <span class="built_in">func</span>(obj, <span class="number">2</span>, <span class="number">3</span>) &lt;&lt; std::endl; <span class="comment">// 输出 5</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ol>
+<li><strong>类型安全</strong>：<code>std::function</code> 提供了一种类型安全的方式来存储和调用可调用对象。</li>
+<li><strong>多态性</strong>：可以存储不同类型的可调用对象（普通函数、lambda 表达式、仿函数、成员函数）。</li>
+<li><strong>灵活性</strong>：可以在运行时决定调用哪个函数。</li>
+</ol>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li><code>std::function</code> 对象的参数类型和返回类型必须与被封装的可调用对象匹配。</li>
+<li><code>std::function</code> 对象不能用于检查相等性，但可以与 <code>nullptr</code> 进行比较。</li>
 </ul>
-</li>
-<li><p><strong>函数对象适配器：</strong></p>
-<ul>
+<p><code>std::function</code> 对象不能用于检查相等性，这意味着你不能直接比较两个 <code>std::function</code> 对象来判断它们是否封装了相同的可调用对象。例如，以下代码是无效的：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::function&lt;<span class="type">int</span>(<span class="type">int</span>)&gt; f1 =  &#123; <span class="keyword">return</span> x + <span class="number">1</span>; &#125;; std::function&lt;<span class="type">int</span>(<span class="type">int</span>)&gt; f2 =  &#123; <span class="keyword">return</span> x + <span class="number">1</span>; &#125;;  <span class="keyword">if</span> (f1 == f2) &#123; <span class="comment">// 错误：不能比较两个 std::function 对象     // ... &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以与 <code>nullptr</code> 进行比较，这意味着你可以检查 <code>std::function</code> 对象是否包含一个有效的可调用对象。这样做的主要目的是检查 <code>std::function</code> 是否被初始化或是否为空。例如：</p>
+<h2 id="函数对象适配器"><a href="#函数对象适配器" class="headerlink" title="函数对象适配器"></a>函数对象适配器</h2><ul>
 <li><code>&lt;functional&gt;</code> 头文件还包含一些函数对象适配器，如 <code>std::bind</code> 和 <code>std::mem_fn</code>。</li>
 <li><code>std::bind</code> 允许你创建一个可调用对象，它是对其他可调用对象的部分应用，可以绑定参数或改变参数顺序。</li>
 <li><code>std::mem_fn</code> 是一个函数模板，用于创建成员函数指针的包装器，使其可以像普通函数指针一样使用。</li>
 </ul>
-</li>
-<li><p><strong>其他功能：</strong></p>
+<h3 id="std-bind"><a href="#std-bind" class="headerlink" title="std::bind"></a>std::bind</h3><p><code>std::bind</code> 是 C++11 标准库中的一个函数，用于创建一个可调用对象，通常称为“绑定”。这个函数允许你绑定一个或多个函数的参数，以便在稍后的时间点调用它。<code>std::bind</code> 可以与普通函数、成员函数、函数对象等一起使用，非常灵活。</p>
+<h4 id="基本用法-1"><a href="#基本用法-1" class="headerlink" title="基本用法"></a>基本用法</h4><p><code>std::bind</code> 的基本语法如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span>  auto bound_function = std::bind(callable, arg1, arg2, ...); </span></span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>还包括一些其他的功能，比如 <code>std::reference_wrapper</code>，它提供了引用包装器，允许你将引用作为可调用对象使用。</li>
+<li><code>callable</code>：可以是函数指针、成员函数指针、函数对象等。</li>
+<li><code>arg1, arg2, ...</code>：要绑定的参数，可以是具体的值，也可以是占位符。</li>
 </ul>
-</li>
-</ol>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><h5 id="1-绑定普通函数"><a href="#1-绑定普通函数" class="headerlink" title="1. 绑定普通函数"></a>1. 绑定普通函数</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">auto</span> add_five = std::<span class="built_in">bind</span>(add, std::placeholders::_1, <span class="number">5</span>);</span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">add_five</span>(<span class="number">10</span>) &lt;&lt; std::endl; <span class="comment">// 输出 15</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>add_five</code> 是一个绑定了 <code>add</code> 函数的可调用对象，其中第二个参数固定为 5。</p>
+<h5 id="2-绑定成员函数"><a href="#2-绑定成员函数" class="headerlink" title="2. 绑定成员函数"></a>2. 绑定成员函数</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">(<span class="type">int</span> a, <span class="type">const</span> std::string&amp; str)</span> </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Print: &quot;</span> &lt;&lt; a &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; str &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    MyClass obj;</span><br><span class="line">    <span class="keyword">auto</span> bound_print = std::<span class="built_in">bind</span>(&amp;MyClass::print, &amp;obj, std::placeholders::_1, std::placeholders::_2);</span><br><span class="line">    <span class="built_in">bound_print</span>(<span class="number">10</span>, <span class="string">&quot;Hello&quot;</span>); <span class="comment">// 输出 Print: 10 Hello</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>bound_print</code> 绑定了 <code>MyClass</code> 的成员函数 <code>print</code>，并且绑定了对象实例 <code>obj</code>。</p>
+<h4 id="占位符"><a href="#占位符" class="headerlink" title="占位符"></a>占位符</h4><p><code>std::placeholders</code> 提供了一组占位符（如 <code>_1</code>, <code>_2</code> 等），用于表示绑定时的参数位置。例如：</p>
+<ul>
+<li><code>_1</code> 表示第一个参数</li>
+<li><code>_2</code> 表示第二个参数</li>
+</ul>
+<h3 id="std-mem-fn"><a href="#std-mem-fn" class="headerlink" title="std::mem_fn"></a>std::mem_fn</h3><p><code>std::mem_fn</code> 是 C++11 引入的一个工具，用于生成可以存储、复制和调用成员函数指针的包装器对象。它可以与普通函数、成员函数、函数对象等一起使用，非常灵活。</p>
+<p><code>std::mem_fn</code> 的主要用途是简化成员函数的调用，特别是在需要将成员函数作为参数传递给算法或其他函数时。</p>
+<h4 id="基本用法-2"><a href="#基本用法-2" class="headerlink" title="基本用法"></a>基本用法</h4><p><code>std::mem_fn</code> 的基本语法如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span>  </span></span><br><span class="line"><span class="keyword">auto</span> mem_fn_object = std::<span class="built_in">mem_fn</span>(&amp;ClassName::MemberFunction); </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>ClassName::MemberFunction</code> 是成员函数指针。</li>
+</ul>
+<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h4><p>以下是一个使用 <code>std::mem_fn</code> 的简单示例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">(<span class="type">int</span> a, <span class="type">const</span> std::string&amp; str)</span> </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Print: &quot;</span> &lt;&lt; a &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; str &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    MyClass obj;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 std::mem_fn 生成成员函数的包装器对象</span></span><br><span class="line">    <span class="keyword">auto</span> mem_fn_print = std::<span class="built_in">mem_fn</span>(&amp;MyClass::print);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 调用成员函数</span></span><br><span class="line">    <span class="built_in">mem_fn_print</span>(obj, <span class="number">10</span>, <span class="string">&quot;Hello&quot;</span>); <span class="comment">// 输出 Print: 10 Hello</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>mem_fn_print</code> 是一个包装器对象，它封装了 <code>MyClass</code> 的成员函数 <code>print</code>。通过 <code>mem_fn_print</code>，可以像调用普通函数一样调用成员函数。</p>
+<h3 id="std-bind与std-mem-fn-的比较"><a href="#std-bind与std-mem-fn-的比较" class="headerlink" title="std::bind与std::mem_fn 的比较"></a><code>std::bind</code>与<code>std::mem_fn</code> 的比较</h3><p>虽然 <code>std::bind</code> 也可以用于绑定成员函数，但 <code>std::mem_fn</code> 更加简洁和专用。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">(<span class="type">int</span> a, <span class="type">const</span> std::string&amp; str)</span> </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Print: &quot;</span> &lt;&lt; a &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; str &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    MyClass obj;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 std::bind 绑定成员函数</span></span><br><span class="line">    <span class="keyword">auto</span> bound_print = std::<span class="built_in">bind</span>(&amp;MyClass::print, &amp;obj, std::placeholders::_1, std::placeholders::_2);</span><br><span class="line">    <span class="built_in">bound_print</span>(<span class="number">10</span>, <span class="string">&quot;Hello&quot;</span>); <span class="comment">// 输出 Print: 10 Hello</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 std::mem_fn 生成成员函数的包装器对象</span></span><br><span class="line">    <span class="keyword">auto</span> mem_fn_print = std::<span class="built_in">mem_fn</span>(&amp;MyClass::print);</span><br><span class="line">    <span class="built_in">mem_fn_print</span>(obj, <span class="number">10</span>, <span class="string">&quot;Hello&quot;</span>); <span class="comment">// 输出 Print: 10 Hello</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>std::bind</code> 和 <code>std::mem_fn</code> 都可以实现相同的功能，但 <code>std::mem_fn</code> 更加简洁。</p>
+<p><code>std::bind</code> 更灵活，因为它允许你使用占位符来指定参数的位置和数量。这使得 <code>std::bind</code> 在需要部分应用（partial application）或重新排列参数时非常有用。</p>
+<p><strong>使用 std::bind 的场景</strong>：</p>
+<ul>
+<li><strong>需要部分应用</strong>：如果你只想绑定部分参数，而将其他参数留给调用时指定。</li>
+<li><strong>需要重新排列参数</strong>：如果你需要改变参数的顺序。</li>
+<li><strong>需要更复杂的绑定逻辑</strong>：例如，绑定多个函数或组合多个操作。</li>
+</ul>
+<p><strong>使用 std::mem_fn 的场景</strong>：</p>
+<ul>
+<li><strong>简单调用成员函数</strong>：如果你只需要调用成员函数而不需要部分应用或重新排列参数。</li>
+<li><strong>代码简洁性</strong>：<code>std::mem_fn</code> 更加简洁和直接，适合简单的成员函数调用。</li>
+</ul>
+<h2 id="结合使用"><a href="#结合使用" class="headerlink" title="结合使用"></a>结合使用</h2><p>当你需要创建一个部分应用（partial application）或绑定特定参数的可调用对象，并希望将其存储在 <code>std::function</code> 中时，<code>std::bind</code> 和 <code>std::function</code> 会一起使用。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 使用 std::bind 创建一个绑定了第二个参数的可调用对象</span></span><br><span class="line">    <span class="keyword">auto</span> add_five = std::<span class="built_in">bind</span>(add, std::placeholders::_1, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 std::function 存储这个可调用对象</span></span><br><span class="line">    std::function&lt;<span class="type">int</span>(<span class="type">int</span>)&gt; func = add_five;</span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Result: &quot;</span> &lt;&lt; <span class="built_in">func</span>(<span class="number">10</span>) &lt;&lt; std::endl; <span class="comment">// 输出 15</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>std::bind</code> 创建了一个绑定了第二个参数的可调用对象 <code>add_five</code>，然后将其存储在 <code>std::function</code> 中。</p>
 
     </div>
 
@@ -343,8 +406,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/02/02/C++-namespace/" rel="prev" title="命名空间namespace">
-      <i class="fa fa-chevron-left"></i> 命名空间namespace
+    <a href="/2024/02/02/C++-lambda/" rel="prev" title="函数指针与匿名函数">
+      <i class="fa fa-chevron-left"></i> 函数指针与匿名函数
     </a></div>
       <div class="post-nav-item">
     <a href="/2024/02/02/C++-find_if/" rel="next" title="find_if">
@@ -413,6 +476,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#functional"><span class="nav-number">1.</span> <span class="nav-text">-functional</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#std-function"><span class="nav-number">1.1.</span> <span class="nav-text">std::function</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95"><span class="nav-number">1.1.1.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.1.2.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%B0%81%E8%A3%85%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">1. 封装普通函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%B0%81%E8%A3%85-lambda-%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">2. 封装 lambda 表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E5%B0%81%E8%A3%85%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%EF%BC%88%E4%BB%BF%E5%87%BD%E6%95%B0%EF%BC%89"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">3. 封装函数对象（仿函数）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%B0%81%E8%A3%85%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">4. 封装成员函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">1.1.3.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.1.4.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1%E9%80%82%E9%85%8D%E5%99%A8"><span class="nav-number">1.2.</span> <span class="nav-text">函数对象适配器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#std-bind"><span class="nav-number">1.2.1.</span> <span class="nav-text">std::bind</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-1"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-1"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">示例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E7%BB%91%E5%AE%9A%E6%99%AE%E9%80%9A%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.1.2.1.</span> <span class="nav-text">1. 绑定普通函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E7%BB%91%E5%AE%9A%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.1.2.2.</span> <span class="nav-text">2. 绑定成员函数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%A0%E4%BD%8D%E7%AC%A6"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">占位符</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-mem-fn"><span class="nav-number">1.2.2.</span> <span class="nav-text">std::mem_fn</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-2"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B-2"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">示例</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#std-bind%E4%B8%8Estd-mem-fn-%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">1.2.3.</span> <span class="nav-text">std::bind与std::mem_fn 的比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E5%90%88%E4%BD%BF%E7%94%A8"><span class="nav-number">1.3.</span> <span class="nav-text">结合使用</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -428,20 +492,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -485,12 +549,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">105k</span>
+    <span title="站点总字数">280k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:36</span>
+    <span title="站点阅读时长">4:14</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

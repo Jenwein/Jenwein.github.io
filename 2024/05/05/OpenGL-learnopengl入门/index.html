@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!--pjax：防止跳转页面音乐暂停-->
+ <script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/sword1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/sword2.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rhahr.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="OpenGL学习也有两个多礼拜，结束了 LearnOpenGL CN   的入门部分的学习，是时候总结整理一下了，按照整体创建一个图形的一系列步骤，大体上也是渲染管线的流程。全部使用面向过程来写  详见猴子也能看懂的渲染管线（Render Pipeline） - 知乎 (zhihu.com)  opengl是什么OpenGL本身并不是一个API，它仅仅是一个由Khronos组织制定并维护的规范(S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Learn OpenGL 入门">
+<meta property="og:url" content="http://rhahr.top/2024/05/05/OpenGL-learnopengl%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="HahのBlog">
+<meta property="og:description" content="OpenGL学习也有两个多礼拜，结束了 LearnOpenGL CN   的入门部分的学习，是时候总结整理一下了，按照整体创建一个图形的一系列步骤，大体上也是渲染管线的流程。全部使用面向过程来写  详见猴子也能看懂的渲染管线（Render Pipeline） - 知乎 (zhihu.com)  opengl是什么OpenGL本身并不是一个API，它仅仅是一个由Khronos组织制定并维护的规范(S">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://cdn.rhahr.asia/vertex_array_objects_ebo.png">
+<meta property="og:image" content="https://learnopengl-cn.github.io/img/01/06/vertex_attribute_pointer_interleaved_textures.png">
+<meta property="article:published_time" content="2024-05-05T14:00:00.000Z">
+<meta property="article:modified_time" content="2024-05-07T04:39:04.995Z">
+<meta property="article:author" content="Hah">
+<meta property="article:tag" content="创建图形到摄像机总结">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cdn.rhahr.asia/vertex_array_objects_ebo.png">
+
+<link rel="canonical" href="http://rhahr.top/2024/05/05/OpenGL-learnopengl%E5%85%A5%E9%97%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Learn OpenGL 入门 | HahのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Jenwein" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#fff; color:#151513; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">HahのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/05/05/OpenGL-learnopengl%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Learn OpenGL 入门
+        </h1>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-05 22:00:00" itemprop="dateCreated datePublished" datetime="2024-05-05T22:00:00+08:00">2024-05-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-07 12:39:04" itemprop="dateModified" datetime="2024-05-07T12:39:04+08:00">2024-05-07</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenGL/" itemprop="url" rel="index"><span itemprop="name">OpenGL</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenGL/%E5%85%A5%E9%97%A8/" itemprop="url" rel="index"><span itemprop="name">入门</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="OpenGL"><a href="#OpenGL" class="headerlink" title="OpenGL"></a>OpenGL</h1><p>学习也有两个多礼拜，结束了 <a target="_blank" rel="noopener" href="https://learnopengl-cn.github.io/intro/">LearnOpenGL CN </a>  的入门部分的学习，是时候总结整理一下了，按照整体创建一个图形的一系列步骤，大体上也是渲染管线的流程。全部使用面向过程来写</p>
+<blockquote>
+<p>详见<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/137780634">猴子也能看懂的渲染管线（Render Pipeline） - 知乎 (zhihu.com)</a></p>
+</blockquote>
+<h2 id="opengl是什么"><a href="#opengl是什么" class="headerlink" title="opengl是什么"></a>opengl是什么</h2><p>OpenGL本身并不是一个API，它仅仅是一个由<a target="_blank" rel="noopener" href="http://www.khronos.org/">Khronos组织</a>制定并维护的规范(Specification)。</p>
+<p>早期的OpenGL使用立即渲染模式（Immediate mode，也就是固定渲染管线），这个模式下绘制图形很方便。OpenGL的大多数功能都被库隐藏起来，开发者很少有控制OpenGL如何进行计算的自由。而开发者迫切希望能有更多的灵活性。随着时间推移，规范越来越灵活，开发者对绘图细节有了更多的掌控。立即渲染模式确实容易使用和理解，但是效率太低。因此从OpenGL3.2开始，规范文档开始废弃立即渲染模式，并鼓励开发者在OpenGL的核心模式(Core-profile)下进行开发，这个分支的规范完全移除了旧的特性。</p>
+<h2 id="状态机"><a href="#状态机" class="headerlink" title="状态机"></a>状态机</h2><p>OpenGL自身是一个巨大的状态机(State Machine)：一系列的变量描述OpenGL此刻应当如何运行。OpenGL的状态通常被称为OpenGL上下文(Context)。我们通常使用如下途径去更改OpenGL状态：设置选项，操作缓冲。最后，我们使用当前OpenGL上下文来渲染。</p>
+<p>假设当我们想告诉OpenGL去画线段而不是三角形的时候，我们通过改变一些上下文变量来改变OpenGL状态，从而告诉OpenGL如何去绘图。一旦我们改变了OpenGL的状态为绘制线段，下一个绘制命令就会画出线段而不是三角形。</p>
+<p>当使用OpenGL的时候，我们会遇到一些状态设置函数(State-changing Function)，这类函数将会改变上下文。以及状态使用函数(State-using Function)，这类函数会根据当前OpenGL的状态执行一些操作。只要你记住OpenGL本质上是个大状态机，就能更容易理解它的大部分特性。</p>
+<p>世界就是一个巨大的状态机，State Machine！！！！！</p>
+<h2 id="绘制"><a href="#绘制" class="headerlink" title="绘制"></a>绘制</h2><p>有关配置及窗口部分不在赘述，重在理解各个对象</p>
+<ul>
+<li>顶点数组对象：Vertex Array Object，VAO</li>
+<li>顶点缓冲对象：Vertex Buffer Object，VBO</li>
+<li>元素缓冲对象：Element Buffer Object，EBO 或 索引缓冲对象 Index Buffer Object，IBO</li>
+</ul>
+<p>使用OpenGL绘制图形的流程大致可以分为以下几个步骤：</p>
+<ol>
+<li><strong>创建OpenGL上下文（Context）</strong>：在调用任何OpenGL指令之前，首先需要创建一个OpenGL上下文。这个上下文是一个庞大的状态机，保存了OpenGL中的各种状态，是OpenGL指令执行的基础。</li>
+<li><strong>设置帧缓冲区（FrameBuffer）</strong>：帧缓冲区相当于画板，它不是实际存储数据的对象，而是提供了附着点（Attachment），可以附着纹理（Texture）或渲染缓冲区（RenderBuffer）。</li>
+<li><strong>准备顶点数据和缓冲区</strong>：顶点数据是图形的骨架，可以存储在顶点数组（VertexArray）中，也可以预先传入显存中的顶点缓冲区（VertexBuffer）。</li>
+<li><strong>设置索引数据和缓冲区</strong>：索引数据（ElementArray）可以实现顶点的复用，提高效率。它们可以存储在索引缓冲区（ElementBuffer）中。</li>
+<li><strong>编写和编译着色器程序（Shader）</strong>：现代OpenGL使用可编程渲染管线，需要编写顶点着色器（VertexShader）和片段着色器（FragmentShader），然后将它们编译成着色器程序。</li>
+<li><strong>设置渲染管线和绘制命令</strong>：配置好渲染管线后，使用绘制命令如<code>glDrawArrays</code>或<code>glDrawElements</code>来执行绘制操作。</li>
+<li><strong>渲染到屏幕</strong>：经过光栅化等一系列处理后，图形最终会渲染到屏幕上。</li>
+</ol>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>从代码开始</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> <span class="comment">/* Initialize the library */</span></span><br><span class="line">	<span class="comment">//初始化GLFW</span></span><br><span class="line">   <span class="keyword">if</span> (!<span class="built_in">glfwInit</span>()) </span><br><span class="line">       <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"><span class="comment">//指定版本</span></span><br><span class="line">   <span class="type">const</span> <span class="type">char</span>* glsl_version = <span class="string">&quot;#version 330 core&quot;</span>;</span><br><span class="line">   <span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MAJOR, <span class="number">3</span>);<span class="comment">//主版本号(Major)</span></span><br><span class="line">   <span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MINOR, <span class="number">3</span>);<span class="comment">//次版本号(Minor)</span></span><br><span class="line">   <span class="built_in">glfwWindowHint</span>(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);<span class="comment">//核心模式(Core-profile)</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">/* Create a windowed mode window and its OpenGL context */</span></span><br><span class="line">   window = <span class="built_in">glfwCreateWindow</span>(<span class="number">640</span>, <span class="number">480</span>, <span class="string">&quot;Hello World&quot;</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">   <span class="keyword">if</span> (!window)</span><br><span class="line">   &#123;</span><br><span class="line">       <span class="built_in">glfwTerminate</span>();</span><br><span class="line">       <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">/* Make the window&#x27;s context current */</span></span><br><span class="line">   <span class="built_in">glfwMakeContextCurrent</span>(window);</span><br><span class="line"><span class="comment">//启用垂直同步</span></span><br><span class="line">   <span class="built_in">glfwSwapInterval</span>(<span class="number">3</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//错误检查</span></span><br><span class="line">   <span class="keyword">if</span>(<span class="built_in">glewInit</span>()!=GLEW_OK) </span><br><span class="line">       std::cout&lt;&lt;<span class="string">&quot;Error \n&quot;</span>;</span><br><span class="line"></span><br><span class="line">   std::cout &lt;&lt; <span class="built_in">glGetString</span>(GL_VERSION) &lt;&lt; std::endl;<span class="comment">//输出当前显卡配置版本</span></span><br></pre></td></tr></table></figure>
+
+<p>这部分在最开始，初始化glfw，指定版本（核心模式） ，创建窗口，创建上下文，启用垂直同步。</p>
+<h3 id="开始！"><a href="#开始！" class="headerlink" title="开始！"></a>开始！</h3><p>开始绘制图形之前，我们需要先给OpenGL输入一些顶点数据,OpenGL仅当3D坐标在3个轴（x、y和z）上-1.0到1.0的范围内时才处理,所有在这个范围内的坐标叫做标准化设备坐标,</p>
+<p>希望渲染一个三角形，就要指定三个顶点，每个顶点都有一个3D位置。我们会将它们以标准化设备坐标的形式（OpenGL的可见区域）定义为一个<code>float</code>数组。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> vertices[] = &#123;</span><br><span class="line">		<span class="comment">//位置			     //颜色            //纹理    </span></span><br><span class="line">		<span class="number">0.5f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>,  <span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>,  <span class="number">1.0f</span>,<span class="number">1.0f</span>,     <span class="comment">// 右上角</span></span><br><span class="line">		<span class="number">0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,  <span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>,  <span class="number">1.0f</span>,<span class="number">0.0f</span>,     <span class="comment">// 右下角</span></span><br><span class="line">	   <span class="number">-0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,  <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>,  <span class="number">0.0f</span>,<span class="number">0.0f</span>,     <span class="comment">// 左下角</span></span><br><span class="line">	   <span class="number">-0.5f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>,  <span class="number">0.0f</span>, <span class="number">0.5f</span>, <span class="number">0.0f</span>,  <span class="number">0.0f</span>,<span class="number">1.0f</span>     <span class="comment">// 左上角</span></span><br><span class="line">    &#125;;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> index[] = &#123;</span><br><span class="line">		<span class="comment">// 注意索引从0开始!</span></span><br><span class="line">		<span class="comment">// 此例的索引(0,1,2,3)就是顶点数组vertices的下标，</span></span><br><span class="line">		<span class="comment">// 这样可以由下标代表顶点组合成矩形</span></span><br><span class="line">		<span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>,  <span class="comment">// 第一个三角形</span></span><br><span class="line">		<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>,  <span class="comment">// 第二个三角形</span></span><br><span class="line"></span><br><span class="line">	&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这里的两个数组分别对应的VB和IB</p>
+<p>vertices存放所有的顶点，每一行代表一个<strong>顶点</strong>，每个顶点有三个<strong>顶点属性</strong>，分别为<strong>位置</strong>，<strong>颜色</strong>，<strong>纹理</strong></p>
+<p><strong>位置属性负责指定顶点位置，颜色属性指定顶点颜色，纹理属性指定纹理与顶点的映射</strong></p>
+<p>index存放索引，用于指定或是说告诉GPU如何使用顶点，这里表示使用第0,1,3 和第1,2,3这几个顶点绘制两个三角形，然后指定出了一个矩形</p>
+<h3 id="VAO"><a href="#VAO" class="headerlink" title="VAO"></a>VAO</h3><p>先指定一个VAO，**Vertex Array Object（顶点数组对象） ** ，用于管理和优化顶点数据的存储和访问，可以说VAO绑定期间内的其他所有的VBO和IBO的状态都会被VAO保存（状态机）</p>
+<p><img src="http://cdn.rhahr.asia/vertex_array_objects_ebo.png"></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> VAO;</span><br><span class="line"></span><br><span class="line"><span class="built_in">glGenVertexArrays</span>(<span class="number">1</span>, &amp;VAO);<span class="comment">//生成1个VA并返回id给VAO</span></span><br><span class="line"><span class="built_in">glBindVertexArray</span>(VAO);<span class="comment">//绑定VAO</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="VBO"><a href="#VBO" class="headerlink" title="VBO"></a>VBO</h3><p>绑定可以理解为插到一个对应的插槽上，例如这里就是将VBO绑定在GL_ARRAY_BUFFER这个插槽上，之后任何对GL_ARRAY_BUFFER的操作就相当于是对这个VBO的操作，同时也意味着，如果要对另一个VBO操作就需要将另一个VBO绑定在这个插槽上，（IBO同理）</p>
+<p>顶点缓冲对象类型：GL_ARRAY_BUFFER</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> VBO;</span><br><span class="line">	<span class="built_in">glGenBuffers</span>(<span class="number">1</span>, &amp;VBO);				<span class="comment">//生成1个buffer并返回id给VBO</span></span><br><span class="line">	<span class="built_in">glBindBuffer</span>(GL_ARRAY_BUFFER, VBO);	  <span class="comment">//绑定VBO到GL_ARRAY_BUFFER上</span></span><br><span class="line">	<span class="built_in">glBufferData</span>(GL_ARRAY_BUFFER, <span class="built_in">sizeof</span>(vertices), &amp;vertices, GL_STATIC_DRAW);<span class="comment">//把用户定义的数据复制到当前绑定缓冲的函数</span></span><br><span class="line"><span class="comment">//有一些顶点数据存储在 position 中，把这些数据的大小为 6 * sizeof(float) 的部分传输到GPU（buffer）。多次使用这些数据来绘制，但不会对它们进行修改</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="IBO"><a href="#IBO" class="headerlink" title="IBO"></a>IBO</h3><p>此处的GL_ELEMENT_ARRAY_BUFFER就是另一个插槽，</p>
+<p>索引缓冲对象类型：GL_ELEMENT_ARRAY_BUFFER</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> IBO;</span><br><span class="line">	<span class="built_in">glGenBuffers</span>(<span class="number">1</span>, &amp;IBO);		<span class="comment">//生成1个buffer并返回id给IBO</span></span><br><span class="line">	<span class="built_in">glBindBuffer</span>(GL_ELEMENT_ARRAY_BUFFER, IBO);<span class="comment">//绑定VBO到GL_ELEMENT_ARRAY_BUFFER上</span></span><br><span class="line">	<span class="built_in">glBufferData</span>(GL_ELEMENT_ARRAY_BUFFER, <span class="built_in">sizeof</span>(index), &amp;index, GL_STATIC_DRAW);<span class="comment">//将索引数据复制到缓冲中-告诉GPU使用这几个索引来绘制</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Texture"><a href="#Texture" class="headerlink" title="Texture"></a>Texture</h3><p>VBO和IBO已经告诉了GPU如何绘制这个图形，接下来给这个图形添加纹理，在开始部分的顶点属性中的<strong>位置，颜色，纹理</strong> 我们已经完成了前两个的设置，</p>
+<p>我们已经知道可以为每个顶点添加颜色来增加图形的细节，从而创建出有趣的图像。但是，如果想让图形看起来更真实，我们就必须有足够多的顶点，从而指定足够多的颜色。这将会产生很多额外开销，因为每个模型都会需求更多的顶点，每个顶点又需求一个颜色属性。</p>
+<p>艺术家和程序员更喜欢使用纹理(Texture)。纹理是一个2D图片（甚至也有1D和3D的纹理），它可以用来添加物体的细节；你可以想象纹理是一张绘有砖块的纸，无缝折叠贴合到你的3D的房子上，这样你的房子看起来就像有砖墙外表了。因为我们可以在一张图片上插入非常多的细节，这样就可以让物体非常精细而不用指定额外的顶点。</p>
+<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stbi_set_flip_vertically_on_load</span>(<span class="literal">true</span>);<span class="comment">//上下翻转，因为纹理种坐标左下角为(0,0)，可能会上下颠倒</span></span><br><span class="line"></span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span>* data0 = <span class="built_in">stbi_load</span>(<span class="string">&quot;res/texture/bbb.png&quot;</span>, &amp;width0, &amp;height0, &amp;nrChannels0, <span class="number">4</span>);</span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span>* data1 = <span class="built_in">stbi_load</span>(<span class="string">&quot;res/texture/aaa.png&quot;</span>, &amp;width1, &amp;height1, &amp;nrChannels1, <span class="number">4</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//首先接受一个图像文件的位置作为输入，接下来它需要三个int用，图像的宽度、高度和颜色通道的个数填充这三个变量</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="纹理绑定"><a href="#纹理绑定" class="headerlink" title="纹理绑定"></a>纹理绑定</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> texture0;<span class="comment">//与vbo，vao，ibo类似，都是使用id引用</span></span><br><span class="line"><span class="built_in">glGenTextures</span>(<span class="number">1</span>, &amp;texture0);<span class="comment">//生成纹理id并传入texture</span></span><br><span class="line"><span class="built_in">glBindTexture</span>(GL_TEXTURE_2D, texture0);<span class="comment">//绑定纹理</span></span><br></pre></td></tr></table></figure>
+<h4 id="纹理设置"><a href="#纹理设置" class="headerlink" title="纹理设置"></a>纹理设置</h4><p>设置当前纹理的环绕&amp;过滤</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//设置当前纹理的环绕</span></span><br><span class="line">	<span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);<span class="comment">//为当前绑定在GL_TEXTURE_2D上的纹理的s轴进行GL_REPEAT的环绕方式</span></span><br><span class="line">	<span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);<span class="comment">//为当前绑定在GL_TEXTURE_2D上的纹理的t轴进行GL_REPEAT的环绕方式</span></span><br><span class="line">	</span><br><span class="line"><span class="comment">//设置当前纹理的过滤</span></span><br><span class="line">	<span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);<span class="comment">//为当前绑定在GL_TEXTURE_2D上的纹理的放大行为设置GL_LINEAR_MIPMAP_LINEAR的多级渐远纹理方式</span></span><br><span class="line">	<span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*一个常见的错误是，将放大过滤的选项设置为多级渐远纹理过滤选项之一。这样没有任何效果，因为多级渐远纹理</span></span><br><span class="line"><span class="comment">	  主要是使用在纹理被缩小的情况下的：纹理放大不会使用多级渐远纹理，为放大过滤设置多级渐远纹理的选项会产</span></span><br><span class="line"><span class="comment">	  生一个GL_INVALID_ENUM错误代码。*/</span></span><br></pre></td></tr></table></figure>
+<p>现在已经有了准备好的图片数据data和设置好的纹理texture，我们可以使用前面载入的图片数据生成一个纹理了。纹理可以通过glTexImage2D来生成：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (data0)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">glTexImage2D</span>(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGBA, width0, height0, <span class="number">0</span>, GL_RGBA, GL_UNSIGNED_BYTE, data0);<span class="comment">//使用载入的图片数据生成纹理</span></span><br><span class="line">	</span><br><span class="line">       <span class="comment">//target，多级渐远纹理级别，纹理存储格式，最终的纹理的宽度和高度，0，原图的格式及数据类型，图像数据（stbi_load获取）</span></span><br><span class="line">	<span class="comment">//目前只有基本级别(Base-level)的纹理图像被加载了，要使用多级渐远纹理，我们必须手动设置所有不同的图像（不断递增第二个参数）</span></span><br><span class="line">	<span class="comment">//或者，直接在生成纹理之后调用glGenerateMipmap。这会为当前绑定的纹理自动生成所有需要的多级渐远纹理。</span></span><br><span class="line">	<span class="built_in">glGenerateMipmap</span>(GL_TEXTURE_2D);<span class="comment">//这会为当前绑定的纹理自动生成所有需要的多级渐远纹理。</span></span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>生成纹理的过程总体是这样的：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> texture;</span><br><span class="line"><span class="built_in">glGenTextures</span>(<span class="number">1</span>, &amp;texture);</span><br><span class="line"><span class="built_in">glBindTexture</span>(GL_TEXTURE_2D, texture);</span><br><span class="line"><span class="comment">// 为当前绑定的纹理对象设置环绕、过滤方式</span></span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);   </span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);</span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);</span><br><span class="line"><span class="built_in">glTexParameteri</span>(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);</span><br><span class="line"><span class="comment">// 加载并生成纹理</span></span><br><span class="line"><span class="type">int</span> width, height, nrChannels;</span><br><span class="line"><span class="type">unsigned</span> <span class="type">char</span> *data = <span class="built_in">stbi_load</span>(<span class="string">&quot;container.jpg&quot;</span>, &amp;width, &amp;height, &amp;nrChannels, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span> (data)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">glTexImage2D</span>(GL_TEXTURE_2D, <span class="number">0</span>, GL_RGB, width, height, <span class="number">0</span>, GL_RGB, GL_UNSIGNED_BYTE, data);</span><br><span class="line">    <span class="built_in">glGenerateMipmap</span>(GL_TEXTURE_2D);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Failed to load texture&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">stbi_image_free</span>(data);<span class="comment">//释放图像的内存</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="着色器代码"><a href="#着色器代码" class="headerlink" title="着色器代码"></a>着色器代码</h3><p>目前阶段的渲染管线中只需要关心顶点着色器和片段着色器，着色器语言GLSL。</p>
+<p>着色器的开头总是要声明版本，接着是输入和输出变量、uniform和main函数。每个着色器的入口点都是main函数，在这个函数中我们处理所有的输入变量，并将结果输出到输出变量中。</p>
+<p>一个示例结构：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#version version_number</span></span><br><span class="line">in type in_variable_name;</span><br><span class="line">in type in_variable_name;</span><br><span class="line"></span><br><span class="line">out type out_variable_name;</span><br><span class="line"></span><br><span class="line">uniform type uniform_name;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="comment">// 处理输入并进行一些图形操作</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="comment">// 输出处理过的结果到输出变量</span></span><br><span class="line">  out_variable_name = weird_stuff_we_processed;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>GLSL定义了<code>in</code>和<code>out</code>关键字专门来实现输入和输出，进行数据交流和传递。</p>
+<p>顶点着色器应该接收的是一种特殊形式的输入，否则就会效率低下。顶点着色器的输入特殊在，它从顶点数据（VB）中直接接收输入，为了定义顶点数据该如何管理，我们使用<code>location</code>这一元数据指定输入变量，这样我们才可以在CPU上配置顶点属性。我们已经在前面的教程看过这个了，<code>layout (location = 0)</code>。顶点着色器需要为它的输入提供一个额外的<code>layout</code>标识，这样我们才能把它链接到顶点数据。</p>
+<p>如果我们打算从一个着色器向另一个着色器发送数据，我们必须在发送方着色器中声明一个输出，在接收方着色器中声明一个类似的输入。当类型和名字都一样的时候，OpenGL就会把两个变量链接到一起，它们之间就能发送数据了（这是在链接程序对象时完成的）</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//顶点着色器</span></span><br><span class="line">	<span class="type">const</span> <span class="type">char</span>* vertexshadersource = <span class="string">R&quot;(</span></span><br><span class="line"><span class="string">#version 330 core</span></span><br><span class="line"><span class="string">layout (location = 0) in vec3 aPos;   // 位置变量的属性位置值为 0 </span></span><br><span class="line"><span class="string">layout (location = 1) in vec3 aColor; // 颜色变量的属性位置值为 1</span></span><br><span class="line"><span class="string">layout (location = 2) in vec2 aTexCoord; //纹理变量的属性位置</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">out vec3 ourColor; // 向片段着色器输出一个颜色</span></span><br><span class="line"><span class="string">out vec2 TexCoord; // 向片段着色器输出一个纹理</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">//uniform mat4 transform;</span></span><br><span class="line"><span class="string">uniform mat4 model;</span></span><br><span class="line"><span class="string">uniform mat4 view;</span></span><br><span class="line"><span class="string">uniform mat4 proj;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">uniform mat4 u_MVP;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">void main()</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    gl_Position = u_MVP * vec4(aPos, 1.0f);</span></span><br><span class="line"><span class="string">    ourColor = aColor; // 将ourColor设置为我们从顶点数据那里得到的输入颜色</span></span><br><span class="line"><span class="string">	TexCoord = aTexCoord;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">)&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//片段着色器</span></span><br><span class="line">	<span class="type">const</span> <span class="type">char</span>* fragmentshadersource = <span class="string">R&quot;(</span></span><br><span class="line"><span class="string">#version 330 core</span></span><br><span class="line"><span class="string">out vec4 FragColor;  </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">in vec3 ourColor;</span></span><br><span class="line"><span class="string">in vec2 TexCoord;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">uniform sampler2D ourTexture0;</span></span><br><span class="line"><span class="string">uniform sampler2D ourTexture1;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">void main()</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    //FragColor = vec4(ourColor, 1.0);//为了片段插值提供数据</span></span><br><span class="line"><span class="string">	//FragColor = texture(ourTexture, TexCoord);//GLSL内建的texture函数来采样纹理的颜色</span></span><br><span class="line"><span class="string">	//FragColor = texture(ourTexture0, TexCoord)*vec4(ourColor,1.0);//把纹理颜色与顶点颜色在片段着色器中相乘来混合二者的颜色</span></span><br><span class="line"><span class="string">	FragColor = mix(texture(ourTexture0,TexCoord),texture(ourTexture1,TexCoord),0.4);//mix函数需要接受两个值作为参数,并对它们根据第三个参数进行线性插值,0.2会返回80%的第一个输入颜色和20%的第二个输入颜色，即返回两个纹理的混合色</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">)&quot;</span>;</span><br><span class="line">	</span><br></pre></td></tr></table></figure>
+
+<p>有了着色器代码就可以开始定义着色器</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个空的着色器对象，并返回一个可以引用它的非零值	</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> vertexShader; </span><br><span class="line">vertexShader = <span class="built_in">glCreateShader</span>(GL_VERTEX_SHADER);	</span><br><span class="line"></span><br><span class="line"><span class="built_in">glShaderSource</span>(vertexShader, <span class="number">1</span>, &amp;vertexshadersource, <span class="literal">NULL</span>);<span class="comment">//把这个着色器源码附加到着色器对象,要编译的着色器对象作为第一个参数。第二参数指定了传递的源码字符串数量</span></span><br><span class="line"><span class="built_in">glCompileShader</span>(vertexShader);<span class="comment">// 编译着色器</span></span><br><span class="line"></span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> fragmentShader;</span><br><span class="line">fragmentShader = <span class="built_in">glCreateShader</span>(GL_FRAGMENT_SHADER);</span><br><span class="line"><span class="built_in">glShaderSource</span>(fragmentShader, <span class="number">1</span>, &amp;fragmentshadersource, <span class="literal">NULL</span>);</span><br><span class="line"><span class="built_in">glCompileShader</span>(fragmentShader);</span><br></pre></td></tr></table></figure>
+
+<h3 id="着色器程序"><a href="#着色器程序" class="headerlink" title="着色器程序"></a>着色器程序</h3><p>创建一个程序对象很简单：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> shaderProgram;</span><br><span class="line">shaderProgram = <span class="built_in">glCreateProgram</span>();<span class="comment">//创建一个程序并返回id</span></span><br></pre></td></tr></table></figure>
+
+<p>把之前编译的着色器附加到程序对象上，然后用glLinkProgram链接它们：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glAttachShader</span>(shaderProgram, vertexShader);</span><br><span class="line"><span class="built_in">glAttachShader</span>(shaderProgram, fragmentShader);</span><br><span class="line"><span class="built_in">glLinkProgram</span>(shaderProgram);</span><br></pre></td></tr></table></figure>
+
+<p>得到的结果就是一个程序对象，我们可以调用glUseProgram函数，用刚创建的程序对象作为它的参数，以激活这个程序对象：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glUseProgram</span>(shaderProgram);</span><br></pre></td></tr></table></figure>
+
+<p>着色器对象链接到程序对象以后，删除着色器对象，不再需要它们：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glDeleteShader</span>(vertexShader);</span><br><span class="line"><span class="built_in">glDeleteShader</span>(fragmentShader);</span><br></pre></td></tr></table></figure>
+
+<p>现在，我们已经把输入顶点数据发送给了GPU，并指示了GPU如何在顶点和片段着色器中处理它。就快要完成了，但还没结束，OpenGL还不知道它该如何解释内存中的顶点数据，以及它该如何将顶点数据链接到顶点着色器的属性上。我们需要告诉OpenGL怎么做。</p>
+<h3 id="应用属性"><a href="#应用属性" class="headerlink" title="应用属性"></a>应用属性</h3><p><img src="https://learnopengl-cn.github.io/img/01/06/vertex_attribute_pointer_interleaved_textures.png" alt="img"></p>
+<p>glVertexAttribPointer用于指定这些属性</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//设置顶点位置属性指针</span></span><br><span class="line"><span class="built_in">glVertexAttribPointer</span>(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">5</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>), (<span class="type">void</span>*)<span class="number">0</span>);<span class="comment">//在这里的第一个参数使vao保存了vbo中数据应该有的状态！！！！！</span></span><br><span class="line"><span class="built_in">glEnableVertexAttribArray</span>(<span class="number">0</span>);</span><br><span class="line"><span class="comment">//设置顶点颜色属性指针</span></span><br><span class="line"><span class="comment">//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));</span></span><br><span class="line"><span class="comment">//glEnableVertexAttribArray(1);</span></span><br><span class="line"><span class="comment">//设置顶点纹理属性指针</span></span><br><span class="line"><span class="built_in">glVertexAttribPointer</span>(<span class="number">2</span>, <span class="number">2</span>, GL_FLOAT, GL_FALSE, <span class="number">5</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>), (<span class="type">void</span>*)(<span class="number">3</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>)));</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>第一个参数指定我们要配置的顶点属性。还记得我们在顶点着色器中使用<code>layout(location = 0)</code>定义了position顶点属性的位置值(Location)吗？layout就是这里的顶点属性的标号，对应position中的顶点，从前到后为位置，颜色，纹理，所以分别为0，1，2</li>
+<li>第二个参数指定顶点属性的大小。顶点属性是一个<code>vec3</code>，它由3个值组成，所以大小是3。</li>
+<li>第三个参数指定数据的类型，这里是GL_FLOAT(GLSL中<code>vec*</code>都是由浮点数值组成的)。</li>
+<li>下个参数定义我们是否希望数据被标准化(Normalize)。如果我们设置为GL_TRUE，所有数据都会被映射到0（对于有符号型signed数据是-1）到1之间。我们把它设置为GL_FALSE。</li>
+<li>第五个参数叫做步长(Stride)，它告诉我们在连续的顶点属性组之间的间隔。由于下个组位置数据在3个<code>float</code>之后，我们把步长设置为<code>3 * sizeof(float)</code>。要注意的是由于我们知道这个数组是紧密排列的（在两个顶点属性之间没有空隙）我们也可以设置为0来让OpenGL决定具体步长是多少（只有当数值是紧密排列时才可用）。一旦我们有更多的顶点属性，我们就必须更小心地定义每个顶点属性之间的间隔，我们在后面会看到更多的例子（译注: 这个参数的意思简单说就是从这个属性第二次出现的地方到整个数组0位置之间有多少字节）。</li>
+<li>最后一个参数的类型是<code>void*</code>，所以需要我们进行这个奇怪的强制类型转换。它表示位置数据在缓冲中起始位置的偏移量(Offset)。由于位置数据在数组的开头，所以这里是0。我们会在后面详细解释这个参数。</li>
+</ul>
+</blockquote>
+<h3 id="摄影机"><a href="#摄影机" class="headerlink" title="摄影机"></a>摄影机</h3>
+    </div>
+
+    
+    
+    
+    
+     <div>
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hah
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rhahr.top/2024/05/05/OpenGL-learnopengl%E5%85%A5%E9%97%A8/" title="Learn OpenGL 入门">http://rhahr.top/2024/05/05/OpenGL-learnopengl入门/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%BD%A2%E5%88%B0%E6%91%84%E5%83%8F%E6%9C%BA%E6%80%BB%E7%BB%93/" rel="tag"># 创建图形到摄像机总结</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/04/29/linux-shm/" rel="prev" title="共享内存">
+      <i class="fa fa-chevron-left"></i> 共享内存
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/05/14/C++-snprintf/" rel="next" title="snprintf">
+      snprintf <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81ODMwOS8zNDc3Mg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=188550&auto=1&height=66"></iframe>
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OpenGL"><span class="nav-number">1.</span> <span class="nav-text">OpenGL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#opengl%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.</span> <span class="nav-text">opengl是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="nav-number">1.2.</span> <span class="nav-text">状态机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%98%E5%88%B6"><span class="nav-number">1.3.</span> <span class="nav-text">绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.3.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%EF%BC%81"><span class="nav-number">1.3.2.</span> <span class="nav-text">开始！</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VAO"><span class="nav-number">1.3.3.</span> <span class="nav-text">VAO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VBO"><span class="nav-number">1.3.4.</span> <span class="nav-text">VBO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IBO"><span class="nav-number">1.3.5.</span> <span class="nav-text">IBO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Texture"><span class="nav-number">1.3.6.</span> <span class="nav-text">Texture</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.3.6.1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%B9%E7%90%86%E7%BB%91%E5%AE%9A"><span class="nav-number">1.3.6.2.</span> <span class="nav-text">纹理绑定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BA%B9%E7%90%86%E8%AE%BE%E7%BD%AE"><span class="nav-number">1.3.6.3.</span> <span class="nav-text">纹理设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9D%80%E8%89%B2%E5%99%A8%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.7.</span> <span class="nav-text">着色器代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9D%80%E8%89%B2%E5%99%A8%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.3.8.</span> <span class="nav-text">着色器程序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%B1%9E%E6%80%A7"><span class="nav-number">1.3.9.</span> <span class="nav-text">应用属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%91%84%E5%BD%B1%E6%9C%BA"><span class="nav-number">1.3.10.</span> <span class="nav-text">摄影机</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hah"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Hah</p>
+  <div class="site-description" itemprop="description">我没有为你伤春悲秋不配有憾事</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Jenwein" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Jenwein" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:rgw127310@gmail.com" title="E-Mail → mailto:rgw127310@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023-4 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hah</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">280k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:14</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+    </div>
+</body>
+</html>

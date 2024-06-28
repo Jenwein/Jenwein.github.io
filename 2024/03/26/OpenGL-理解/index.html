@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!--pjax：防止跳转页面音乐暂停-->
+ <script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/sword1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/sword2.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rhahr.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="OpenGLopengl就是一个状态机。 C++和OpenGL之间的关系可以这样理解：  C++程序：这是运行在CPU上的程序，它负责执行应用程序逻辑，处理输入输出，以及管理资源等。在OpenGL应用程序中，C++代码用于设置和控制渲染流程，包括调用OpenGL的API来执行具体的图形操作。 OpenGL程序：这是运行在GPU上的程序，它由一系列着色器组成，这些着色器是用GLSL（OpenGL S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenGL">
+<meta property="og:url" content="http://rhahr.top/2024/03/26/OpenGL-%E7%90%86%E8%A7%A3/index.html">
+<meta property="og:site_name" content="HahのBlog">
+<meta property="og:description" content="OpenGLopengl就是一个状态机。 C++和OpenGL之间的关系可以这样理解：  C++程序：这是运行在CPU上的程序，它负责执行应用程序逻辑，处理输入输出，以及管理资源等。在OpenGL应用程序中，C++代码用于设置和控制渲染流程，包括调用OpenGL的API来执行具体的图形操作。 OpenGL程序：这是运行在GPU上的程序，它由一系列着色器组成，这些着色器是用GLSL（OpenGL S">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-03-26T14:00:00.000Z">
+<meta property="article:modified_time" content="2024-04-15T15:20:36.160Z">
+<meta property="article:author" content="Hah">
+<meta property="article:tag" content="理解">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://rhahr.top/2024/03/26/OpenGL-%E7%90%86%E8%A7%A3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>OpenGL | HahのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Jenwein" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#fff; color:#151513; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">HahのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/26/OpenGL-%E7%90%86%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenGL
+        </h1>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-26 22:00:00" itemprop="dateCreated datePublished" datetime="2024-03-26T22:00:00+08:00">2024-03-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-15 23:20:36" itemprop="dateModified" datetime="2024-04-15T23:20:36+08:00">2024-04-15</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenGL/" itemprop="url" rel="index"><span itemprop="name">OpenGL</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>12k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>11 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="OpenGL"><a href="#OpenGL" class="headerlink" title="OpenGL"></a>OpenGL</h1><p>opengl就是一个状态机。</p>
+<p>C++和OpenGL之间的关系可以这样理解：</p>
+<ul>
+<li><strong>C++程序</strong>：这是运行在CPU上的程序，它负责执行应用程序逻辑，处理输入输出，以及管理资源等。在OpenGL应用程序中，C++代码用于设置和控制渲染流程，包括调用OpenGL的API来执行具体的图形操作。</li>
+<li><strong>OpenGL程序</strong>：这是运行在GPU上的程序，它由一系列着色器组成，这些着色器是用GLSL（OpenGL Shading Language）编写的。这些着色器程序负责处理所有的图形渲染任务，如顶点变换、光照计算、像素着色等。</li>
+</ul>
+<p>当你在C++的<code>main</code>函数中编写OpenGL相关的代码时，你实际上是在使用C++来控制GPU的行为。以下是整个过程的简化版：</p>
+<ol>
+<li><strong>编写着色器代码</strong>：在C++程序中，你会编写顶点着色器和片段着色器的源代码。</li>
+<li><strong>创建和编译着色器</strong>：通过<code>CreateShader</code>和<code>CompileShader</code>函数，你会创建OpenGL着色器对象，并将你的GLSL代码编译成GPU可以理解的形式。</li>
+<li><strong>链接着色器到程序</strong>：编译好的着色器会被附加到一个OpenGL程序对象上，然后这个程序对象会被链接。链接是将不同的着色器合并成一个完整的可执行程序的过程。</li>
+<li><strong>验证程序</strong>：链接完成后，程序会被验证，以确保它可以在当前的OpenGL环境中运行。</li>
+<li><strong>使用程序</strong>：在C++的<code>main</code>函数中，通过调用<code>glUseProgram</code>，你会告诉GPU使用之前链接好的程序来渲染图形。</li>
+</ol>
+<p>所以，你可以将C++程序看作是“指挥官”，它指挥GPU做什么；而OpenGL程序就像是在GPU上执行具体任务的“工人”。在C++程序中准备好一切后，通过<code>glUseProgram</code>实际上启动GPU上的OpenGL程序来进行渲染工作</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;GL/glew.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;GLFW/glfw3.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">unsigned</span> <span class="type">int</span> <span class="title">CompileShader</span><span class="params">(<span class="type">unsigned</span> <span class="type">int</span> type, <span class="type">const</span> std::string&amp; source)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个空的着色器对象，并返回一个可以引用它的非零值</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> id = <span class="built_in">glCreateShader</span>(type);</span><br><span class="line">   </span><br><span class="line">    <span class="comment">// 将C++字符串转换为C风格字符串</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* src = source.<span class="built_in">c_str</span>();</span><br><span class="line">   </span><br><span class="line">    <span class="comment">//将着色器中的源代码设置为字符串指定的字符串数组中的源代码</span></span><br><span class="line">    <span class="built_in">glShaderSource</span>(id,<span class="number">1</span>, &amp;src,<span class="literal">nullptr</span>);</span><br><span class="line">   </span><br><span class="line">    <span class="comment">// 编译着色器</span></span><br><span class="line">    <span class="built_in">glCompileShader</span>(id);</span><br><span class="line">   </span><br><span class="line">                      </span><br><span class="line">    <span class="comment">// 检查编译是否成功</span></span><br><span class="line">    <span class="type">int</span> result;</span><br><span class="line">    <span class="built_in">glGetShaderiv</span>(id,GL_COMPILE_STATUS, &amp;result);<span class="comment">//返回着色器对象的参数</span></span><br><span class="line">    <span class="keyword">if</span> (result == GL_FALSE)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> length;</span><br><span class="line">        <span class="comment">// 获取错误消息的长度</span></span><br><span class="line">        <span class="built_in">glGetShaderiv</span>(id, GL_INFO_LOG_LENGTH, &amp;length);</span><br><span class="line">        <span class="comment">// 分配足够的空间来存储错误消息</span></span><br><span class="line">        <span class="type">char</span>* message=(<span class="type">char</span>*)_malloca(length*<span class="built_in">sizeof</span>(<span class="type">char</span>));</span><br><span class="line">        <span class="comment">// 获取错误消息</span></span><br><span class="line">        <span class="built_in">glGetShaderInfoLog</span>(id,length,&amp;length, message);</span><br><span class="line">        <span class="comment">// 打印错误消息</span></span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Failed to compile &quot;</span>&lt;&lt;(type==GL_VERTEX_SHADER?<span class="string">&quot; vertex &quot;</span> :<span class="string">&quot; fragment &quot;</span>) &lt;&lt; <span class="string">&quot; shader!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; message &lt;&lt; std::endl;</span><br><span class="line">        <span class="comment">// 删除着色器并返回0</span></span><br><span class="line">        <span class="built_in">glDeleteShader</span>(id);</span><br><span class="line">    </span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 返回着色器ID</span></span><br><span class="line">    <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">unsigned</span> <span class="type">int</span> <span class="title">CreateShader</span><span class="params">(<span class="type">const</span> std::string&amp; vertexShader, <span class="type">const</span> std::string&amp; fragmentShader)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个程序对象并返回其ID</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> program=<span class="built_in">glCreateProgram</span>();</span><br><span class="line">   </span><br><span class="line">    <span class="comment">// 编译顶点和片段着色器</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> vs = <span class="built_in">CompileShader</span>(GL_VERTEX_SHADER,vertexShader);</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> fs = <span class="built_in">CompileShader</span>(GL_FRAGMENT_SHADER, fragmentShader);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将着色器附加到程序</span></span><br><span class="line">    <span class="built_in">glAttachShader</span>(program, vs);</span><br><span class="line">    <span class="built_in">glAttachShader</span>(program, fs);</span><br><span class="line">    <span class="comment">// 链接程序</span></span><br><span class="line">    <span class="built_in">glLinkProgram</span>(program);</span><br><span class="line">    <span class="comment">// 验证程序</span></span><br><span class="line">    <span class="built_in">glValidateProgram</span>(program);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除着色器对象，它们已经链接到程序中，不再需要了</span></span><br><span class="line">    <span class="built_in">glDeleteProgram</span>(vs);</span><br><span class="line">    <span class="built_in">glDeleteProgram</span>(fs);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 返回程序ID</span></span><br><span class="line">    <span class="keyword">return</span> program;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    GLFWwindow* window;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Initialize the library */</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">glfwInit</span>())</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Create a windowed mode window and its OpenGL context */</span></span><br><span class="line">    window = <span class="built_in">glfwCreateWindow</span>(<span class="number">640</span>, <span class="number">480</span>, <span class="string">&quot;Hello World&quot;</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span> (!window)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">glfwTerminate</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Make the window&#x27;s context current */</span></span><br><span class="line">    <span class="built_in">glfwMakeContextCurrent</span>(window);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">glewInit</span>()!=GLEW_OK) </span><br><span class="line">        std::cout&lt;&lt;<span class="string">&quot;Error \n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">glGetString</span>(GL_VERSION) &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//创建了顶点缓冲对象（VBO）</span></span><br><span class="line">    <span class="type">float</span> position[<span class="number">6</span>] = &#123;</span><br><span class="line">        <span class="number">-0.5f</span>, <span class="number">-0.5f</span>,</span><br><span class="line">         <span class="number">0.0f</span>,  <span class="number">0.5f</span>,</span><br><span class="line">         <span class="number">0.5f</span>, <span class="number">-0.5f</span>,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> buffer;</span><br><span class="line">    <span class="built_in">glGenBuffers</span>(<span class="number">1</span>, &amp;buffer);<span class="comment">//生成1个缓冲区，并将缓冲区id传入buffer</span></span><br><span class="line">    <span class="built_in">glBindBuffer</span>(GL_ARRAY_BUFFER,buffer);<span class="comment">//将一个名为 buffer 的缓冲区对象绑定到 GL_ARRAY_BUFFER 目标上,指定了缓冲区对象将被用于顶点属性数据的存储,任何对GL_ARRAY_BUFFER的操作都会影响buffer</span></span><br><span class="line">    <span class="built_in">glBufferData</span>(GL_ARRAY_BUFFER,<span class="number">6</span>*<span class="built_in">sizeof</span>(<span class="type">float</span>), position,GL_STATIC_DRAW);</span><br><span class="line">    <span class="comment">//有一些顶点数据存储在 position 中，把这些数据的大小为 6 * sizeof(float) 的部分传输到GPU。多次使用这些数据来绘制，但不会对它们进行修改</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">glEnableVertexAttribArray</span>(<span class="number">0</span>);<span class="comment">//启用顶点属性数组</span></span><br><span class="line">    <span class="comment">//为这些数据指定布局,确保了顶点着色器能够正确地理解每个顶点属性的数据结构和存储方式</span></span><br><span class="line">    <span class="built_in">glVertexAttribPointer</span>(<span class="number">0</span>, <span class="number">2</span>, GL_FLOAT, GL_FALSE, <span class="built_in">sizeof</span>(<span class="type">float</span>) * <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//以下是着色器源代码是用GL Shader Language (GLSL) 编写的，这是OpenGL的着色器编程语言</span></span><br><span class="line">    <span class="comment">//#version指令用于指定GLSL版本，</span></span><br><span class="line">    <span class="comment">//layout(location = 0)用于指定输入或输出变量的位置，</span></span><br><span class="line">    <span class="comment">//main函数是着色器的入口点</span></span><br><span class="line">    std::string vertexShader = <span class="string">R&quot;(</span></span><br><span class="line"><span class="string">#version 330 core</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">layout(location = 0) in vec4 position;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">void main()</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    gl_Position = position;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">)&quot;</span>;</span><br><span class="line"></span><br><span class="line">    std::string fragmentShader = <span class="string">R&quot;(</span></span><br><span class="line"><span class="string">#version 330 core</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">layout(location = 0) out vec4 color;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">void main()</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    color = vec4(1.0, 0.0, 1.0, 1.0);</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">)&quot;</span>;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> shader = <span class="built_in">CreateShader</span>(vertexShader, fragmentShader);</span><br><span class="line">    <span class="built_in">glUseProgram</span>(shader);</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">     </span><br><span class="line">    <span class="comment">/* Loop until the user closes the window */</span></span><br><span class="line">    <span class="keyword">while</span> (!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/* Render here */</span></span><br><span class="line">        <span class="built_in">glClear</span>(GL_COLOR_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="built_in">glDrawArrays</span>(GL_TRIANGLES,<span class="number">0</span>,<span class="number">6</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        glBegin(GL_TRIANGLES);</span></span><br><span class="line"><span class="comment">        glVertex2f( -0.5f, -0.5f );</span></span><br><span class="line"><span class="comment">        glVertex2f(  0.0f,  0.5f );</span></span><br><span class="line"><span class="comment">        glVertex2f(  0.5f, -0.5f );</span></span><br><span class="line"><span class="comment">        glEnd();</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">/* Swap front and back buffers */</span></span><br><span class="line">        <span class="built_in">glfwSwapBuffers</span>(window);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* Poll for and process events */</span></span><br><span class="line">        <span class="built_in">glfwPollEvents</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">glDeleteProgram</span>(shader);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">glfwTerminate</span>();</span><br><span class="line">    std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>OpenGL编程的大体流程涉及多个阶段，每个阶段都有其特定的功能和作用。下面是一个简化的流程概述</p>
+<ol>
+<li><p><strong>创建OpenGL上下文（Context）</strong>：这是开始任何OpenGL编程之前的必要步骤。上下文是一个巨大的状态机，它保存了OpenGL中的各种状态。</p>
+</li>
+<li><p>设置视口（Viewport）：这一步涉及到定义一个屏幕上的矩形区域，OpenGL会将最终的图像渲染到这个区域内。</p>
+</li>
+<li><p>准备着色器和程序（Shaders and Program）：着色器是运行在GPU上的小程序，负责处理图形和像素的渲染。在OpenGL中，至少需要编写并编译顶点和片段着色器，然后将它们链接到一个程序中，这个程序会在渲染过程中使用。</p>
+</li>
+<li><p>创建缓冲区（Buffers）：在GPU内存中创建缓冲区来存储顶点数据、颜色、纹理坐标等信息。这些数据会在渲染时被着色器程序使用。</p>
+</li>
+<li><p>加载纹理（Textures）：如果需要的话，加载纹理数据到GPU，以便在渲染中应用到3D对象上。</p>
+</li>
+<li><p>设置渲染循环（Render Loop）：这是一个持续运行的循环，不断地绘制图像并刷新屏幕。在每次迭代中，会执行清除屏幕、设置摄像机和视图变换、绘制对象等操作。</p>
+</li>
+<li><p>输入处理（Input Handling）：响应用户输入，如键盘和鼠标事件，以实现交互式图形应用。</p>
+</li>
+<li><p>清除和绘制（Clear and Draw）：在每次迭代中，清除颜色缓冲区和深度缓冲区，然后根据缓冲区中的数据绘制3D对象。</p>
+</li>
+<li><p>交换缓冲区（Buffer Swap）：在双缓冲模式下，绘制完成后，将后台缓冲区的内容交换到前台，显示到屏幕上。</p>
+</li>
+</ol>
+<p>关于 <strong>准备着色器和程序（Shaders and Program）</strong>部分。这段代码主要负责以下几个任务：</p>
+<ol>
+<li><strong>编译着色器（Compile Shaders）</strong>：<code>CompileShader</code>函数接收着色器类型和源代码字符串，创建着色器对象，将源代码与着色器关联，然后编译着色器。如果编译失败，它会打印错误信息并返回0。</li>
+<li><strong>链接着色器到程序（Link Shaders to Program）</strong>：<code>CreateShader</code>函数创建一个OpenGL程序对象，调用<code>CompileShader</code>函数分别编译顶点和片段着色器，然后将这两个着色器附加到程序对象上。接着，它链接这个程序对象，使其成为一个完整的可执行程序，最后返回程序对象的ID。</li>
+</ol>
+<p>这些步骤是设置OpenGL渲染管线的关键部分，确保了GPU能够正确地执行着色器代码来渲染图形。</p>
+<p>这里提到的程序是实际上的<strong>GPU上运行的程序</strong>，当main中写好的着色器代码传入CreateShader后编译这些代码，编译完成后将着色器附加到程序相当于是把编译好的代码添加到程序中，然后链接验证程序，最后将这个程序的id作为返回值返回，也就是相当于在CreateShader 和CompileShader 作准备工作，也就是编译着色器代码和创建程序以及两者的链接，然后在main中调用glUseProgram才会实际上执行这个程序</p>
+<h2 id="顶点着色器（可编程）"><a href="#顶点着色器（可编程）" class="headerlink" title="顶点着色器（可编程）"></a>顶点着色器（可编程）</h2><p>当今大多数显卡都有成千上万的小处理核心，它们在GPU上为每一个（渲染管线）阶段运行各自的小程序，从而在图形渲染管线中快速处理你的数据。这些小程序叫做<strong>着色器(Shader)。</strong> </p>
+<p>图形渲染管线的第一个部分是**顶点着色器(Vertex Shader)**，它把一个单独的顶点作为输入。顶点着色器主要的目的是把3D坐标转为另一种3D坐标（后面会解释），同时顶点着色器允许我们对顶点属性进行一些基本处理。</p>
+<p>它会在GPU上</p>
+<ol>
+<li>创建内存用于储存我们的顶点数据，</li>
+<li>配置OpenGL如何解释这些内存，并且指定其如何发送给显卡。</li>
+<li>顶点着色器接着会处理我们在内存中指定数量的顶点</li>
+</ol>
+<p>通过顶点缓冲对象(Vertex Buffer Objects, VBO)管理2中的这个内存，它会在GPU内存（通常被称为显存）中储存大量顶点。使用这些缓冲对象的好处是我们可以一次性的发送一大批数据到显卡上，而不是每个顶点发送一次。从CPU把数据发送到显卡相对较慢，所以只要可能我们都要尝试尽量一次性发送尽可能多的数据。当数据发送至显卡的内存中后，顶点着色器几乎能立即访问顶点，这是个非常快的过程。</p>
+<p>顶点数据储存在显卡的内存中，用VBO这个顶点缓冲对象管理。</p>
+<h2 id="片段着色器"><a href="#片段着色器" class="headerlink" title="片段着色器"></a>片段着色器</h2><p>计算像素最后的颜色输出</p>
+<blockquote>
+<p>在计算机图形中颜色被表示为有4个元素的数组：红色、绿色、蓝色和alpha(透明度)分量，通常缩写为RGBA。当在OpenGL或GLSL中定义一个颜色的时候，我们把颜色每个分量的强度设置在0.0到1.0之间。比如说我们设置红为1.0f，绿为1.0f，我们会得到两个颜色的混合色，即黄色。这三种颜色分量的不同调配可以生成超过1600万种不同的颜色！</p>
+</blockquote>
+<p>&#x3D;&#x3D;每个顶点属性从一个VBO管理的内存中获得它的数据，而具体是从哪个VBO（程序中可以有多个VBO）获取则是通过在调用glVertexAttribPointer时绑定到GL_ARRAY_BUFFER的VBO决定的。由于在调用glVertexAttribPointer之前绑定的是先前定义的VBO对象，顶点属性<code>0</code>现在会链接到它的顶点数据。&#x3D;&#x3D;</p>
+<h2 id="顶点数组（VAO）"><a href="#顶点数组（VAO）" class="headerlink" title="顶点数组（VAO）"></a>顶点数组（VAO）</h2><p>。。。</p>
+<p>在OpenGL中，当你绑定一个<strong>IBO（索引缓冲对象）到GL_ELEMENT_ARRAY_BUFFER</strong>目标，并且此时有一个<strong>VAO（顶点数组对象）</strong>处于绑定状态，IBO的绑定就会被VAO记录下来。这意味着，VAO不仅保存了顶点属性指针的状态，也保存了索引缓冲的绑定状态。</p>
+<p>这里是发生这一过程的关键步骤：</p>
+<ol>
+<li>创建并绑定VAO。</li>
+<li>绑定VBO并设置顶点属性指针（这些状态被保存在VAO中）。</li>
+<li>绑定IBO到GL_ELEMENT_ARRAY_BUFFER（这个绑定也被保存在VAO中）。</li>
+<li>解绑VAO。</li>
+</ol>
+<p>有一个vao绑定的期间绑定的所有对象都会被保存在vao中，所以在代码中才会出现刚创建vbo的时候进行了一次glBindBuffer(GL_ARRAY_BUFFER, VBO);绑定，在绑定vao之后又进行了一次这个绑定，第二次的绑定相当于是为了将其状态告知vao,</p>
+<hr>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;glad/glad.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;GLFW/glfw3.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">framebuffer_size_callback</span><span class="params">(GLFWwindow* window, <span class="type">int</span> width, <span class="type">int</span> height)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">processInput</span><span class="params">(GLFWwindow* window)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// settings</span></span><br><span class="line"><span class="type">const</span> <span class="type">unsigned</span> <span class="type">int</span> SCR_WIDTH = <span class="number">800</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">unsigned</span> <span class="type">int</span> SCR_HEIGHT = <span class="number">600</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// glfw: initialize and configure</span></span><br><span class="line">	<span class="comment">// ------------------------------</span></span><br><span class="line">	<span class="built_in">glfwInit</span>();</span><br><span class="line">	<span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MAJOR, <span class="number">3</span>);</span><br><span class="line">	<span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MINOR, <span class="number">3</span>);</span><br><span class="line">	<span class="built_in">glfwWindowHint</span>(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __APPLE__</span></span><br><span class="line">	<span class="built_in">glfwWindowHint</span>(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// glfw window creation</span></span><br><span class="line">	<span class="comment">// --------------------</span></span><br><span class="line">	GLFWwindow* window = <span class="built_in">glfwCreateWindow</span>(SCR_WIDTH, SCR_HEIGHT, <span class="string">&quot;LearnOpenGL&quot;</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">if</span> (window == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Failed to create GLFW window&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">		<span class="built_in">glfwTerminate</span>();</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">glfwMakeContextCurrent</span>(window);</span><br><span class="line">	<span class="built_in">glfwSetFramebufferSizeCallback</span>(window, framebuffer_size_callback);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// glad: load all OpenGL function pointers</span></span><br><span class="line">	<span class="comment">// ---------------------------------------</span></span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">gladLoadGLLoader</span>((GLADloadproc)glfwGetProcAddress))</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Failed to initialize GLAD&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="type">float</span> vertices[] = &#123;</span><br><span class="line">	 <span class="number">0.5f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>,   <span class="comment">// 右上角</span></span><br><span class="line">	 <span class="number">0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,   <span class="comment">// 右下角</span></span><br><span class="line">	<span class="number">-0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,   <span class="comment">// 左下角</span></span><br><span class="line">	<span class="number">-0.5f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>    <span class="comment">// 左上角</span></span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> index[] = &#123;</span><br><span class="line">		<span class="comment">// 注意索引从0开始!</span></span><br><span class="line">		<span class="comment">// 此例的索引(0,1,2,3)就是顶点数组vertices的下标，</span></span><br><span class="line">		<span class="comment">// 这样可以由下标代表顶点组合成矩形</span></span><br><span class="line"></span><br><span class="line">		<span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="comment">// 第一个三角形</span></span><br><span class="line">		<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>  <span class="comment">// 第二个三角形</span></span><br><span class="line"></span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> VBO;</span><br><span class="line">	<span class="built_in">glGenBuffers</span>(<span class="number">1</span>, &amp;VBO);</span><br><span class="line">	<span class="built_in">glBindBuffer</span>(GL_ARRAY_BUFFER, VBO);</span><br><span class="line">	<span class="built_in">glBufferData</span>(GL_ARRAY_BUFFER, <span class="built_in">sizeof</span>(vertices), &amp;vertices, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> IBO;</span><br><span class="line">	<span class="built_in">glGenBuffers</span>(<span class="number">1</span>, &amp;IBO);</span><br><span class="line">	<span class="built_in">glBindBuffer</span>(GL_ELEMENT_ARRAY_BUFFER, IBO);</span><br><span class="line">	<span class="built_in">glBufferData</span>(GL_ELEMENT_ARRAY_BUFFER, <span class="built_in">sizeof</span>(index), &amp;index, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">	<span class="type">const</span> <span class="type">char</span>* vertexshadersource = <span class="string">R&quot;(</span></span><br><span class="line"><span class="string">#version 330 core</span></span><br><span class="line"><span class="string">layout (location = 0) in vec3 aPos;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">void main()</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">)&quot;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> vertexShader;</span><br><span class="line">	vertexShader = <span class="built_in">glCreateShader</span>(GL_VERTEX_SHADER);</span><br><span class="line">	<span class="built_in">glShaderSource</span>(vertexShader, <span class="number">1</span>, &amp;vertexshadersource, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">glCompileShader</span>(vertexShader);</span><br><span class="line"></span><br><span class="line">	<span class="type">const</span> <span class="type">char</span>* fragmentshadersource = <span class="string">R&quot;(</span></span><br><span class="line"><span class="string">#version 330 core</span></span><br><span class="line"><span class="string">out vec4 FragColor;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">void main()</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);</span></span><br><span class="line"><span class="string">&#125; </span></span><br><span class="line"><span class="string">)&quot;</span>;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> fragmentShader;</span><br><span class="line">	fragmentShader = <span class="built_in">glCreateShader</span>(GL_FRAGMENT_SHADER);</span><br><span class="line">	<span class="built_in">glShaderSource</span>(fragmentShader, <span class="number">1</span>, &amp;fragmentshadersource, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">glCompileShader</span>(fragmentShader);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//创建一个程序对象</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> ShaderProgram;</span><br><span class="line">	ShaderProgram = <span class="built_in">glCreateProgram</span>();</span><br><span class="line"></span><br><span class="line">	<span class="comment">//编译的着色器附加到程序对象上</span></span><br><span class="line">	<span class="built_in">glAttachShader</span>(ShaderProgram, vertexShader);</span><br><span class="line">	<span class="built_in">glAttachShader</span>(ShaderProgram, fragmentShader);</span><br><span class="line">	<span class="built_in">glLinkProgram</span>(ShaderProgram);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//连接后即可删除</span></span><br><span class="line">	<span class="built_in">glDeleteShader</span>(vertexShader);</span><br><span class="line">	<span class="built_in">glDeleteShader</span>(fragmentShader);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//激活这个程序对象</span></span><br><span class="line">	<span class="built_in">glUseProgram</span>(ShaderProgram);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	现在，我们已经把输入顶点数据发送给了GPU，并指示了GPU如何在顶点和片段着色器中处理它。</span></span><br><span class="line"><span class="comment">	就快要完成了，但还没结束，OpenGL还不知道它该如何解释内存中的顶点数据，以及它该如</span></span><br><span class="line"><span class="comment">	何将顶点数据链接到顶点着色器的属性上。我们需要告诉OpenGL怎么做。</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),0);</span></span><br><span class="line"><span class="comment">//	glEnableVertexAttribArray(0);</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	自此，所有东西都已经设置好了：我们使用一个顶点缓冲对象将</span></span><br><span class="line"><span class="comment">	顶点数据初始化至缓冲中，建立了一个顶点和一个片段着色器，</span></span><br><span class="line"><span class="comment">	并告诉了OpenGL如何把顶点数据链接到顶点着色器的顶点属性上。</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line"></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> VAO;</span><br><span class="line">	<span class="comment">// 1. 绑定VAO</span></span><br><span class="line">	<span class="built_in">glGenVertexArrays</span>(<span class="number">1</span>, &amp;VAO);</span><br><span class="line">	<span class="built_in">glBindVertexArray</span>(VAO);</span><br><span class="line">	<span class="comment">// 2. 把顶点数组复制到缓冲中供OpenGL使用</span></span><br><span class="line">	<span class="built_in">glBindBuffer</span>(GL_ARRAY_BUFFER, VBO);</span><br><span class="line">	<span class="built_in">glBufferData</span>(GL_ARRAY_BUFFER, <span class="built_in">sizeof</span>(vertices), vertices, GL_STATIC_DRAW);</span><br><span class="line">	<span class="comment">// 3. 把索引数组复制到缓冲中供OpenGL使用</span></span><br><span class="line">	<span class="built_in">glBindBuffer</span>(GL_ELEMENT_ARRAY_BUFFER, IBO);</span><br><span class="line">	<span class="built_in">glBufferData</span>(GL_ELEMENT_ARRAY_BUFFER, <span class="built_in">sizeof</span>(index), index, GL_STATIC_DRAW);</span><br><span class="line">	<span class="comment">// 4. 设置顶点属性指针</span></span><br><span class="line">	<span class="built_in">glVertexAttribPointer</span>(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">3</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>), (<span class="type">void</span>*)<span class="number">0</span>);<span class="comment">//在这里的第一个参数使vao保存了vbo中数据应该有的状态！！！！！</span></span><br><span class="line">	<span class="built_in">glEnableVertexAttribArray</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// render loop</span></span><br><span class="line">	<span class="comment">// -----------</span></span><br><span class="line">	<span class="keyword">while</span> (!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// input</span></span><br><span class="line">		<span class="comment">// -----</span></span><br><span class="line">		<span class="built_in">processInput</span>(window);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// render</span></span><br><span class="line">		<span class="comment">// ------</span></span><br><span class="line">		<span class="built_in">glClearColor</span>(<span class="number">0.2f</span>, <span class="number">0.3f</span>, <span class="number">0.3f</span>, <span class="number">1.0f</span>);</span><br><span class="line">		<span class="built_in">glClear</span>(GL_COLOR_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="built_in">glUseProgram</span>(ShaderProgram);</span><br><span class="line">		<span class="built_in">glBindVertexArray</span>(VAO);</span><br><span class="line">		<span class="built_in">glDrawElements</span>(GL_TRIANGLES, <span class="number">6</span>, GL_UNSIGNED_INT, <span class="literal">nullptr</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//glBindVertexArray(0);</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)</span></span><br><span class="line">		<span class="comment">// -------------------------------------------------------------------------------</span></span><br><span class="line">		<span class="built_in">glfwSwapBuffers</span>(window);</span><br><span class="line">		<span class="built_in">glfwPollEvents</span>();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// glfw: terminate, clearing all previously allocated GLFW resources.</span></span><br><span class="line">	<span class="comment">// ------------------------------------------------------------------</span></span><br><span class="line">	<span class="built_in">glfwTerminate</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly</span></span><br><span class="line"><span class="comment">// ---------------------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">processInput</span><span class="params">(GLFWwindow* window)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">glfwGetKey</span>(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)</span><br><span class="line">		<span class="built_in">glfwSetWindowShouldClose</span>(window, <span class="literal">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// glfw: whenever the window size changed (by OS or user resize) this callback function executes</span></span><br><span class="line"><span class="comment">// ---------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">framebuffer_size_callback</span><span class="params">(GLFWwindow* window, <span class="type">int</span> width, <span class="type">int</span> height)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// make sure the viewport matches the new window dimensions; note that width and </span></span><br><span class="line">	<span class="comment">// height will be significantly larger than specified on retina displays.</span></span><br><span class="line">	<span class="built_in">glViewport</span>(<span class="number">0</span>, <span class="number">0</span>, width, height);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+    
+     <div>
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hah
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rhahr.top/2024/03/26/OpenGL-%E7%90%86%E8%A7%A3/" title="OpenGL">http://rhahr.top/2024/03/26/OpenGL-理解/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%90%86%E8%A7%A3/" rel="tag"># 理解</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/03/25/C++-set_intersection/" rel="prev" title="集合运算">
+      <i class="fa fa-chevron-left"></i> 集合运算
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/04/03/linux-makefile/" rel="next" title="makefile">
+      makefile <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81ODMwOS8zNDc3Mg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=188550&auto=1&height=66"></iframe>
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OpenGL"><span class="nav-number">1.</span> <span class="nav-text">OpenGL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B6%E7%82%B9%E7%9D%80%E8%89%B2%E5%99%A8%EF%BC%88%E5%8F%AF%E7%BC%96%E7%A8%8B%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">顶点着色器（可编程）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%87%E6%AE%B5%E7%9D%80%E8%89%B2%E5%99%A8"><span class="nav-number">1.2.</span> <span class="nav-text">片段着色器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B6%E7%82%B9%E6%95%B0%E7%BB%84%EF%BC%88VAO%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">顶点数组（VAO）</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hah"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Hah</p>
+  <div class="site-description" itemprop="description">我没有为你伤春悲秋不配有憾事</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Jenwein" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Jenwein" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:rgw127310@gmail.com" title="E-Mail → mailto:rgw127310@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023-4 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hah</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">280k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:14</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+    </div>
+</body>
+</html>

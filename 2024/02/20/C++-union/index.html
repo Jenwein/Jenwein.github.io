@@ -32,7 +32,7 @@
 <meta property="og:description" content="union在C++中，联合体（Union）是一种特殊的数据类型，允许在同一内存位置存储不同的数据类型。你可以把联合体看作一个结构，其中所有的成员共享同一个内存位置。这意味着你可以在同一位置存放许多不同类型的数据，并且只能使用其中一种类型的数据。 这是一个Union的例子：  12345union  &amp;#123;&#x2F;&#x2F;通常匿名使用但是匿名的时候不能有成员函数  int myInt;  double m">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-02-20T14:00:00.000Z">
-<meta property="article:modified_time" content="2024-02-21T08:33:55.949Z">
+<meta property="article:modified_time" content="2024-05-20T09:15:45.725Z">
 <meta property="article:author" content="Hah">
 <meta property="article:tag" content="QAQ">
 <meta name="twitter:card" content="summary">
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-02-21 16:33:55" itemprop="dateModified" datetime="2024-02-21T16:33:55+08:00">2024-02-21</time>
+                <time title="修改时间：2024-05-20 17:15:45" itemprop="dateModified" datetime="2024-05-20T17:15:45+08:00">2024-05-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,7 +259,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
+              <span>1.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -300,6 +300,15 @@
 </li>
 </ol>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Print</span><span class="params">(<span class="type">const</span> Vector2&amp; vec)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::cout&lt;&lt;vec.x&lt;&lt;<span class="string">&quot;,&quot;</span>&lt;&lt;vec.y &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Vector4 vector = &#123; <span class="number">1.0f</span>,<span class="number">2.0f</span>,<span class="number">3.0f</span>,<span class="number">4.0f</span>&#125;;<span class="comment">//a和b的对应元素其实也被初始化了，因为它们和x, y, z, w实际上是共享内存的。//vector.b.x==vector.z</span></span><br><span class="line">	<span class="built_in">Print</span>(vector.a);</span><br><span class="line">	vector.z = <span class="number">50.0f</span>;</span><br><span class="line">	<span class="built_in">Print</span>(vector.b);</span><br><span class="line">	</span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>也就是对同一片内存的按照不同类型进行的不同解释。</p>
+<p>如果有</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Entity</span>;</span><br><span class="line">Entity* e;</span><br></pre></td></tr></table></figure>
+
+<p>那么有时候会见到</p>
+<p><code>e[i].member</code> 和 <code>(e+i)-&gt;member</code> 这两种写法是等价的，一个是以数组形式的访问，一个是以指针的形式访问，因为e是Entity类型，所以当e+i时，实际上是在e的地址基础上＋i个Entity的size的位置，也就是e的地址末尾+1的位置。</p>
+
     </div>
 
     
@@ -347,8 +356,8 @@
       <i class="fa fa-chevron-left"></i> 类型双关
     </a></div>
       <div class="post-nav-item">
-    <a href="/2024/02/20/C++-Cast/" rel="next" title="类型双关">
-      类型双关 <i class="fa fa-chevron-right"></i>
+    <a href="/2024/02/20/C++-Cast/" rel="next" title="C++类型转换">
+      C++类型转换 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -429,20 +438,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -486,12 +495,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">105k</span>
+    <span title="站点总字数">280k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:36</span>
+    <span title="站点阅读时长">4:14</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

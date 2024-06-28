@@ -32,7 +32,7 @@
 <meta property="og:description" content="模板在C++和其他一些编程语言中，模板是一种通用编程的工具，允许程序员编写通用代码，以适应不同的数据类型或数据结构。模板的目的是提供一种在编写代码时延迟数据类型或数值选择的方式。 在C++中，主要有两种模板：函数模板和类模板。  函数模板：允许定义通用的函数，其中某些类型或数值可以通过模板参数进行参数化。函数模板的声明以 template 关键字开始，后面跟着模板参数列表和函数的定义。 1234t">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-01-27T14:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-27T14:03:13.973Z">
+<meta property="article:modified_time" content="2024-04-17T05:21:47.366Z">
 <meta property="article:author" content="Hah">
 <meta property="article:tag" content="templates">
 <meta name="twitter:card" content="summary">
@@ -222,10 +222,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-01-27 22:00:00 / 修改时间：22:03:13" itemprop="dateCreated datePublished" datetime="2024-01-27T22:00:00+08:00">2024-01-27</time>
+              <time title="创建时间：2024-01-27 22:00:00" itemprop="dateCreated datePublished" datetime="2024-01-27T22:00:00+08:00">2024-01-27</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-04-17 13:21:47" itemprop="dateModified" datetime="2024-04-17T13:21:47+08:00">2024-04-17</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -253,14 +259,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>945</span>
+              <span>2.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -289,6 +295,35 @@
 <p>通过使用模板，程序员可以编写更通用、灵活且可重用的代码，因为模板允许在编译时期实现参数化。在实际使用中，模板常常与泛型编程概念相结合，以实现更灵活的数据结构和算法。</p>
 <p>一个函数模板只有在调用后才会创建</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T,<span class="type">int</span> N&gt;<span class="comment">//这是一个模板声明，用于定义一个通用的类。T 是一个占位符，代表数组中元素的类型；N 也是一个占位符，代表数组的大小。</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Array</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	T m_Array[N];<span class="comment">//接受不同类型与不同的size</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">int</span> <span class="title">GetSize</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> N; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	Array&lt;<span class="type">int</span>, <span class="number">5</span>&gt;arr;</span><br><span class="line">	std::cout&lt;&lt;arr.<span class="built_in">GetSize</span>();</span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="模板特化"><a href="#模板特化" class="headerlink" title="模板特化"></a>模板特化</h2><p><strong>泛型编程</strong>是一种编程范式，它允许程序员编写与数据类型无关的代码。这是通过使用模板来实现的，模板可以看作是对类型进行参数化的工具。泛型编程的一个主要优势是代码重用：你可以创建能够处理多种数据类型的函数和类，而不需要为每种类型编写特定的代码。如果你想创建一个能够对任意类型的数组进行排序的函数，你可以使用函数模板来实现</p>
+<p><strong>模板元编程</strong>（Template Metaprogramming, TMP）则是一种更高级的泛型编程技术，它利用模板不仅仅是生成类型安全的代码，还能在编译时执行计算。这意味着你可以在程序编译时进行逻辑判断、计算和类型操作，从而生成优化的代码。模板元编程可以用于创建编译时数据结构、执行编译时算法，甚至生成新的代码</p>
+<p>一个简单的模板元编程的例子是编译时计算阶乘：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="type">int</span> N&gt; </span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Factorial</span> </span><br><span class="line">&#123;     </span><br><span class="line">    <span class="type">static</span> <span class="type">const</span> <span class="type">int</span> value = N * Factorial&lt;N - <span class="number">1</span>&gt;::value; </span><br><span class="line">&#125;;  </span><br><span class="line"><span class="keyword">template</span> &lt;&gt; </span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Factorial</span>&lt;<span class="number">0</span>&gt; </span><br><span class="line">&#123;     </span><br><span class="line">    <span class="type">static</span> <span class="type">const</span> <span class="type">int</span> value = <span class="number">1</span>; </span><br><span class="line">&#125;;  </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123;     </span><br><span class="line">    <span class="type">int</span> result = Factorial&lt;<span class="number">5</span>&gt;::value; <span class="comment">// 编译时计算5的阶乘     </span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>Factorial</code>模板结构体会在编译时递归计算给定数字的阶乘，并将结果存储在静态常量<code>value</code>中。这样，<code>result</code>变量就会被初始化为120，而这个计算是在编译时完成的，不会影响程序的运行时性能</p>
+<p>允许程序员为特定的数据类型提供特殊的模板代码实现。</p>
+<p><strong>模板特化</strong>（Template Specialization）是指为模板提供一个特定类型的实现。当模板被实例化时，如果特化的类型与实例化的类型匹配，编译器会使用特化的实现而不是通用模板。模板特化可以应用于类模板和函数模板。</p>
+<p>例如，你可能有一个通用的模板类<code>Compare</code>，但是你想为<code>float</code>类型提供一个特殊的比较逻辑，你可以这样特化：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;&gt; </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Compare</span>&lt;<span class="type">float</span>&gt; </span><br><span class="line">&#123; </span><br><span class="line"><span class="keyword">public</span>:     </span><br><span class="line">	<span class="function"><span class="type">bool</span> <span class="title">equal</span><span class="params">(<span class="type">float</span> a, <span class="type">float</span> b)</span> </span></span><br><span class="line"><span class="function">	</span>&#123;         </span><br><span class="line">	<span class="keyword">return</span> std::<span class="built_in">abs</span>(a - b) &lt; <span class="number">0.001</span>;    </span><br><span class="line">    &#125; </span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
+
+<p><strong>模板偏特化</strong>（Partial Template Specialization）是指对模板的一部分参数进行特化，而不是全部参数。这通常用于类模板，因为C++标准不支持函数模板的偏特化。</p>
+<p>例如，如果你有一个模板类<code>Pair</code>，它接受两种类型的参数，你可以为第一个类型是<code>int</code>的情况提供偏特化：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> <span class="title class_">T</span>&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Pair</span>&lt;<span class="type">int</span>, T&gt; </span><br><span class="line">&#123;     <span class="comment">// 偏特化实现 </span></span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
+
+<p>这里，<code>Pair</code>类模板被偏特化为当第一个参数是<code>int</code>类型时的实现。注意，偏特化仍然是模板，因为它包含至少一个模板参数（在这个例子中是<code>T</code>）。</p>
+<ol>
+<li><strong>模板参数推导</strong>：这是编译器自动确定模板参数类型的过程。当你使用模板函数或类时，编译器可以根据传递给模板的实参来推导模板参数的类型。</li>
+<li><strong>可变参数模板</strong>：C++11引入了可变参数模板，允许模板接受任意数量的模板参数。这使得编写能够接受不同数量参数的函数和类成为可能。</li>
+<li><strong>模板的默认参数</strong>：你可以为模板参数提供默认类型，如果在模板实例化时没有指定参数类型，将使用默认类型。</li>
+<li><strong>非类型模板参数</strong>：模板不仅可以接受类型作为参数，还可以接受常量值作为参数，这些值必须在编译时已知。</li>
+<li><strong>模板模板参数</strong>：这是一种高级的模板编程技术，允许模板接受另一个模板作为参数。</li>
+<li><strong>模板别名</strong>：C++11还引入了模板别名，它允许你为复杂的模板类型提供一个简短的别名。</li>
+<li><strong>SFINAE（Substitution Failure Is Not An Error）</strong>：这是一种编译时机制，用于在模板参数替换失败时选择合适的函数重载，而不是产生编译错误。</li>
+<li><strong>模板类的成员模板</strong>：一个模板类可以拥有模板成员函数，这些成员函数本身也是模板。</li>
+<li><strong>概念和约束</strong>（C++20）：这是C++20中引入的新特性，允许你为模板参数指定必须满足的条件，从而提供更清晰的模板接口和更好的错误信息。</li>
+</ol>
+
     </div>
 
     
@@ -402,7 +437,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.</span> <span class="nav-text">模板</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.</span> <span class="nav-text">模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%9D%BF%E7%89%B9%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">模板特化</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -418,20 +453,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -475,12 +510,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">105k</span>
+    <span title="站点总字数">280k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:36</span>
+    <span title="站点阅读时长">4:14</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

@@ -34,7 +34,7 @@
 <meta property="og:image" content="http://cdn.rhahr.icu/1704547576622.png">
 <meta property="og:image" content="http://cdn.rhahr.icu/tang.png">
 <meta property="article:published_time" content="2024-01-10T04:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-10T03:49:44.858Z">
+<meta property="article:modified_time" content="2024-05-16T02:51:50.458Z">
 <meta property="article:author" content="Hah">
 <meta property="article:tag" content="字符及字符串">
 <meta name="twitter:card" content="summary">
@@ -225,10 +225,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2024-01-10 12:00:00 / 修改时间：11:49:44" itemprop="dateCreated datePublished" datetime="2024-01-10T12:00:00+08:00">2024-01-10</time>
+              <time title="创建时间：2024-01-10 12:00:00" itemprop="dateCreated datePublished" datetime="2024-01-10T12:00:00+08:00">2024-01-10</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-16 10:51:50" itemprop="dateModified" datetime="2024-05-16T10:51:50+08:00">2024-05-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -256,14 +262,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.5k</span>
+              <span>6.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
+              <span>6 分钟</span>
             </span>
 
         </div>
@@ -280,7 +286,7 @@
 </li>
 <li><p>C++中字符串定义，像是<code>const char* name = &quot;String&quot;;</code> 双引号这种方式的字符串直接为<code>const char*</code>类型，在c++11中规定不允许<code>char*</code>来接受这种形式的字符串，在c++11之前是一种未定义的行为，不好的代码风格</p>
 </li>
-<li><p>C语言风格的字符串数组定义 <code>char name2[7] = &#123; &#39;S&#39;,&#39;t&#39;,&#39;r&#39;,&#39;i&#39;,&#39;n&#39;,&#39;g&#39;,0 &#125;;</code> 需要扩充数组补0来告知编译器结束位置否则编译器会被“烫着”（maybe）</p>
+<li><p>C语言风格的字符串数组定义 <code>char name2[7] = &#123; &#39;S&#39;,&#39;t&#39;,&#39;r&#39;,&#39;i&#39;,&#39;n&#39;,&#39;g&#39;,0 &#125;;</code> <strong>需要扩充数组补0</strong>来告知编译器结束位置否则编译器会被“烫着”（maybe）</p>
 </li>
 </ul>
 <p>就像<img src="http://cdn.rhahr.icu/1704547576622.png"><br>这是因为在这种类型的字符定义不像<code>char *</code>，会有空终止符（the null termination charactor），而是访问到了set cc部分（暂无）</p>
@@ -288,6 +294,162 @@
 <ul>
 <li>传参时如果直接参数传递会使在heap上动态的分配全新的char数组来存储string的复制内容，slow，所以要用引用传递,eg:<code>void PrintStirng(std::string&amp; string)</code></li>
 </ul>
+<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><table>
+<thead>
+<tr>
+<th align="left">成员函数</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#append"><code>append</code></a></td>
+<td align="left">向字符串的末尾添加字符。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#assign"><code>assign</code></a></td>
+<td align="left">对字符串的内容赋新的字符值。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#at"><code>at</code></a></td>
+<td align="left">返回对字符串中指定位置的元素的引用。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#begin"><code>begin</code></a></td>
+<td align="left">返回发现字符串中第一个元素的位置的迭代器。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#c_str"><code>c_str</code></a></td>
+<td align="left">将字符串的内容转换为以 null 结尾的 C 样式字符串。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#cbegin"><code>cbegin</code></a></td>
+<td align="left">返回发现字符串中第一个元素的位置的常量迭代器。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#cend"><code>cend</code></a></td>
+<td align="left">返回发现字符串中最后一个元素之后的位置的常量迭代器。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#clear"><code>clear</code></a></td>
+<td align="left">清除字符串中的全部元素。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#compare"><code>compare</code></a></td>
+<td align="left">将字符串与指定字符串比较，确定两个字符串是否相等或按字典顺序一个字符串是否小于另一个。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#copy"><code>copy</code></a></td>
+<td align="left">将指定数目的字符从源字符串中的索引位置复制到目标字符组。 已弃用。 请改用 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#copy_s"><code>basic_string::_Copy_s</code></a>。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#crbegin"><code>crbegin</code></a></td>
+<td align="left">返回发现反向字符串中第一个元素的位置的常量迭代器。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#crend"><code>crend</code></a></td>
+<td align="left">返回发现反向字符串中最后一个元素之后的位置的常量迭代器。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#copy_s"><code>_Copy_s</code></a></td>
+<td align="left"><strong>Microsoft 特定</strong>：将指定数目的字符从源字符串中的索引位置复制到目标字符组。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#data"><code>data</code></a></td>
+<td align="left">将字符串的内容转换为字符数组。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#empty"><code>empty</code></a></td>
+<td align="left">测试字符串是否包含字符。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#end"><code>end</code></a></td>
+<td align="left">返回发现字符串中最后一个元素之后的位置的迭代器。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#ends_with"><code>ends_with</code></a>C++20</td>
+<td align="left">检查字符串是否以指定的后缀结尾。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#erase"><code>erase</code></a></td>
+<td align="left">从字符串中的指定位置删除一个或一系列元素。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#find"><code>find</code></a></td>
+<td align="left">向前搜索字符串，搜索与指定字符序列匹配的第一个子字符串。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#find_first_not_of"><code>find_first_not_of</code></a></td>
+<td align="left">在字符串中搜索不属于指定字符串中元素的第一个字符。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#find_first_of"><code>find_first_of</code></a></td>
+<td align="left">在字符串中搜索与指定字符串中任何元素匹配的第一个字符。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#find_last_not_of"><code>find_last_not_of</code></a></td>
+<td align="left">在字符串中搜索不属于指定字符串中任何元素的最后一个字符。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#find_last_of"><code>find_last_of</code></a></td>
+<td align="left">在字符串中搜索属于指定字符串中一个元素的最后一个字符。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#front"><code>front</code></a></td>
+<td align="left">返回对字符串中第一个元素的引用。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#get_allocator"><code>get_allocator</code></a></td>
+<td align="left">返回用于构造字符串的 <code>allocator</code> 对象的副本。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#insert"><code>insert</code></a></td>
+<td align="left">将一个、多个或一系列元素插入到指定位置的字符串中。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#length"><code>length</code></a></td>
+<td align="left">返回字符串中元素的当前数目。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#max_size"><code>max_size</code></a></td>
+<td align="left">返回字符串可包含的字符的最大数目。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#rbegin"><code>rbegin</code></a></td>
+<td align="left">返回指向反向字符串中第一个元素的迭代器。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#rend"><code>rend</code></a></td>
+<td align="left">返回指向刚超出反向字符串的最后一个元素的位置的迭代器。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#replace"><code>replace</code></a></td>
+<td align="left">用指定字符或者从其他范围、字符串或 C 字符串复制的字符来替代字符串中指定位置的元素。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#reserve"><code>reserve</code></a></td>
+<td align="left">将字符串的容量设置为一个数目，这个数目至少应与指定数目一样大。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#resize"><code>resize</code></a></td>
+<td align="left">根据要求追加或删除元素，为字符串指定新的大小。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#rfind"><code>rfind</code></a></td>
+<td align="left">向后搜索字符串，搜索与指定字符序列匹配的第一个子字符串。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#size"><code>size</code></a></td>
+<td align="left">返回字符串中元素的当前数目。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#starts_with"><code>starts_with</code></a>C++20</td>
+<td align="left">检查字符串是否以指定的前缀开始。</td>
+</tr>
+<tr>
+<td align="left"><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/standard-library/basic-string-class?view=msvc-170#substr"><code>substr</code></a></td>
+<td align="left">从字符串起始处的指定位置复制最多某个数目的字符的子字符串。</td>
+</tr>
+</tbody></table>
 <p>全部代码：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span> </span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">PrintStirng</span><span class="params">(std::string&amp; string)</span><span class="comment">//直接参数传递会使在heap上动态的分配全新的char数组来存储string的复制内容，slow，所以要用引用传递</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::cout &lt;&lt; string &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//char* name = &quot;String&quot;;//错误,双引号&quot;&quot;来包括字符是指的是const char*类型的字符，所以不能用char*来修饰</span></span><br><span class="line">	</span><br><span class="line">	<span class="type">const</span> <span class="type">char</span>* name = <span class="string">&quot;String&quot;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//std::string name0=&quot;String&quot;;</span></span><br><span class="line">	std::string name0 = std::<span class="built_in">string</span>(<span class="string">&quot;string&quot;</span>)+<span class="string">&quot;hello&quot;</span>;<span class="comment">//显示的调用string构造函数将其一个传入string构造函数中</span></span><br><span class="line">	<span class="type">bool</span> contains=name0.<span class="built_in">find</span>(<span class="string">&quot;gh&quot;</span>)!=std::string::npos;<span class="comment">//查找string中是否有想要查找的内容，有1无0（bool），find；</span></span><br><span class="line"><span class="comment">//name0 += &quot;hello&quot;;//连接字符串</span></span><br><span class="line">    <span class="comment">//char name2[7] = &#123; &#x27;S&#x27;,&#x27;t&#x27;,&#x27;r&#x27;,&#x27;i&#x27;,&#x27;n&#x27;,&#x27;g&#x27;,0 &#125;;//需要一个0告知编译器结束位置</span></span><br><span class="line"></span><br><span class="line">	std::cout &lt;&lt; name &lt;&lt; std::endl;</span><br><span class="line">	std::cout &lt;&lt; name0 &lt;&lt; std::endl;<span class="comment">//&lt;string&gt;中将&quot;&lt;&lt;&quot;重载，使得可以把字符串传入输出流</span></span><br><span class="line">	std::cout &lt;&lt;contains &lt;&lt; std::endl;</span><br><span class="line">	<span class="built_in">PrintStirng</span>(name0);</span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -330,7 +492,7 @@
 <p>注意，这里的 “String”s 是一个 std::string 类型的 string_literal，因为它使用了 s 后缀。s 后缀是一个用户自定义的字面量 (user-defined literal)，它可以将一个 const char* 类型的 string_literal 转换为一个 std::string 类型的 string_literal。</p>
 <p>再或者可以</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const char* ex=R&quot;(line1</span><br><span class="line">line2</span><br><span class="line">line3</span><br><span class="line">line4)&quot;;</span><br></pre></td></tr></table></figure>
-<p>适合用大量文本编写，如果没有 R 则需要每个字符串后都\n手动换行</p>
+<p>适合用大量文本编写，如果没有 R 则需要每个字符串后都\n手动换行,在OpenGL的着色器代码编写时可以用</p>
 </li>
 <li><p>当我用这种方法</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::u32string name0 = <span class="string">U&quot;String&quot;</span>s + <span class="string">U&quot;hello&quot;</span>;</span><br></pre></td></tr></table></figure>
@@ -474,7 +636,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#String"><span class="nav-number">1.</span> <span class="nav-text">String</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#String-literal"><span class="nav-number">1.1.</span> <span class="nav-text">String literal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#other-thing"><span class="nav-number">1.2.</span> <span class="nav-text">other thing</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#String"><span class="nav-number">1.</span> <span class="nav-text">String</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">常用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#String-literal"><span class="nav-number">1.2.</span> <span class="nav-text">String literal</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#other-thing"><span class="nav-number">1.3.</span> <span class="nav-text">other thing</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -490,20 +652,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -547,12 +709,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">105k</span>
+    <span title="站点总字数">280k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:36</span>
+    <span title="站点阅读时长">4:14</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

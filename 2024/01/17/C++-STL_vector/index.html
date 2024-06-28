@@ -32,7 +32,7 @@
 <meta property="og:description" content="vector动态数组，动态分配是通过重新创建一个更大空间的新数组来将原来的数据复制过去然后删除原来的数组 头文件&lt;vector&gt;  例： 12345678910111213141516171819202122232425262728293031323334353637383940struct Vertex&amp;#123;	float x, y, z;&amp;#125;;std::ostream&amp;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-01-17T14:00:00.000Z">
-<meta property="article:modified_time" content="2024-01-19T14:05:47.204Z">
+<meta property="article:modified_time" content="2024-03-07T02:19:44.844Z">
 <meta property="article:author" content="Hah">
 <meta property="article:tag" content="range-based for loop">
 <meta name="twitter:card" content="summary">
@@ -230,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-01-19 22:05:47" itemprop="dateModified" datetime="2024-01-19T22:05:47+08:00">2024-01-19</time>
+                <time title="修改时间：2024-03-07 10:19:44" itemprop="dateModified" datetime="2024-03-07T10:19:44+08:00">2024-03-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -259,7 +259,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4.4k</span>
+              <span>4.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -283,7 +283,7 @@
 <p>例：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Vertex</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">float</span> x, y, z;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">std::ostream&amp; <span class="keyword">operator</span>&lt;&lt;(std::ostream&amp; stream,<span class="type">const</span> Vertex&amp; vertex)</span><br><span class="line">&#123;</span><br><span class="line">	stream &lt;&lt; vertex.x &lt;&lt; <span class="string">&quot;,&quot;</span> &lt;&lt; vertex.y &lt;&lt; <span class="string">&quot;,&quot;</span> &lt;&lt; vertex.z;</span><br><span class="line">	<span class="keyword">return</span> stream;</span><br><span class="line">&#125;<span class="comment">//重载&lt;&lt;,更方便的输出vector</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Function</span><span class="params">(std::vector&lt;Vertex&gt;&amp; vertices)</span><span class="comment">//一定要引用传递</span></span></span><br><span class="line"><span class="function"></span>&#123;<span class="comment">//do sth.</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//Vertex* vertices = new Vertex[5];</span></span><br><span class="line">	<span class="comment">//vertices[4];</span></span><br><span class="line"></span><br><span class="line">	std::vector&lt;Vertex&gt;vertices;<span class="comment">//尽量使用对象而不是指针</span></span><br><span class="line">	vertices.<span class="built_in">push_back</span>(&#123; <span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span> &#125;);</span><br><span class="line">	vertices.<span class="built_in">push_back</span>(&#123; <span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span> &#125;);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">Function</span>(vertices);<span class="comment">//确保是引用传递，避免大量复制</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; vertices.<span class="built_in">size</span>(); i++)</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; vertices[i] &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	vertices.<span class="built_in">erase</span>(vertices.<span class="built_in">begin</span>()+<span class="number">1</span>);</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">for</span> (Vertex&amp; v: vertices)<span class="comment">//range-based for loop</span></span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt;v &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="range-based-for-loop"><a href="#range-based-for-loop" class="headerlink" title="range-based for loop"></a>range-based for loop</h2><p>范围-based for 循环（Range-based for loop）是C++11引入的一种新型循环结构，它简化了遍历容器元素的过程，提高了代码的可读性。这种循环适用于任何支持迭代器（iterator）的容器，如数组、向量、列表等。</p>
+<h3 id="range-based-for-loop"><a href="#range-based-for-loop" class="headerlink" title="range-based for loop"></a>range-based for loop</h3><p>范围-based for 循环（Range-based for loop）是C++11引入的一种新型循环结构，它简化了遍历容器元素的过程，提高了代码的可读性。这种循环适用于任何支持迭代器（iterator）的容器，如数组、向量、列表等。</p>
 <p>循环的基本语法形式如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">cppCopy code</span></span><br><span class="line"><span class="function"><span class="title">for</span> <span class="params">(element_declaration : range_expression)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 循环体</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -300,7 +300,7 @@
 <h2 id="vector优化"><a href="#vector优化" class="headerlink" title="vector优化"></a>vector优化</h2><p>因为vector会在容量够的情况下去重新分配内存空间然后复制原来的内容到新的地方，所以会有很大的拷贝开销，还是用之前的例子，然后我们在这个类中定义好构造函数和拷贝构造函数，并在拷贝构造函数里打印copied用来标记显示我们调用了几次拷贝构造</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Vertex</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">float</span> x, y, z;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">Vertex</span>(<span class="type">float</span> x,<span class="type">float</span> y,<span class="type">float</span> z)</span><br><span class="line">		:<span class="built_in">x</span>(x),<span class="built_in">y</span>(y),<span class="built_in">z</span>(z)</span><br><span class="line">	&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">Vertex</span>(<span class="type">const</span> Vertex&amp; vertex)</span><br><span class="line">		:<span class="built_in">x</span>(vertex.x),<span class="built_in">y</span>(vertex.y),<span class="built_in">z</span>(vertex.z)</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Copied!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p>在main中创建Vertex类型的vector名为vertices，然后通过push_back来插入元素，结果运行后发现打印了六次copied，（这里参数写为Vectex(1,2,3)）便于看出这是先构造一个新对象，然后通过拷贝构造来将参数拷贝过去，每次容量扩充都会带来一次拷贝</p>
+<p>在main中创建Vertex类型的vector名为vertices，然后通过push_back来插入元素，结果运行后发现打印了六次copied，（这里参数写为Vectex(1,2,3)）便于看出这是在main中构造一个新对象，然后通过拷贝构造来将参数拷贝过去，每次容量扩充都会带来一次拷贝，<em>也就是说使用push_back是一次构造一次复制</em></p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::vector&lt;Vertex&gt;vertices;</span><br><span class="line"></span><br><span class="line">	vertices.<span class="built_in">push_back</span>(<span class="built_in">Vertex</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>));</span><br><span class="line">	vertices.<span class="built_in">push_back</span>(<span class="built_in">Vertex</span>(<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>));</span><br><span class="line">	vertices.<span class="built_in">push_back</span>(<span class="built_in">Vertex</span>(<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>假设vector&#96;的扩容倍数是2，代码中vector的容量变化如下：</p>
 <ul>
@@ -310,15 +310,19 @@
 </ul>
 <p>所以，总共打印了六次<code>Copied!</code>，每次打印的次数等于当前<code>vector</code>的大小</p>
 <p>如果你想避免这种情况，你可以使用<code>reserve</code>函数来预留一定的内存空间，这样就不需要每次添加元素时都重新分配内存和拷贝元素例如，可以这样写：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;Vertex&gt; vertices; vertices.<span class="built_in">reserve</span>(<span class="number">3</span>); <span class="comment">// 预留3个元素的空间 </span></span><br><span class="line">vertices.<span class="built_in">push_back</span>(<span class="built_in">Vertex</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)); <span class="comment">// 不需要重新分配内存，只调用一次拷贝构造函数 </span></span><br><span class="line">vertices.<span class="built_in">push_back</span>(<span class="built_in">Vertex</span>(<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)); <span class="comment">// 不需要重新分配内存，只调用一次拷贝构造函数 </span></span><br><span class="line">vertices.<span class="built_in">push_back</span>(<span class="built_in">Vertex</span>(<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>)); <span class="comment">// 不需要重新分配内存，只调用一次拷贝构造函数 </span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;Vertex&gt; vertices; vertices.<span class="built_in">reserve</span>(<span class="number">3</span>); <span class="comment">// 预留3个元素的空间 </span></span><br><span class="line">vertices.<span class="built_in">push_back</span>(<span class="built_in">Vertex</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)); <span class="comment">// 不需要重新分配内存，调用一次默认构造和拷贝构造函数 </span></span><br><span class="line">vertices.<span class="built_in">push_back</span>(<span class="built_in">Vertex</span>(<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>)); <span class="comment">// 不需要重新分配内存，调用一次默认构造和拷贝构造函数 </span></span><br><span class="line">vertices.<span class="built_in">push_back</span>(<span class="built_in">Vertex</span>(<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>)); <span class="comment">// 不需要重新分配内存，调用一次默认构造和拷贝构造函数 </span></span><br></pre></td></tr></table></figure>
 
+<blockquote>
+<p>如果你提供的是一个对象实例，而不是一个临时对象或者一个对象的引用，那么会调用默认构造函数来创建一个新的元素，然后再使用拷贝构造函数将其添加到向量中。如果你提供的是一个临时对象或者一个对象的引用，那么会直接调用拷贝构造函数将其添加到向量中，而不会调用默认构造函数</p>
+</blockquote>
 <p>这样就只会打印三次<code>Copied!</code>，每次打印的次数等于1</p>
 <p>也可以使用<code>emplace_back</code>函数来直接在<code>vector</code>的尾部构造一个元素，而不需要创建一个临时对象，这样就可以避免拷贝构造函数的调用，提高效率。例如，可以这样写：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;Vertex&gt; vertices; vertices.<span class="built_in">reserve</span>(<span class="number">3</span>); <span class="comment">// 预留3个元素的空间 </span></span><br><span class="line">vertices.<span class="built_in">emplace_back</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>); <span class="comment">// 不需要重新分配内存，也不需要拷贝构造函数，只调用一次构造函数 </span></span><br><span class="line">vertices.<span class="built_in">emplace_back</span>(<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>); <span class="comment">// 不需要重新分配内存，也不需要拷贝构造函数，只调用一次构造函数 </span></span><br><span class="line">vertices.<span class="built_in">emplace_back</span>(<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>); <span class="comment">// 不需要重新分配内存，也不需要拷贝构造函数，只调用一次构造函数 </span></span><br></pre></td></tr></table></figure>
 
 <p>这样就不会打印任何<code>Copied!</code>，只会打印三次<code>Constructor</code></p>
 <h3 id="emplace-back"><a href="#emplace-back" class="headerlink" title="emplace_back()"></a>emplace_back()</h3><p>该函数是 C++ 11 新增加的，其功能和 push_back() 相同，都是在 vector 容器的尾部添加一个元素。</p>
-<p>当调用push_back() 或insert() 成员函数时，是把元素类型的对象传递给它们，这些对象被拷贝到容器中。</p>
+<p>当调用push_back() 或insert() 成员函数时，是把元素类型的对象传递给它们，这些对象被拷贝到容器中。emplace_back是使用传入的参数直接用来构造实例而不是push_back先在main中构造后在拷贝到对象中</p>
+<p>也就是从原来的  <u>构造＋拷贝—&gt;构造</u></p>
 <p>而当我们调用一个 emplace 系列函数时，则是将相应参数传递给元素类型的构造函数。这样emplace_back() 能就地通过参数构造对象，不需要拷贝操作，相比push_back() 能更好的避免内存的拷贝和移动，提升容器插入元素的性能。</p>
 <p>大多数情况都应该使用 emplace 系列函数：emplace; emplace_back; emplace_hit; emplace_fornt; emplace_after.</p>
 <blockquote>
@@ -385,8 +389,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/01/17/C++-%E5%86%85%E5%AE%B9%E5%AF%B9%E9%BD%90%E4%B8%8E%E5%AD%97%E8%8A%82%E5%A1%AB%E5%85%85/" rel="prev" title="内容对齐与字节填充">
-      <i class="fa fa-chevron-left"></i> 内容对齐与字节填充
+    <a href="/2024/01/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-vector/" rel="prev" title="手写vector,array">
+      <i class="fa fa-chevron-left"></i> 手写vector,array
     </a></div>
       <div class="post-nav-item">
     <a href="/2024/01/26/C++-%E4%BD%BF%E7%94%A8%E5%BA%93/" rel="next" title="库的链接创建使用">
@@ -455,7 +459,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vector"><span class="nav-number">1.</span> <span class="nav-text">vector</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#range-based-for-loop"><span class="nav-number">1.1.</span> <span class="nav-text">range-based for loop</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector%E4%BC%98%E5%8C%96"><span class="nav-number">1.2.</span> <span class="nav-text">vector优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#emplace-back"><span class="nav-number">1.2.1.</span> <span class="nav-text">emplace_back()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">1.3.</span> <span class="nav-text">补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vector%E4%B8%AD%E7%9A%84reserve%E5%92%8Cresize%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%EF%BC%9A"><span class="nav-number">1.3.1.</span> <span class="nav-text">vector中的reserve和resize的区别是：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vector%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5"><span class="nav-number">1.3.2.</span> <span class="nav-text">vector分配策略</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vector"><span class="nav-number">1.</span> <span class="nav-text">vector</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#range-based-for-loop"><span class="nav-number">1.0.1.</span> <span class="nav-text">range-based for loop</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vector%E4%BC%98%E5%8C%96"><span class="nav-number">1.1.</span> <span class="nav-text">vector优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#emplace-back"><span class="nav-number">1.1.1.</span> <span class="nav-text">emplace_back()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">1.2.</span> <span class="nav-text">补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vector%E4%B8%AD%E7%9A%84reserve%E5%92%8Cresize%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%EF%BC%9A"><span class="nav-number">1.2.1.</span> <span class="nav-text">vector中的reserve和resize的区别是：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#vector%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5"><span class="nav-number">1.2.2.</span> <span class="nav-text">vector分配策略</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -471,20 +475,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -528,12 +532,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">105k</span>
+    <span title="站点总字数">280k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:36</span>
+    <span title="站点阅读时长">4:14</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
