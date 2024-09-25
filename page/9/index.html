@@ -195,250 +195,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/01/17/C++-%E5%86%85%E5%AE%B9%E5%AF%B9%E9%BD%90%E4%B8%8E%E5%AD%97%E8%8A%82%E5%A1%AB%E5%85%85/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/01/17/C++-%E5%86%85%E5%AE%B9%E5%AF%B9%E9%BD%90%E4%B8%8E%E5%AD%97%E8%8A%82%E5%A1%AB%E5%85%85/" class="post-title-link" itemprop="url">内容对齐与字节填充</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-01-17 00:00:00 / 修改时间：20:34:15" itemprop="dateCreated datePublished" datetime="2024-01-17T00:00:00+08:00">2024-01-17</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="内存对齐"><a href="#内存对齐" class="headerlink" title="内存对齐"></a>内存对齐</h1><p>一种编程技术，用于让数据在内存中的存放位置满足一定的规则，以提高数据访问的效率和兼容性。填充字节是为了实现内存对齐而在数据之间或结构体末尾添加的额外字节，用于占位或对齐。</p>
-<p>内存对齐的原因有两个：</p>
-<ul>
-<li>平台原因：不同的硬件平台对数据的访问方式和要求可能不同，有些平台只能从特定的地址开始访问特定类型的数据，否则会出现错误或异常。</li>
-<li>性能原因：内存对齐可以使数据访问更快，因为处理器可以一次读取或写入一个数据单元，而不需要多次操作或额外的处理。</li>
-</ul>
-<p>内存对齐的规则有三个：</p>
-<ul>
-<li>基本类型的对齐值就是其大小，例如 int 的对齐值是 4，char 的对齐值是 1。</li>
-<li>结构体或联合体的成员，第一个成员的偏移量是 0，以后每个成员的偏移量都是该成员的对齐值和预设的对齐系数中较小的那个的整数倍，如果需要，编译器会在成员之间插入填充字节。</li>
-<li>结构体或联合体本身的对齐值是其最大成员的对齐值和预设的对齐系数中较小的那个，结构体或联合体的总大小是其对齐值的整数倍，如果需要，编译器会在结构体或联合体末尾添加填充字节。</li>
-</ul>
-<p>预设的对齐系数是编译器默认的内存对齐参数，通常是 4 或 8，也可以通过编译指令或选项来修改。例如，在 gcc 中，可以使用 #pragma pack(n) 来指定对齐系数为 n，n 可以是 1，2，4，8，16 等。</p>
-<p>下面是一个例子，说明内存对齐和填充字节的作用：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">S1</span> &#123;</span><br><span class="line">    <span class="type">int</span> i; <span class="comment">// 4 字节，对齐值为 4，偏移量为 0</span></span><br><span class="line">    <span class="type">char</span> c1; <span class="comment">// 1 字节，对齐值为 1，偏移量为 4</span></span><br><span class="line">    <span class="type">char</span> c2; <span class="comment">// 1 字节，对齐值为 1，偏移量为 5</span></span><br><span class="line">    <span class="comment">// 编译器在此处插入 2 个填充字节，使结构体总大小为 8 的整数倍</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">S2</span> &#123;</span><br><span class="line">    <span class="type">char</span> c1; <span class="comment">// 1 字节，对齐值为 1，偏移量为 0</span></span><br><span class="line">    <span class="type">int</span> i; <span class="comment">// 4 字节，对齐值为 4，偏移量为 4（因为预设的对齐系数为 4，所以要跳过 3 个字节）</span></span><br><span class="line">    <span class="type">char</span> c2; <span class="comment">// 1 字节，对齐值为 1，偏移量为 8</span></span><br><span class="line">    <span class="comment">// 编译器在此处插入 3 个填充字节，使结构体总大小为 12 的整数倍</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">S3</span> &#123;</span><br><span class="line">    <span class="type">char</span> c1; <span class="comment">// 1 字节，对齐值为 1，偏移量为 0</span></span><br><span class="line">    <span class="type">char</span> c2; <span class="comment">// 1 字节，对齐值为 1，偏移量为 1</span></span><br><span class="line">    <span class="type">int</span> i; <span class="comment">// 4 字节，对齐值为 4，偏移量为 4（因为预设的对齐系数为 4，所以要跳过 2 个字节）</span></span><br><span class="line">    <span class="comment">// 编译器不需要在此处插入填充字节，因为结构体总大小为 8 的整数倍</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">sizeof</span>(S1)); <span class="comment">// 输出 8</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">sizeof</span>(S2)); <span class="comment">// 输出 12</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, <span class="built_in">sizeof</span>(S3)); <span class="comment">// 输出 8</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/01/16/C++-CopyConstruction/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/01/16/C++-CopyConstruction/" class="post-title-link" itemprop="url">复制(深拷贝与浅拷贝)及拷贝构造</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-01-16 00:31:00 / 修改时间：00:32:27" itemprop="dateCreated datePublished" datetime="2024-01-16T00:31:00+08:00">2024-01-16</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/%E5%A4%8D%E5%88%B6%E5%8F%8A%E6%8B%B7%E8%B4%9D%E6%9E%84%E9%80%A0/" itemprop="url" rel="index"><span itemprop="name">复制及拷贝构造</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>4 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="copy"><a href="#copy" class="headerlink" title="copy"></a>copy</h2><p>ps：这一节将及其脑袋疼，但是很有趣</p>
-<p>作为一个资深“cv工程师”，ctrl-c(唱跳rap篮球-c)再熟悉不过，也就是复制， 平时的代码中到处都是复制，最常见“&#x3D;”就是在复制内容后赋值给左值，以及直接参数传递，也是复制，将传入的参数复制一遍再执行操作。看例子：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Vector2</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">float</span> x, y;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> PrintVector（Vector2 vector）</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//do something</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Vector2 a;<span class="comment">//简洁起见，不初始化了</span></span><br><span class="line">	Vector2 b = a;</span><br><span class="line">     </span><br><span class="line">    Vector2 c;</span><br><span class="line">	</span><br><span class="line">    Vector2* d=<span class="keyword">new</span> <span class="built_in">Vector2</span>();</span><br><span class="line">	Vector2* e = d;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">PrintVector</span>(c);</span><br><span class="line">    </span><br><span class="line">    std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个例子中出现的复制：（注：除引用外，“&#x3D;”总是在复制内容）</p>
-<ul>
-<li>将a中的内容复制给b，这里的a和b两个变量是两个独立的副本，各有不同的内存空间。</li>
-<li>将d中的内容（new的Vector2的地址）复制给e，这里的d和e两个变量指向的同一个内存空间。</li>
-<li>第19行的PrintVector(c);由于是直接传参，实际上是将c复制一个副本然后再执行函数内的操作</li>
-</ul>
-<p>所以拷贝也有坏处。</p>
-<p>现在我们来通过一种原始方法来实现一个打印字符串，先写一个类String，具体自己实现:</p>
- <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">String</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">char</span>* m_Buffer;      <span class="comment">//用于存储字符串数据</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> m_Size; <span class="comment">//用于存储字符串长度</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">String</span>(<span class="type">const</span> <span class="type">char</span>* string)    <span class="comment">// 构造函数，接受一个常量字符指针作为参数</span></span><br><span class="line">	&#123;</span><br><span class="line">		m_Size=<span class="built_in">strlen</span>(string);    <span class="comment">// 计算输入字符串的长度</span></span><br><span class="line">		m_Buffer = <span class="keyword">new</span> <span class="type">char</span>[m_Size+<span class="number">1</span>];<span class="comment">// 分配足够的内存来存储字符串和空终止符</span></span><br><span class="line">        <span class="comment">//因为char包括一个空终止符，所以要+1，或者直接使用strcpy，strcpy包括了空终止符</span></span><br><span class="line">		<span class="built_in">memcpy</span>(m_Buffer,string,m_Size+<span class="number">1</span>); <span class="comment">// 复制输入字符串到内部缓冲区，包括空终止符</span></span><br><span class="line">        <span class="comment">//+1是正确的，因为要复制空终止符</span></span><br><span class="line">	&#125;;</span><br><span class="line"><span class="comment">// 析构函数，负责释放内部缓冲区的内存</span></span><br><span class="line">	~<span class="built_in">String</span>()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">delete</span>[] m_Buffer;</span><br><span class="line">	&#125;</span><br><span class="line">   <span class="comment">// 友元函数，允许类外函数方法访问类内私有成员</span></span><br><span class="line">	<span class="keyword">friend</span> std::ostream&amp; <span class="keyword">operator</span>&lt;&lt;(std::ostream&amp; stream, <span class="type">const</span> String&amp; string);</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>这个类具体内容请看注释，简单的字符串封装类，它包含了基本的构造函数和析构函数，以及一个友元函数来支持输出操作。</p>
-<p><em>这里为了方便打印，我们先来重载操作符”&lt;&lt;”,在类外实现后并且在类内声明友元</em></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">std::ostream&amp; <span class="keyword">operator</span>&lt;&lt;(std::ostream&amp; stream, <span class="type">const</span> String&amp; string)</span><br><span class="line">&#123;<span class="comment">//友元函数 operator&lt;&lt; 允许 std::ostream 类型的对象（比如 std::cout）来输出 String 类的实例。</span></span><br><span class="line">	stream &lt;&lt; string.m_Buffer;</span><br><span class="line">	<span class="keyword">return</span> stream;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>这个时候，我们试着使用一下这个类</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">String <span class="title">string</span><span class="params">(<span class="string">&quot;Hello&quot;</span>)</span></span>;</span><br><span class="line">    std::cout&lt;&lt;string&lt;&lt;std::endl</span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<p>发现正常打印Hello，这很好，但是如果我们试着去复制这个string给另一个对象second，</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">String <span class="title">string</span><span class="params">(<span class="string">&quot;Hello&quot;</span>)</span></span>;</span><br><span class="line">	String second = string;</span><br><span class="line"></span><br><span class="line">    std::cout&lt;&lt;string&lt;&lt;std::endl</span><br><span class="line">    std::cout&lt;&lt;second&lt;&lt;std::endl</span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>打印发现正常输出两个hello，但是单击回车后触发了某种异常，从而执行了 <code>__debugbreak()</code></p>
-<p><img src="http://cdn.rhahr.icu/a75c747fe9b6e2707df0d7ae96edbc3.png"></p>
-<p>why？</p>
-<p>接下来仔细分析代码，当我们复制string给second时，实际上是将string的m_Buffer的内容直接赋值给了second的m_Buffer，而m_Buffer是一个char<em>，并且保存的是在构造函数中new的那个char内存空间的地址，所以<strong>两个m_Buffer都是指向的同一个内存空间</strong>，在main中按下回车后作用域结束调用析构函数delete[] m_Buffer，string和second都会调用一次，所以*<em>同一个地址空间被delete了两次</em></em>,所以出现了这个错误。这就是个因为浅拷贝造成的内存错误。</p>
-<p>更直观的，打个断点发现它们是同一个内存地址</p>
-<p><img src="http://cdn.rhahr.icu/79db4b09668be018094db4ecb7ec3e0.png"></p>
-<h3 id="什么是浅拷贝呢"><a href="#什么是浅拷贝呢" class="headerlink" title="什么是浅拷贝呢"></a>什么是浅拷贝呢</h3><p>​        浅拷贝是创建一个新对象，其属性值是原始对象属性值的一份精确拷贝。如果属性是基本类型，拷贝的就是基本类型的值；如果属性是引用类型，拷贝的就是内存地址，因此如果其中一个对象改变了这个地址，就会影响到另一个对象。简单来说，浅拷贝只拷贝对象不拷贝引用</p>
-<p>​        如果你有一个包含引用类型成员的对象，并且你对这个对象进行浅拷贝，那么拷贝出来的对象中的引用类型成员仍然指向原始对象中的相同实例。这意味着，如果你修改了原始对象中的引用类型成员，拷贝出来的对象中的相应成员也会受到影响，因为它们指向的是同一个实例。</p>
-<p>​       所以在这个例子中，如果我们修改second的值，string也会受到影响，而我们真正想要的是完全复制一个新的String来存储sring中的值，我们希望第二个字符串拥有自己的指针，以拥有自己的内存块，想要做到这一点就涉及到一个深拷贝</p>
-<h3 id="什么是深拷贝呢"><a href="#什么是深拷贝呢" class="headerlink" title="什么是深拷贝呢"></a>什么是深拷贝呢</h3><p>深拷贝不仅复制对象本身，还会复制对象中引用的所有对象，创建完全独立的副本。在深拷贝中，修改原始对象不会影响拷贝出来的对象，因为它们是完全独立的。</p>
-<p>C++其实默认提供了一个叫默认拷贝构造函数的东西，当你在进行拷贝初始化时就会调用这个函数</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//c++提供的默认拷贝构造函数，只提供浅拷贝，只复制指针而不复制指针指向的内存，second创建时调用了这个函数</span></span><br><span class="line">     <span class="built_in">String</span>(<span class="type">const</span> String&amp; other)</span><br><span class="line">		:<span class="built_in">m_Buffer</span>(other.m_Buffer),<span class="built_in">m_Size</span>(other.m_Size)</span><br><span class="line">	&#123;&#125;</span><br><span class="line">	<span class="comment">/*String(const String&amp; other)//还可以写成这个</span></span><br><span class="line"><span class="comment">	&#123;</span></span><br><span class="line"><span class="comment">		memcpy(this, &amp;other, m_Size);</span></span><br><span class="line"><span class="comment">	&#125;*/</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>这个默认的拷贝构造时浅拷贝，我们可以 删除拷贝构造函数，也就是unique_ptr所做的事情<code>String(const String&amp; other) = delete;</code> </p>
-<p>不过我们是要实现拷贝的，而且是深拷贝，就不能这么做，而是</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span>(<span class="type">const</span> String&amp; other)<span class="comment">//深拷贝</span></span><br><span class="line">		:<span class="built_in">m_Size</span>(other.m_Size)</span><br><span class="line">	&#123;</span><br><span class="line">	 std::cout &lt;&lt; <span class="string">&quot;create string!&quot;</span>&lt;&lt;std::endl;</span><br><span class="line">		m_Buffer = <span class="keyword">new</span> <span class="type">char</span>[m_Size+<span class="number">1</span>];<span class="comment">//给当前的m_Buffer开辟一个新的空间</span></span><br><span class="line">		<span class="built_in">memcpy</span>(m_Buffer, other.m_Buffer, m_Size+<span class="number">1</span>);<span class="comment">//并将被拷贝的m_Buffer赋值给当前的m_Buffer</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这样就实现了深拷贝，再次运行程序发现不会出现之前的错误了。</p>
-<p><em>这里踩了个坑，再写深拷贝的时候m_Buffer &#x3D; new char[m_Size+1];这里的中括号写成了小括号，也就是m_Buffer &#x3D; new char（m_Size+1）;导致了内存越界</em></p>
-<p>最后补充一个，写一个这样的函数来打印string，并且在深拷贝函数里添加个标记 <code>std::cout &lt;&lt; &quot;create string!&quot;&lt;&lt;std::endl;</code> </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">PrintString</span><span class="params">(String string)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::cout &lt;&lt; string &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>会发现发生了多次拷贝</p>
-<p><img src="http://cdn.rhahr.icu/35055bba420bac5c19bade2439ea400.png"></p>
-<p>就像开头说的，直接参数传递会发生复制行为，在开始创建second的时候会打印第一个create string！然后在调用PrintString的时候由于直接传参所以就会再复制两个副本来打印string和second，就不详细介绍，如果在main开始打个断点然后逐语句执行你就会清晰，所以参数传递一定要const &amp;。</p>
-<p>相关文章</p>
-<blockquote>
-<p>[const &amp;| HahのBlog (rhahr.top)](<a target="_blank" rel="noopener" href="https://www.rhahr.top/2024/01/16/C++-const">https://www.rhahr.top/2024/01/16/C++-const</a> &amp;&#x2F;)</p>
-</blockquote>
-<p>累死了，要寄了，半夜了已经，该睡觉了QAQ</p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/01/16/C++-copy%20construction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1463,10 +1219,267 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/01/13/C++-Operator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/13/C++-Operator/" class="post-title-link" itemprop="url">Operator(操作符)</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-01-13 13:30:00" itemprop="dateCreated datePublished" datetime="2024-01-13T13:30:00+08:00">2024-01-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-18 12:34:33" itemprop="dateModified" datetime="2024-06-18T12:34:33+08:00">2024-06-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/%E6%93%8D%E4%BD%9C%E7%AC%A6/" itemprop="url" rel="index"><span itemprop="name">操作符</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="操作符重载"><a href="#操作符重载" class="headerlink" title="操作符重载"></a>操作符重载</h2><p>将已有的操作符重载以添加功能，增加参数或者重新创建，重载允许你在程序中定义或修改一个操作符的行为，有的时候可以是代码更加简洁，易读。</p>
+<p>狙个粒子：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Vector2</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">float</span> x, y;</span><br><span class="line">	<span class="built_in">Vector2</span>(<span class="type">float</span> x, <span class="type">float</span> y)</span><br><span class="line">		:<span class="built_in">x</span>(x),<span class="built_in">y</span>(y) &#123;&#125;</span><br><span class="line">&#125;; </span><br></pre></td></tr></table></figure>
+
+<p>我们定义一个结构体Vector2，并对其初始化构造函数，然后我们就可以在main中定义position，speed，以及一个powerup，大概意思就是，位置，速度，速度变化。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function">Vector2 <span class="title">position</span><span class="params">(<span class="number">4.0f</span>, <span class="number">4.0f</span>)</span></span>;</span><br><span class="line">	<span class="function">Vector2 <span class="title">speed</span><span class="params">(<span class="number">0.5f</span>, <span class="number">1.5f</span>)</span></span>;</span><br><span class="line">	<span class="function">Vector2 <span class="title">powerup</span><span class="params">(<span class="number">1.1f</span>,<span class="number">1.1f</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">	Vector2 result1 = position.<span class="built_in">Add</span>(speed.<span class="built_in">mult</span>(powerup));</span><br><span class="line">	Vector2 result2 = position + speed * powerup;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (result1 == result2)&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">Printvector</span>(result1);</span><br><span class="line">	<span class="built_in">Printvector</span>(result2);</span><br><span class="line"></span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="重载运算符"><a href="#重载运算符" class="headerlink" title="重载运算符"></a>重载运算符</h2><p>所以想要进行操作，pisition+speed*powerup，得到result，但是这些都是Vector2类型的实例，想要有这样的结果就需要定义这样的方法，Add为“ + ”，mult为“ * ”。</p>
+<p>然后就开始在Vector2中定义</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">   <span class="function">Vector2 <span class="title">Add</span><span class="params">(<span class="type">const</span> Vector2&amp; other)</span><span class="type">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">Vector2</span>(x + other.x, y + other.y);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">Vector2 <span class="title">mult</span><span class="params">(<span class="type">const</span> Vector2&amp; other)</span><span class="type">const</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">Vector2</span>(x * other.x, y * other.y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以通过result1来实现了，也就是**<code> Vector2 result1 = position.Add(speed.mult(powerup));</code>**</p>
+<p>很正常但是不够简洁美观，所以就有操作符重载，想要直接将result写成**<code>Vector2 result2 = position + speed * powerup;</code>** 这样简洁直观，然后就实现：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">   Vector2 <span class="keyword">operator</span>+(<span class="type">const</span> Vector2&amp; other)<span class="type">const</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//return Vector2(x + other.x, y + other.y);</span></span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">Add</span>(other);</span><br><span class="line">&#125;</span><br><span class="line">Vector2 <span class="keyword">operator</span>*(<span class="type">const</span> Vector2&amp; other)<span class="type">const</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//return Vector2(x * other.x, y * other.y);</span></span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">mult</span>(other);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>两种return都是可以的，如果已经有了Add方法则直接return Add（）； 就样就可以实现result2；</p>
+<ul>
+<li><p>其实也就是相当于一个函数，吧operator+看作一个函数进行操作，如果这样的话还可以反过来，不是用操作符+来调用Add函数而是在Add函数里调用+操作符。也就是：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Vector2 <span class="title">Add</span><span class="params">(<span class="type">const</span> Vector2&amp; other)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> *<span class="keyword">this</span>+other;</span><br><span class="line">	<span class="comment">//	return operator+(other);//操作符就是一个函数</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>不止是很奇怪，还很难懂QAQ，这里的this是个指针，解引用 * 之后就是一个普通的Vector2对象,this指向的是该函数作用的对象，在这里也就是position</p>
+<blockquote>
+<p>相关this指针详见文章<a target="_blank" rel="noopener" href="https://www.rhahr.top/2024/01/14/C++-this/">C++-this指针 | HahのBlog (rhahr.top)</a></p>
+</blockquote>
+</li>
+</ul>
+<h2 id="重载输出”-lt-lt-”"><a href="#重载输出”-lt-lt-”" class="headerlink" title="重载输出”&lt;&lt;”"></a>重载输出”&lt;&lt;”</h2><p>好了，这中普通的重载就ok了，我们尝试一下其他的，我们已经有了result，可以试着打印输出一下，但是cout&lt;&lt;并不能直接输出这类型的值，编译器会报错没有与这些操作数匹配的”&lt;&lt;”运算符，所以我们要重载”&lt;&lt;”，也就是：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">std::ostream&amp; <span class="keyword">operator</span>&lt;&lt;(std::ostream &amp; stream, <span class="type">const</span> Vector2 other)</span><br><span class="line"><span class="comment">//   ostream&amp; func(ostream&amp; stream,const Vector2 &amp; other)</span></span><br><span class="line">&#123;</span><br><span class="line">	stream &lt;&lt; other.x &lt;&lt; <span class="string">&quot;,&quot;</span> &lt;&lt; other.y;</span><br><span class="line">	<span class="keyword">return</span> stream;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Printvector</span><span class="params">(<span class="type">const</span> Vector2 &amp; vector)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::cout &lt;&lt; vector &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这一长串<code>std::ostream&amp; operator&lt;&lt;(std::ostream &amp; stream, const Vector2 other)</code> </p>
+<blockquote>
+<p>简化一下，就像是Type&amp; func（参数一，参数二）</p>
+<ul>
+<li><p><code>std::ostream&amp;</code>: 这是函数的返回类型，表示这个函数返回一个引用，该引用指向 <code>std::ostream</code> 类型的对象。<code>std::ostream</code> 是C++中用于输出的流类，例如标准输出流 <code>std::cout</code>。</p>
+</li>
+<li><p><code>operator&lt;&lt;</code>: 这是输出流运算符的重载。通过在自定义类型上重载这个运算符，你可以定义该类型对象如何被输出到流。</p>
+</li>
+<li><p><code>(std::ostream &amp; stream, const Vector2 other)</code>: 这是函数的参数列表。</p>
+<ul>
+<li><code>std::ostream &amp; stream</code>: 是一个引用，表示输出流对象。这是你想要往其中输出数据的流，通常是 <code>std::cout</code>（标准输出流）或其他类似的流。</li>
+<li><code>const Vector2 other</code>: 是一个常量引用，表示要输出的 <code>Vector2</code> 类型的对象。<code>const</code> 表示在函数内不能修改这个对象的值，以确保输出操作不会修改输入对象。</li>
+</ul>
+</li>
+<li><p><code>std::ostream</code> 是 C++ 标准库中的一个类，用于处理输出流。这个类是输出流的基类，它提供了一组成员函数和操作符，使得程序能够向流中输出数据。</p>
+</li>
+<li><p>当你在使用这个函数时，你需要传递一个已经存在的输出流对象，例如 <code>std::cout</code>（标准输出流）或 <code>std::ofstream</code>（文件输出流）。</p>
+</li>
+<li><p>这样，函数就知道将 <code>Vector2</code> 对象的信息输出到哪个地方</p>
+</li>
+</ul>
+</blockquote>
+<p>不懂就看这里：（可能会有）</p>
+<blockquote>
+<p>相关this指针详见文章<a target="_blank" rel="noopener" href="https://www.rhahr.top/2024/01/13/C++-ostream/">C++-ostream | HahのBlog (rhahr.top)</a></p>
+</blockquote>
+<h2 id="重载比较符号"><a href="#重载比较符号" class="headerlink" title="重载比较符号"></a>重载比较符号</h2><p>最后再随便重载个&#x3D;&#x3D;</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">    <span class="type">bool</span> <span class="keyword">operator</span>==(<span class="type">const</span> Vector2&amp; other)<span class="type">const</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> x == other.x &amp;&amp; y == other.y;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">bool</span> <span class="keyword">operator</span>!=(<span class="type">const</span> Vector2&amp; other)<span class="type">const</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> !(*<span class="keyword">this</span> == other);<span class="comment">//详见this文章</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>之后就可以进行比较操作<code> if (result1 == result2)&#123;&#125;</code> 就是这样。。。the end</p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/01/13/C++-Explicit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/01/13/C++-Explicit/" class="post-title-link" itemprop="url">Implicit conversion(隐式转换)and Explicit</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-01-13 12:00:00 / 修改时间：11:41:02" itemprop="dateCreated datePublished" datetime="2024-01-13T12:00:00+08:00">2024-01-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/%E5%85%B6%E4%BB%96/%E9%9A%90%E5%BC%8F%E8%BD%AC%E6%8D%A2/" itemprop="url" rel="index"><span itemprop="name">隐式转换</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>777</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="隐式转换"><a href="#隐式转换" class="headerlink" title="隐式转换"></a>隐式转换</h2><p>C++允许编译器对某些参数进行隐式类型转换</p>
+<p>首先随便创建一个class Entity</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Entity</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	std::string m_Name;</span><br><span class="line">	<span class="type">int</span> m_Age;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Entity</span>(<span class="type">const</span> std::string&amp; name)</span><br><span class="line">		:<span class="built_in">m_Name</span>(name),<span class="built_in">m_Age</span>(<span class="number">-1</span>) &#123;&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">Entity</span>(<span class="type">int</span> age)</span><br><span class="line">		:<span class="built_in">m_Name</span>(<span class="string">&quot;Unknow&quot;</span>), <span class="built_in">m_Age</span>(age) &#123;&#125;;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>在创建实例及初始化时我们就有了很多种方法</p>
+<p>在这里的line2就发生了隐式转换，将int类型转换为了Entity类型，相似的我们认为也可以<code> Entity a=&quot;Hello&quot;</code> ，蛋柿，“Hello”其实是const char[6] (包含一个空终止符)，而不是string，<strong>只能做一次隐式转换</strong>,所以要手动转换一次，可以Entity()或者std::string()，但一般不要这么做，二般我也不知道。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Entity a = std::<span class="built_in">string</span>(<span class="string">&quot; &quot;</span>);<span class="comment">//&quot;Hello&quot;是const char，</span></span><br><span class="line">Entity b = <span class="number">22</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Entity a=Entity(&quot;Hello&quot;);</span></span><br><span class="line"><span class="comment">//Entity b=Entity(20);</span></span><br><span class="line"><span class="function">Entity <span class="title">b</span><span class="params">(<span class="number">22</span>)</span></span>;<span class="comment">//应该这样做</span></span><br></pre></td></tr></table></figure>
+<h2 id="关键字explicit"><a href="#关键字explicit" class="headerlink" title="关键字explicit"></a>关键字explicit</h2><p>如果你想用一个整数构造一个Entity对象，那你就必须显式的调用这个构造函数<br>explicit会禁用隐式转换，explicit关键字放在构造函数前面，意味着这个构造函数不会进行隐式转换</p>
+<p>例如将Entity中的</p>
+<p>Entity(int age)改为</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">explicit</span> <span class="title">Entity</span><span class="params">(<span class="type">int</span> age)</span></span></span><br></pre></td></tr></table></figure>
+
+<p>那么就会出现</p>
+<p><img src="http://cdn.rhahr.icu/62432e20b413ca3624485c7d724f7b3.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1534,7 +1547,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1547,7 +1560,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-count">66</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

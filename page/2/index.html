@@ -195,534 +195,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/Qt-%E7%88%B6%E5%AF%B9%E8%B1%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/28/Qt-%E7%88%B6%E5%AF%B9%E8%B1%A1/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-06-28 18:16:31" itemprop="dateCreated datePublished" datetime="2024-06-28T18:16:31+08:00">2024-06-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-07 10:02:01" itemprop="dateModified" datetime="2024-06-07T10:02:01+08:00">2024-06-07</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>939</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>父对象</strong>通常指的是在对象的层次结构中处于上一级的对象。在面向对象编程（OOP）的上下文中，父对象具有以下特点：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/LagerSwan/article/details/104212352"><strong>继承性</strong>：子对象（或子类）会继承父对象（或父类）的属性和方法。这意味着子对象可以使用父对象定义的功能，同时还可以有自己的特定功能</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/LagerSwan/article/details/104212352">1</a><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-inheritance.html">2</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-inheritance.html"><strong>层次结构</strong>：在一个层次结构中，父对象可以有多个子对象，但一个子对象通常只有一个父对象</a><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-inheritance.html">2</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-inheritance.html"><strong>封装性</strong>：父对象可以封装通用的属性和方法，子对象则可以扩展或修改这些属性和方法以满足特定需求</a><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-inheritance.html">2</a>。</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/LagerSwan/article/details/104212352">例如，在Qt框架中，如果你创建了一个<code>QPushButton</code>按钮，并将其放置在一个窗口<code>widget</code>中，那么这个窗口<code>widget</code>就是按钮的父对象。按钮会继承窗口的一些属性，如位置和可见性，同时也可以有自己的属性，如按钮文本和点击事件处理</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E7%88%B6%E5%AF%B9%E8%B1%A1+%E5%AE%9A%E4%B9%89">3</a>。</p>
-<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Parent_object">在更广泛的编程语境中，父对象的概念也可以指代给定属性或方法所属的对象</a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Parent_object">4</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/LagerSwan/article/details/104212352">。这有助于组织代码，使其更加模块化和可重用。</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/LagerSwan/article/details/104212352">1</a><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-inheritance.html">2</a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Parent_object">3</a></p>
-<p>在Qt中，当你为一个对象指定一个父对象后，父对象会负责管理其子对象的生命周期。这是通过Qt的<strong>对象树（Object Tree）</strong>机制来实现的。具体来说，父对象如何管理子对象的生命周期包括以下几个方面：</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_46577050/article/details/139334719"><strong>自动内存管理</strong>：当你创建一个对象并指定一个父对象时，这个新创建的对象会被自动添加到父对象的子对象列表中。当父对象被销毁时，它会自动销毁其所有的子对象。这样，程序员就不需要手动删除每个子对象，从而避免了内存泄漏的风险</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_46577050/article/details/139334719">1</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_46577050/article/details/139334719"><strong>析构过程</strong>：在父对象的析构函数中，会调用子对象的析构函数，确保子对象被正确地清理。如果子对象是在堆上分配的（使用<code>new</code>关键字创建的），则会调用<code>delete</code>来释放内存</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_46577050/article/details/139334719">1</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_46577050/article/details/139334719"><strong>延迟删除</strong>：在某些情况下，如果你需要删除一个QObject对象，推荐使用<code>QObject::deleteLater()</code>方法而不是直接使用<code>delete</code>。这个方法会将删除操作延迟到事件循环的下一个迭代，这通常是线程安全的，并且可以防止在对象正在处理事件时被删除的问题</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/hss2799/article/details/130086658">2</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/hss2799/article/details/130086658"><strong>关闭与删除</strong>：默认情况下，当一个QWidget窗口关闭时，它不会被自动删除，只是被隐藏。如果你希望在窗口关闭时自动删除窗口对象，可以在窗口的构造函数中设置<code>Qt::WA_DeleteOnClose</code>属性。这样，当窗口关闭时，Qt会自动调用窗口对象的析构函数来释放资源</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/hss2799/article/details/130086658">2</a>。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/Qt-%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/28/Qt-%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-06-28 18:16:31" itemprop="dateCreated datePublished" datetime="2024-06-28T18:16:31+08:00">2024-06-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-04 10:25:47" itemprop="dateModified" datetime="2024-06-04T10:25:47+08:00">2024-06-04</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>764</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Qt的类层次结构是一个庞大而复杂的体系，它包含了许多不同的类，这些类通过继承关系相互联系。在Qt中，所有的类都继承自<code>QObject</code>或者其子类。<code>QObject</code>是Qt对象模型的基础，提供了信号和槽机制、对象树结构管理等功能。</p>
-<p>主要的模块，它们分别提供不同的功能和类：</p>
-<ol>
-<li><strong>QtCore</strong>：这是Qt框架的核心模块，提供了非GUI的基础功能，如事件循环、信号和槽机制、基础数据类型、文件操作等。它是其他所有模块的基础。</li>
-<li><strong>QtGui</strong>：这个模块提供了基础的图形界面功能，如绘图、窗口管理、事件处理等。它建立在QtCore之上，为更高级别的用户界面组件提供底层支持。</li>
-<li><strong>QtWidgets</strong>：建立在QtGui之上，提供了一套完整的用户界面控件，如按钮、对话框、输入框等。这些控件用于构建传统的桌面应用程序。</li>
-<li><strong>QtNetwork</strong>：这个模块提供了网络通信的功能，如TCP&#x2F;IP、UDP等。它也依赖于QtCore模块。</li>
-<li><strong>QtSql</strong>：提供了数据库操作的功能，支持多种数据库系统。它也是基于QtCore模块。</li>
-<li><strong>QtQuick</strong>：用于构建现代化的动态用户界面，它使用QML语言来描述界面。QtQuick建立在QtGui之上，并且通常与QtQml模块一起使用。</li>
-<li><strong>QtQml</strong>：提供了QML语言的解析和执行功能，是QtQuick的基础。</li>
-<li><strong>QtMultimedia</strong>：提供了音频、视频以及摄像头的支持。</li>
-</ol>
-<p>这些模块之间的关系是层次化的，高层模块依赖于低层模块。例如，QtWidgets依赖于QtGui和QtCore，而QtGui则依赖于QtCore。这种层次结构使得开发者可以根据需要选择合适的模块来构建应用程序。</p>
-<p>此外，Qt还有其他模块，如Qt3D、QtWebEngine等，它们提供了更专业的功能。每个模块都包含了一系列相关的类，这些类通过继承关系相互联系，共同构成了Qt的类层次结构。</p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/OOP-%E9%9A%90%E8%97%8F%E4%B8%8E%E8%A6%86%E7%9B%96/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/28/OOP-%E9%9A%90%E8%97%8F%E4%B8%8E%E8%A6%86%E7%9B%96/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-06-28 18:16:05" itemprop="dateCreated datePublished" datetime="2024-06-28T18:16:05+08:00">2024-06-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-11 18:49:36" itemprop="dateModified" datetime="2024-06-11T18:49:36+08:00">2024-06-11</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/C++-%E8%99%9A%E7%BB%A7%E6%89%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/28/C++-%E8%99%9A%E7%BB%A7%E6%89%BF/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-06-28 18:16:05" itemprop="dateCreated datePublished" datetime="2024-06-28T18:16:05+08:00">2024-06-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-11 10:53:12" itemprop="dateModified" datetime="2024-06-11T10:53:12+08:00">2024-06-11</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/C++-%E4%BD%8D%E8%BF%90%E7%AE%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/28/C++-%E4%BD%8D%E8%BF%90%E7%AE%97/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-06-28 18:15:38" itemprop="dateCreated datePublished" datetime="2024-06-28T18:15:38+08:00">2024-06-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-13 17:00:52" itemprop="dateModified" datetime="2024-06-13T17:00:52+08:00">2024-06-13</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在 <code>epoll</code> 事件通知机制中，事件类型如 <code>EPOLLIN</code>、<code>EPOLLOUT</code> 等被定义为二进制中的单个位标志（bit flags）。这些标志是通过位掩码（bitmask）来表示的，而不是通过简单的数字相加。每种类型的事件都对应于整数值中的一个特定的位位置，而这些位位置是通过位运算来设置和检查的。</p>
-<p>例如，<code>EPOLLIN</code> 可能被定义为 <code>0x001</code>（二进制的 <code>0001</code>），而 <code>EPOLLOUT</code> 可能被定义为 <code>0x004</code>（二进制的 <code>0100</code>）。当一个文件描述符同时有可读和可写事件发生时，<code>epoll</code> 会将这两个事件的位掩码进行按位或运算（<code>|</code>），而不是数字相加。这样，即使两个事件同时发生，<code>EPOLLIN</code> 的位也会保持为 <code>1</code>。</p>
-<p>这里是如何通过按位或运算来组合事件的示例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EPOLLIN:   0001 (二进制表示) EPOLLOUT:  0100 (二进制表示)            ---- 按位或结果: 0101 (二进制表示) </span><br></pre></td></tr></table></figure>
-
-<p>在这个例子中，即使 <code>EPOLLIN</code> 和 <code>EPOLLOUT</code> 同时发生，组合后的结果 <code>0101</code> 仍然在最低位有 <code>1</code>，这表示 <code>EPOLLIN</code> 事件发生了。因此，当我们使用按位与运算符 <code>&amp;</code> 检查 <code>evs[ii].events &amp; EPOLLIN</code> 时，只要 <code>EPOLLIN</code> 事件发生，无论是否有其他事件同时发生，结果都不会是 <code>0</code>。</p>
-<p>这就是为什么我们可以通过检查按位与运算的结果是否为非零来确定特定事件（如 <code>EPOLLIN</code>）是否发生，而不用担心其他事件的影响。</p>
-<p>正是通过位掩码（bitmask）的设计，我们可以确保即使多个事件同时发生，也能通过按位与运算（<code>&amp;</code>）得到正确的结果。位掩码是一种使用二进制位操作来表示和控制多个配置选项的技术。在 <code>epoll</code> 事件中，每个事件类型都有一个唯一的位掩码，这些掩码在设计时就确保了它们之间的二进制表示不会冲突。</p>
-<p>例如，<code>EPOLLIN</code> 和 <code>EPOLLOUT</code> 可能分别被定义为：</p>
-<ul>
-<li><code>EPOLLIN</code>: <code>0x001</code> 或 <code>0001</code>（二进制）</li>
-<li><code>EPOLLOUT</code>: <code>0x004</code> 或 <code>0100</code>（二进制）</li>
-</ul>
-<p>当我们想要检查 <code>EPOLLIN</code> 是否发生时，我们会这样做：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">evs[ii].<span class="property">events</span>:  xxxx (二进制表示，x代表任意值) </span><br><span class="line"><span class="attr">EPOLLIN</span>:         <span class="number">0001</span> (二进制表示)                  </span><br><span class="line">				---- </span><br><span class="line">&amp; 操作结果:       xx01 (二进制表示) </span><br></pre></td></tr></table></figure>
-
-<p>只要 <code>EPOLLIN</code> 对应的位是 <code>1</code>，无论 <code>xxxx</code> 中的其他位是什么值，按位与运算的结果的最低位都将是 <code>1</code>，这表明 <code>EPOLLIN</code> 事件发生了。</p>
-<p>这种设计允许我们使用单个整数值来存储和检查多个事件的发生情况，而不需要为每个事件单独使用一个变量。这样做不仅节省了空间，而且提高了效率，因为位运算通常比其他类型的运算更快。</p>
-<p>在实际编程中，这种技巧非常有用，因为它允许程序员以一种非常紧凑和高效的方式处理多个事件标志。这是系统编程中常用的一种模式，特别是在需要处理多种类型的输入&#x2F;输出事件时</p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/C++-%E5%A6%82%E4%BD%95%E5%86%99CPP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/28/C++-%E5%A6%82%E4%BD%95%E5%86%99CPP/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-06-28 18:15:38" itemprop="dateCreated datePublished" datetime="2024-06-28T18:15:38+08:00">2024-06-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-10 19:06:18" itemprop="dateModified" datetime="2024-06-10T19:06:18+08:00">2024-06-10</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/C++-cpp20-format/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1265,10 +737,669 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/11/linux-IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/06/11/linux-IO%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" class="post-title-link" itemprop="url">I/O多路复用</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-11 19:00:00" itemprop="dateCreated datePublished" datetime="2024-06-11T19:00:00+08:00">2024-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-13 16:58:03" itemprop="dateModified" datetime="2024-06-13T16:58:03+08:00">2024-06-13</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">多路复用</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="IO多路复用"><a href="#IO多路复用" class="headerlink" title="IO多路复用"></a>IO多路复用</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_67318913/article/details/138442134">IO多路复用（Input&#x2F;Output Multiplexing）是一种在单个线程中管理多个输入&#x2F;输出通道的技术</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_67318913/article/details/138442134">2</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_67318913/article/details/138442134">。它允许一个线程同时监听多个输入流（例如网络套接字、文件描述符等），并在有数据可读或可写时进行相应的处理，而不需要为每个通道创建一个独立的线程。常见的IO多路复用机制包括select、poll和epoll，这些机制通过将多个IO通道注册到一个事件管理器中，然后通过阻塞方式等待事件的发生</a></p>
+<p>IO多路复用的工作原理是通过一种机制，允许单个进程监视多个文件描述符，一旦某个文件描述符就绪（例如，一个网络连接上有数据可读），就能够通知程序进行相应的读写操作。</p>
+<p>这里的“多路”指的是多个网络连接或文件流，“复用”指的是使用同一个进程或线程来处理多个流。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Squid87/article/details/123452472">在传统的阻塞IO模型中，每个IO操作通常需要一个独立的线程来处理，这在处理大量并发连接时会导致线程数量的增加，从而带来线程切换和上下文切换的开销。而IO多路复用通过使用一个线程来监听多个IO事件，避免了线程数量的增加，减少了这些开销</a></p>
+<p>常见的IO多路复用技术包括<code>select</code>、<code>poll</code>和<code>epoll</code></p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Squid87/article/details/123452472"><strong>select和poll</strong>：这两种机制都是通过告诉内核监视一系列的文件描述符，然后进程阻塞并等待内核通知它哪些文件描述符就绪了。<code>select</code>有最大文件描述符数量的限制，而<code>poll</code>没有这个限制。但它们都有一个共同的缺点，那就是当监视的文件描述符数量很多时，每次调用都需要遍历整个集合来检查状态，效率较低</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/Squid87/article/details/123452472">1</a>。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Squid87/article/details/123452472"><strong>epoll</strong>：与<code>select</code>和<code>poll</code>不同，<code>epoll</code>是在Linux 2.6及以上版本中提供的一种高效的IO事件通知机制。它不需要遍历整个文件描述符集合，而是当文件描述符状态发生变化时，就会将这个事件通知给应用程序。<code>epoll</code>可以处理数以万计的并发连接，而且效率不会随着文件描述符数量的增加而降低。<code>epoll</code>的另一个特点是它支持“边缘触发”和“水平触发”，前者只在状态变化时通知一次，而后者只要条件满足就会不断通知</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/Squid87/article/details/123452472">1</a></p>
+</li>
+</ul>
+<p>虽然<code>epoll</code>在处理大量并发连接时比<code>select</code>和<code>poll</code>更高效，但这并不意味着<code>select</code>和<code>poll</code>就完全没有用处了。<code>select</code>和<code>poll</code>在某些情况下仍然有其适用性和优势。</p>
+<h2 id="select-amp-poll"><a href="#select-amp-poll" class="headerlink" title="select&amp;poll"></a>select&amp;poll</h2><p>select与poll的逻辑相似，都是把要监听的socket存入一个数据结构中（select-bitmap）然后每次发生事件后循环遍历这个数据结构返回发生事件的socket，这里的事件可能是读事件&#x2F;写事件。都是水平触发( level-trigger)</p>
+<p>读事件：1）已连接队列中有已经准备好的socket（有新的客户端连上来了）；<br>              2）接收缓存中有数据可以读（对端发送的报文已到达）；<br>              3）tcp连接已断开（对端调用close()函数关闭了连接）。<br>写事件：发送缓冲区没有满，可以写入数据（可以向对端发送报文）。</p>
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><p>select 的实现思路很直接，假如程序同时监视sock1、sock2 和 sock3 三个socket，那么在调用select 之后，操作系统把进程分别加入这三个socket的等待队列中. 每次调用select都需要将进程加入到所有监视socket的等待队列，每次唤醒都需要从每个队列中移除。这里涉及了两次遍历，而且每次都要将整个 FDS 列表传递给内核，有一定的开销.正是因为遍历操作开销大，出于效率的考量，才会规定select 的最大监视数量，默认只能监视1024个socket。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化服务端的监听端口。</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">initserver</span><span class="params">(<span class="type">int</span> port)</span></span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 初始化服务端用于监听的socket。</span></span><br><span class="line">    <span class="type">int</span> listensock = <span class="built_in">initserver</span>(<span class="built_in">atoi</span>(argv[<span class="number">1</span>]));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;listensock=%d\n&quot;</span>,listensock);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (listensock &lt; <span class="number">0</span>) &#123; <span class="built_in">printf</span>(<span class="string">&quot;initserver() failed.\n&quot;</span>); <span class="keyword">return</span> <span class="number">-1</span>; &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    fd_set readfds;                         <span class="comment">// 需要监视读事件的socket的集合，大小为16字节（1024位）的bitmap。</span></span><br><span class="line">    <span class="built_in">FD_ZERO</span>(&amp;readfds);                <span class="comment">// 初始化readfds，把bitmap的每一位都置为0。</span></span><br><span class="line">    <span class="built_in">FD_SET</span>(listensock,&amp;readfds);  <span class="comment">// 把服务端用于监听的socket加入readfds。</span></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> maxfd=listensock;              <span class="comment">// readfds中socket的最大值。</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>)        <span class="comment">// 事件循环。</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 用于表示超时时间的结构体。</span></span><br><span class="line">        <span class="keyword">struct</span> <span class="title class_">timeval</span> timeout;     </span><br><span class="line">        timeout.tv_sec=<span class="number">10</span>;        <span class="comment">// 秒</span></span><br><span class="line">        timeout.tv_usec=<span class="number">0</span>;        <span class="comment">// 微秒。</span></span><br><span class="line"></span><br><span class="line">        fd_set tmpfds=readfds;      <span class="comment">// 在select()函数中，会修改bitmap，所以，要把readfds复制一份给tmpfds，再把tmpfds传给select()。</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 调用select() 等待事件的发生（监视哪些socket发生了事件)。</span></span><br><span class="line">        <span class="type">int</span> infds=<span class="built_in">select</span>(maxfd+<span class="number">1</span>,&amp;tmpfds,<span class="literal">NULL</span>,<span class="literal">NULL</span>,<span class="number">0</span>); </span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果infds&lt;0，表示调用select()失败。</span></span><br><span class="line">        <span class="keyword">if</span> (infds&lt;<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">perror</span>(<span class="string">&quot;select() failed&quot;</span>); <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果infds==0，表示select()超时。</span></span><br><span class="line">        <span class="keyword">if</span> (infds==<span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;select() timeout.\n&quot;</span>); <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果infds&gt;0，表示有事件发生，infds存放了已发生事件的个数。</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> eventfd=<span class="number">0</span>;eventfd&lt;=maxfd;eventfd++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="built_in">FD_ISSET</span>(eventfd,&amp;tmpfds)==<span class="number">0</span>) <span class="keyword">continue</span>;   <span class="comment">// 如果eventfd在bitmap中的标志为0，表示它没有事件，continue</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 如果发生事件的是listensock，表示已连接队列中有已经准备好的socket（有新的客户端连上来了）。</span></span><br><span class="line">            <span class="keyword">if</span> (eventfd==listensock)</span><br><span class="line">            &#123;</span><br><span class="line">                 <span class="comment">// 处理事件</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 如果是客户端连接的socke有事件，表示接收缓存中有数据可以读（对端发送的报文已到达），或者有客户端已断开连接。</span></span><br><span class="line">           	    <span class="comment">// 处理事件</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化服务端用于监听的socket。</span></span><br><span class="line">    <span class="type">int</span> listensock = <span class="built_in">initserver</span>(<span class="built_in">atoi</span>(argv[<span class="number">1</span>]));</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;listensock=%d\n&quot;</span>,listensock);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (listensock &lt; <span class="number">0</span>) &#123; <span class="built_in">printf</span>(<span class="string">&quot;initserver() failed.\n&quot;</span>); <span class="keyword">return</span> <span class="number">-1</span>; &#125;</span><br><span class="line"></span><br><span class="line">    pollfd fds[<span class="number">2048</span>];                 <span class="comment">// fds存放需要监视的socket。</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始化数组，把全部的socket设置为-1，如果数组中的socket的值为-1，那么，poll将忽略它。</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> ii=<span class="number">0</span>;ii&lt;<span class="number">2048</span>;ii++)             </span><br><span class="line">        fds[ii].fd=<span class="number">-1</span>;   </span><br><span class="line"></span><br><span class="line">    <span class="comment">// 打算让poll监视listensock读事件。</span></span><br><span class="line">    fds[listensock].fd=listensock;</span><br><span class="line">    fds[listensock].events=POLLIN;        <span class="comment">// POLLIN表示读事件，POLLOUT表示写事件。</span></span><br><span class="line">    <span class="comment">// fds[listensock].events=POLLIN|POLLOUT;</span></span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> maxfd=listensock;        <span class="comment">// fds数组中需要监视的socket的实际大小。</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>)        <span class="comment">// 事件循环。</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 调用poll() 等待事件的发生（监视哪些socket发生了事件)。</span></span><br><span class="line">        <span class="type">int</span> infds=<span class="built_in">poll</span>(fds,maxfd+<span class="number">1</span>,<span class="number">10000</span>);      <span class="comment">// 超时时间为10秒。</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果infds&lt;0，表示调用poll()失败。</span></span><br><span class="line">        <span class="keyword">if</span> (infds &lt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">perror</span>(<span class="string">&quot;poll() failed&quot;</span>); <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果infds==0，表示poll()超时。</span></span><br><span class="line">        <span class="keyword">if</span> (infds == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;poll() timeout.\n&quot;</span>); <span class="keyword">continue</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果infds&gt;0，表示有事件发生，infds存放了已发生事件的个数。</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> eventfd=<span class="number">0</span>;eventfd&lt;=maxfd;eventfd++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span> (fds[eventfd].fd&lt;<span class="number">0</span>) <span class="keyword">continue</span>;                               <span class="comment">// 如果fd为负，忽略它。</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> ((fds[eventfd].revents&amp;POLLIN)==<span class="number">0</span>)  <span class="keyword">continue</span>;  <span class="comment">// 如果没有读事件，continue</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 如果发生事件的是listensock，表示已连接队列中有已经准备好的socket（有新的客户端连上来了）。</span></span><br><span class="line">            <span class="keyword">if</span> (eventfd==listensock)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//处理监听事件</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">// 如果是客户端连接的socke有事件，表示有报文发过来了或者连接已断开。</span></span><br><span class="line">                <span class="comment">// 处理事件</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h2><p>epoll是在select 出现 N 多年后才被发明的，是select 和 poll的增强版本。epoll通过以下一些措施来改进效率：</p>
+<p>1.功能分离</p>
+<p>​	select 低效的原因之一是将“维护等待队列”和“阻塞进程”两个步骤合二为一。</p>
+<p>epoll将这两个操作分开，先用epoll_ctl 维护等待队列，再调用epoll_wait 阻塞进程。显而易见，效率就能得到提升。</p>
+<p>2.就绪列表</p>
+<p>select低效的另一个原因在于程序不知道哪些socket收到数据，只能一个个遍历。如果内核维护一个“就绪列表”，引用收到数据的socket，就能避免遍历。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>当某个进程调用epoll_create方法时，内核会创建一个 eventpoll 对象（也就是程序中 epfd 所代表的对象）。eventpoll 对象也是文件系统中的一员，和socket一样，它也会有等待队列。</p>
+<p>创建一个代表该epoll的 eventpoll 对象是必须的，因为内核要维护“就绪列表”等数据，“就绪列表”可以作为 eventpoll 的成员。<strong>epoll使用双向链表来实现就绪队列，使用红黑树作为索引结构</strong></p>
+<p>创建epoll对象后，可以用epoll_ctl 添加或删除所要监听的socket。以添加socket为例。</p>
+<p>当socket收到数据后，中断程序会操作 eventpoll 对象，而不是直接操作进程。</p>
+<p>当socket收到数据后，中断程序会给 eventpoll 的“就绪列表”添加socket引用。</p>
+<p>eventpoll 对象相当于socket和进程之间的中介，socket的数据接收并不直接影响进程，而是通过改变 eventpoll 的就绪列表来改变进程状态。</p>
+<p>当程序执行到epoll_wait 时，如果rdlist 已经引用了socket，那么epoll_wait 直接返回，如果 rdlist 为空，阻塞进程。</p>
+<p>在实际的使用中，IO多路复用要求不能阻塞在任意环节，所以应该设置非阻塞</p>
+<blockquote>
+<p><strong>整体逻辑：将所有需要<code>epoll</code>监控的socket通过<code>epoll_event</code>（这个结构体更是为了设置socket的一个临时方法，并不存储实际事件，只用来保存当前要进行设置的fd）来设置其需要监视的事件类型（读&#x2F;写）以及触发方式（边缘触发&#x2F;水平触发），然后通过<code>epoll_ctl</code>指定<code>EPOLL_CTL_ADD</code>来加入到epoll的fd中，然后就可以用过<code>epoll_wait</code>开始监视事件，并返回发生事件的socket到第<code>epoll_wait</code>的二个参数中，处理事件后使用<code>epoll_ctl</code>指定<code>EPOLL_CTL_DEL</code>删除对应的socket。</strong></p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化服务端用于监听的socket。</span></span><br><span class="line">   <span class="type">int</span> listensock = <span class="built_in">initserver</span>(<span class="built_in">atoi</span>(argv[<span class="number">1</span>]));</span><br><span class="line">   <span class="built_in">printf</span>(<span class="string">&quot;listensock=%d\n&quot;</span>,listensock);</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (listensock &lt; <span class="number">0</span>) &#123; <span class="built_in">printf</span>(<span class="string">&quot;initserver() failed.\n&quot;</span>); <span class="keyword">return</span> <span class="number">-1</span>; &#125;</span><br><span class="line">   <span class="built_in">setnonblocking</span>(listensock);<span class="comment">//设置为非阻塞</span></span><br><span class="line">   <span class="comment">//创建epoll句柄</span></span><br><span class="line">   <span class="type">int</span> epollfd = <span class="built_in">epoll_create</span>(<span class="number">1</span>);     </span><br><span class="line"></span><br><span class="line">   <span class="comment">//为服务端的listensock准备读事件</span></span><br><span class="line">   epoll_event ev;             <span class="comment">//声明事件的数据结构</span></span><br><span class="line">   ev.data.fd = listensock;    <span class="comment">//指定事件的自定义数据，会随着epoll_wait返回的事件一并返回</span></span><br><span class="line">   <span class="comment">//ev.events = EPOLLIN;        //指定epoll监视listen的读事件</span></span><br><span class="line">   ev.events = EPOLLIN|EPOLLET;        <span class="comment">//指定epoll监视listen的读事件</span></span><br><span class="line">   </span><br><span class="line">   <span class="built_in">epoll_ctl</span>(epollfd,EPOLL_CTL_ADD,listensock,&amp;ev);    <span class="comment">//把需要监视的socket和事件加入epollfd中</span></span><br><span class="line"></span><br><span class="line">   epoll_event evs[<span class="number">10</span>];        <span class="comment">//存放epoll返回的事件</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">   &#123;</span><br><span class="line">       <span class="comment">//等待监视的socket有事件发生</span></span><br><span class="line">       <span class="type">int</span> infds = <span class="built_in">epoll_wait</span>(epollfd,evs,<span class="number">10</span>,<span class="number">-1</span>);</span><br><span class="line"></span><br><span class="line">       <span class="comment">//返回失败</span></span><br><span class="line">       <span class="keyword">if</span>(infds&lt;<span class="number">0</span>)</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="built_in">perror</span>(<span class="string">&quot;epoll() failed&quot;</span>);</span><br><span class="line">           <span class="keyword">break</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//超时</span></span><br><span class="line">       <span class="keyword">if</span>(infds == <span class="number">0</span>)</span><br><span class="line">       &#123;</span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">&quot;epoll() timeout&quot;</span>);</span><br><span class="line">           <span class="keyword">continue</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//如果infds&gt;0表示有时间发生，值为发生的事件的数量</span></span><br><span class="line">       <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;infds;i++)</span><br><span class="line">       &#123; </span><br><span class="line">           <span class="comment">//如果发生事件的是listensock，表示有新的连接</span></span><br><span class="line">           <span class="keyword">if</span>(evs[i].data.fd==listensock)</span><br><span class="line">           &#123;</span><br><span class="line">               <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">               &#123;</span><br><span class="line">                   <span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> client;</span><br><span class="line">                   <span class="type">socklen_t</span> len = <span class="built_in">sizeof</span>(client);</span><br><span class="line">                   <span class="type">int</span> clientsock = <span class="built_in">accept</span>(listensock,(<span class="keyword">struct</span> sockaddr*)&amp;client,&amp;len);</span><br><span class="line">                   <span class="keyword">if</span>(clientsock&lt;<span class="number">0</span>&amp;&amp;errno==EAGAIN) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">                   <span class="built_in">printf</span>(<span class="string">&quot;accept client(socket = %d) ok\n&quot;</span>,clientsock);</span><br><span class="line"></span><br><span class="line">                   <span class="comment">//为新客户端准备读事件</span></span><br><span class="line">                   ev.data.fd = clientsock;</span><br><span class="line">                   ev.events = EPOLLIN;</span><br><span class="line">                   <span class="built_in">epoll_ctl</span>(epollfd,EPOLL_CTL_ADD,clientsock,&amp;ev);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;    </span><br><span class="line">           <span class="keyword">else</span></span><br><span class="line">           &#123;</span><br><span class="line">               <span class="comment">//如果客户端连接的socket有时间表示有报文发来或连接已断开</span></span><br><span class="line">               <span class="type">char</span> buffer[<span class="number">1024</span>];</span><br><span class="line">               <span class="built_in">memset</span>(buffer,<span class="number">0</span>,<span class="built_in">sizeof</span>(buffer));</span><br><span class="line">               <span class="keyword">if</span> (<span class="built_in">recv</span>(evs[i].data.fd,buffer,<span class="built_in">sizeof</span>(buffer),<span class="number">0</span>)&lt;=<span class="number">0</span>)</span><br><span class="line">               &#123;</span><br><span class="line">                   <span class="comment">// 如果客户端的连接已断开。</span></span><br><span class="line">                   <span class="built_in">printf</span>(<span class="string">&quot;client(eventfd=%d) disconnected.\n&quot;</span>,evs[i].data.fd);</span><br><span class="line">                   <span class="built_in">close</span>(evs[i].data.fd);            <span class="comment">// 关闭客户端的socket</span></span><br><span class="line">                   <span class="comment">// 从epollfd中删除客户端的socket，如果socket被关闭了，会自动从epollfd中删除，所以，以下代码不必启用。</span></span><br><span class="line">                   <span class="comment">// epoll_ctl(epollfd,EPOLL_CTL_DEL,evs[ii].data.fd,0);     </span></span><br><span class="line">               &#125;</span><br><span class="line">               <span class="keyword">else</span></span><br><span class="line">               &#123;</span><br><span class="line">                   <span class="comment">// 如果客户端有报文发过来。</span></span><br><span class="line">                   <span class="built_in">printf</span>(<span class="string">&quot;recv(eventfd=%d):%s\n&quot;</span>,evs[i].data.fd,buffer);</span><br><span class="line"></span><br><span class="line">                   <span class="comment">// 把接收到的报文内容原封不动的发回去。</span></span><br><span class="line">                   <span class="built_in">send</span>(evs[i].data.fd,buffer,<span class="built_in">strlen</span>(buffer),<span class="number">0</span>);</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">           </span><br><span class="line">       &#125;   </span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="epoll对定时器与信号的处理"><a href="#epoll对定时器与信号的处理" class="headerlink" title="epoll对定时器与信号的处理"></a>epoll对定时器与信号的处理</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//把定时器加入epoll。</span></span><br><span class="line"><span class="type">int</span> tfd=<span class="built_in">timerfd_create</span>(CLOCK_MONOTONIC,TFD_NONBLOCK|TFD_CLOEXEC);   <span class="comment">// 创建timerfd。</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">itimerspec</span> timeout;                                <span class="comment">// 定时时间的数据结构。</span></span><br><span class="line"><span class="built_in">memset</span>(&amp;timeout,<span class="number">0</span>,<span class="built_in">sizeof</span>(<span class="keyword">struct</span> itimerspec));</span><br><span class="line">timeout.it_value.tv_sec = <span class="number">10</span>;                            <span class="comment">// 定时时间为10秒。</span></span><br><span class="line">timeout.it_value.tv_nsec = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">timerfd_settime</span>(tfd,<span class="number">0</span>,&amp;timeout,<span class="number">0</span>);                  <span class="comment">// 开始计时。alarm(10)</span></span><br><span class="line">ev.data.fd=tfd;                                                  <span class="comment">// 为定时器准备事件。</span></span><br><span class="line">ev.events=EPOLLIN;</span><br><span class="line"><span class="built_in">epoll_ctl</span>(epollfd,EPOLL_CTL_ADD,tfd,&amp;ev);     <span class="comment">// 把定时器fd加入epoll。</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/11/OOP-%E7%BB%A7%E6%89%BF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/06/11/OOP-%E7%BB%A7%E6%89%BF/" class="post-title-link" itemprop="url">继承的使用</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-06-11 12:00:00 / 修改时间：19:12:12" itemprop="dateCreated datePublished" datetime="2024-06-11T12:00:00+08:00">2024-06-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OOP/" itemprop="url" rel="index"><span itemprop="name">OOP</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OOP/%E7%BB%A7%E6%89%BF/" itemprop="url" rel="index"><span itemprop="name">继承</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="面向对象之继承"><a href="#面向对象之继承" class="headerlink" title="面向对象之继承"></a>面向对象之继承</h2><h3 id="实现一个不可继承的类"><a href="#实现一个不可继承的类" class="headerlink" title="实现一个不可继承的类"></a>实现一个不可继承的类</h3><p>过度使用继承可能会导致一些问题，这就是为什么现代编程实践中建议“少用继承，多用组合”的原因。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//-少用继承？</span></span><br><span class="line"><span class="comment">//无法被其他类所继承的类</span></span><br><span class="line"><span class="comment">//1.禁用构造（私有） --&gt;导致类本身无法创建实例</span></span><br><span class="line"><span class="comment">//		--&gt;解决：1.定义一个静态成员函数来在类内部构造</span></span><br><span class="line"><span class="comment">//				2.友元类或友元函数</span></span><br><span class="line"><span class="comment">//				3.工厂模式</span></span><br><span class="line"><span class="comment">//		</span></span><br><span class="line"><span class="comment">//2.final标志（C++11），保证当前类不可继承</span></span><br></pre></td></tr></table></figure>
+
+<p>使用组合而不是继承。在C++中，如果你想要防止一个类被继承，可以使用以下几种方法：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://blog.twofei.com/672/"><strong>私有化构造函数</strong>：通过将构造函数设置为私有，其他类就无法继承它，因为它们无法调用基类的构造函数。这种方法通常与一个静态成员函数配合使用，该函数负责创建类的实例</a><a target="_blank" rel="noopener" href="https://blog.twofei.com/672/">1</a>。</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">FinalC</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">FinalC</span>()&#123;&#125;</span><br><span class="line">	<span class="keyword">virtual</span> ~<span class="built_in">FinalC</span>()&#123;&#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>私有化构造函数之后就会使得在类外部都无法创建实例，虽然保证了类无法被继承，但是导致了类本身也无法创建实例，解决这个问题考虑：</p>
+<p>​		a. <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41289920/article/details/118228275"><strong>静态成员函数</strong>：可以在类内部提供一个静态成员函数来创建对象。这个函数可以访问类的私有成员，包括私有构造函数。这种方法常用于实现单例模式</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41289920/article/details/118228275">1</a>。<br>​		b. <a target="_blank" rel="noopener" href="https://blog.csdn.net/liuweiyuxiang/article/details/89503231"><strong>友元类或友元函数</strong>：可以声明一个友元类或友元函数，它们可以访问类的私有成员，包括私有构造函数。这样，友元可以负责创建类的实例</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/liuweiyuxiang/article/details/89503231">2</a>。<br>​		c. <a target="_blank" rel="noopener" href="https://developer.baidu.com/article/details/3311300"><strong>工厂模式</strong>：可以使用工厂模式来创建对象。在这种模式下，一个专门的工厂类负责对象的创建，它可以访问原始类的私有构造函数来创建对象</a><a target="_blank" rel="noopener" href="https://developer.baidu.com/article/details/3311300">3</a>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">FinalC</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">FinalC</span>()&#123;&#125;</span><br><span class="line">	<span class="keyword">virtual</span> ~<span class="built_in">FinalC</span>()&#123;&#125;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">static</span> FinalC* <span class="title">CreateInstance</span><span class="params">()</span><span class="comment">//通过一个静态成员函数来创建返回实例</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> FinalC;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//-------------------------------------</span></span><br><span class="line"><span class="comment">//单例模式</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FinalC</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">static</span> FinalC&amp; <span class="title">Get</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> s_FinalC;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="built_in">FinalC</span>()&#123;&#125;</span><br><span class="line">	<span class="keyword">virtual</span> ~<span class="built_in">FinalC</span>()&#123;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	<span class="type">static</span> FinalC s_FinalC;			</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="2">
+<li><p><a target="_blank" rel="noopener" href="https://blog.twofei.com/672/"><strong>虚继承和私有基类构造函数</strong>：使用模板和虚继承来阻止类被继承。这种方法涉及到一个基类的构造函数是私有的，而派生类是该基类的虚继承者</a><a target="_blank" rel="noopener" href="https://blog.twofei.com/672/">1</a>。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SealedT</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 注意：不是 friend class T;</span></span><br><span class="line">    <span class="keyword">friend</span> T;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">SealedT</span>() &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意：是虚继承</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Demo2</span> : <span class="keyword">virtual</span> SealedT&lt;Demo2&gt;</span><br><span class="line">&#123;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Demo2*      pd2 = <span class="keyword">new</span> Demo2;</span><br><span class="line"><span class="comment">//  Test2*      pt2 = new Test2;        // 错误：不能访问间接虚基类</span></span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.twofei.com/672/"><strong>使用final关键字</strong>：从C++11开始，可以在类声明的末尾使用<code>final</code>关键字来防止类被继承。这是一种简单直接的方法</a></p>
+</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">FinalC</span> <span class="keyword">final</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">FinalC</span>()&#123;&#125;</span><br><span class="line">	<span class="keyword">virtual</span> ~<span class="built_in">FinalC</span>()&#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="接口继承取代实现继承"><a href="#接口继承取代实现继承" class="headerlink" title="接口继承取代实现继承"></a>接口继承取代实现继承</h3><p>组合&gt;继承</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">CanFlyable</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">fly</span><span class="params">()</span> </span>= <span class="number">0</span>;	<span class="comment">//纯虚方法，接口继承</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bird</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">walk</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Bird Walk&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">virtual</span> <span class="type">float</span> <span class="title">GetLength</span><span class="params">()</span> <span class="type">const</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> m_Length;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:	</span><br><span class="line">	<span class="type">float</span> m_Length;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Sparrow</span> :<span class="keyword">public</span> Bird, CanFlyable<span class="comment">//多重继承</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">walk</span><span class="params">()</span><span class="keyword">override</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Sparrow Walk&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">fly</span><span class="params">()</span><span class="keyword">override</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Sparrow fly&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Ostrich</span> :<span class="keyword">public</span> Bird</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">walk</span><span class="params">()</span><span class="keyword">override</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Ostrich walk&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bat</span> :<span class="keyword">public</span> CanFlyable</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="type">void</span> <span class="title">fly</span><span class="params">()</span><span class="keyword">override</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Bat fly&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//FinalC fc;</span></span><br><span class="line">	<span class="comment">//FinalC* fc1 = FinalC::CreateInstance();静态成员函数</span></span><br><span class="line">	InheritC ic;</span><br><span class="line"><span class="comment">//---------</span></span><br><span class="line">	Bird bird;</span><br><span class="line">	bird.<span class="built_in">walk</span>();</span><br><span class="line"></span><br><span class="line">	Sparrow sparrow;</span><br><span class="line">	sparrow.<span class="built_in">fly</span>();</span><br><span class="line">	sparrow.<span class="built_in">walk</span>();</span><br><span class="line"></span><br><span class="line">	Ostrich ostrich;</span><br><span class="line">	ostrich.<span class="built_in">walk</span>();</span><br><span class="line"></span><br><span class="line">	Bat	bat;</span><br><span class="line">	bat.<span class="built_in">fly</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/08/Qt-%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BF%A1%E5%8F%B7%E5%92%8C%E6%A7%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/06/08/Qt-%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BF%A1%E5%8F%B7%E5%92%8C%E6%A7%BD/" class="post-title-link" itemprop="url">QT-信号与槽</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-06-08 12:00:00 / 修改时间：11:01:15" itemprop="dateCreated datePublished" datetime="2024-06-08T12:00:00+08:00">2024-06-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index"><span itemprop="name">QT</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/QT/%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BF%A1%E5%8F%B7%E5%92%8C%E6%A7%BD/" itemprop="url" rel="index"><span itemprop="name">自定义信号和槽</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="信号与槽"><a href="#信号与槽" class="headerlink" title="信号与槽"></a>信号与槽</h2><p>一旦信号和槽通过 <code>connect</code> 函数连接起来，每当信号被 <code>emit</code> 发射，它就会触发槽函数的执行。这是Qt事件驱动编程的核心机制，允许对象之间以松耦合的方式进行通信。</p>
+<p>槽函数的调用是由emit显式发送信号函数来触发的。</p>
+<p><strong>自定义信号</strong>:</p>
+<ul>
+<li>在类的声明中，使用 <code>signals:</code> 关键字来定义信号。</li>
+<li>信号没有返回值，可以有参数。</li>
+<li>信号是函数的声明，不需要定义实现。</li>
+<li>使用 <code>emit</code> 关键字来发射信号。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// .h 文件</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QObject&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> : <span class="keyword">public</span> QObject &#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyClass</span>(QObject *parent = <span class="literal">nullptr</span>);</span><br><span class="line"></span><br><span class="line">signals:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">mySignal</span><span class="params">(<span class="type">int</span> value)</span></span>; <span class="comment">// 自定义信号</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p><strong>自定义槽</strong>:</p>
+<ul>
+<li>在类的声明中，使用 <code>slots:</code> 或者 <code>public/private/protected slots:</code> 来定义槽函数。</li>
+<li>槽函数的实现与普通成员函数相同。</li>
+<li>槽函数通常没有返回值，参数需要与信号匹配。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;MyClass.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QDebug&gt;</span></span></span><br><span class="line"></span><br><span class="line">MyClass::<span class="built_in">MyClass</span>(QObject *parent) : <span class="built_in">QObject</span>(parent) &#123;</span><br><span class="line">    <span class="comment">// 连接信号和槽</span></span><br><span class="line">    <span class="built_in">connect</span>(<span class="keyword">this</span>, &amp;MyClass::mySignal, <span class="keyword">this</span>, &amp;MyClass::mySlot);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 自定义槽函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MyClass::mySlot</span><span class="params">(<span class="type">int</span> value)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;Signal received with value:&quot;</span> &lt;&lt; value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>连接信号和槽</strong>:</p>
+<ul>
+<li>使用 <code>QObject::connect</code> 函数来连接信号和槽。</li>
+<li><code>connect</code> 的参数包括信号发送者、信号、信号接收者和槽函数。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">connect</span>(sender, &amp;SenderClass::signalName, receiver, &amp;ReceiverClass::slotName);</span><br></pre></td></tr></table></figure>
+
+<p><strong>发射信号</strong>:</p>
+<ul>
+<li>使用 <code>emit</code> 关键字来发射信号，触发连接的槽函数。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">emit <span class="title">mySignal</span><span class="params">(<span class="number">123</span>)</span></span>; <span class="comment">// 发射信号，传递参数值123</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dodamce/article/details/138028733">类必须包含 <code>Q_OBJECT</code> 宏，这样 Qt 的元对象系统才能正常工作，支持信号和槽的功能</a></p>
+<h3 id="why"><a href="#why" class="headerlink" title="why?"></a>why?</h3><ol>
+<li><strong>为什么信号函数不允许有返回值？</strong> 信号函数不允许有返回值是因为它们的目的是通知其他对象某个事件发生了，而不是进行计算并返回一个值。信号的设计是为了触发槽函数的执行，而槽函数可以有返回值。信号的作用是通知，而不是询问。</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xuechanba/article/details/117553260"><strong>信号函数的参数有什么作用？</strong> 信号函数的参数用于传递与信号相关的数据。例如，如果你有一个信号表示温度变化，参数可能就是新的温度值。这样，当信号被发射时，槽函数可以接收这个值并据此做出反应</a></li>
+<li><strong>没有参数的信号如何工作？</strong> 没有参数的信号简单地通知接收者某个事件发生了，而不提供额外的数据。例如，一个按钮被点击的信号可能不需要参数，因为接收者只需要知道按钮被点击了，而不需要其他信息。</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33154343/article/details/96829473"><strong>使用emit发射信号是什么意思？</strong> <code>emit</code>是Qt中的一个关键字，用于发射信号。当你想通知其他对象某个事件发生时，你会在你的代码中使用<code>emit</code>来发射相应的信号。这样，所有连接到该信号的槽函数都会被调用</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/08/Qt-%E9%94%AE%E9%BC%A0%E5%93%8D%E5%BA%94%E4%BA%8B%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/06/08/Qt-%E9%94%AE%E9%BC%A0%E5%93%8D%E5%BA%94%E4%BA%8B%E4%BB%B6/" class="post-title-link" itemprop="url">QT-键鼠响应</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-08 12:00:00" itemprop="dateCreated datePublished" datetime="2024-06-08T12:00:00+08:00">2024-06-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-25 09:04:47" itemprop="dateModified" datetime="2024-09-25T09:04:47+08:00">2024-09-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index"><span itemprop="name">QT</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/QT/%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BF%A1%E5%8F%B7%E5%92%8C%E6%A7%BD/" itemprop="url" rel="index"><span itemprop="name">自定义信号和槽</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;mainwindow.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QtWidgets&gt;</span></span></span><br><span class="line"><span class="comment">//接受一个QWidget类型的指针parent作为参数，这个参数通常用于设置窗口的父子关系。构造函数使用初始化列表语法:来调用基类QMainWindow的构造函数，并将parent传递给它。这样，MainWindow就被初始化为一个QMainWindow对象。</span></span><br><span class="line">MainWindow::<span class="built_in">MainWindow</span>(QWidget *parent)</span><br><span class="line">    : <span class="built_in">QMainWindow</span>(parent)   <span class="comment">//初始化列表，QWidget类型的parent初始化QWidget为基类的QMainWindow</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//设置了鼠标跟踪为开启状态。当鼠标跟踪开启时，即使没有按键被按下，窗口也会接收到鼠标移动事件。</span></span><br><span class="line">    <span class="built_in">setMouseTracking</span>(<span class="literal">true</span>);</span><br><span class="line">    <span class="comment">//创建了一个QPushButton对象，按钮上的文字是&quot;Quit&quot;。this指针表示这个按钮是MainWindow的子对象，这意味着按钮的生命周期将由MainWindow管理</span></span><br><span class="line">    <span class="keyword">auto</span> *quitBtn = <span class="keyword">new</span> <span class="built_in">QPushButton</span>(<span class="string">&quot;Quit&quot;</span>,<span class="keyword">this</span>);</span><br><span class="line">    <span class="comment">//设置了按钮的位置和大小</span></span><br><span class="line">    quitBtn-&gt;<span class="built_in">setGeometry</span>(<span class="number">50</span>,<span class="number">25</span>,<span class="number">100</span>,<span class="number">50</span>);</span><br><span class="line">    <span class="comment">//连接了quitBtn的clicked信号到全局QApplication对象的quit槽。这意味着当按钮被点击时，QApplication::quit函数会被调用，导致应用程序退出</span></span><br><span class="line">    <span class="built_in">connect</span>(quitBtn,&amp;QPushButton::clicked,qApp,&amp;QApplication::quit);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::keyPressEvent</span><span class="params">(QKeyEvent* event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(event-&gt;<span class="built_in">key</span>()==Qt::Key_Escape)</span><br><span class="line">    &#123;</span><br><span class="line">        qApp-&gt;<span class="built_in">quit</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::mouseMoveEvent</span><span class="params">(QMouseEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> x = event-&gt;<span class="built_in">pos</span>().<span class="built_in">x</span>();</span><br><span class="line">    <span class="type">int</span> y = event-&gt;<span class="built_in">pos</span>().<span class="built_in">y</span>();</span><br><span class="line">    QString text = <span class="string">&quot;position:&quot;</span>+QString::<span class="built_in">number</span>(x)+<span class="string">&quot;,&quot;</span>+QString::<span class="built_in">number</span>(y);</span><br><span class="line">    <span class="keyword">this</span>-&gt;<span class="built_in">statusBar</span>()-&gt;<span class="built_in">showMessage</span>(text);</span><br><span class="line">&#125;</span><br><span class="line">MainWindow::~<span class="built_in">MainWindow</span>()</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/05/20/linux-%E8%BF%9B%E7%A8%8B%E5%BF%83%E8%B7%B3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/20/linux-%E8%BF%9B%E7%A8%8B%E5%BF%83%E8%B7%B3/" class="post-title-link" itemprop="url">linux进程心跳</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-05-20 12:00:00 / 修改时间：17:08:49" itemprop="dateCreated datePublished" datetime="2024-05-20T12:00:00+08:00">2024-05-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/%E8%BF%9B%E7%A8%8B%E5%BF%83%E8%B7%B3/" itemprop="url" rel="index"><span itemprop="name">进程心跳</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="进程的心跳"><a href="#进程的心跳" class="headerlink" title="进程的心跳"></a>进程的心跳</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/687024858">进程心跳是一种周期性发送信号的技术，用于确认系统或者组件是否处于正常运行状态。通常，心跳信号由一个程序或者进程定期发送给另一个程序或者进程，接收方通过监测心跳信号的到达情况来判断发送方的状态。在C++中，心跳机制可以通过定时器、线程、网络套接字等方式实现，具体实现方式取决于应用的需求和环境</a></p>
+<p>进程心跳就像是一个定时发出的“我还活着”的信号。想象一下，如果你有一个机器人朋友，在另一个房间工作，你不能看到它。为了确保它还在正常工作，你让它每隔一段时间就对你喊一声“我还好”。只要你听到它的声音，你就知道它还在那里工作。如果你突然听不到它的声音了，那可能意味着它遇到了问题，需要你去检查一下。</p>
+<p>在计算机程序中，这个“喊声”就是心跳信号。一个程序会定期发送这个信号给另一个程序，告诉它“我还在运行”。如果心跳信号停了，接收信号的程序就知道发送信号的程序可能出了问题，需要采取一些措施。这个机制帮助程序员确保系统的稳定性和可靠性。<strong>简单来说，进程心跳就是程序之间用来检查对方是否还在正常运行的一种方法。</strong></p>
+<p>例子：</p>
+<p>这段代码通过使用共享内存来实现多进程间的进程心跳，在这个例子中的“喊声”就是进程的当前时间，每隔一段时间更新一次atime这个参数，当每次超过超时时间后这个参数仍没有改变就知道该进程出现了问题。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;_public.h&quot;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> idc;</span><br><span class="line"></span><br><span class="line"><span class="comment">//进程心跳的结构体</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">stprocinfo</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> pid=<span class="number">0</span>;			<span class="comment">//进程id</span></span><br><span class="line">	<span class="type">char</span> pname[<span class="number">51</span>]=&#123;<span class="number">0</span>&#125;;	<span class="comment">//进程名</span></span><br><span class="line">	<span class="type">int</span> timeout = <span class="number">0</span>;	<span class="comment">//超时时间</span></span><br><span class="line">	<span class="type">time_t</span> atime = <span class="number">0</span>;	<span class="comment">//最后一次心跳的时间(最后一次“发送信号”)</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">stprocinfo</span>() = <span class="keyword">default</span>;				<span class="comment">//启用默认构造</span></span><br><span class="line">	<span class="built_in">stprocinfo</span>(<span class="type">const</span> <span class="type">int</span> in_pid,<span class="type">const</span> std::string&amp; in_pname,<span class="type">const</span> <span class="type">int</span> in_timeout,<span class="type">const</span> <span class="type">time_t</span> in_atime)</span><br><span class="line">		:<span class="built_in">pid</span>(in_pid),<span class="built_in">timeout</span>(in_timeout),<span class="built_in">atime</span>(in_atime)</span><br><span class="line">	&#123;</span><br><span class="line">    	<span class="built_in">strncpy</span>(pname,in_pname.<span class="built_in">c_str</span>(),<span class="number">50</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> m_shmid = <span class="number">-1</span>;					<span class="comment">//共享内存的id</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">stprocinfo</span>* m_shm = <span class="literal">nullptr</span>;	<span class="comment">//指向共享内存的地址空间 </span></span><br><span class="line"><span class="type">int</span> m_pos = <span class="number">-1</span>;						<span class="comment">//当前进程在数组中的下标</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">EXIT</span><span class="params">(<span class="type">int</span> sig)</span></span>;	<span class="comment">//退出信号的处理函数</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;	</span><br><span class="line">	<span class="comment">//处理程序的退出信号</span></span><br><span class="line">	<span class="built_in">signal</span>(SIGINT,EXIT);</span><br><span class="line">	<span class="built_in">signal</span>(SIGTERM,EXIT);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//创建/获取共享内存</span></span><br><span class="line">	<span class="keyword">if</span>(m_shmid = <span class="built_in">shmget</span>((<span class="type">key_t</span>)<span class="number">0x5095</span>,<span class="number">1000</span>*<span class="built_in">sizeof</span>(<span class="keyword">struct</span> stprocinfo),<span class="number">0666</span>|IPC_CREAT)==<span class="number">-1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;创建/获取共享内存(%d)失败. \n&quot;</span>,<span class="number">0x5095</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//连接共享内存到当前进程的地址空间</span></span><br><span class="line">	<span class="keyword">if</span>((m_shm = (<span class="keyword">struct</span> stprocinfo*)<span class="built_in">shmat</span>(m_shmid,<span class="number">0</span>,<span class="number">0</span>))==(<span class="type">void</span>*)<span class="number">-1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;连接到当前进程地址失败. \n&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//将共享内存中的全部进程信息显示出来用于调试</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span>(m_shm[i].pid!=<span class="number">0</span>)<span class="comment">//m_shm+i</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;i=%d,pid=%d,pname=%s,timeout=%d,atime=%d\n&quot;</span>,</span><br><span class="line">                    i,m_shm[i].pid,m_shm[i].pname,m_shm[i].timeout,m_shm[i].atime);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//将当前进程的信息填充到结构体</span></span><br><span class="line">	<span class="comment">//procinfo.atime = time(0);				//获取当前系统时间作为最后一次心跳时间(1970-1-1以来的秒数)</span></span><br><span class="line">	<span class="keyword">struct</span> <span class="title class_">stprocinfo</span> <span class="built_in">procinfo</span>(<span class="built_in">getpid</span>(),<span class="string">&quot;server1&quot;</span>,<span class="number">30</span>,<span class="built_in">time</span>(<span class="number">0</span>));</span><br><span class="line"></span><br><span class="line">	<span class="comment">//查找位置并操作内存，防止多个进程同时找到用一个位置这种情况，对共享内存加锁（信号量）</span></span><br><span class="line">	csemp semlock;			<span class="comment">//给共享内存加锁的信号量</span></span><br><span class="line">	<span class="keyword">if</span>(semlock.<span class="built_in">init</span>(<span class="number">0x5095</span>)==<span class="literal">false</span>)<span class="comment">//初始化信号量</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;创建信号量%x失败.\n&quot;</span>,<span class="number">0x5095</span>);</span><br><span class="line">		<span class="built_in">EXIT</span>(<span class="number">-1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	semlock.<span class="built_in">wait</span>();<span class="comment">//加锁</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 进程id是循环使用的，如果曾经有一个进程异常退出（fragment fault/kill-9），没有清理自己的心跳信息，</span></span><br><span class="line">    <span class="comment">// 它的进程信息将残留在共享内存中，不巧的是，如果当前进程重用了它的id，</span></span><br><span class="line">    <span class="comment">// 所以，如果共享内存中已存在当前进程编号，一定是其它进程残留的信息，当前进程应该重用这个位置。</span></span><br><span class="line">	<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;<span class="number">1000</span>;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//m_shm+i也可以，因为m_shm是stprocinfo类型，所以+i表示加i个stprocinfo大小的位置</span></span><br><span class="line">		<span class="keyword">if</span>(m_shm[i].pid == procinfo.pid)<span class="comment">//如果当前进程id在内存中已存在</span></span><br><span class="line">		&#123;</span><br><span class="line">			m_pos = i;					<span class="comment">//设置当前进程位置（标记这个位置）即重用这个位置</span></span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;Find the old position %d. \n&quot;</span>);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(m_pos == <span class="number">-1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">	<span class="comment">//在共享内存中寻找空位置并将进程的结构体保存到共享内存中</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;<span class="number">1000</span>;i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span>(m_shm[i].pid == <span class="number">0</span>)	<span class="comment">//如果pid为空，也就是当前位置为空位置</span></span><br><span class="line">			&#123;</span><br><span class="line">				m_pos = i;			<span class="comment">//设置当前进程位置（标记这个位置）</span></span><br><span class="line">				<span class="built_in">printf</span>(<span class="string">&quot;Find a new position %d. \n&quot;</span>,i);</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//若m_pos==-1表示没有找到空位置，共享内存空间已用完</span></span><br><span class="line">	<span class="keyword">if</span>(m_pos == <span class="number">-1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		semlock.<span class="built_in">post</span>();			<span class="comment">//解锁</span></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;The shm is full.\n&quot;</span>);</span><br><span class="line">		<span class="built_in">EXIT</span>(<span class="number">-1</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//把当前进程的结构体保存到共享内存中</span></span><br><span class="line">	<span class="comment">//memcpy(m_shm + m_pos,&amp;procinfo,sizeof(struct st_procinfo)); </span></span><br><span class="line">	<span class="built_in">memcpy</span>(&amp;m_shm[m_pos],&amp;procinfo,<span class="built_in">sizeof</span>(<span class="keyword">struct</span> st_procinfo));</span><br><span class="line">	semlock.<span class="built_in">post</span>();			<span class="comment">//解锁</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(<span class="literal">true</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout&lt;&lt;<span class="string">&quot;服务程序正在运行中...\n&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">//每隔这么多秒更新一次心跳（发送一次信号），不能大于超时timeout时间</span></span><br><span class="line">		<span class="built_in">sleep</span>(<span class="number">25</span>);</span><br><span class="line">		<span class="comment">//更新进程的心跳信息</span></span><br><span class="line">		m_shm[m_pos].atime=<span class="built_in">time</span>(<span class="number">0</span>);</span><br><span class="line">		<span class="built_in">sleep</span>(<span class="number">25</span>);</span><br><span class="line">		m_shm[m_pos].atime=<span class="built_in">time</span>(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">EXIT</span><span class="params">(<span class="type">int</span> sig)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;sig=%d\n&quot;</span>,sig);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//从共享内存中删除当前进程的心跳信息</span></span><br><span class="line">	<span class="keyword">if</span>(m_pos !=<span class="number">-1</span>)</span><br><span class="line">		<span class="built_in">memset</span>(&amp;m_shm[m_pos],<span class="number">0</span>,<span class="built_in">sizeof</span>(<span class="keyword">struct</span> stprocinfo));</span><br><span class="line"></span><br><span class="line">	<span class="comment">//把共享内存从当前进程分离</span></span><br><span class="line">	<span class="keyword">if</span>(m_shm != <span class="number">0</span> )</span><br><span class="line">		<span class="built_in">shmdt</span>(&amp;m_shmid);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>);<span class="comment">//退出程序</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/05/19/linux-%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/05/19/linux-%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86/" class="post-title-link" itemprop="url">正向代理与反向代理</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-05-19 12:00:00" itemprop="dateCreated datePublished" datetime="2024-05-19T12:00:00+08:00">2024-05-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-17 21:44:46" itemprop="dateModified" datetime="2024-06-17T21:44:46+08:00">2024-06-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/%E4%BB%A3%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">代理</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>0</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1336,7 +1467,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1349,7 +1480,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-count">66</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

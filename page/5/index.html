@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/04/linux-Main(arg)/">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/24/Qt-%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -209,370 +209,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/04/04/linux-Main(arg)/" class="post-title-link" itemprop="url">main函数的参数</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-04-04 17:00:00 / 修改时间：18:29:13" itemprop="dateCreated datePublished" datetime="2024-04-04T17:00:00+08:00">2024-04-04</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="int-main-int-argc-char-argv-char-envp"><a href="#int-main-int-argc-char-argv-char-envp" class="headerlink" title="int main(int argc,char *argv[],char*envp[])"></a>int main(int argc,char *argv[],char*envp[])</h1><p>在C和C++中，<code>main</code> 函数可以有不同的形式，这取决于程序是否需要从命令行接收参数或环境变量。通常，如果程序不需要命令行参数或环境变量，可以使用 <code>int main()</code> 或 <code>int main(void)</code>。如果程序需要命令行参数，可以使用 <code>int main(int argc, char* argv[])</code>，其中 <code>argc</code> 表示参数数量，<code>argv</code> 是参数的数组。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span> *argv[],<span class="type">char</span>*envp[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//输出命令行的参数个数</span></span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;There are &quot;</span>&lt;&lt;argc&lt;&lt;<span class="string">&quot; args&quot;</span>&lt;&lt;std::endl;</span><br><span class="line"><span class="comment">//打印出所有参数</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;argc;i++)</span><br><span class="line">std::cout&lt;&lt;i&lt;&lt;<span class="string">&quot; : &quot;</span>&lt;&lt;argv[i]&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="comment">//打印出所有环境变量</span></span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;envp[i]!=<span class="number">0</span>;i++)</span><br><span class="line">std::cout&lt;&lt;envp[i]&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">//添加环境变量</span></span><br><span class="line"><span class="built_in">setenv</span>(<span class="string">&quot;AA&quot;</span>,<span class="string">&quot;aaaa&quot;</span>,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取环境变量</span></span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;AA= &quot;</span>&lt;&lt;<span class="built_in">getenv</span>(<span class="string">&quot;AA&quot;</span>)&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>linux中g++编译后运行<code>./Main a1 a2</code>输出得到</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">There are 3 args</span><br><span class="line">0 : ./Main</span><br><span class="line">1 : a1</span><br><span class="line">2 : a2</span><br><span class="line">...</span><br><span class="line">//一大堆环境变量</span><br><span class="line">LESSCLOSE=/usr/bin/lesspipe %s %s</span><br><span class="line">XDG_MENU_PREFIX=gnome-</span><br><span class="line">PWD=/home/jenwein/dev/ostest3</span><br><span class="line">...</span><br><span class="line">_=./Main</span><br><span class="line">AA= aaaa</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>而在vs中不再使用<code>putenv</code> 和 <code>getenv</code> ，理由之后再说&#x2F;</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[], <span class="type">char</span>** envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">char</span>* pValue;</span><br><span class="line">	<span class="type">size_t</span> len;</span><br><span class="line">	<span class="type">errno_t</span> err;</span><br><span class="line"> <span class="comment">//输出命令行的参数个数</span></span><br><span class="line">	std::cout &lt;&lt; <span class="string">&quot;There are &quot;</span> &lt;&lt; argc &lt;&lt; <span class="string">&quot; args&quot;</span> &lt;&lt; std::endl;</span><br><span class="line"><span class="comment">//打印出所有参数</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; argc; i++)</span><br><span class="line">		std::cout &lt;&lt; i &lt;&lt; <span class="string">&quot; : &quot;</span> &lt;&lt; argv[i] &lt;&lt; <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"><span class="comment">//打印出所有环境变量</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; envp[i] != <span class="number">0</span>; i++)</span><br><span class="line">		std::cout &lt;&lt; envp[i] &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//添加环境变量，使用_putenv(const char *envstring)参数为环境字符串定义。</span></span><br><span class="line">	<span class="comment">//envstring：指向环境变量的指针，其中环境变量必须以 &quot;name=value&quot; 的形式给出,调用成功返回 0调用失败时返回 非0 值</span></span><br><span class="line">	<span class="keyword">if</span> (_putenv(<span class="string">&quot;AA=aaaa&quot;</span>) == <span class="number">0</span>) </span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;环境变量添加成功\n&quot;</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;环境变量添加失败\n&quot;</span>; </span><br><span class="line">	</span><br><span class="line">	<span class="comment">//获取环境变量使用_dupenv_s（char **buffer,size_t *numberOfElements,const char *varname）</span></span><br><span class="line">    <span class="comment">//1.buffer 用于存储变量值的缓冲区。</span></span><br><span class="line">    <span class="comment">//2.numberOfElement sbuffer 的大小。</span></span><br><span class="line">    <span class="comment">//3.varname 环境变量名称</span></span><br><span class="line"><span class="comment">//ps:如果未找到变量，则将 buffer 设置为 NULL、将 numberOfElements 设置为 0，并且返回值是 0，因为未将这种情况视为错误条件。</span></span><br><span class="line"></span><br><span class="line">	err = _dupenv_s(&amp;pValue, &amp;len, <span class="string">&quot;AA&quot;</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (err)</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;获取失败,[ERROR]: &quot;</span> &lt;&lt; err &lt;&lt; std::endl;	</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (pValue == <span class="literal">NULL</span>) &#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;环境变量 &#x27;BB&#x27; 不存在。\n&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> &#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;BB=&quot;</span> &lt;&lt; pValue &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (pValue != <span class="literal">NULL</span>) &#123;</span><br><span class="line">		<span class="built_in">free</span>(pValue);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><code>putenv</code> vs <code>_putenv</code>:<ul>
-<li><code>putenv</code> 是 POSIX 标准的一部分，用于设置或更改环境变量。在 Unix 类系统（如 Linux）中，<code>putenv</code> 是常用的函数。</li>
-<li><code>_putenv</code> 是 Microsoft Visual C++ 提供的函数，它是 <code>putenv</code> 的替代品，用于在 Windows 系统中设置环境变量。它与 ISO C++ 标准兼容，因此在 Windows 平台上编程时推荐使用 <code>_putenv</code>。</li>
-</ul>
-</li>
-<li><code>getenv</code> vs <code>_dupenv_s</code>:<ul>
-<li><code>getenv</code> 是 C 和 POSIX 标准库中的一个函数，用于获取环境变量的值。但是，<code>getenv</code> 返回的是指向内部存储的指针，这可能会在多线程环境中引起问题，因为环境变量可能被其他线程更改。</li>
-<li><code>_dupenv_s</code> 是一个更安全的函数，它在 Microsoft Visual C++ 中提供。它不仅返回环境变量的值，还会为这个值分配新的内存，避免了 <code>getenv</code> 可能带来的线程安全问题。因此，在需要考虑线程安全的 Windows 程序中，推荐使用 <code>_dupenv_s</code>。</li>
-</ul>
-</li>
-</ol>
-<p>总的来说，<code>_putenv</code> 和 <code>_dupenv_s</code> 是在 Windows 平台上，为了提高安全性和符合标准而推荐使用的函数。它们提供了与 <code>putenv</code> 和 <code>getenv</code> 相同的功能，但是在处理环境变量时更安全，更适合多线程环境</p>
-<p>相关用法详见</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/c-runtime-library/reference/dupenv-s-wdupenv-s?view=msvc-170">_dupenv_s、_wdupenv_s | Microsoft Learn</a></p>
-</blockquote>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/cpp/c-runtime-library/reference/putenv-wputenv?view=msvc-170">_putenv、_wputenv | Microsoft Learn</a></p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/03/linux-makefile/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/04/03/linux-makefile/" class="post-title-link" itemprop="url">makefile</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-04-03 22:00:00 / 修改时间：15:06:11" itemprop="dateCreated datePublished" datetime="2024-04-03T22:00:00+08:00">2024-04-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/makefile/" itemprop="url" rel="index"><span itemprop="name">makefile</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>5.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>5 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="makefile"><a href="#makefile" class="headerlink" title="makefile"></a>makefile</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wohu1104/article/details/110905996">Makefile 是一个文本文件，用于定义如何编译和链接源代码以生成可执行文件、库文件或其他构建目标。它是 make 工具的输入文件，make 工具根据 Makefile 中定义的规则自动执行编译和链接操作。在 Makefile 中，你可以定义变量、编译规则、文件依赖关系等，以简化和自动化编译过程。例如，你可以指定哪些文件需要编译，哪些文件需要先编译，哪些文件需要后编译，以及哪些文件在源文件更改后需要重新编译</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/wohu1104/article/details/110905996">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/575852387">2</a><a target="_blank" rel="noopener" href="https://getiot.tech/zh/makefile/makefile-intro/">3</a>。</p>
-<p>这是一个简单的 Makefile 示例：</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">all: program  </span></span><br><span class="line"><span class="section">program: main.o utils.o     </span></span><br><span class="line">		gcc -o program main.o utils.o  </span><br><span class="line"><span class="section">main.o: main.c     </span></span><br><span class="line">		gcc -c main.c  </span><br><span class="line"><span class="section">utils.o: utils.c     </span></span><br><span class="line">		gcc -c utils.c  </span><br><span class="line"><span class="section">clean:     </span></span><br><span class="line">		rm -f *.o program </span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wohu1104/article/details/110905996">在这个例子中，<code>all</code> 是一个目标，它依赖于 <code>program</code> 目标。<code>program</code> 目标又依赖于 <code>main.o</code> 和 <code>utils.o</code> 对象文件。<code>gcc</code> 命令用于编译源文件并生成对象文件，以及链接对象文件生成最终的可执行文件。<code>clean</code> 是一个伪目标，用于清理编译生成的文件。使用 Makefile 可以大大提高软件开发的效率，特别是在处理大型项目时</a></p>
-<p>Makefile 的语法主要包括以下几个部分：</p>
-<ol>
-<li><strong>目标（Targets）</strong>：指明要生成的文件或执行的操作。</li>
-<li><strong>依赖（Dependencies）</strong>：目标文件依赖的文件，即在生成目标之前需要先存在或最新的文件。</li>
-<li><strong>命令（Commands）</strong>：一系列执行的shell命令，用于生成目标文件。</li>
-<li><strong>变量（Variables）</strong>：可以在 Makefile 中定义变量，以便重复使用。</li>
-<li><strong>规则（Rules）</strong>：由目标、依赖和命令组成的指令，告诉 make 如何生成一个目标。</li>
-<li><strong>伪目标（Phony Targets）</strong>：不是文件的目标，通常用于执行特定的命令序列。</li>
-</ol>
-<p>以下是一些具体的语法规则：</p>
-<ul>
-<li><p><strong>规则的基本语法</strong>：</p>
-<p><code>目标...: 依赖...     命令 </code></p>
-<p>每条命令前必须有一个Tab键作为缩进。</p>
-</li>
-<li><p><strong>变量的使用</strong>： 使用 <code>$</code> 符号表示取变量的值，例如：</p>
-<p><code>CC = gcc CFLAGS = -g -Wall $(CC) $(CFLAGS) -c main.c </code></p>
-</li>
-<li><p><strong>通配符和模式匹配</strong>： 使用 <code>%</code> 作为模式匹配，例如：</p>
-<p><code>%.o: %.c     $(CC) -c $&lt; -o $@ </code></p>
-</li>
-<li><p><strong>函数的使用</strong>： Makefile 提供了许多内置函数，例如 <code>wildcard</code>、<code>patsubst</code> 等，用于文件名和字符串的操作。</p>
-</li>
-<li><p><strong>条件判断</strong>： Makefile 支持条件判断语句，如 <code>ifeq</code>、<code>ifneq</code>、<code>ifdef</code> 和 <code>ifndef</code>。</p>
-</li>
-<li><p><strong>包含其他 Makefile</strong>： 使用 <code>include</code> 关键字可以包含其他 Makefile 文件。</p>
-</li>
-<li><p><strong>注释</strong>： 使用 <code>#</code> 开头的行表示注释。</p>
-</li>
-</ul>
-<h2 id="1-循环"><a href="#1-循环" class="headerlink" title="1.循环"></a>1.循环</h2><p>在 Makefile 中使用循环可以帮助你重复执行一系列命令，这在处理多个类似对象时非常有用。Makefile 支持 <code>foreach</code> 和 <code>while</code> 循环，但 <code>while</code> 循环不是直接支持的，通常需要通过其他方式模拟。以下是 <code>foreach</code> 循环的使用方法：</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义一个变量，包含多个值 </span></span><br><span class="line">FILES := file1.c file2.c file3.c  </span><br><span class="line"><span class="comment"># 使用 foreach 函数遍历 FILES 变量中的每个文件名 </span></span><br><span class="line">OBJS := <span class="variable">$(<span class="built_in">foreach</span> <span class="built_in">file</span>,<span class="variable">$(FILES)</span>,$(<span class="built_in">file</span>:.c=.o)</span>)  </span><br><span class="line"><span class="comment"># 定义规则，使用 OBJS 变量中的对象文件列表 </span></span><br><span class="line"><span class="section">all: <span class="variable">$(OBJS)</span>     </span></span><br><span class="line">	gcc -o program <span class="variable">$(OBJS)</span> </span><br></pre></td></tr></table></figure>
-
-<p>在这个例子中，<code>foreach</code> 函数遍历 <code>FILES</code> 变量中的每个文件名，并将 <code>.c</code> 后缀替换为 <code>.o</code>，生成对象文件列表 <code>OBJS</code>。然后，<code>all</code> 规则使用这个列表来编译程序。</p>
-<p>对于 <code>while</code> 循环，由于 Makefile 本身不直接支持，通常需要通过 shell 脚本或其他工具来实现。例如，你可以在命令中使用 shell 的 <code>while</code> 循环：</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 shell 命令的 while 循环 </span></span><br><span class="line"><span class="section">count:     </span></span><br><span class="line">	@count=0 ; \     </span><br><span class="line">	while [ $$count -lt 5 ]; do \         </span><br><span class="line">		echo Count: $$count ; \         </span><br><span class="line">		count=$$((count + 1)) ; \     </span><br><span class="line">	done </span><br></pre></td></tr></table></figure>
-
-<p>在这个例子中，<code>count</code> 目标使用 shell 的 <code>while</code> 循环来打印数字 0 到 4。</p>
-<h2 id="2-条件判断"><a href="#2-条件判断" class="headerlink" title="2.条件判断"></a>2.条件判断</h2><p>常见的条件判断语句：</p>
-<ol>
-<li><strong>ifeq 和 ifneq</strong>：用于比较两个值是否相等或不相等。</li>
-</ol>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ifeq</span> (<span class="variable">$(VARIABLE)</span>,value)     </span><br><span class="line"><span class="comment"># 如果 VARIABLE 等于 value，则执行这里的命令 </span></span><br><span class="line"><span class="keyword">else</span>     </span><br><span class="line"><span class="comment"># 如果 VARIABLE 不等于 value，则执行这里的命令 </span></span><br><span class="line"><span class="keyword">endif</span> </span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><strong>ifdef 和 ifndef</strong>：用于检查一个变量是否被定义。</li>
-</ol>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ifdef</span> VARIABLE_NAME     </span><br><span class="line"><span class="comment"># 如果 VARIABLE_NAME 被定义，则执行这里的命令 </span></span><br><span class="line"><span class="keyword">else</span>     </span><br><span class="line"><span class="comment"># 如果 VARIABLE_NAME 未被定义，则执行这里的命令 </span></span><br><span class="line"><span class="keyword">endif</span> </span><br></pre></td></tr></table></figure>
-
-<p>在使用条件判断时，需要注意以下几点：</p>
-<ul>
-<li><code>ifeq</code> 和 <code>ifneq</code> 后面的参数可以用小括号 <code>()</code> 或者是单引号 <code>&#39;&#39;</code> 包围。</li>
-<li>条件语句中的 <code>else</code> 部分是可选的，如果不需要可以省略。</li>
-<li>条件语句必须以 <code>endif</code> 结束。</li>
-<li>在条件表达式中不能使用自动化变量，因为它们只在规则命令执行时有效。</li>
-</ul>
-<h2 id="3、变量"><a href="#3、变量" class="headerlink" title="3、变量"></a>3、变量</h2><p>$符号表示取变量的值，当变量名多于一个字符时，使用”( )”<br>$符的其他用法</p>
-<p>$^ 表示所有的依赖文件</p>
-<p>$@ 表示生成的目标文件</p>
-<p>$&lt; 代表第一个依赖文件</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SRC = <span class="variable">$(<span class="built_in">wildcard</span> *.c)</span></span><br><span class="line">OBJ = <span class="variable">$(<span class="built_in">patsubst</span> %.c, %.o, <span class="variable">$(SRC)</span>)</span></span><br><span class="line"> </span><br><span class="line"><span class="section">ALL: hello.out</span></span><br><span class="line"> </span><br><span class="line"><span class="section">hello.out: <span class="variable">$(OBJ)</span></span></span><br><span class="line">        gcc <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"> </span><br><span class="line"><span class="variable">$(OBJ)</span>: <span class="variable">$(SRC)</span></span><br><span class="line">        gcc -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="4、变量赋值"><a href="#4、变量赋值" class="headerlink" title="4、变量赋值"></a>4、变量赋值</h2><p>1、”<strong>&#x3D;</strong>“是最普通的等号，在Makefile中容易搞错赋值等号，使用 “&#x3D;”进行赋值，变量的值是整个Makefile中最后被指定的值。</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">VIR_A = A</span><br><span class="line">VIR_B = <span class="variable">$(VIR_A)</span> B</span><br><span class="line">VIR_A = AA</span><br></pre></td></tr></table></figure>
-
-<p>经过上面的赋值后，最后VIR_B的值是AA B，而不是A B，在make时，会把整个Makefile展开，来决定变量的值</p>
-<p>2、”<strong>:&#x3D;</strong>“ 表示直接赋值，赋予当前位置的值。</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">VIR_A := A</span><br><span class="line">VIR_B := <span class="variable">$(VIR_A)</span> B</span><br><span class="line">VIR_A := AA</span><br></pre></td></tr></table></figure>
-
-<p>最后BIR_B的值是A B，即根据当前位置进行赋值。因此相当于“&#x3D;”，“：&#x3D;”才是真正意义上的直接赋值</p>
-<p>3、”<strong>?&#x3D;</strong>“ 表示如果该变量没有被赋值，赋值予等号后面的值。</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VIR ?= new_value</span><br></pre></td></tr></table></figure>
-
-<p>如果VIR在之前没有被赋值，那么VIR的值就为new_value。</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">VIR := old_value</span><br><span class="line">VIR ?= new_value</span><br></pre></td></tr></table></figure>
-
-<p>这种情况下，VIR的值就是old_value<br>4、”<strong>+&#x3D;</strong>“和平时写代码的理解是一样的，表示将符号后面的值添加到前面的变量上</p>
-<h2 id="5、预定义变量"><a href="#5、预定义变量" class="headerlink" title="5、预定义变量"></a>5、预定义变量</h2><p>CC：c编译器的名称，默认值为cc。cpp c预编译器的名称默认值为$(CC) -E</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CC = gcc</span><br></pre></td></tr></table></figure>
-
-<p>回显问题，Makefile中的命令都会被打印出来。如果不想打印命令部分 可以使用@去除回显</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@echo <span class="string">&quot;clean done!&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="6、函数"><a href="#6、函数" class="headerlink" title="6、函数"></a>6、函数</h2><p>通配符</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SRC = <span class="variable">$(<span class="built_in">wildcard</span> ./*.c)</span></span><br></pre></td></tr></table></figure>
-
-<p>匹配目录下所有.c 文件，并将其赋值给SRC变量。</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OBJ = <span class="variable">$(<span class="built_in">patsubst</span> %.c, %.o, <span class="variable">$(SRC)</span>)</span></span><br></pre></td></tr></table></figure>
-
-<p>这个函数有三个参数，意思是取出SRC中的所有值，然后将.c 替换为.o 最后赋值给OBJ变量。</p>
-<p>示例：如果目录下有很多个.c 源文件，就不需要写很多条规则语句了，而是可以像下面这样写</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SRC = <span class="variable">$(<span class="built_in">wildcard</span> *.c)</span></span><br><span class="line">OBJ = <span class="variable">$(<span class="built_in">patsubst</span> %.c, %.o, <span class="variable">$(SRC)</span>)</span></span><br><span class="line"> </span><br><span class="line"><span class="section">ALL: hello.out</span></span><br><span class="line"> </span><br><span class="line"><span class="section">hello.out: <span class="variable">$(OBJ)</span></span></span><br><span class="line">        gcc <span class="variable">$(OBJ)</span> -o hello.out</span><br><span class="line"> </span><br><span class="line"><span class="variable">$(OBJ)</span>: <span class="variable">$(SRC)</span></span><br><span class="line">        gcc -c <span class="variable">$(SRC)</span> -o <span class="variable">$(OBJ)</span></span><br></pre></td></tr></table></figure>
-
-<p>这里先将所有.c 文件编译为 .o 文件，这样后面更改某个 .c 文件时，其他的 .c 文件将不在编译，而只是编译有更改的 .c 文件，可以大大提高大项目中的编译速度。</p>
-<h2 id="7、伪目标-PHONY"><a href="#7、伪目标-PHONY" class="headerlink" title="7、伪目标 .PHONY"></a>7、伪目标 .PHONY</h2><p>伪目标只是一个标签，clean是个伪目标没有依赖文件，只有用make来调用时才会执行</p>
-<p>当目录下有与make 命令 同名的文件时 执行make 命令就会出现错误。</p>
-<p>解决办法就是使用伪目标</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">SRC = <span class="variable">$(<span class="built_in">wildcard</span> *.c)</span></span><br><span class="line">OBJ = <span class="variable">$(<span class="built_in">patsubst</span> %.c, %.o, <span class="variable">$(SRC)</span>)</span></span><br><span class="line"> </span><br><span class="line"><span class="section">ALL: hello.out</span></span><br><span class="line"> </span><br><span class="line"><span class="section">hello.out: <span class="variable">$(OBJ)</span></span></span><br><span class="line">        gcc <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"> </span><br><span class="line"><span class="variable">$(OBJ)</span>: <span class="variable">$(SRC)</span></span><br><span class="line">        gcc -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"> </span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">        rm -rf <span class="variable">$(OBJ)</span> hello.out</span><br><span class="line"> </span><br><span class="line"><span class="meta"><span class="keyword">.PHONY</span>: clean ALL</span></span><br></pre></td></tr></table></figure>
-
-<p>通常也会把ALL设置成伪目标</p>
-<h2 id="8、其他常用功能"><a href="#8、其他常用功能" class="headerlink" title="8、其他常用功能"></a>8、其他常用功能</h2><p>代码清理clean<br>我们可以编译一条属于自己的clean语句，来清理make命令所产生的所有文件，列如</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">SRC = <span class="variable">$(<span class="built_in">wildcard</span> *.c)</span></span><br><span class="line">OBJ = <span class="variable">$(<span class="built_in">patsubst</span> %.c, %.o, <span class="variable">$(SRC)</span>)</span></span><br><span class="line"> </span><br><span class="line"><span class="section">ALL: hello.out</span></span><br><span class="line"> </span><br><span class="line"><span class="section">hello.out: <span class="variable">$(OBJ)</span></span></span><br><span class="line">        gcc <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"> </span><br><span class="line"><span class="variable">$(OBJ)</span>: <span class="variable">$(SRC)</span></span><br><span class="line">        gcc -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br><span class="line"> </span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">        rm -rf <span class="variable">$(OBJ)</span> hello.out</span><br></pre></td></tr></table></figure>
-
-<h2 id="9、嵌套执行Makefile"><a href="#9、嵌套执行Makefile" class="headerlink" title="9、嵌套执行Makefile"></a>9、嵌套执行Makefile</h2><p>在一些大工程中，会把不同模块或不同功能的源文件放在不同的目录中，我们可以在每个目录中都写一个该目录的Makefile这有利于让我们的Makefile变的更加简洁，不至于把所有东西全部写在一个Makefile中。</p>
-<p>列如在子目录subdir目录下有个Makefile文件，来指明这个目录下文件的编译规则。外部总Makefile可以这样写</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">subsystem:</span></span><br><span class="line">            cd subdir &amp;&amp; <span class="variable">$(MAKE)</span></span><br><span class="line">其等价于：</span><br><span class="line"><span class="section">subsystem:</span></span><br><span class="line">            <span class="variable">$(MAKE)</span> -C subdir</span><br></pre></td></tr></table></figure>
-
-<p>定义$(MAKE)宏变量的意思是，也许我们的make需要一些参数，所以定义成一个变量比较有利于维护。两个例子意思都是先进入”subdir”目录，然后执行make命令</p>
-<p>我们把这个Makefile叫做总控Makefile，总控Makefile的变量可以传递到下级的Makefile中，但是不会覆盖下层Makefile中所定义的变量，除非指定了 “-e”参数。</p>
-<p>如果传递变量到下级Makefile中，那么可以使用这样的声明</p>
-<p>export</p>
-<p>如果不想让某些变量传递到下级Makefile，可以使用</p>
-<p>unexport</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> variable = value</span><br><span class="line">等价于</span><br><span class="line">variable = value</span><br><span class="line"><span class="keyword">export</span> variable</span><br><span class="line">等价于</span><br><span class="line"><span class="keyword">export</span> variable := value</span><br><span class="line">等价于</span><br><span class="line">variable := value</span><br><span class="line"><span class="keyword">export</span> variable</span><br><span class="line">如果需要传递所有变量，那么只要一个<span class="keyword">export</span>就行了。后面什么也不用跟，表示传递所有变量</span><br></pre></td></tr></table></figure>
-
-<h2 id="10、指定头文件路径"><a href="#10、指定头文件路径" class="headerlink" title="10、指定头文件路径"></a>10、指定头文件路径</h2><p>一般都是通过”<strong>-I</strong>“（大写i）来指定，假设头文件在：</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/develop/<span class="keyword">include</span></span><br></pre></td></tr></table></figure>
-
-<p>则可以通过-I指定：</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-I/home/develop/<span class="keyword">include</span></span><br></pre></td></tr></table></figure>
-
-<p>将该目录添加到头文件搜索路径中</p>
-<p>在Makefile中则可以这样写：</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CFLAGS=-I/home/develop/<span class="keyword">include</span></span><br></pre></td></tr></table></figure>
-
-<p>然后在编译的时候，引用CFLAGS即可，如下</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">yourapp:*.c</span></span><br><span class="line">    gcc <span class="variable">$(CFLAGS)</span> -o yourapp</span><br></pre></td></tr></table></figure>
-
-<h2 id="11、指定库文件路径"><a href="#11、指定库文件路径" class="headerlink" title="11、指定库文件路径"></a>11、指定库文件路径</h2><p>与上面指定头文件类似只不过使用的是”<strong>-L</strong>“来指定</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LDFLAGS=-L/usr/lib -L/path/to/your/lib</span><br></pre></td></tr></table></figure>
-
-<p>告诉链接器要链接哪些库文件，使用”<strong>-l</strong>“（小写L）如下：</p>
-<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LIBS = -lpthread -liconv</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/ZBraveHeart/article/details/123187908">Makefile入门(超详细一文读懂)-CSDN博客</a></p>
-</blockquote>
-<h2 id="12、简单示例"><a href="#12、简单示例" class="headerlink" title="12、简单示例"></a>12、简单示例</h2><p>现假设这是一个大型项目目录结构：</p>
-<p><img src="http://cdn.rhahr.icu/7dec33a3ab6e112db9972dc280b52c4.png"></p>
-<p>Main是最终的运行文件（包含main.cpp）其中调用了public与myapi中的内容，此处将public.cpp与myapi.cpp制作为库文件（静态-.a|动态.so）,方便与Main链接，其中每一部分都有各自的makefile：</p>
-<p>api：</p>
-<p><img src="http://cdn.rhahr.icu/4901f141e46991eb329c4ebfa342edd.png"></p>
-<p>tools（public）：</p>
-<p><img src="http://cdn.rhahr.icu/25597ea5806ca3c884ac58776343fa0.png"></p>
-<p>app（Main）：</p>
-<p><img src="http://cdn.rhahr.icu/79bacdea1b75506494df220360de9c3.png"></p>
-<p>前两个各自负责制作各自的动静态库文件，app中的main负责编译，当然也可以在项目根目录也就是此处的src中写一个总的makefile来统一调用管理：</p>
-<p><img src="http://cdn.rhahr.icu/b27afaf377b4b528cfcc1eb1335f0d2.png"></p>
-<p>不过就要注意子目录之间的依赖关系，在这里顺序为先make tools再api最后app，如果先是app的话，就会出现问题，因为还没有制作好库文件就开始编译Main，所以就找不到库文件</p>
-<p>处理子目录之间的依赖关系是 Makefile 中一个重要的高级用法，尤其是在大型项目中。以下是一些处理子目录依赖关系的方法：</p>
-<ol>
-<li><strong>明确声明依赖关系</strong>：在主 Makefile 中，您可以明确指出子目录之间的依赖关系，并按照依赖顺序调用子 Makefile。</li>
-<li><strong>使用递归 Make</strong>：通过在主 Makefile 中递归地调用 <code>$(MAKE)</code> 命令，可以构建子目录。如果子目录之间有依赖关系，可以在主 Makefile 中按照依赖顺序排列递归调用。</li>
-<li><strong>自动生成依赖关系</strong>：对于 C&#x2F;C++ 项目，您可以使用编译器提供的 <code>-M</code> 选项来自动生成依赖关系文件（如 <code>.d</code> 文件），然后在 Makefile 中包含这些文件来自动处理依赖关系。</li>
-<li><strong>使用非递归 Make</strong>：通过在主 Makefile 中包含子目录的 Makefile 片段（如 <code>subdir.mk</code>），可以将整个项目的构建规则集中管理，同时处理依赖关系。</li>
-<li><strong>使用高级构建系统</strong>：例如 CMake，它可以帮助管理复杂的依赖关系，并生成适用于不同平台的 Makefile 或其他构建脚本。</li>
-<li><strong>VPATH 和 vpath</strong>：使用这些变量可以指定额外的搜索路径，这样 make 就可以在这些路径中查找依赖文件。</li>
-<li><strong>条件判断</strong>：在子 Makefile 中使用条件判断来确定是否需要重新构建某些目标，这可以基于文件是否存在或某些变量的值</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/26/OpenGL-%E7%90%86%E8%A7%A3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/26/OpenGL-%E7%90%86%E8%A7%A3/" class="post-title-link" itemprop="url">OpenGL</a>
+            <a href="/2024/03/24/Qt-%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">QT运行流程</a>
         </h2>
 
         <div class="post-meta">
@@ -583,14 +220,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2024-03-26 22:00:00" itemprop="dateCreated datePublished" datetime="2024-03-26T22:00:00+08:00">2024-03-26</time>
+              <time title="创建时间：2024-03-24 23:00:00" itemprop="dateCreated datePublished" datetime="2024-03-24T23:00:00+08:00">2024-03-24</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-04-15 23:20:36" itemprop="dateModified" datetime="2024-04-15T23:20:36+08:00">2024-04-15</time>
+                <time title="修改时间：2024-09-25 09:03:46" itemprop="dateModified" datetime="2024-09-25T09:03:46+08:00">2024-09-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -598,7 +235,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/OpenGL/" itemprop="url" rel="index"><span itemprop="name">OpenGL</span></a>
+                  <a href="/categories/QT/" itemprop="url" rel="index"><span itemprop="name">QT</span></a>
                 </span>
             </span>
 
@@ -608,14 +245,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>12k</span>
+              <span>39</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>11 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -627,282 +264,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="OpenGL"><a href="#OpenGL" class="headerlink" title="OpenGL"></a>OpenGL</h1><p>opengl就是一个状态机。</p>
-<p>C++和OpenGL之间的关系可以这样理解：</p>
-<ul>
-<li><strong>C++程序</strong>：这是运行在CPU上的程序，它负责执行应用程序逻辑，处理输入输出，以及管理资源等。在OpenGL应用程序中，C++代码用于设置和控制渲染流程，包括调用OpenGL的API来执行具体的图形操作。</li>
-<li><strong>OpenGL程序</strong>：这是运行在GPU上的程序，它由一系列着色器组成，这些着色器是用GLSL（OpenGL Shading Language）编写的。这些着色器程序负责处理所有的图形渲染任务，如顶点变换、光照计算、像素着色等。</li>
-</ul>
-<p>当你在C++的<code>main</code>函数中编写OpenGL相关的代码时，你实际上是在使用C++来控制GPU的行为。以下是整个过程的简化版：</p>
-<ol>
-<li><strong>编写着色器代码</strong>：在C++程序中，你会编写顶点着色器和片段着色器的源代码。</li>
-<li><strong>创建和编译着色器</strong>：通过<code>CreateShader</code>和<code>CompileShader</code>函数，你会创建OpenGL着色器对象，并将你的GLSL代码编译成GPU可以理解的形式。</li>
-<li><strong>链接着色器到程序</strong>：编译好的着色器会被附加到一个OpenGL程序对象上，然后这个程序对象会被链接。链接是将不同的着色器合并成一个完整的可执行程序的过程。</li>
-<li><strong>验证程序</strong>：链接完成后，程序会被验证，以确保它可以在当前的OpenGL环境中运行。</li>
-<li><strong>使用程序</strong>：在C++的<code>main</code>函数中，通过调用<code>glUseProgram</code>，你会告诉GPU使用之前链接好的程序来渲染图形。</li>
-</ol>
-<p>所以，你可以将C++程序看作是“指挥官”，它指挥GPU做什么；而OpenGL程序就像是在GPU上执行具体任务的“工人”。在C++程序中准备好一切后，通过<code>glUseProgram</code>实际上启动GPU上的OpenGL程序来进行渲染工作</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;GL/glew.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;GLFW/glfw3.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">unsigned</span> <span class="type">int</span> <span class="title">CompileShader</span><span class="params">(<span class="type">unsigned</span> <span class="type">int</span> type, <span class="type">const</span> std::string&amp; source)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个空的着色器对象，并返回一个可以引用它的非零值</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> id = <span class="built_in">glCreateShader</span>(type);</span><br><span class="line">   </span><br><span class="line">    <span class="comment">// 将C++字符串转换为C风格字符串</span></span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>* src = source.<span class="built_in">c_str</span>();</span><br><span class="line">   </span><br><span class="line">    <span class="comment">//将着色器中的源代码设置为字符串指定的字符串数组中的源代码</span></span><br><span class="line">    <span class="built_in">glShaderSource</span>(id,<span class="number">1</span>, &amp;src,<span class="literal">nullptr</span>);</span><br><span class="line">   </span><br><span class="line">    <span class="comment">// 编译着色器</span></span><br><span class="line">    <span class="built_in">glCompileShader</span>(id);</span><br><span class="line">   </span><br><span class="line">                      </span><br><span class="line">    <span class="comment">// 检查编译是否成功</span></span><br><span class="line">    <span class="type">int</span> result;</span><br><span class="line">    <span class="built_in">glGetShaderiv</span>(id,GL_COMPILE_STATUS, &amp;result);<span class="comment">//返回着色器对象的参数</span></span><br><span class="line">    <span class="keyword">if</span> (result == GL_FALSE)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> length;</span><br><span class="line">        <span class="comment">// 获取错误消息的长度</span></span><br><span class="line">        <span class="built_in">glGetShaderiv</span>(id, GL_INFO_LOG_LENGTH, &amp;length);</span><br><span class="line">        <span class="comment">// 分配足够的空间来存储错误消息</span></span><br><span class="line">        <span class="type">char</span>* message=(<span class="type">char</span>*)_malloca(length*<span class="built_in">sizeof</span>(<span class="type">char</span>));</span><br><span class="line">        <span class="comment">// 获取错误消息</span></span><br><span class="line">        <span class="built_in">glGetShaderInfoLog</span>(id,length,&amp;length, message);</span><br><span class="line">        <span class="comment">// 打印错误消息</span></span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Failed to compile &quot;</span>&lt;&lt;(type==GL_VERTEX_SHADER?<span class="string">&quot; vertex &quot;</span> :<span class="string">&quot; fragment &quot;</span>) &lt;&lt; <span class="string">&quot; shader!&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">        std::cout &lt;&lt; message &lt;&lt; std::endl;</span><br><span class="line">        <span class="comment">// 删除着色器并返回0</span></span><br><span class="line">        <span class="built_in">glDeleteShader</span>(id);</span><br><span class="line">    </span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 返回着色器ID</span></span><br><span class="line">    <span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">unsigned</span> <span class="type">int</span> <span class="title">CreateShader</span><span class="params">(<span class="type">const</span> std::string&amp; vertexShader, <span class="type">const</span> std::string&amp; fragmentShader)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 创建一个程序对象并返回其ID</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> program=<span class="built_in">glCreateProgram</span>();</span><br><span class="line">   </span><br><span class="line">    <span class="comment">// 编译顶点和片段着色器</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> vs = <span class="built_in">CompileShader</span>(GL_VERTEX_SHADER,vertexShader);</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> fs = <span class="built_in">CompileShader</span>(GL_FRAGMENT_SHADER, fragmentShader);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将着色器附加到程序</span></span><br><span class="line">    <span class="built_in">glAttachShader</span>(program, vs);</span><br><span class="line">    <span class="built_in">glAttachShader</span>(program, fs);</span><br><span class="line">    <span class="comment">// 链接程序</span></span><br><span class="line">    <span class="built_in">glLinkProgram</span>(program);</span><br><span class="line">    <span class="comment">// 验证程序</span></span><br><span class="line">    <span class="built_in">glValidateProgram</span>(program);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 删除着色器对象，它们已经链接到程序中，不再需要了</span></span><br><span class="line">    <span class="built_in">glDeleteProgram</span>(vs);</span><br><span class="line">    <span class="built_in">glDeleteProgram</span>(fs);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 返回程序ID</span></span><br><span class="line">    <span class="keyword">return</span> program;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    GLFWwindow* window;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Initialize the library */</span></span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">glfwInit</span>())</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Create a windowed mode window and its OpenGL context */</span></span><br><span class="line">    window = <span class="built_in">glfwCreateWindow</span>(<span class="number">640</span>, <span class="number">480</span>, <span class="string">&quot;Hello World&quot;</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">    <span class="keyword">if</span> (!window)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">glfwTerminate</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Make the window&#x27;s context current */</span></span><br><span class="line">    <span class="built_in">glfwMakeContextCurrent</span>(window);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(<span class="built_in">glewInit</span>()!=GLEW_OK) </span><br><span class="line">        std::cout&lt;&lt;<span class="string">&quot;Error \n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">glGetString</span>(GL_VERSION) &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//创建了顶点缓冲对象（VBO）</span></span><br><span class="line">    <span class="type">float</span> position[<span class="number">6</span>] = &#123;</span><br><span class="line">        <span class="number">-0.5f</span>, <span class="number">-0.5f</span>,</span><br><span class="line">         <span class="number">0.0f</span>,  <span class="number">0.5f</span>,</span><br><span class="line">         <span class="number">0.5f</span>, <span class="number">-0.5f</span>,</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> buffer;</span><br><span class="line">    <span class="built_in">glGenBuffers</span>(<span class="number">1</span>, &amp;buffer);<span class="comment">//生成1个缓冲区，并将缓冲区id传入buffer</span></span><br><span class="line">    <span class="built_in">glBindBuffer</span>(GL_ARRAY_BUFFER,buffer);<span class="comment">//将一个名为 buffer 的缓冲区对象绑定到 GL_ARRAY_BUFFER 目标上,指定了缓冲区对象将被用于顶点属性数据的存储,任何对GL_ARRAY_BUFFER的操作都会影响buffer</span></span><br><span class="line">    <span class="built_in">glBufferData</span>(GL_ARRAY_BUFFER,<span class="number">6</span>*<span class="built_in">sizeof</span>(<span class="type">float</span>), position,GL_STATIC_DRAW);</span><br><span class="line">    <span class="comment">//有一些顶点数据存储在 position 中，把这些数据的大小为 6 * sizeof(float) 的部分传输到GPU。多次使用这些数据来绘制，但不会对它们进行修改</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">glEnableVertexAttribArray</span>(<span class="number">0</span>);<span class="comment">//启用顶点属性数组</span></span><br><span class="line">    <span class="comment">//为这些数据指定布局,确保了顶点着色器能够正确地理解每个顶点属性的数据结构和存储方式</span></span><br><span class="line">    <span class="built_in">glVertexAttribPointer</span>(<span class="number">0</span>, <span class="number">2</span>, GL_FLOAT, GL_FALSE, <span class="built_in">sizeof</span>(<span class="type">float</span>) * <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//以下是着色器源代码是用GL Shader Language (GLSL) 编写的，这是OpenGL的着色器编程语言</span></span><br><span class="line">    <span class="comment">//#version指令用于指定GLSL版本，</span></span><br><span class="line">    <span class="comment">//layout(location = 0)用于指定输入或输出变量的位置，</span></span><br><span class="line">    <span class="comment">//main函数是着色器的入口点</span></span><br><span class="line">    std::string vertexShader = <span class="string">R&quot;(</span></span><br><span class="line"><span class="string">#version 330 core</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">layout(location = 0) in vec4 position;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">void main()</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    gl_Position = position;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">)&quot;</span>;</span><br><span class="line"></span><br><span class="line">    std::string fragmentShader = <span class="string">R&quot;(</span></span><br><span class="line"><span class="string">#version 330 core</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">layout(location = 0) out vec4 color;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">void main()</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    color = vec4(1.0, 0.0, 1.0, 1.0);</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">)&quot;</span>;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> shader = <span class="built_in">CreateShader</span>(vertexShader, fragmentShader);</span><br><span class="line">    <span class="built_in">glUseProgram</span>(shader);</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">     </span><br><span class="line">    <span class="comment">/* Loop until the user closes the window */</span></span><br><span class="line">    <span class="keyword">while</span> (!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/* Render here */</span></span><br><span class="line">        <span class="built_in">glClear</span>(GL_COLOR_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="built_in">glDrawArrays</span>(GL_TRIANGLES,<span class="number">0</span>,<span class="number">6</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        glBegin(GL_TRIANGLES);</span></span><br><span class="line"><span class="comment">        glVertex2f( -0.5f, -0.5f );</span></span><br><span class="line"><span class="comment">        glVertex2f(  0.0f,  0.5f );</span></span><br><span class="line"><span class="comment">        glVertex2f(  0.5f, -0.5f );</span></span><br><span class="line"><span class="comment">        glEnd();</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">/* Swap front and back buffers */</span></span><br><span class="line">        <span class="built_in">glfwSwapBuffers</span>(window);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/* Poll for and process events */</span></span><br><span class="line">        <span class="built_in">glfwPollEvents</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="built_in">glDeleteProgram</span>(shader);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">glfwTerminate</span>();</span><br><span class="line">    std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>OpenGL编程的大体流程涉及多个阶段，每个阶段都有其特定的功能和作用。下面是一个简化的流程概述</p>
-<ol>
-<li><p><strong>创建OpenGL上下文（Context）</strong>：这是开始任何OpenGL编程之前的必要步骤。上下文是一个巨大的状态机，它保存了OpenGL中的各种状态。</p>
-</li>
-<li><p>设置视口（Viewport）：这一步涉及到定义一个屏幕上的矩形区域，OpenGL会将最终的图像渲染到这个区域内。</p>
-</li>
-<li><p>准备着色器和程序（Shaders and Program）：着色器是运行在GPU上的小程序，负责处理图形和像素的渲染。在OpenGL中，至少需要编写并编译顶点和片段着色器，然后将它们链接到一个程序中，这个程序会在渲染过程中使用。</p>
-</li>
-<li><p>创建缓冲区（Buffers）：在GPU内存中创建缓冲区来存储顶点数据、颜色、纹理坐标等信息。这些数据会在渲染时被着色器程序使用。</p>
-</li>
-<li><p>加载纹理（Textures）：如果需要的话，加载纹理数据到GPU，以便在渲染中应用到3D对象上。</p>
-</li>
-<li><p>设置渲染循环（Render Loop）：这是一个持续运行的循环，不断地绘制图像并刷新屏幕。在每次迭代中，会执行清除屏幕、设置摄像机和视图变换、绘制对象等操作。</p>
-</li>
-<li><p>输入处理（Input Handling）：响应用户输入，如键盘和鼠标事件，以实现交互式图形应用。</p>
-</li>
-<li><p>清除和绘制（Clear and Draw）：在每次迭代中，清除颜色缓冲区和深度缓冲区，然后根据缓冲区中的数据绘制3D对象。</p>
-</li>
-<li><p>交换缓冲区（Buffer Swap）：在双缓冲模式下，绘制完成后，将后台缓冲区的内容交换到前台，显示到屏幕上。</p>
-</li>
-</ol>
-<p>关于 <strong>准备着色器和程序（Shaders and Program）</strong>部分。这段代码主要负责以下几个任务：</p>
-<ol>
-<li><strong>编译着色器（Compile Shaders）</strong>：<code>CompileShader</code>函数接收着色器类型和源代码字符串，创建着色器对象，将源代码与着色器关联，然后编译着色器。如果编译失败，它会打印错误信息并返回0。</li>
-<li><strong>链接着色器到程序（Link Shaders to Program）</strong>：<code>CreateShader</code>函数创建一个OpenGL程序对象，调用<code>CompileShader</code>函数分别编译顶点和片段着色器，然后将这两个着色器附加到程序对象上。接着，它链接这个程序对象，使其成为一个完整的可执行程序，最后返回程序对象的ID。</li>
-</ol>
-<p>这些步骤是设置OpenGL渲染管线的关键部分，确保了GPU能够正确地执行着色器代码来渲染图形。</p>
-<p>这里提到的程序是实际上的<strong>GPU上运行的程序</strong>，当main中写好的着色器代码传入CreateShader后编译这些代码，编译完成后将着色器附加到程序相当于是把编译好的代码添加到程序中，然后链接验证程序，最后将这个程序的id作为返回值返回，也就是相当于在CreateShader 和CompileShader 作准备工作，也就是编译着色器代码和创建程序以及两者的链接，然后在main中调用glUseProgram才会实际上执行这个程序</p>
-<h2 id="顶点着色器（可编程）"><a href="#顶点着色器（可编程）" class="headerlink" title="顶点着色器（可编程）"></a>顶点着色器（可编程）</h2><p>当今大多数显卡都有成千上万的小处理核心，它们在GPU上为每一个（渲染管线）阶段运行各自的小程序，从而在图形渲染管线中快速处理你的数据。这些小程序叫做<strong>着色器(Shader)。</strong> </p>
-<p>图形渲染管线的第一个部分是**顶点着色器(Vertex Shader)**，它把一个单独的顶点作为输入。顶点着色器主要的目的是把3D坐标转为另一种3D坐标（后面会解释），同时顶点着色器允许我们对顶点属性进行一些基本处理。</p>
-<p>它会在GPU上</p>
-<ol>
-<li>创建内存用于储存我们的顶点数据，</li>
-<li>配置OpenGL如何解释这些内存，并且指定其如何发送给显卡。</li>
-<li>顶点着色器接着会处理我们在内存中指定数量的顶点</li>
-</ol>
-<p>通过顶点缓冲对象(Vertex Buffer Objects, VBO)管理2中的这个内存，它会在GPU内存（通常被称为显存）中储存大量顶点。使用这些缓冲对象的好处是我们可以一次性的发送一大批数据到显卡上，而不是每个顶点发送一次。从CPU把数据发送到显卡相对较慢，所以只要可能我们都要尝试尽量一次性发送尽可能多的数据。当数据发送至显卡的内存中后，顶点着色器几乎能立即访问顶点，这是个非常快的过程。</p>
-<p>顶点数据储存在显卡的内存中，用VBO这个顶点缓冲对象管理。</p>
-<h2 id="片段着色器"><a href="#片段着色器" class="headerlink" title="片段着色器"></a>片段着色器</h2><p>计算像素最后的颜色输出</p>
-<blockquote>
-<p>在计算机图形中颜色被表示为有4个元素的数组：红色、绿色、蓝色和alpha(透明度)分量，通常缩写为RGBA。当在OpenGL或GLSL中定义一个颜色的时候，我们把颜色每个分量的强度设置在0.0到1.0之间。比如说我们设置红为1.0f，绿为1.0f，我们会得到两个颜色的混合色，即黄色。这三种颜色分量的不同调配可以生成超过1600万种不同的颜色！</p>
-</blockquote>
-<p>&#x3D;&#x3D;每个顶点属性从一个VBO管理的内存中获得它的数据，而具体是从哪个VBO（程序中可以有多个VBO）获取则是通过在调用glVertexAttribPointer时绑定到GL_ARRAY_BUFFER的VBO决定的。由于在调用glVertexAttribPointer之前绑定的是先前定义的VBO对象，顶点属性<code>0</code>现在会链接到它的顶点数据。&#x3D;&#x3D;</p>
-<h2 id="顶点数组（VAO）"><a href="#顶点数组（VAO）" class="headerlink" title="顶点数组（VAO）"></a>顶点数组（VAO）</h2><p>。。。</p>
-<p>在OpenGL中，当你绑定一个<strong>IBO（索引缓冲对象）到GL_ELEMENT_ARRAY_BUFFER</strong>目标，并且此时有一个<strong>VAO（顶点数组对象）</strong>处于绑定状态，IBO的绑定就会被VAO记录下来。这意味着，VAO不仅保存了顶点属性指针的状态，也保存了索引缓冲的绑定状态。</p>
-<p>这里是发生这一过程的关键步骤：</p>
-<ol>
-<li>创建并绑定VAO。</li>
-<li>绑定VBO并设置顶点属性指针（这些状态被保存在VAO中）。</li>
-<li>绑定IBO到GL_ELEMENT_ARRAY_BUFFER（这个绑定也被保存在VAO中）。</li>
-<li>解绑VAO。</li>
-</ol>
-<p>有一个vao绑定的期间绑定的所有对象都会被保存在vao中，所以在代码中才会出现刚创建vbo的时候进行了一次glBindBuffer(GL_ARRAY_BUFFER, VBO);绑定，在绑定vao之后又进行了一次这个绑定，第二次的绑定相当于是为了将其状态告知vao,</p>
-<hr>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;glad/glad.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;GLFW/glfw3.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">framebuffer_size_callback</span><span class="params">(GLFWwindow* window, <span class="type">int</span> width, <span class="type">int</span> height)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">processInput</span><span class="params">(GLFWwindow* window)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// settings</span></span><br><span class="line"><span class="type">const</span> <span class="type">unsigned</span> <span class="type">int</span> SCR_WIDTH = <span class="number">800</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">unsigned</span> <span class="type">int</span> SCR_HEIGHT = <span class="number">600</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// glfw: initialize and configure</span></span><br><span class="line">	<span class="comment">// ------------------------------</span></span><br><span class="line">	<span class="built_in">glfwInit</span>();</span><br><span class="line">	<span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MAJOR, <span class="number">3</span>);</span><br><span class="line">	<span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MINOR, <span class="number">3</span>);</span><br><span class="line">	<span class="built_in">glfwWindowHint</span>(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> __APPLE__</span></span><br><span class="line">	<span class="built_in">glfwWindowHint</span>(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// glfw window creation</span></span><br><span class="line">	<span class="comment">// --------------------</span></span><br><span class="line">	GLFWwindow* window = <span class="built_in">glfwCreateWindow</span>(SCR_WIDTH, SCR_HEIGHT, <span class="string">&quot;LearnOpenGL&quot;</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">if</span> (window == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Failed to create GLFW window&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">		<span class="built_in">glfwTerminate</span>();</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">glfwMakeContextCurrent</span>(window);</span><br><span class="line">	<span class="built_in">glfwSetFramebufferSizeCallback</span>(window, framebuffer_size_callback);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// glad: load all OpenGL function pointers</span></span><br><span class="line">	<span class="comment">// ---------------------------------------</span></span><br><span class="line">	<span class="keyword">if</span> (!<span class="built_in">gladLoadGLLoader</span>((GLADloadproc)glfwGetProcAddress))</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Failed to initialize GLAD&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="type">float</span> vertices[] = &#123;</span><br><span class="line">	 <span class="number">0.5f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>,   <span class="comment">// 右上角</span></span><br><span class="line">	 <span class="number">0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,   <span class="comment">// 右下角</span></span><br><span class="line">	<span class="number">-0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,   <span class="comment">// 左下角</span></span><br><span class="line">	<span class="number">-0.5f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>    <span class="comment">// 左上角</span></span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> index[] = &#123;</span><br><span class="line">		<span class="comment">// 注意索引从0开始!</span></span><br><span class="line">		<span class="comment">// 此例的索引(0,1,2,3)就是顶点数组vertices的下标，</span></span><br><span class="line">		<span class="comment">// 这样可以由下标代表顶点组合成矩形</span></span><br><span class="line"></span><br><span class="line">		<span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="comment">// 第一个三角形</span></span><br><span class="line">		<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>  <span class="comment">// 第二个三角形</span></span><br><span class="line"></span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> VBO;</span><br><span class="line">	<span class="built_in">glGenBuffers</span>(<span class="number">1</span>, &amp;VBO);</span><br><span class="line">	<span class="built_in">glBindBuffer</span>(GL_ARRAY_BUFFER, VBO);</span><br><span class="line">	<span class="built_in">glBufferData</span>(GL_ARRAY_BUFFER, <span class="built_in">sizeof</span>(vertices), &amp;vertices, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> IBO;</span><br><span class="line">	<span class="built_in">glGenBuffers</span>(<span class="number">1</span>, &amp;IBO);</span><br><span class="line">	<span class="built_in">glBindBuffer</span>(GL_ELEMENT_ARRAY_BUFFER, IBO);</span><br><span class="line">	<span class="built_in">glBufferData</span>(GL_ELEMENT_ARRAY_BUFFER, <span class="built_in">sizeof</span>(index), &amp;index, GL_STATIC_DRAW);</span><br><span class="line"></span><br><span class="line">	<span class="type">const</span> <span class="type">char</span>* vertexshadersource = <span class="string">R&quot;(</span></span><br><span class="line"><span class="string">#version 330 core</span></span><br><span class="line"><span class="string">layout (location = 0) in vec3 aPos;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">void main()</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">)&quot;</span>;</span><br><span class="line"></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> vertexShader;</span><br><span class="line">	vertexShader = <span class="built_in">glCreateShader</span>(GL_VERTEX_SHADER);</span><br><span class="line">	<span class="built_in">glShaderSource</span>(vertexShader, <span class="number">1</span>, &amp;vertexshadersource, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">glCompileShader</span>(vertexShader);</span><br><span class="line"></span><br><span class="line">	<span class="type">const</span> <span class="type">char</span>* fragmentshadersource = <span class="string">R&quot;(</span></span><br><span class="line"><span class="string">#version 330 core</span></span><br><span class="line"><span class="string">out vec4 FragColor;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">void main()</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);</span></span><br><span class="line"><span class="string">&#125; </span></span><br><span class="line"><span class="string">)&quot;</span>;</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> fragmentShader;</span><br><span class="line">	fragmentShader = <span class="built_in">glCreateShader</span>(GL_FRAGMENT_SHADER);</span><br><span class="line">	<span class="built_in">glShaderSource</span>(fragmentShader, <span class="number">1</span>, &amp;fragmentshadersource, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="built_in">glCompileShader</span>(fragmentShader);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//创建一个程序对象</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> ShaderProgram;</span><br><span class="line">	ShaderProgram = <span class="built_in">glCreateProgram</span>();</span><br><span class="line"></span><br><span class="line">	<span class="comment">//编译的着色器附加到程序对象上</span></span><br><span class="line">	<span class="built_in">glAttachShader</span>(ShaderProgram, vertexShader);</span><br><span class="line">	<span class="built_in">glAttachShader</span>(ShaderProgram, fragmentShader);</span><br><span class="line">	<span class="built_in">glLinkProgram</span>(ShaderProgram);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//连接后即可删除</span></span><br><span class="line">	<span class="built_in">glDeleteShader</span>(vertexShader);</span><br><span class="line">	<span class="built_in">glDeleteShader</span>(fragmentShader);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//激活这个程序对象</span></span><br><span class="line">	<span class="built_in">glUseProgram</span>(ShaderProgram);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	现在，我们已经把输入顶点数据发送给了GPU，并指示了GPU如何在顶点和片段着色器中处理它。</span></span><br><span class="line"><span class="comment">	就快要完成了，但还没结束，OpenGL还不知道它该如何解释内存中的顶点数据，以及它该如</span></span><br><span class="line"><span class="comment">	何将顶点数据链接到顶点着色器的属性上。我们需要告诉OpenGL怎么做。</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),0);</span></span><br><span class="line"><span class="comment">//	glEnableVertexAttribArray(0);</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	自此，所有东西都已经设置好了：我们使用一个顶点缓冲对象将</span></span><br><span class="line"><span class="comment">	顶点数据初始化至缓冲中，建立了一个顶点和一个片段着色器，</span></span><br><span class="line"><span class="comment">	并告诉了OpenGL如何把顶点数据链接到顶点着色器的顶点属性上。</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line"></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> VAO;</span><br><span class="line">	<span class="comment">// 1. 绑定VAO</span></span><br><span class="line">	<span class="built_in">glGenVertexArrays</span>(<span class="number">1</span>, &amp;VAO);</span><br><span class="line">	<span class="built_in">glBindVertexArray</span>(VAO);</span><br><span class="line">	<span class="comment">// 2. 把顶点数组复制到缓冲中供OpenGL使用</span></span><br><span class="line">	<span class="built_in">glBindBuffer</span>(GL_ARRAY_BUFFER, VBO);</span><br><span class="line">	<span class="built_in">glBufferData</span>(GL_ARRAY_BUFFER, <span class="built_in">sizeof</span>(vertices), vertices, GL_STATIC_DRAW);</span><br><span class="line">	<span class="comment">// 3. 把索引数组复制到缓冲中供OpenGL使用</span></span><br><span class="line">	<span class="built_in">glBindBuffer</span>(GL_ELEMENT_ARRAY_BUFFER, IBO);</span><br><span class="line">	<span class="built_in">glBufferData</span>(GL_ELEMENT_ARRAY_BUFFER, <span class="built_in">sizeof</span>(index), index, GL_STATIC_DRAW);</span><br><span class="line">	<span class="comment">// 4. 设置顶点属性指针</span></span><br><span class="line">	<span class="built_in">glVertexAttribPointer</span>(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="number">3</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>), (<span class="type">void</span>*)<span class="number">0</span>);<span class="comment">//在这里的第一个参数使vao保存了vbo中数据应该有的状态！！！！！</span></span><br><span class="line">	<span class="built_in">glEnableVertexAttribArray</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// render loop</span></span><br><span class="line">	<span class="comment">// -----------</span></span><br><span class="line">	<span class="keyword">while</span> (!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">// input</span></span><br><span class="line">		<span class="comment">// -----</span></span><br><span class="line">		<span class="built_in">processInput</span>(window);</span><br><span class="line"></span><br><span class="line">		<span class="comment">// render</span></span><br><span class="line">		<span class="comment">// ------</span></span><br><span class="line">		<span class="built_in">glClearColor</span>(<span class="number">0.2f</span>, <span class="number">0.3f</span>, <span class="number">0.3f</span>, <span class="number">1.0f</span>);</span><br><span class="line">		<span class="built_in">glClear</span>(GL_COLOR_BUFFER_BIT);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="built_in">glUseProgram</span>(ShaderProgram);</span><br><span class="line">		<span class="built_in">glBindVertexArray</span>(VAO);</span><br><span class="line">		<span class="built_in">glDrawElements</span>(GL_TRIANGLES, <span class="number">6</span>, GL_UNSIGNED_INT, <span class="literal">nullptr</span>);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//glBindVertexArray(0);</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)</span></span><br><span class="line">		<span class="comment">// -------------------------------------------------------------------------------</span></span><br><span class="line">		<span class="built_in">glfwSwapBuffers</span>(window);</span><br><span class="line">		<span class="built_in">glfwPollEvents</span>();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// glfw: terminate, clearing all previously allocated GLFW resources.</span></span><br><span class="line">	<span class="comment">// ------------------------------------------------------------------</span></span><br><span class="line">	<span class="built_in">glfwTerminate</span>();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly</span></span><br><span class="line"><span class="comment">// ---------------------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">processInput</span><span class="params">(GLFWwindow* window)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">glfwGetKey</span>(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)</span><br><span class="line">		<span class="built_in">glfwSetWindowShouldClose</span>(window, <span class="literal">true</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// glfw: whenever the window size changed (by OS or user resize) this callback function executes</span></span><br><span class="line"><span class="comment">// ---------------------------------------------------------------------------------------------</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">framebuffer_size_callback</span><span class="params">(GLFWwindow* window, <span class="type">int</span> width, <span class="type">int</span> height)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// make sure the viewport matches the new window dimensions; note that width and </span></span><br><span class="line">	<span class="comment">// height will be significantly larger than specified on retina displays.</span></span><br><span class="line">	<span class="built_in">glViewport</span>(<span class="number">0</span>, <span class="number">0</span>, width, height);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/25/C++-set_intersection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/25/C++-set_intersection/" class="post-title-link" itemprop="url">集合运算</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-03-25 22:00:00 / 修改时间：17:36:37" itemprop="dateCreated datePublished" datetime="2024-03-25T22:00:00+08:00">2024-03-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/%E9%9B%86%E5%90%88/" itemprop="url" rel="index"><span itemprop="name">集合</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="集合运算（C-17）"><a href="#集合运算（C-17）" class="headerlink" title="集合运算（C++17）"></a>集合运算（C++17）</h2><blockquote>
-<p>.<a target="_blank" rel="noopener" href="https://blog.csdn.net/xiaozhidian/article/details/117554753">C++集合 STL集合 set集和–交集、并集、差集、对称差-CSDN博客</a></p>
-</blockquote>
-<p><code>std::set_intersection</code> 是 C++ 标准库中的一个算法，它用于计算两个已排序范围（通常是集合或向量）的交集，并将结果输出到另一个范围。这个算法假设两个输入范围都是按照升序排序的，并且输出范围也应该是已排序的。</p>
-<p>以下是 <code>std::set_intersection</code> 的基本用法：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iterator&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;set&gt;</span>  </span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;     </span><br><span class="line">    std::set&lt;<span class="type">int</span>&gt; set1 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;     </span><br><span class="line">    std::set&lt;<span class="type">int</span>&gt; set2 = &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>&#125;;     </span><br><span class="line">    std::set&lt;<span class="type">int</span>&gt; intersection;      </span><br><span class="line">    std::<span class="built_in">set_intersection</span>(set1.<span class="built_in">begin</span>(), set1.<span class="built_in">end</span>(),                           </span><br><span class="line">                          set2.<span class="built_in">begin</span>(), set2.<span class="built_in">end</span>(),                           std::<span class="built_in">inserter</span>(intersection, intersection.<span class="built_in">begin</span>()));      <span class="comment">// intersection 现在包含 &#123;4, 5&#125; &#125; </span></span><br></pre></td></tr></table></figure>
-
-<p>在这个例子中，<code>set1</code> 和 <code>set2</code> 是两个集合，我们想要找出它们的交集。<code>std::set_intersection</code> 被调用，并且传入了两个集合的开始和结束迭代器，以及一个插入迭代器，它指向结果集合 <code>intersection</code>。算法会遍历两个输入范围，并将两个范围都有的元素复制到输出范围。</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/algorithm/set_intersection">std::set_intersection - cppreference.com</a></p>
-</blockquote>
-<p>根据文档可知也可以自定义比较规则</p>
-<h3 id="插入迭代器"><a href="#插入迭代器" class="headerlink" title="插入迭代器"></a>插入迭代器</h3><p><code>std::inserter</code> 是一个插入迭代器，它在被赋值时会调用容器的 <code>insert</code> 方法。在这个例子中，它被用来将算法的结果插入到 <code>intersection</code> 集合中。由于 <code>std::set</code> 是一个有序容器，所以 <code>std::inserter</code> 只需要知道插入的目标容器，而不需要具体的位置。</p>
-<p><code>std::set_intersection</code> 可以用于任何类型的有序范围，不仅限于 <code>std::set</code>。它也可以用于 <code>std::vector</code>，只要这些向量是有序的。</p>
-<p><code>std::set_intersection</code> 的第五个参数是一个输出迭代器，它指定了算法的结果应该被插入到哪个容器中。这个参数通常是通过 <code>std::inserter</code> 函数创建的插入迭代器，它允许 <code>std::set_intersection</code> 将计算出的交集元素插入到指定的输出容器中。</p>
-<p>这里是一个例子，展示了如何使用 <code>std::inserter</code> 作为 <code>std::set_intersection</code> 的第五个参数：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">std::set&lt;<span class="type">int</span>&gt; set1 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;; </span><br><span class="line">std::set&lt;<span class="type">int</span>&gt; set2 = &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>&#125;; </span><br><span class="line">std::set&lt;<span class="type">int</span>&gt; intersection;  </span><br><span class="line">std::<span class="built_in">set_intersection</span>(set1.<span class="built_in">begin</span>(), set1.<span class="built_in">end</span>(),                      </span><br><span class="line">                      set2.<span class="built_in">begin</span>(), set2.<span class="built_in">end</span>(),                       </span><br><span class="line">                      std::<span class="built_in">inserter</span>(intersection, intersection.<span class="built_in">begin</span>())); </span><br></pre></td></tr></table></figure>
-
-<p>在这个例子中，<code>std::inserter(intersection, intersection.begin())</code> 创建了一个插入迭代器，它会在 <code>intersection</code> 集合的开始位置插入元素。由于 <code>std::set</code> 是一个有序容器，实际上元素会被插入到正确的排序位置，而不是字面上的 <code>begin()</code> 位置。</p>
-<p>总结来说，<code>std::set_intersection</code> 的第五个参数需要一个输出迭代器，它定义了输出结果的存储位置</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/iterator/inserter">std::inserter - cppreference.com</a></p>
-</blockquote>
-<p><strong>&#x3D;&#x3D;第五个参数使用 std::back_inserter相当于是尾插法， std::front_inserter相当于是头插法,std::inserter则指定位置&#x3D;&#x3D;</strong></p>
-<p><u>请注意，直接在 <code>set1</code> 上调用 <code>std::set_difference</code> 是不安全的，因为它可能会在计算差集的过程中修改 <code>set1</code> ，导致未定义的行为。因此，使用一个临时变量来存储差集的结果是必要的。完成操作后，再将结果移动回 <code>set1</code> 是安全且有效的做法。</u></p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/25/%E7%AE%97%E6%B3%95-%E8%B4%AA%E5%BF%83%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/25/%E7%AE%97%E6%B3%95-%E8%B4%AA%E5%BF%83%E6%B3%95/" class="post-title-link" itemprop="url">贪心法</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-03-25 19:00:02 / 修改时间：17:29:59" itemprop="dateCreated datePublished" datetime="2024-03-25T19:00:02+08:00">2024-03-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E8%B4%AA%E5%BF%83/" itemprop="url" rel="index"><span itemprop="name">贪心</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(std::set&lt;std::string&gt;&amp;states_needed, std::map&lt;std::string, std::set&lt;std::string&gt;&gt;&amp; stations, std::set&lt;std::string&gt;&amp; final_stations)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (!states_needed.<span class="built_in">empty</span>())</span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">	std::string best_station;<span class="comment">//存储在当前迭代中找到的最佳广播站的名称</span></span><br><span class="line">	std::set&lt;std::string&gt; states_covered;<span class="comment">//存储当前迭代中best_station能覆盖的州</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; [station, states_for_station] : stations)</span><br><span class="line">	&#123;</span><br><span class="line">		std::set&lt;std::string&gt; covered;<span class="comment">//当前考虑的广播站能覆盖的、还未覆盖的州。</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//算states_needed和当前广播站能覆盖的州station_state的交集，并将结果存储在covered中。</span></span><br><span class="line">		std::<span class="built_in">set_intersection</span>(states_needed.<span class="built_in">begin</span>(), states_needed.<span class="built_in">end</span>(),</span><br><span class="line">		                      states_for_station.<span class="built_in">begin</span>(), states_for_station.<span class="built_in">end</span>(),</span><br><span class="line">			                  std::<span class="built_in">inserter</span>(covered, covered.<span class="built_in">begin</span>()));</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (covered.<span class="built_in">size</span>() &gt; states_covered.<span class="built_in">size</span>()) </span><br><span class="line">		&#123;</span><br><span class="line">			best_station = station;</span><br><span class="line">			states_covered = covered;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	std::set&lt;std::string&gt;temp;</span><br><span class="line"></span><br><span class="line">	std::<span class="built_in">set_difference</span>(states_needed.<span class="built_in">begin</span>(), states_needed.<span class="built_in">end</span>(), </span><br><span class="line">		                states_covered.<span class="built_in">begin</span>(), states_covered.<span class="built_in">end</span>(), </span><br><span class="line">		                std::<span class="built_in">inserter</span>(temp, temp.<span class="built_in">begin</span>()));</span><br><span class="line">	</span><br><span class="line">	states_needed=std::<span class="built_in">move</span>(temp);</span><br><span class="line"></span><br><span class="line">	final_stations.<span class="built_in">insert</span>(best_station);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::set&lt;std::string&gt;states_needed = &#123; <span class="string">&quot;mt&quot;</span>, <span class="string">&quot;wa&quot;</span>, <span class="string">&quot;or&quot;</span>, <span class="string">&quot;id&quot;</span>, <span class="string">&quot;nv&quot;</span>, <span class="string">&quot;ut&quot;</span>,<span class="string">&quot;ca&quot;</span>, <span class="string">&quot;az&quot;</span> &#125;;</span><br><span class="line">	std::map&lt;std::string, std::set&lt;std::string&gt;&gt;stations;</span><br><span class="line">	stations[<span class="string">&quot;kone&quot;</span>] = &#123;<span class="string">&quot;id&quot;</span>, <span class="string">&quot;nv&quot;</span>, <span class="string">&quot;ut&quot;</span> &#125;;</span><br><span class="line">	stations[<span class="string">&quot;ktwo&quot;</span>] = &#123; <span class="string">&quot;wa&quot;</span>, <span class="string">&quot;id&quot;</span>, <span class="string">&quot;mt&quot;</span> &#125;;</span><br><span class="line">	stations[<span class="string">&quot;kthree&quot;</span>] = &#123; <span class="string">&quot;or&quot;</span>, <span class="string">&quot;nv&quot;</span>, <span class="string">&quot;ca&quot;</span> &#125;;</span><br><span class="line">	stations[<span class="string">&quot;kfour&quot;</span>] = &#123; <span class="string">&quot;nv&quot;</span>, <span class="string">&quot;ut&quot;</span> &#125;;</span><br><span class="line">	stations[<span class="string">&quot;kfive&quot;</span>] = &#123; <span class="string">&quot;ca&quot;</span>, <span class="string">&quot;az&quot;</span> &#125;;</span><br><span class="line"></span><br><span class="line">	std::set&lt;std::string&gt;final_stations;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">func</span>(states_needed, stations, final_stations);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">const</span> std::string&amp; station : final_stations) &#123;</span><br><span class="line">		std::cout &lt;&lt; station &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<blockquote>
+          <blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_21438461/article/details/135578569">【Qt运行流程详解】从启动到事件循环的深入解读_qt程序运行顺序-CSDN博客</a></p>
 </blockquote>
 
       
@@ -1038,6 +401,210 @@
 <li><p>最后一个pointer参数为指针0表示当前的position属性在这个顶点中的位置，在这里也就是第一个属性就是position</p>
 </li>
 </ol>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/24/Qt-%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/24/Qt-%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB/" class="post-title-link" itemprop="url">QT层次结构</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-24 22:00:00" itemprop="dateCreated datePublished" datetime="2024-03-24T22:00:00+08:00">2024-03-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-25 09:03:14" itemprop="dateModified" datetime="2024-09-25T09:03:14+08:00">2024-09-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index"><span itemprop="name">QT</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>773</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="层次结构与继承关系"><a href="#层次结构与继承关系" class="headerlink" title="层次结构与继承关系"></a>层次结构与继承关系</h1><p>Qt的类层次结构是一个庞大而复杂的体系，它包含了许多不同的类，这些类通过继承关系相互联系。在Qt中，所有的类都继承自<code>QObject</code>或者其子类。<code>QObject</code>是Qt对象模型的基础，提供了信号和槽机制、对象树结构管理等功能。</p>
+<p>主要的模块，它们分别提供不同的功能和类：</p>
+<ol>
+<li><strong>QtCore</strong>：这是Qt框架的核心模块，提供了非GUI的基础功能，如事件循环、信号和槽机制、基础数据类型、文件操作等。它是其他所有模块的基础。</li>
+<li><strong>QtGui</strong>：这个模块提供了基础的图形界面功能，如绘图、窗口管理、事件处理等。它建立在QtCore之上，为更高级别的用户界面组件提供底层支持。</li>
+<li><strong>QtWidgets</strong>：建立在QtGui之上，提供了一套完整的用户界面控件，如按钮、对话框、输入框等。这些控件用于构建传统的桌面应用程序。</li>
+<li><strong>QtNetwork</strong>：这个模块提供了网络通信的功能，如TCP&#x2F;IP、UDP等。它也依赖于QtCore模块。</li>
+<li><strong>QtSql</strong>：提供了数据库操作的功能，支持多种数据库系统。它也是基于QtCore模块。</li>
+<li><strong>QtQuick</strong>：用于构建现代化的动态用户界面，它使用QML语言来描述界面。QtQuick建立在QtGui之上，并且通常与QtQml模块一起使用。</li>
+<li><strong>QtQml</strong>：提供了QML语言的解析和执行功能，是QtQuick的基础。</li>
+<li><strong>QtMultimedia</strong>：提供了音频、视频以及摄像头的支持。</li>
+</ol>
+<p>这些模块之间的关系是层次化的，高层模块依赖于低层模块。例如，QtWidgets依赖于QtGui和QtCore，而QtGui则依赖于QtCore。这种层次结构使得开发者可以根据需要选择合适的模块来构建应用程序。</p>
+<p>此外，Qt还有其他模块，如Qt3D、QtWebEngine等，它们提供了更专业的功能。每个模块都包含了一系列相关的类，这些类通过继承关系相互联系，共同构成了Qt的类层次结构。</p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/24/Qt-%E4%B8%BB%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/24/Qt-%E4%B8%BB%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" class="post-title-link" itemprop="url">QT事件循环</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-24 22:00:00" itemprop="dateCreated datePublished" datetime="2024-03-24T22:00:00+08:00">2024-03-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-25 09:02:45" itemprop="dateModified" datetime="2024-09-25T09:02:45+08:00">2024-09-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index"><span itemprop="name">QT</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>755</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在Qt中，事件循环（Event Loop）是一个核心概念，它负责接收和分发应用程序中的各种事件。事件循环确保应用程序保持响应，并在适当的时候处理事件。下面是对Qt事件循环的详细讲解：</p>
+<h3 id="事件循环的作用"><a href="#事件循环的作用" class="headerlink" title="事件循环的作用"></a>事件循环的作用</h3><p>事件循环是Qt事件驱动系统的核心。它运行一个持续的循环，等待事件的发生（如用户输入、定时器触发、网络消息等），并将这些事件分发给相应的对象进行处理。这个机制使得应用程序能够同时处理多种操作，而不会阻塞用户界面。</p>
+<h3 id="事件循环的工作流程"><a href="#事件循环的工作流程" class="headerlink" title="事件循环的工作流程"></a>事件循环的工作流程</h3><ol>
+<li><strong>启动事件循环</strong>：当你在<code>main</code>函数中调用<code>QApplication::exec()</code>时，事件循环开始运行。这个调用会阻塞，直到事件循环结束，通常是当主窗口关闭时。</li>
+<li><strong>等待事件</strong>：事件循环会等待操作系统或者应用程序产生事件。</li>
+<li><strong>事件的分发</strong>：一旦事件发生，事件循环会从事件队列中取出事件，并根据事件类型将其分发给相应的事件处理器。</li>
+<li><strong>事件处理</strong>：事件处理器（通常是一个对象的成员函数）会处理事件。例如，一个按钮被点击会产生一个点击事件，事件循环将这个事件发送给按钮对象，按钮对象通过调用其<code>clicked()</code>槽函数来响应这个事件。</li>
+<li><strong>继续循环</strong>：处理完事件后，事件循环会继续等待新的事件。</li>
+</ol>
+<h3 id="自定义事件处理"><a href="#自定义事件处理" class="headerlink" title="自定义事件处理"></a>自定义事件处理</h3><p>Qt允许你自定义事件处理器。你可以通过重写<code>QObject</code>的<code>event()</code>函数或者特定事件的处理函数（如<code>mousePressEvent()</code>）来自定义事件的处理方式。</p>
+<h3 id="事件循环的结束"><a href="#事件循环的结束" class="headerlink" title="事件循环的结束"></a>事件循环的结束</h3><p>事件循环会一直运行，直到调用了<code>QApplication::quit()</code>，这通常发生在主窗口关闭时。调用<code>quit()</code>会导致<code>exec()</code>返回，从而结束事件循环，程序随后退出。</p>
+<h3 id="事件循环的重要性"><a href="#事件循环的重要性" class="headerlink" title="事件循环的重要性"></a>事件循环的重要性</h3><p>理解事件循环对于编写响应式的Qt应用程序至关重要。它不仅关系到用户界面的响应性，还涉及到程序的正确性和效率。正确地使用事件循环可以避免界面冻结和应用程序崩溃。</p>
 
       
     </div>
@@ -1427,6 +994,107 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/11/%E7%AE%97%E6%B3%95-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/11/%E7%AE%97%E6%B3%95-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" class="post-title-link" itemprop="url">快速排序</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-11 19:00:02" itemprop="dateCreated datePublished" datetime="2024-03-11T19:00:02+08:00">2024-03-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-12 17:45:12" itemprop="dateModified" datetime="2024-03-12T17:45:12+08:00">2024-03-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F/" itemprop="url" rel="index"><span itemprop="name">排序</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39181839/article/details/109478094">快速排序算法—图文详解，一篇就够了！_快速排序算法图解-CSDN博客</a></p>
+<p>快速排序，递归+分治,就是c语言中的qsort</p>
+<p>C++中std::sort并不是简单的快速排序，它对快速排序进行了优化。此外，它还结合了插入排序和推排序。系统会根据数据形式和数据量自动选择合适的排序方法。它每次排序中不只选择一种方法，比如给一个数据量较大的数组排序，开始采用快速排序，分段递归，分段之后每一段的数据量达到一个较小值后它就不继续往下递归，而是选择插入排序，如果递归的太深，他会选择推排序。</p>
+<p>自己实现快速排序：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">quicksort</span><span class="params">(std::vector&lt;<span class="type">int</span>&gt;&amp; vec,<span class="type">int</span> low,<span class="type">int</span> high)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (low &gt;= high)<span class="keyword">return</span>;<span class="comment">// 递归基</span></span><br><span class="line">	</span><br><span class="line">	<span class="type">int</span> pivot = vec[low];<span class="comment">//记录基准值pivot</span></span><br><span class="line">	</span><br><span class="line">	<span class="type">int</span> i = low, j = high;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (i &lt; j)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//从右向左找</span></span><br><span class="line">		<span class="keyword">while</span> (i &lt; j &amp;&amp; vec[j] &gt;= pivot) j--;</span><br><span class="line">		<span class="keyword">if</span> (i &lt; j) vec[i++] = vec[j];</span><br><span class="line">		<span class="comment">//从左向右找</span></span><br><span class="line">		<span class="keyword">while</span> (i &lt; j &amp;&amp; vec[i] &lt;= pivot) i++;</span><br><span class="line">		<span class="keyword">if</span> (i &lt; j)vec[j++] = vec[i];</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//此时left=right，用pivot替换这个位置的数字</span></span><br><span class="line">	vec[i] = pivot;<span class="comment">// 将基准值放到正确的位置</span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">quicksort</span>(vec, low, i - <span class="number">1</span>); <span class="comment">// 递归排序左子数组</span></span><br><span class="line">	<span class="built_in">quicksort</span>(vec, i + <span class="number">1</span>, high); <span class="comment">// 递归排序右子数组</span></span><br><span class="line"></span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Printvector</span><span class="params">(<span class="type">const</span> std::vector&lt;<span class="type">int</span>&gt;&amp; vec)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> value : vec)</span><br><span class="line">		std::cout &lt;&lt; value&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	</span><br><span class="line">	std::vector&lt;<span class="type">int</span>&gt; vector=&#123;<span class="number">4</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">5</span>&#125;;</span><br><span class="line">	<span class="built_in">quicksort</span>(vector,<span class="number">0</span>,vector.<span class="built_in">size</span>()<span class="number">-1</span>);</span><br><span class="line">	<span class="built_in">Printvector</span>(vector);</span><br><span class="line"></span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>自己写的qsort比C++的std::sort快一点点（debug）</p>
+<p><img src="http://cdn.rhahr.icu/ca726a383dea8ea75f31a79c71fc86c.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/11/%E7%AE%97%E6%B3%95-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1519,10 +1187,149 @@
   
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/09/C++-Perfect%20Forwarding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/09/C++-Perfect%20Forwarding/" class="post-title-link" itemprop="url">Perfect Forwarding</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-03-09 19:00:02 / 修改时间：18:51:33" itemprop="dateCreated datePublished" datetime="2024-03-09T19:00:02+08:00">2024-03-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="完美转发"><a href="#完美转发" class="headerlink" title="完美转发"></a>完美转发</h1><p>完美转发是指在模板函数中将接收到的参数无损地转发到另一个函数的能力。这是通过<code>std::forward</code>来实现的，它是一个特殊的模板函数，用于保持原始参数的值类别（左值或右值）。</p>
+<p>当你在模板函数中使用<code>std::forward&lt;Args&gt;(args)...</code>时，它会根据每个参数的原始值类别来转发这些参数。如果原始参数是左值，那么转发后它仍然是左值；如果原始参数是右值，那么转发后它也是右值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Args&gt; </span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">wrapper</span><span class="params">(Args&amp;&amp;... args)</span> </span>&#123;     </span><br><span class="line"><span class="comment">// 使用std::forward来完美转发参数   </span></span><br><span class="line"><span class="built_in">another_function</span>(std::forward&lt;Args&gt;(args)...); </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>这种机制非常重要，因为它允许你编写通用代码，同时保持参数的优化（比如避免不必要的拷贝）。完美转发是现代C++中实现高效和灵活代码的关键技术之一。接下来一个一个解释。</p>
+<h2 id="万能引用"><a href="#万能引用" class="headerlink" title="万能引用"></a>万能引用</h2><p>万能引用，形如<code>T&amp;&amp; args</code> 乍一看这不就是右值引用吗，错啦~，这里还是写完整一点好</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; </span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">wrapper</span><span class="params">(T&amp;&amp; args)</span> </span>&#123;     </span><br></pre></td></tr></table></figure>
+
+<p>上边的例子中</p>
+<p>右值引用是一个具体的类型才是右值引用，例如 <code>int&amp;&amp; a</code> ,万能引用则类型是由推导可知的</p>
+<p> 确实看起来像是一个右值引用，但它实际上是一个万能引用。这是因为 <code>T</code> 是一个模板参数，而不是一个具体的类型。当模板函数或方法中出现 <code>T&amp;&amp;</code> 时，其中的 <code>T</code> 是通过类型推导得到的，所以 <strong><code>T&amp;&amp;</code> 可以根据传入参数的类型变成左值引用或右值引用。</strong> 这就是万能引用的作用</p>
+<p>在模板类中，如果 <code>pushback</code> 函数被调用并传入一个右值，那么 <code>T</code> 将被推导为非引用类型，使得 <code>T&amp;&amp;</code> 成为一个右值引用。如果传入一个左值，<code>T</code> 将被推导为左值引用类型，使得 <code>T&amp;&amp;</code> 实际上成为一个左值引用。这就是万能引用的特性，它可以绑定到左值和右值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">relay</span><span class="params">(T&amp;&amp; arg)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">process</span>(std::forward&lt;T&gt;(arg)); <span class="comment">// 完美转发 arg</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">process</span><span class="params">(<span class="type">int</span>&amp; x)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 处理左值</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">process</span><span class="params">(<span class="type">int</span>&amp;&amp; x)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 处理右值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当你调用 <code>relay(a);</code> 并且 <code>a</code> 是一个左值时，<code>T</code> 推导为 <code>int&amp;</code>，使得 <code>T&amp;&amp;</code> 实际上变成了 <code>int&amp; &amp;&amp;</code>。根据<strong>引用折叠</strong>规则，这最终会折叠成 <code>int&amp;</code>，所以 <code>arg</code> 是一个左值引用。<code>std::forward&lt;T&gt;(arg)</code> 此时会按照左值处理 <code>arg</code>。</p>
+<p>当你调用 <code>relay(10);</code> 并且 <code>10</code> 是一个右值时，<code>T</code> 推导为 <code>int</code>，使得 <code>T&amp;&amp;</code> 实际上是 <code>int&amp;&amp;</code>，一个真正的右值引用。<code>std::forward&lt;T&gt;(arg)</code> 此时会按照右值处理 <code>arg</code>。</p>
+<p>这就是为什么 <code>T&amp;&amp; arg</code> 不总是右值引用，它取决于传入参数的类型。这种机制允许 <code>relay</code> 函数完美转发它的参数，无论它们是左值还是右值。</p>
+<blockquote>
+<p>实际上在移动语义中，也是一样的，如果类型是模板类型则会自动推导，但是传参进来的不管是左值还是右值都无所谓，因为有std::move</p>
+</blockquote>
+<p>那么什么是引用折叠呢？</p>
+<h3 id="引用折叠"><a href="#引用折叠" class="headerlink" title="引用折叠"></a>引用折叠</h3><p>引用折叠是C++中的一个规则，它处理在模板和类型推导中出现的多层引用的情况。在C++中，你不能直接创建引用的引用，比如 <code>int&amp;&amp; &amp;</code> 或 <code>int&amp; &amp;&amp;</code>。但在模板和自动类型推导中，这样的情况是可能发生的。引用折叠规则决定了这些多层引用如何被解析为单一的引用。</p>
+<p>引用折叠的规则很简单：</p>
+<ul>
+<li>如果在任何引用对中至少有一个是左值引用（<code>&amp;</code>），那么结果就是左值引用（<code>&amp;</code>）。</li>
+<li>如果两个引用都是右值引用（<code>&amp;&amp;</code>），那么结果就是右值引用（<code>&amp;&amp;</code>）。</li>
+</ul>
+<p>例如</p>
+<ul>
+<li><code>int&amp; &amp;&amp;</code> 折叠为 <code>int&amp;</code></li>
+<li><code>int&amp;&amp; &amp;</code> 折叠为 <code>int&amp;</code></li>
+<li><code>int&amp; &amp;</code> 折叠为 <code>int&amp;</code></li>
+<li><code>int&amp;&amp; &amp;&amp;</code> 折叠为 <code>int&amp;&amp;</code></li>
+</ul>
+<h2 id="std-forward"><a href="#std-forward" class="headerlink" title="std::forward"></a>std::forward</h2><p>简洁补一下forward</p>
+<p><code>std::forward</code> 是 C++11 引入的一个模板函数，它用于实现所谓的完美转发。完美转发允许你将函数的参数以原始的左值或右值形式传递给其他函数，这意味着保持参数的原始值类别（lvalue 或 rvalue）不变。</p>
+<p>当我们定义一个模板函数用于转发参数时，通常我们会希望保持原始参数的左值&#x2F;右值性质，并且将其转发给另一个函数。假设我们定义如下函数模板：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">wrapper</span><span class="params">(T&amp;&amp; arg)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">another_function</span>(arg);  <span class="comment">// 这里的arg永远是左值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的 <code>T&amp;&amp;</code> 是通用引用，它可以匹配任意左值或右值。但是问题在于，传给 <code>another_function</code> 的 <code>arg</code> 无论原始参数是左值还是右值，在 <code>wrapper</code> 函数内部，<code>arg</code> 始终是左值。这就是我们需要 <code>std::forward</code> 的地方。</p>
+<p><code>std::forward</code> 的作用就是，保持原有参数的左值&#x2F;右值性质，并正确地转发给另一个函数。所以上述代码应当修改为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">wrapper</span><span class="params">(T&amp;&amp; arg)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">another_function</span>(std::forward&lt;T&gt;(arg));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在无论 <code>arg</code> 是左值还是右值，<code>std::forward&lt;T&gt;(arg)</code> 都能保持其原有性质，并正确地转发给 <code>another_function</code> 函数。这就是所谓的”完美转发”。</p>
+<p>总结一下，<code>std::forward</code> 是C++中实现”完美转发”的重要工具，它能够保持函数参数的原有性质（包括左值、右值特性），并且将其转发给另一个函数。</p>
+<h2 id="完美转发-x3D-x3D"><a href="#完美转发-x3D-x3D" class="headerlink" title="完美转发&#x3D;&#x3D;"></a>完美转发&#x3D;&#x3D;</h2><p>万能引用可以保持传入参数的属性不变，乍一看很鸡肋，刚才的例子中直接在main中调用process不也就直接调用了对应的左值右值版本的函数了吗，为什么还要调用 relay这个万能引用版本呢?</p>
+<p> 回想起之前学的可变参数模板就派上用场了</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>...Args&gt;</span></span><br><span class="line"><span class="function">T&amp; <span class="title">emplaceback</span><span class="params">(Args&amp;&amp;...args)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (m_Size &gt;= m_Capacity)</span><br><span class="line">			<span class="built_in">ReAlloca</span>(m_Capacity + m_Capacity / <span class="number">2</span>);</span><br><span class="line">		<span class="keyword">new</span>(&amp;m_Data[m_Size]) <span class="built_in">T</span>(std::forward&lt;Args&gt;(args)...);</span><br><span class="line">    <span class="comment">//展开： std::forward&lt;Args&gt;(args1),std::forward&lt;Args&gt;(args2),...</span></span><br><span class="line">		<span class="keyword">return</span> m_Data[m_Size++];</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>完美转发 &#x3D; 万能引用 + std::forward</p>
+<p>第六行placement new语法new(memory) Type(Args),此处意为不使用new分配内存而是直接在m_Data[m_Size]（m_Data最后一个数据位置+1）处就地构造一个T类型的参数，参数是万能引用传过来的参数包args，参数包的可变数量可变类型的参数正好合适用完美转发来处理</p>
+<p>总之在我看来，完美转发就是通过万能引用来接受传入的参数并根据引用折叠规则来转换成想要的类型后，通过std::forward 正确的转发出去</p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1590,7 +1397,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1603,7 +1410,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-count">66</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

@@ -24,19 +24,20 @@
     var CONFIG = {"hostname":"rhahr.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="1234567891011121314151617181920212223242526272829303132333435#include &quot;mainwindow.h&quot;#include &lt;QtWidgets&gt;&#x2F;&#x2F;接受一个QWidget类型的指针parent作为参数，这个参数通常用于设置窗口的父子关系。构造函数使用初始化列表语法:来调用基类QMainWindow的构造">
+  <meta name="description" content="层次结构与继承关系Qt的类层次结构是一个庞大而复杂的体系，它包含了许多不同的类，这些类通过继承关系相互联系。在Qt中，所有的类都继承自QObject或者其子类。QObject是Qt对象模型的基础，提供了信号和槽机制、对象树结构管理等功能。 主要的模块，它们分别提供不同的功能和类：  QtCore：这是Qt框架的核心模块，提供了非GUI的基础功能，如事件循环、信号和槽机制、基础数据类型、文件操作等。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HahのBlog">
-<meta property="og:url" content="http://rhahr.top/2024/06/28/Qt-%E9%94%AE%E9%BC%A0%E5%93%8D%E5%BA%94%E4%BA%8B%E4%BB%B6/index.html">
+<meta property="og:title" content="QT层次结构">
+<meta property="og:url" content="http://rhahr.top/2024/03/24/Qt-%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB/index.html">
 <meta property="og:site_name" content="HahのBlog">
-<meta property="og:description" content="1234567891011121314151617181920212223242526272829303132333435#include &quot;mainwindow.h&quot;#include &lt;QtWidgets&gt;&#x2F;&#x2F;接受一个QWidget类型的指针parent作为参数，这个参数通常用于设置窗口的父子关系。构造函数使用初始化列表语法:来调用基类QMainWindow的构造">
+<meta property="og:description" content="层次结构与继承关系Qt的类层次结构是一个庞大而复杂的体系，它包含了许多不同的类，这些类通过继承关系相互联系。在Qt中，所有的类都继承自QObject或者其子类。QObject是Qt对象模型的基础，提供了信号和槽机制、对象树结构管理等功能。 主要的模块，它们分别提供不同的功能和类：  QtCore：这是Qt框架的核心模块，提供了非GUI的基础功能，如事件循环、信号和槽机制、基础数据类型、文件操作等。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-06-28T10:16:31.324Z">
-<meta property="article:modified_time" content="2024-06-04T02:30:30.542Z">
+<meta property="article:published_time" content="2024-03-24T14:00:00.000Z">
+<meta property="article:modified_time" content="2024-09-25T01:03:14.250Z">
 <meta property="article:author" content="Hah">
+<meta property="article:tag" content="QT基础理解">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://rhahr.top/2024/06/28/Qt-%E9%94%AE%E9%BC%A0%E5%93%8D%E5%BA%94%E4%BA%8B%E4%BB%B6/">
+<link rel="canonical" href="http://rhahr.top/2024/03/24/Qt-%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB/">
 
 
 <script id="page-configurations">
@@ -49,7 +50,7 @@
   };
 </script>
 
-  <title> | HahのBlog</title>
+  <title>QT层次结构 | HahのBlog</title>
   
 
 
@@ -198,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/Qt-%E9%94%AE%E9%BC%A0%E5%93%8D%E5%BA%94%E4%BA%8B%E4%BB%B6/">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/24/Qt-%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -211,7 +212,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
+          QT层次结构
         </h1>
 
         <div class="post-meta">
@@ -222,15 +223,24 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2024-06-28 18:16:31" itemprop="dateCreated datePublished" datetime="2024-06-28T18:16:31+08:00">2024-06-28</time>
+              <time title="创建时间：2024-03-24 22:00:00" itemprop="dateCreated datePublished" datetime="2024-03-24T22:00:00+08:00">2024-03-24</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-04 10:30:30" itemprop="dateModified" datetime="2024-06-04T10:30:30+08:00">2024-06-04</time>
+                <time title="修改时间：2024-09-25 09:03:14" itemprop="dateModified" datetime="2024-09-25T09:03:14+08:00">2024-09-25</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index"><span itemprop="name">QT</span></a>
+                </span>
+            </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -245,7 +255,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
+              <span>773</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -264,8 +274,20 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;mainwindow.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QtWidgets&gt;</span></span></span><br><span class="line"><span class="comment">//接受一个QWidget类型的指针parent作为参数，这个参数通常用于设置窗口的父子关系。构造函数使用初始化列表语法:来调用基类QMainWindow的构造函数，并将parent传递给它。这样，MainWindow就被初始化为一个QMainWindow对象。</span></span><br><span class="line">MainWindow::<span class="built_in">MainWindow</span>(QWidget *parent)</span><br><span class="line">    : <span class="built_in">QMainWindow</span>(parent)   <span class="comment">//初始化列表，QWidget类型的parent初始化QWidget为基类的QMainWindow</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//设置了鼠标跟踪为开启状态。当鼠标跟踪开启时，即使没有按键被按下，窗口也会接收到鼠标移动事件。</span></span><br><span class="line">    <span class="built_in">setMouseTracking</span>(<span class="literal">true</span>);</span><br><span class="line">    <span class="comment">//创建了一个QPushButton对象，按钮上的文字是&quot;Quit&quot;。this指针表示这个按钮是MainWindow的子对象，这意味着按钮的生命周期将由MainWindow管理</span></span><br><span class="line">    <span class="keyword">auto</span> *quitBtn = <span class="keyword">new</span> <span class="built_in">QPushButton</span>(<span class="string">&quot;Quit&quot;</span>,<span class="keyword">this</span>);</span><br><span class="line">    <span class="comment">//设置了按钮的位置和大小</span></span><br><span class="line">    quitBtn-&gt;<span class="built_in">setGeometry</span>(<span class="number">50</span>,<span class="number">25</span>,<span class="number">100</span>,<span class="number">50</span>);</span><br><span class="line">    <span class="comment">//连接了quitBtn的clicked信号到全局QApplication对象的quit槽。这意味着当按钮被点击时，QApplication::quit函数会被调用，导致应用程序退出</span></span><br><span class="line">    <span class="built_in">connect</span>(quitBtn,&amp;QPushButton::clicked,qApp,&amp;QApplication::quit);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::keyPressEvent</span><span class="params">(QKeyEvent* event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(event-&gt;<span class="built_in">key</span>()==Qt::Key_Escape)</span><br><span class="line">    &#123;</span><br><span class="line">        qApp-&gt;<span class="built_in">quit</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::mouseMoveEvent</span><span class="params">(QMouseEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> x = event-&gt;<span class="built_in">pos</span>().<span class="built_in">x</span>();</span><br><span class="line">    <span class="type">int</span> y = event-&gt;<span class="built_in">pos</span>().<span class="built_in">y</span>();</span><br><span class="line">    QString text = <span class="string">&quot;position:&quot;</span>+QString::<span class="built_in">number</span>(x)+<span class="string">&quot;,&quot;</span>+QString::<span class="built_in">number</span>(y);</span><br><span class="line">    <span class="keyword">this</span>-&gt;<span class="built_in">statusBar</span>()-&gt;<span class="built_in">showMessage</span>(text);</span><br><span class="line">&#125;</span><br><span class="line">MainWindow::~<span class="built_in">MainWindow</span>()</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+        <h1 id="层次结构与继承关系"><a href="#层次结构与继承关系" class="headerlink" title="层次结构与继承关系"></a>层次结构与继承关系</h1><p>Qt的类层次结构是一个庞大而复杂的体系，它包含了许多不同的类，这些类通过继承关系相互联系。在Qt中，所有的类都继承自<code>QObject</code>或者其子类。<code>QObject</code>是Qt对象模型的基础，提供了信号和槽机制、对象树结构管理等功能。</p>
+<p>主要的模块，它们分别提供不同的功能和类：</p>
+<ol>
+<li><strong>QtCore</strong>：这是Qt框架的核心模块，提供了非GUI的基础功能，如事件循环、信号和槽机制、基础数据类型、文件操作等。它是其他所有模块的基础。</li>
+<li><strong>QtGui</strong>：这个模块提供了基础的图形界面功能，如绘图、窗口管理、事件处理等。它建立在QtCore之上，为更高级别的用户界面组件提供底层支持。</li>
+<li><strong>QtWidgets</strong>：建立在QtGui之上，提供了一套完整的用户界面控件，如按钮、对话框、输入框等。这些控件用于构建传统的桌面应用程序。</li>
+<li><strong>QtNetwork</strong>：这个模块提供了网络通信的功能，如TCP&#x2F;IP、UDP等。它也依赖于QtCore模块。</li>
+<li><strong>QtSql</strong>：提供了数据库操作的功能，支持多种数据库系统。它也是基于QtCore模块。</li>
+<li><strong>QtQuick</strong>：用于构建现代化的动态用户界面，它使用QML语言来描述界面。QtQuick建立在QtGui之上，并且通常与QtQml模块一起使用。</li>
+<li><strong>QtQml</strong>：提供了QML语言的解析和执行功能，是QtQuick的基础。</li>
+<li><strong>QtMultimedia</strong>：提供了音频、视频以及摄像头的支持。</li>
+</ol>
+<p>这些模块之间的关系是层次化的，高层模块依赖于低层模块。例如，QtWidgets依赖于QtGui和QtCore，而QtGui则依赖于QtCore。这种层次结构使得开发者可以根据需要选择合适的模块来构建应用程序。</p>
+<p>此外，Qt还有其他模块，如Qt3D、QtWebEngine等，它们提供了更专业的功能。每个模块都包含了一系列相关的类，这些类通过继承关系相互联系，共同构成了Qt的类层次结构。</p>
 
     </div>
 
@@ -290,7 +312,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://rhahr.top/2024/06/28/Qt-%E9%94%AE%E9%BC%A0%E5%93%8D%E5%BA%94%E4%BA%8B%E4%BB%B6/" title="">http://rhahr.top/2024/06/28/Qt-键鼠响应事件/</a>
+    <a href="http://rhahr.top/2024/03/24/Qt-%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB/" title="QT层次结构">http://rhahr.top/2024/03/24/Qt-层次结构与继承关系/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -300,6 +322,9 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/QT%E5%9F%BA%E7%A1%80%E7%90%86%E8%A7%A3/" rel="tag"># QT基础理解</a>
+          </div>
 
         
 
@@ -307,12 +332,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/06/28/Qt-%E7%88%B6%E5%AF%B9%E8%B1%A1/" rel="prev" title="">
-      <i class="fa fa-chevron-left"></i> 
+    <a href="/2024/03/24/Qt-%E4%B8%BB%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" rel="prev" title="QT事件循环">
+      <i class="fa fa-chevron-left"></i> QT事件循环
     </a></div>
       <div class="post-nav-item">
-    <a href="/2024/06/28/Qt-%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B/" rel="next" title="">
-       <i class="fa fa-chevron-right"></i>
+    <a href="/2024/03/24/OpenGL-%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%E5%92%8C%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" rel="next" title="glVertexAttribPointer">
+      glVertexAttribPointer <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -377,6 +402,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB"><span class="nav-number">1.</span> <span class="nav-text">层次结构与继承关系</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -392,7 +418,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -405,7 +431,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-count">66</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>

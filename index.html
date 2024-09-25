@@ -1224,178 +1224,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/09/24/%E7%89%9B%E5%AE%A2%E6%A8%A1%E6%8B%9F2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/09/24/%E7%89%9B%E5%AE%A2%E6%A8%A1%E6%8B%9F2/" class="post-title-link" itemprop="url">牛客模拟2</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-09-24 13:00:00" itemprop="dateCreated datePublished" datetime="2024-09-24T13:00:00+08:00">2024-09-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-25 08:57:52" itemprop="dateModified" datetime="2024-09-25T08:57:52+08:00">2024-09-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="说一说常用的-Linux-命令"><a href="#说一说常用的-Linux-命令" class="headerlink" title="说一说常用的 Linux 命令"></a>说一说常用的 Linux 命令</h1><ul>
-<li><p>cd         切换目录</p>
-</li>
-<li><p>pwd         显示当前工作目录</p>
-</li>
-<li><p>touch     创建空文件</p>
-</li>
-<li><p>mkdir     创建一个新目录</p>
-<ul>
-<li>-p    创建多级目录</li>
-</ul>
-</li>
-<li><p>cp        复制文件或者目录</p>
-<ul>
-<li>-r    递归处理，将指定目录下的文件与子目录一并拷贝</li>
-</ul>
-</li>
-<li><p>mv        移动文件或目录、文件或目录改名</p>
-</li>
-<li><p>rm         删除文件</p>
-<ul>
-<li>-r    同时删除该目录下的所有文件</li>
-<li>-f    强制删除文件或目录</li>
-</ul>
-</li>
-<li><p>cat        显示文本文件内容</p>
-</li>
-<li><p>more        分页显示文本内容，可前后翻页，空格向后翻页，b向前翻页</p>
-</li>
-<li><p>head        查看文本开头部分，默认十行</p>
-<ul>
-<li>-[num]    查看文本开头部分指定行数</li>
-</ul>
-</li>
-<li><p>tail    查看文本结尾部分，默认十行</p>
-<ul>
-<li>-[num]    查看文本结尾部分指定行数</li>
-<li>-f        循环滚动读取文件并动态显示在屏幕上，根据文件属性追踪    </li>
-<li>-F        循环滚动读取文件并动态显示在屏幕上，文件文件名追踪</li>
-</ul>
-</li>
-<li><p>wc        统计文本行数，字数，字符数</p>
-<ul>
-<li>-m    字符数</li>
-<li>-w    文本字数</li>
-<li>-l    文本行数</li>
-</ul>
-</li>
-<li><p>find    &#x2F; -name 在文件系统的指定目录下查找指定的文件</p>
-</li>
-<li><p>grep        在指定的文件中查找指定内容的行</p>
-</li>
-<li><p>ln        建立链接文件</p>
-</li>
-<li><p>scp  远程传输文件</p>
-</li>
-</ul>
-<h1 id="谈谈InnoDB引擎中的锁"><a href="#谈谈InnoDB引擎中的锁" class="headerlink" title="谈谈InnoDB引擎中的锁"></a>谈谈InnoDB引擎中的锁</h1><p>InnoDB是MySQL数据库中最常用的引擎之一，它采用了多版本并发控制（MVCC）来管理事务的并发访问。在InnoDB中，锁是实现MVCC的重要组件之一。</p>
-<p>InnoDB中的锁可以分为共享锁和排他锁。</p>
-<p>共享锁（S锁）允许多个事务同时持有同一份数据对象的锁，但是不能同时持有排他锁（X锁）。</p>
-<p>排他锁（X锁）则只允许一个事务持有该数据对象的锁，其他事务无法获得该锁，直到该事务释放该锁。</p>
-<p>意向锁（Intention Lock）：用于协调共享锁和排他锁之间的竞争。当一个事务获取共享锁或排他锁时，必须先获取对应的意向锁。意向锁是一种轻量级锁，不会阻塞其他事务的读取操作，只会阻塞其他事务的修改操作。</p>
-<p>在InnoDB中，行级锁是最常用的锁类型。当一个事务需要修改某一行数据时，它会先获取该行的排他锁。如果该行已经被其他事务持有锁，则当前事务会被阻塞，直到该锁被释放。如果一个事务只需要读取某一行数据，它会获取该行的共享锁。多个事务可以同时持有同一行的共享锁，但是任何一个事务持有了该行的排他锁，其他事务无法再获取该行的共享锁。</p>
-<p>除了行级锁外，InnoDB还支持表级锁和页级锁。表级锁会锁定整张表，而页级锁会锁定表中的一页数据。但是表级锁和页级锁可能会导致并发性能下降，因此在实际应用中尽量避免使用。</p>
-<h1 id="UDP协议的特点有哪些？"><a href="#UDP协议的特点有哪些？" class="headerlink" title="UDP协议的特点有哪些？"></a>UDP协议的特点有哪些？</h1><p>  一、UDP是无连接的，即通信时不需要创建连接（发送数据结束时也没有连接可以释放）所以减小了开销和发送数据前的时延；</p>
-<p>二、UDP采用最大努力交付，不保证可靠交付，因此主机不需要维护复杂的连接状态；</p>
-<p>三、UDP是面向报文的，只在应用层交下来的报文前增加了首部后就向下交付IP层；</p>
-<p>四、UDP是无阻塞控制的，即使网络中存在阻塞，也不会影响发送端的发送频率</p>
-<p>五、UDP支持一对一、一对多、多对一、多对多的交互通信</p>
-<p>六、UDP的首部开销小，只有8个字节，它比TCP的20个字节的首部要短。</p>
-<h1 id="TCP-x2F-IP四层模型是什么？"><a href="#TCP-x2F-IP四层模型是什么？" class="headerlink" title="TCP&#x2F;IP四层模型是什么？"></a>TCP&#x2F;IP四层模型是什么？</h1><p>第一层：应用层，主要有负责web浏览器的HTTP协议， 文件传输的FTP协议，负责电子邮件的SMTP协议，负责域名系统的DNS等。<br>第二层：传输层，主要是有可靠传输的TCP协议，特别高效的UDP协议。主要负责传输应用层的数据包。<br>第三层：网络层，主要是IP协议。主要负责寻址（找到目标设备的位置）<br>第四层：数据链路层，主要是负责转换数字信号和物理二进制信号。</p>
-<h1 id="大数相乘"><a href="#大数相乘" class="headerlink" title="大数相乘"></a>大数相乘</h1><p>以字符串的形式读入两个数字，编写一个函数计算它们的乘积，以字符串形式返回。</p>
-<p>数据范围： 读入的数字大小满足 <img src="https://www.nowcoder.com/equation?tex=0%20%5Cle%20n%20%5Cle%20%2010%5E%7B1000%7D" alt="img"></p>
-<p>要求：空间复杂度 <img src="https://www.nowcoder.com/equation?tex=O(m)" alt="O(m)">，时间复杂度 <img src="https://www.nowcoder.com/equation?tex=O(m%5E2)" alt="O(m^2)">（假设m是n的长度）</p>
-<h1 id="合并二叉树"><a href="#合并二叉树" class="headerlink" title="合并二叉树"></a>合并二叉树</h1><p>已知两颗二叉树，将它们合并成一颗二叉树。合并规则是：都存在的结点，就将结点值加起来，否则空的位置就由另一个树的结点来代替。例如：<br>两颗二叉树是:<br>                                                                    Tree 1</p>
-<p><img src="https://uploadfiles.nowcoder.com/images/20210928/382300087_1632821337680/9E290CFD3730B9B08A5CEFF25799608F" alt="img"></p>
-<p>​                                                                        Tree 2<br><img src="https://uploadfiles.nowcoder.com/images/20210928/382300087_1632821376266/DD0A63560E770A8510049C5182E6E622" alt="img"><br>​                                                                    合并后的树为<br><img src="https://uploadfiles.nowcoder.com/images/20210928/382300087_1632821404541/9CB750F8909D5985C0D01D8B71AD58BA" alt="img"></p>
-<p>数据范围：树上节点数量满足 <img src="https://www.nowcoder.com/equation?tex=0%20%5Cle%20n%20%5Cle%20500" alt="img">，树上节点的值一定在32位整型范围内。</p>
-<p>进阶：空间复杂度 <img src="https://www.nowcoder.com/equation?tex=O(1)" alt="img"> ，时间复杂度 <img src="https://www.nowcoder.com/equation?tex=O(n)" alt="img"></p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/09/24/%E7%89%9B%E5%AE%A2%E6%A8%A1%E6%8B%9F1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1599,7 +1427,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/Untitled/">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/09/24/%E7%89%9B%E5%AE%A2%E6%A8%A1%E6%8B%9F2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -1613,7 +1441,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/06/28/Untitled/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2024/09/24/%E7%89%9B%E5%AE%A2%E6%A8%A1%E6%8B%9F2/" class="post-title-link" itemprop="url">牛客模拟2</a>
         </h2>
 
         <div class="post-meta">
@@ -1624,14 +1452,186 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2024-06-28 18:16:31" itemprop="dateCreated datePublished" datetime="2024-06-28T18:16:31+08:00">2024-06-28</time>
+              <time title="创建时间：2024-09-24 13:00:00" itemprop="dateCreated datePublished" datetime="2024-09-24T13:00:00+08:00">2024-09-24</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-08 10:43:59" itemprop="dateModified" datetime="2024-06-08T10:43:59+08:00">2024-06-08</time>
+                <time title="修改时间：2024-09-25 08:57:52" itemprop="dateModified" datetime="2024-09-25T08:57:52+08:00">2024-09-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="说一说常用的-Linux-命令"><a href="#说一说常用的-Linux-命令" class="headerlink" title="说一说常用的 Linux 命令"></a>说一说常用的 Linux 命令</h1><ul>
+<li><p>cd         切换目录</p>
+</li>
+<li><p>pwd         显示当前工作目录</p>
+</li>
+<li><p>touch     创建空文件</p>
+</li>
+<li><p>mkdir     创建一个新目录</p>
+<ul>
+<li>-p    创建多级目录</li>
+</ul>
+</li>
+<li><p>cp        复制文件或者目录</p>
+<ul>
+<li>-r    递归处理，将指定目录下的文件与子目录一并拷贝</li>
+</ul>
+</li>
+<li><p>mv        移动文件或目录、文件或目录改名</p>
+</li>
+<li><p>rm         删除文件</p>
+<ul>
+<li>-r    同时删除该目录下的所有文件</li>
+<li>-f    强制删除文件或目录</li>
+</ul>
+</li>
+<li><p>cat        显示文本文件内容</p>
+</li>
+<li><p>more        分页显示文本内容，可前后翻页，空格向后翻页，b向前翻页</p>
+</li>
+<li><p>head        查看文本开头部分，默认十行</p>
+<ul>
+<li>-[num]    查看文本开头部分指定行数</li>
+</ul>
+</li>
+<li><p>tail    查看文本结尾部分，默认十行</p>
+<ul>
+<li>-[num]    查看文本结尾部分指定行数</li>
+<li>-f        循环滚动读取文件并动态显示在屏幕上，根据文件属性追踪    </li>
+<li>-F        循环滚动读取文件并动态显示在屏幕上，文件文件名追踪</li>
+</ul>
+</li>
+<li><p>wc        统计文本行数，字数，字符数</p>
+<ul>
+<li>-m    字符数</li>
+<li>-w    文本字数</li>
+<li>-l    文本行数</li>
+</ul>
+</li>
+<li><p>find    &#x2F; -name 在文件系统的指定目录下查找指定的文件</p>
+</li>
+<li><p>grep        在指定的文件中查找指定内容的行</p>
+</li>
+<li><p>ln        建立链接文件</p>
+</li>
+<li><p>scp  远程传输文件</p>
+</li>
+</ul>
+<h1 id="谈谈InnoDB引擎中的锁"><a href="#谈谈InnoDB引擎中的锁" class="headerlink" title="谈谈InnoDB引擎中的锁"></a>谈谈InnoDB引擎中的锁</h1><p>InnoDB是MySQL数据库中最常用的引擎之一，它采用了多版本并发控制（MVCC）来管理事务的并发访问。在InnoDB中，锁是实现MVCC的重要组件之一。</p>
+<p>InnoDB中的锁可以分为共享锁和排他锁。</p>
+<p>共享锁（S锁）允许多个事务同时持有同一份数据对象的锁，但是不能同时持有排他锁（X锁）。</p>
+<p>排他锁（X锁）则只允许一个事务持有该数据对象的锁，其他事务无法获得该锁，直到该事务释放该锁。</p>
+<p>意向锁（Intention Lock）：用于协调共享锁和排他锁之间的竞争。当一个事务获取共享锁或排他锁时，必须先获取对应的意向锁。意向锁是一种轻量级锁，不会阻塞其他事务的读取操作，只会阻塞其他事务的修改操作。</p>
+<p>在InnoDB中，行级锁是最常用的锁类型。当一个事务需要修改某一行数据时，它会先获取该行的排他锁。如果该行已经被其他事务持有锁，则当前事务会被阻塞，直到该锁被释放。如果一个事务只需要读取某一行数据，它会获取该行的共享锁。多个事务可以同时持有同一行的共享锁，但是任何一个事务持有了该行的排他锁，其他事务无法再获取该行的共享锁。</p>
+<p>除了行级锁外，InnoDB还支持表级锁和页级锁。表级锁会锁定整张表，而页级锁会锁定表中的一页数据。但是表级锁和页级锁可能会导致并发性能下降，因此在实际应用中尽量避免使用。</p>
+<h1 id="UDP协议的特点有哪些？"><a href="#UDP协议的特点有哪些？" class="headerlink" title="UDP协议的特点有哪些？"></a>UDP协议的特点有哪些？</h1><p>  一、UDP是无连接的，即通信时不需要创建连接（发送数据结束时也没有连接可以释放）所以减小了开销和发送数据前的时延；</p>
+<p>二、UDP采用最大努力交付，不保证可靠交付，因此主机不需要维护复杂的连接状态；</p>
+<p>三、UDP是面向报文的，只在应用层交下来的报文前增加了首部后就向下交付IP层；</p>
+<p>四、UDP是无阻塞控制的，即使网络中存在阻塞，也不会影响发送端的发送频率</p>
+<p>五、UDP支持一对一、一对多、多对一、多对多的交互通信</p>
+<p>六、UDP的首部开销小，只有8个字节，它比TCP的20个字节的首部要短。</p>
+<h1 id="TCP-x2F-IP四层模型是什么？"><a href="#TCP-x2F-IP四层模型是什么？" class="headerlink" title="TCP&#x2F;IP四层模型是什么？"></a>TCP&#x2F;IP四层模型是什么？</h1><p>第一层：应用层，主要有负责web浏览器的HTTP协议， 文件传输的FTP协议，负责电子邮件的SMTP协议，负责域名系统的DNS等。<br>第二层：传输层，主要是有可靠传输的TCP协议，特别高效的UDP协议。主要负责传输应用层的数据包。<br>第三层：网络层，主要是IP协议。主要负责寻址（找到目标设备的位置）<br>第四层：数据链路层，主要是负责转换数字信号和物理二进制信号。</p>
+<h1 id="大数相乘"><a href="#大数相乘" class="headerlink" title="大数相乘"></a>大数相乘</h1><p>以字符串的形式读入两个数字，编写一个函数计算它们的乘积，以字符串形式返回。</p>
+<p>数据范围： 读入的数字大小满足 <img src="https://www.nowcoder.com/equation?tex=0%20%5Cle%20n%20%5Cle%20%2010%5E%7B1000%7D" alt="img"></p>
+<p>要求：空间复杂度 <img src="https://www.nowcoder.com/equation?tex=O(m)" alt="O(m)">，时间复杂度 <img src="https://www.nowcoder.com/equation?tex=O(m%5E2)" alt="O(m^2)">（假设m是n的长度）</p>
+<h1 id="合并二叉树"><a href="#合并二叉树" class="headerlink" title="合并二叉树"></a>合并二叉树</h1><p>已知两颗二叉树，将它们合并成一颗二叉树。合并规则是：都存在的结点，就将结点值加起来，否则空的位置就由另一个树的结点来代替。例如：<br>两颗二叉树是:<br>                                                                    Tree 1</p>
+<p><img src="https://uploadfiles.nowcoder.com/images/20210928/382300087_1632821337680/9E290CFD3730B9B08A5CEFF25799608F" alt="img"></p>
+<p>​                                                                        Tree 2<br><img src="https://uploadfiles.nowcoder.com/images/20210928/382300087_1632821376266/DD0A63560E770A8510049C5182E6E622" alt="img"><br>​                                                                    合并后的树为<br><img src="https://uploadfiles.nowcoder.com/images/20210928/382300087_1632821404541/9CB750F8909D5985C0D01D8B71AD58BA" alt="img"></p>
+<p>数据范围：树上节点数量满足 <img src="https://www.nowcoder.com/equation?tex=0%20%5Cle%20n%20%5Cle%20500" alt="img">，树上节点的值一定在32位整型范围内。</p>
+<p>进阶：空间复杂度 <img src="https://www.nowcoder.com/equation?tex=O(1)" alt="img"> ，时间复杂度 <img src="https://www.nowcoder.com/equation?tex=O(n)" alt="img"></p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/OOP-%E9%9A%90%E8%97%8F%E4%B8%8E%E8%A6%86%E7%9B%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/06/28/OOP-%E9%9A%90%E8%97%8F%E4%B8%8E%E8%A6%86%E7%9B%96/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-28 18:16:05" itemprop="dateCreated datePublished" datetime="2024-06-28T18:16:05+08:00">2024-06-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-11 18:49:36" itemprop="dateModified" datetime="2024-06-11T18:49:36+08:00">2024-06-11</time>
               </span>
 
           <br>
@@ -1679,7 +1679,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/Qt-%E4%B8%BB%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/C++-%E8%99%9A%E7%BB%A7%E6%89%BF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -1693,7 +1693,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/06/28/Qt-%E4%B8%BB%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2024/06/28/C++-%E8%99%9A%E7%BB%A7%E6%89%BF/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -1704,14 +1704,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2024-06-28 18:16:31" itemprop="dateCreated datePublished" datetime="2024-06-28T18:16:31+08:00">2024-06-28</time>
+              <time title="创建时间：2024-06-28 18:16:05" itemprop="dateCreated datePublished" datetime="2024-06-28T18:16:05+08:00">2024-06-28</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-04 10:25:47" itemprop="dateModified" datetime="2024-06-04T10:25:47+08:00">2024-06-04</time>
+                <time title="修改时间：2024-06-11 10:53:12" itemprop="dateModified" datetime="2024-06-11T10:53:12+08:00">2024-06-11</time>
               </span>
 
           <br>
@@ -1720,7 +1720,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>756</span>
+              <span>0</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1739,20 +1739,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>​	</p>
-<p>在Qt中，事件循环（Event Loop）是一个核心概念，它负责接收和分发应用程序中的各种事件。事件循环确保应用程序保持响应，并在适当的时候处理事件。下面是对Qt事件循环的详细讲解：</p>
-<h3 id="事件循环的作用"><a href="#事件循环的作用" class="headerlink" title="事件循环的作用"></a>事件循环的作用</h3><p>事件循环是Qt事件驱动系统的核心。它运行一个持续的循环，等待事件的发生（如用户输入、定时器触发、网络消息等），并将这些事件分发给相应的对象进行处理。这个机制使得应用程序能够同时处理多种操作，而不会阻塞用户界面。</p>
-<h3 id="事件循环的工作流程"><a href="#事件循环的工作流程" class="headerlink" title="事件循环的工作流程"></a>事件循环的工作流程</h3><ol>
-<li><strong>启动事件循环</strong>：当你在<code>main</code>函数中调用<code>QApplication::exec()</code>时，事件循环开始运行。这个调用会阻塞，直到事件循环结束，通常是当主窗口关闭时。</li>
-<li><strong>等待事件</strong>：事件循环会等待操作系统或者应用程序产生事件。</li>
-<li><strong>事件的分发</strong>：一旦事件发生，事件循环会从事件队列中取出事件，并根据事件类型将其分发给相应的事件处理器。</li>
-<li><strong>事件处理</strong>：事件处理器（通常是一个对象的成员函数）会处理事件。例如，一个按钮被点击会产生一个点击事件，事件循环将这个事件发送给按钮对象，按钮对象通过调用其<code>clicked()</code>槽函数来响应这个事件。</li>
-<li><strong>继续循环</strong>：处理完事件后，事件循环会继续等待新的事件。</li>
-</ol>
-<h3 id="自定义事件处理"><a href="#自定义事件处理" class="headerlink" title="自定义事件处理"></a>自定义事件处理</h3><p>Qt允许你自定义事件处理器。你可以通过重写<code>QObject</code>的<code>event()</code>函数或者特定事件的处理函数（如<code>mousePressEvent()</code>）来自定义事件的处理方式。</p>
-<h3 id="事件循环的结束"><a href="#事件循环的结束" class="headerlink" title="事件循环的结束"></a>事件循环的结束</h3><p>事件循环会一直运行，直到调用了<code>QApplication::quit()</code>，这通常发生在主窗口关闭时。调用<code>quit()</code>会导致<code>exec()</code>返回，从而结束事件循环，程序随后退出。</p>
-<h3 id="事件循环的重要性"><a href="#事件循环的重要性" class="headerlink" title="事件循环的重要性"></a>事件循环的重要性</h3><p>理解事件循环对于编写响应式的Qt应用程序至关重要。它不仅关系到用户界面的响应性，还涉及到程序的正确性和效率。正确地使用事件循环可以避免界面冻结和应用程序崩溃。</p>
-
+          
       
     </div>
 
@@ -1772,7 +1759,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/Qt-%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B/">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/C++-%E4%BD%8D%E8%BF%90%E7%AE%97/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -1786,7 +1773,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/06/28/Qt-%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2024/06/28/C++-%E4%BD%8D%E8%BF%90%E7%AE%97/" class="post-title-link" itemprop="url">未命名</a>
         </h2>
 
         <div class="post-meta">
@@ -1797,97 +1784,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2024-06-28 18:16:31" itemprop="dateCreated datePublished" datetime="2024-06-28T18:16:31+08:00">2024-06-28</time>
+              <time title="创建时间：2024-06-28 18:15:38" itemprop="dateCreated datePublished" datetime="2024-06-28T18:15:38+08:00">2024-06-28</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-04 10:25:46" itemprop="dateModified" datetime="2024-06-04T10:25:46+08:00">2024-06-04</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>39</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_21438461/article/details/135578569">【Qt运行流程详解】从启动到事件循环的深入解读_qt程序运行顺序-CSDN博客</a></p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/Qt-%E9%94%AE%E9%BC%A0%E5%93%8D%E5%BA%94%E4%BA%8B%E4%BB%B6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/28/Qt-%E9%94%AE%E9%BC%A0%E5%93%8D%E5%BA%94%E4%BA%8B%E4%BB%B6/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-06-28 18:16:31" itemprop="dateCreated datePublished" datetime="2024-06-28T18:16:31+08:00">2024-06-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-04 10:30:30" itemprop="dateModified" datetime="2024-06-04T10:30:30+08:00">2024-06-04</time>
+                <time title="修改时间：2024-06-13 17:00:52" itemprop="dateModified" datetime="2024-06-13T17:00:52+08:00">2024-06-13</time>
               </span>
 
           <br>
@@ -1915,9 +1819,106 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;mainwindow.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QtWidgets&gt;</span></span></span><br><span class="line"><span class="comment">//接受一个QWidget类型的指针parent作为参数，这个参数通常用于设置窗口的父子关系。构造函数使用初始化列表语法:来调用基类QMainWindow的构造函数，并将parent传递给它。这样，MainWindow就被初始化为一个QMainWindow对象。</span></span><br><span class="line">MainWindow::<span class="built_in">MainWindow</span>(QWidget *parent)</span><br><span class="line">    : <span class="built_in">QMainWindow</span>(parent)   <span class="comment">//初始化列表，QWidget类型的parent初始化QWidget为基类的QMainWindow</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//设置了鼠标跟踪为开启状态。当鼠标跟踪开启时，即使没有按键被按下，窗口也会接收到鼠标移动事件。</span></span><br><span class="line">    <span class="built_in">setMouseTracking</span>(<span class="literal">true</span>);</span><br><span class="line">    <span class="comment">//创建了一个QPushButton对象，按钮上的文字是&quot;Quit&quot;。this指针表示这个按钮是MainWindow的子对象，这意味着按钮的生命周期将由MainWindow管理</span></span><br><span class="line">    <span class="keyword">auto</span> *quitBtn = <span class="keyword">new</span> <span class="built_in">QPushButton</span>(<span class="string">&quot;Quit&quot;</span>,<span class="keyword">this</span>);</span><br><span class="line">    <span class="comment">//设置了按钮的位置和大小</span></span><br><span class="line">    quitBtn-&gt;<span class="built_in">setGeometry</span>(<span class="number">50</span>,<span class="number">25</span>,<span class="number">100</span>,<span class="number">50</span>);</span><br><span class="line">    <span class="comment">//连接了quitBtn的clicked信号到全局QApplication对象的quit槽。这意味着当按钮被点击时，QApplication::quit函数会被调用，导致应用程序退出</span></span><br><span class="line">    <span class="built_in">connect</span>(quitBtn,&amp;QPushButton::clicked,qApp,&amp;QApplication::quit);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::keyPressEvent</span><span class="params">(QKeyEvent* event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(event-&gt;<span class="built_in">key</span>()==Qt::Key_Escape)</span><br><span class="line">    &#123;</span><br><span class="line">        qApp-&gt;<span class="built_in">quit</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::mouseMoveEvent</span><span class="params">(QMouseEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> x = event-&gt;<span class="built_in">pos</span>().<span class="built_in">x</span>();</span><br><span class="line">    <span class="type">int</span> y = event-&gt;<span class="built_in">pos</span>().<span class="built_in">y</span>();</span><br><span class="line">    QString text = <span class="string">&quot;position:&quot;</span>+QString::<span class="built_in">number</span>(x)+<span class="string">&quot;,&quot;</span>+QString::<span class="built_in">number</span>(y);</span><br><span class="line">    <span class="keyword">this</span>-&gt;<span class="built_in">statusBar</span>()-&gt;<span class="built_in">showMessage</span>(text);</span><br><span class="line">&#125;</span><br><span class="line">MainWindow::~<span class="built_in">MainWindow</span>()</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <p>在 <code>epoll</code> 事件通知机制中，事件类型如 <code>EPOLLIN</code>、<code>EPOLLOUT</code> 等被定义为二进制中的单个位标志（bit flags）。这些标志是通过位掩码（bitmask）来表示的，而不是通过简单的数字相加。每种类型的事件都对应于整数值中的一个特定的位位置，而这些位位置是通过位运算来设置和检查的。</p>
+<p>例如，<code>EPOLLIN</code> 可能被定义为 <code>0x001</code>（二进制的 <code>0001</code>），而 <code>EPOLLOUT</code> 可能被定义为 <code>0x004</code>（二进制的 <code>0100</code>）。当一个文件描述符同时有可读和可写事件发生时，<code>epoll</code> 会将这两个事件的位掩码进行按位或运算（<code>|</code>），而不是数字相加。这样，即使两个事件同时发生，<code>EPOLLIN</code> 的位也会保持为 <code>1</code>。</p>
+<p>这里是如何通过按位或运算来组合事件的示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EPOLLIN:   0001 (二进制表示) EPOLLOUT:  0100 (二进制表示)            ---- 按位或结果: 0101 (二进制表示) </span><br></pre></td></tr></table></figure>
 
+<p>在这个例子中，即使 <code>EPOLLIN</code> 和 <code>EPOLLOUT</code> 同时发生，组合后的结果 <code>0101</code> 仍然在最低位有 <code>1</code>，这表示 <code>EPOLLIN</code> 事件发生了。因此，当我们使用按位与运算符 <code>&amp;</code> 检查 <code>evs[ii].events &amp; EPOLLIN</code> 时，只要 <code>EPOLLIN</code> 事件发生，无论是否有其他事件同时发生，结果都不会是 <code>0</code>。</p>
+<p>这就是为什么我们可以通过检查按位与运算的结果是否为非零来确定特定事件（如 <code>EPOLLIN</code>）是否发生，而不用担心其他事件的影响。</p>
+<p>正是通过位掩码（bitmask）的设计，我们可以确保即使多个事件同时发生，也能通过按位与运算（<code>&amp;</code>）得到正确的结果。位掩码是一种使用二进制位操作来表示和控制多个配置选项的技术。在 <code>epoll</code> 事件中，每个事件类型都有一个唯一的位掩码，这些掩码在设计时就确保了它们之间的二进制表示不会冲突。</p>
+<p>例如，<code>EPOLLIN</code> 和 <code>EPOLLOUT</code> 可能分别被定义为：</p>
+<ul>
+<li><code>EPOLLIN</code>: <code>0x001</code> 或 <code>0001</code>（二进制）</li>
+<li><code>EPOLLOUT</code>: <code>0x004</code> 或 <code>0100</code>（二进制）</li>
+</ul>
+<p>当我们想要检查 <code>EPOLLIN</code> 是否发生时，我们会这样做：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">evs[ii].<span class="property">events</span>:  xxxx (二进制表示，x代表任意值) </span><br><span class="line"><span class="attr">EPOLLIN</span>:         <span class="number">0001</span> (二进制表示)                  </span><br><span class="line">				---- </span><br><span class="line">&amp; 操作结果:       xx01 (二进制表示) </span><br></pre></td></tr></table></figure>
 
+<p>只要 <code>EPOLLIN</code> 对应的位是 <code>1</code>，无论 <code>xxxx</code> 中的其他位是什么值，按位与运算的结果的最低位都将是 <code>1</code>，这表明 <code>EPOLLIN</code> 事件发生了。</p>
+<p>这种设计允许我们使用单个整数值来存储和检查多个事件的发生情况，而不需要为每个事件单独使用一个变量。这样做不仅节省了空间，而且提高了效率，因为位运算通常比其他类型的运算更快。</p>
+<p>在实际编程中，这种技巧非常有用，因为它允许程序员以一种非常紧凑和高效的方式处理多个事件标志。这是系统编程中常用的一种模式，特别是在需要处理多种类型的输入&#x2F;输出事件时</p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/C++-%E5%A6%82%E4%BD%95%E5%86%99CPP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/06/28/C++-%E5%A6%82%E4%BD%95%E5%86%99CPP/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-06-28 18:15:38" itemprop="dateCreated datePublished" datetime="2024-06-28T18:15:38+08:00">2024-06-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-06-10 19:06:18" itemprop="dateModified" datetime="2024-06-10T19:06:18+08:00">2024-06-10</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>0</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
       
     </div>
 
@@ -1936,7 +1937,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2004,7 +2005,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">111</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -2017,7 +2018,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-count">66</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
