@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!--pjax：防止跳转页面音乐暂停-->
+ <script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/sword1.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/sword2.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rhahr.top","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":"ture","trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="顶点属性什么是顶点属性？顶点属性（Vertex Attribute）在计算机图形学中，是指用来描述一个顶点特征的数据。这些数据可以是位置、颜色、法线、纹理坐标等等。简单来说，就是用来定义一个顶点在三维空间中的属性，以及它在渲染过程中应该如何被处理 在之前的内容中已经创建了顶点缓冲区，也就是用来存放CPU传过来的顶点数据的缓冲区，有了数据，还需要告诉OpenGL如何解释这些数据，就需要用方法	glV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设置顶点属性与编写着色器">
+<meta property="og:url" content="http://rhahr.top/2024/10/29/OpenGL-D3-%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7/index.html">
+<meta property="og:site_name" content="HahのBlog">
+<meta property="og:description" content="顶点属性什么是顶点属性？顶点属性（Vertex Attribute）在计算机图形学中，是指用来描述一个顶点特征的数据。这些数据可以是位置、颜色、法线、纹理坐标等等。简单来说，就是用来定义一个顶点在三维空间中的属性，以及它在渲染过程中应该如何被处理 在之前的内容中已经创建了顶点缓冲区，也就是用来存放CPU传过来的顶点数据的缓冲区，有了数据，还需要告诉OpenGL如何解释这些数据，就需要用方法	glV">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://learnopengl-cn.github.io/img/01/06/vertex_attribute_pointer_interleaved_textures.png">
+<meta property="og:image" content="http://cdn.rhahr.asia/43bbc9affcedeeba559d48327483301.png">
+<meta property="article:published_time" content="2024-10-29T14:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-29T14:08:54.537Z">
+<meta property="article:author" content="Hah">
+<meta property="article:tag" content="D2">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://learnopengl-cn.github.io/img/01/06/vertex_attribute_pointer_interleaved_textures.png">
+
+<link rel="canonical" href="http://rhahr.top/2024/10/29/OpenGL-D3-%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>设置顶点属性与编写着色器 | HahのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <a target="_blank" rel="noopener" href="https://github.com/Jenwein" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#fff; color:#151513; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">HahのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/10/29/OpenGL-D3-%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          设置顶点属性与编写着色器
+        </h1>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-10-29 22:00:00 / 修改时间：22:08:54" itemprop="dateCreated datePublished" datetime="2024-10-29T22:00:00+08:00">2024-10-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenGL/" itemprop="url" rel="index"><span itemprop="name">OpenGL</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenGL/Cherno/" itemprop="url" rel="index"><span itemprop="name">Cherno</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="顶点属性"><a href="#顶点属性" class="headerlink" title="顶点属性"></a>顶点属性</h2><h3 id="什么是顶点属性？"><a href="#什么是顶点属性？" class="headerlink" title="什么是顶点属性？"></a>什么是顶点属性？</h3><p><strong>顶点属性</strong>（Vertex Attribute）在计算机图形学中，是指用来描述一个顶点特征的数据。这些数据可以是位置、颜色、法线、纹理坐标等等。简单来说，就是用来定义一个顶点在三维空间中的属性，以及它在渲染过程中应该如何被处理</p>
+<p>在之前的内容中已经创建了顶点缓冲区，也就是用来存放CPU传过来的顶点数据的缓冲区，有了数据，还需要告诉OpenGL如何解释这些数据，就需要用方法<code>	glVertexAttribPointer</code></p>
+<p>如果顶点只有位置属性，那么：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> position[<span class="number">6</span>] = &#123;</span><br><span class="line">		<span class="number">-0.5f</span>,  <span class="number">0.5f</span>,</span><br><span class="line">		<span class="number">-0.5f</span>, <span class="number">-0.5f</span>,</span><br><span class="line">		 <span class="number">0.5f</span>,  <span class="number">0.5f</span></span><br><span class="line">	&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>设置属性：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glVertexAttribPointer</span>(<span class="number">0</span>, <span class="number">2</span>, GL_FLOAT, GL_FALSE, <span class="built_in">sizeof</span>(GL_FLOAT) * <span class="number">2</span>, (<span class="type">const</span> <span class="type">void</span>*)<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>第一个参数指定我们要配置的顶点属性。还记得我们在顶点着色器中使用<code>layout(location = 0)</code>定义了position顶点属性的位置值(Location)吗？layout就是这里的顶点属性的标号，对应position中的顶点，从前到后为位置，颜色，纹理，所以分别为0，1，2</p>
+</li>
+<li><p>第二个参数指定顶点属性的大小。顶点属性是一个<code>vec3</code>，它由3个值组成，所以大小是3。</p>
+</li>
+<li><p>第三个参数指定数据的类型，这里是GL_FLOAT(GLSL中<code>vec*</code>都是由浮点数值组成的)。</p>
+</li>
+<li><p>下个参数定义我们是否希望数据被标准化(Normalize)。如果我们设置为GL_TRUE，所有数据都会被映射到0（对于有符号型signed数据是-1）到1之间。我们把它设置为GL_FALSE。</p>
+</li>
+<li><p>第五个参数叫做步长(Stride)，它告诉我们在连续的顶点属性组之间的间隔。由于下个组位置数据在3个<code>float</code>之后，我们把步长设置为<code>3 * sizeof(float)</code>。要注意的是由于我们知道这个数组是紧密排列的（在两个顶点属性之间没有空隙）我们也可以设置为0来让OpenGL决定具体步长是多少（只有当数值是紧密排列时才可用）。一旦我们有更多的顶点属性，我们就必须更小心地定义每个顶点属性之间的间隔，我们在后面会看到更多的例子（译注: 这个参数的意思简单说就是从这个属性第二次出现的地方到整个数组0位置之间有多少字节）。</p>
+</li>
+<li><p>最后一个参数的类型是<code>void*</code>，所以需要我们进行这个奇怪的强制类型转换。它表示位置数据在缓冲中起始位置的偏移量(Offset)。由于位置数据在数组的开头，所以这里是0。我们会在后面详细解释这个参数。</p>
+<p><img src="https://learnopengl-cn.github.io/img/01/06/vertex_attribute_pointer_interleaved_textures.png" alt="img"></p>
+</li>
+</ul>
+<p>如果有其他属性：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> vertices[] = &#123;</span><br><span class="line">		<span class="comment">//位置			    //颜色             //纹理    </span></span><br><span class="line">		<span class="number">0.5f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>,  <span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>,  <span class="number">1.0f</span>,<span class="number">1.0f</span>,     <span class="comment">// 右上角</span></span><br><span class="line">		<span class="number">0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,  <span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>,  <span class="number">1.0f</span>,<span class="number">0.0f</span>,     <span class="comment">// 右下角</span></span><br><span class="line">	   <span class="number">-0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,  <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>,  <span class="number">0.0f</span>,<span class="number">0.0f</span>,     <span class="comment">// 左下角</span></span><br><span class="line">	   <span class="number">-0.5f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>,  <span class="number">0.0f</span>, <span class="number">0.5f</span>, <span class="number">0.0f</span>,  <span class="number">0.0f</span>,<span class="number">1.0f</span>     <span class="comment">// 左上角</span></span><br><span class="line">	&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>设置顶点属性：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glVertexAttribPointer</span>(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="built_in">sizeof</span>(<span class="type">float</span>) * <span class="number">8</span>, (<span class="type">const</span> <span class="type">void</span>*)<span class="number">0</span>);	<span class="comment">//positon</span></span><br><span class="line"><span class="built_in">glVertexAttribPointer</span>(<span class="number">1</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="built_in">sizeof</span>(<span class="type">float</span>) * <span class="number">8</span>, (<span class="type">const</span> <span class="type">void</span>*)(<span class="number">3</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>)));	<span class="comment">//color</span></span><br><span class="line"><span class="built_in">glVertexAttribPointer</span>(<span class="number">2</span>, <span class="number">2</span>, GL_FLOAT, GL_FALSE, <span class="built_in">sizeof</span>(<span class="type">float</span>) * <span class="number">8</span>, (<span class="type">const</span> <span class="type">void</span>*)(<span class="number">6</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>)));	<span class="comment">//color</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="着色器"><a href="#着色器" class="headerlink" title="着色器"></a>着色器</h2><p>现在准备数据的事情都准备的差不多了，总结一下之前做了什么，有一个代表顶点位置的数组，创建了一个VBO用来存放CPU传过来的数据，并初始化VBO的数据为顶点位置的数据，然后设置顶点属性，告诉OpenGL以何种方式来读取数据，现在可以来编写着色器了。</p>
+<p>要把着色器代码变为着色器程序，类似于C++的程序的执行过程，同样需要编译链接，所以先来写一个方法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">static</span> <span class="type">unsigned</span> <span class="type">int</span> <span class="title">createShader</span><span class="params">(<span class="type">const</span> std::string&amp; vertexShader, <span class="type">const</span> std::string&amp; fragmentShader)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//创建一个着色器程序</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> program = <span class="built_in">glCreateProgram</span>();</span><br><span class="line">	<span class="comment">//编译着色器代码</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> vs = <span class="built_in">compileShader</span>(GL_VERTEX_SHADER, vertexShader);</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> fs = <span class="built_in">compileShader</span>(GL_FRAGMENT_SHADER, fragmentShader);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//将得到的着色器代码文件附加到程序上</span></span><br><span class="line">	<span class="built_in">glAttachShader</span>(program, vs);</span><br><span class="line">	<span class="built_in">glAttachShader</span>(program, fs);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//链接程序</span></span><br><span class="line">	<span class="built_in">glLinkProgram</span>(program);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//删除中间文件</span></span><br><span class="line">	<span class="built_in">glDeleteShader</span>(vs);</span><br><span class="line">	<span class="built_in">glDeleteShader</span>(fs);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> program;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先创建一个程序，然后编译着色器代码，编译后得到的vs和fs可以看作两个文件，将两个文件附加在program上后，链接程序，程序成功链接之后，就获得了一个可以执行的程序，之前的中间文件就不再需要可以直接删除。</p>
+<p>编译代码的部分重复较多，再抽象出一个函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//编译着色器代码</span></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">unsigned</span> <span class="type">int</span> <span class="title">compileShader</span><span class="params">(<span class="type">unsigned</span> <span class="type">int</span> type, <span class="type">const</span> std::string&amp; source)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//创建着色器</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> id = <span class="built_in">glCreateShader</span>(type);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//指定着色器源码（将源代码加载到着色器对象中）</span></span><br><span class="line">	<span class="type">const</span> <span class="type">char</span>* src = source.<span class="built_in">c_str</span>();</span><br><span class="line">	<span class="built_in">glShaderSource</span>(id, <span class="number">1</span>, &amp;src, <span class="literal">nullptr</span>);</span><br><span class="line">    <span class="comment">//id：指定要加载源代码的着色器对象的ID。1：表示只有一个字符串。</span></span><br><span class="line">    <span class="comment">//&amp;src：指向包含着色器源代码的字符串。nullptr：表示字符串以空字符结尾。</span></span><br><span class="line">	<span class="comment">//编译着色器代码</span></span><br><span class="line">	<span class="built_in">glCompileShader</span>(id);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//错误处理</span></span><br><span class="line">	<span class="type">int</span> result;</span><br><span class="line">	<span class="built_in">glGetShaderiv</span>(id, GL_COMPILE_STATUS, &amp;result);</span><br><span class="line">	<span class="keyword">if</span> (result == GL_FALSE)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> length;</span><br><span class="line">		<span class="built_in">glGetShaderiv</span>(id, GL_INFO_LOG_LENGTH, &amp;length);</span><br><span class="line">		<span class="type">char</span>* message = (<span class="type">char</span>*)<span class="built_in">alloca</span>(length*<span class="built_in">sizeof</span>(<span class="type">char</span>));</span><br><span class="line">		<span class="comment">//char* message = new char[length];</span></span><br><span class="line">		<span class="built_in">glGetShaderInfoLog</span>(id, length, &amp;length, message);</span><br><span class="line"></span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Failed to compile &quot;</span> &lt;&lt; (type == GL_VERTEX_SHADER ? <span class="string">&quot;vertex&quot;</span> : <span class="string">&quot;fragment&quot;</span>) &lt;&lt; <span class="string">&quot; shader! &quot;</span> &lt;&lt; std::endl;</span><br><span class="line">		std::cout &lt;&lt; message &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">glDeleteShader</span>(id);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>着色器代码的编译链接已经完成，现在可以着手着色器代码本身，着色器代码（GLSL）。GLSL需要记住之前提到的，着色器接收一个输入得到一个输出给下一个阶段，所以通过in接收上一阶段的数据处理，之后将结果通过out输出到下一阶段，下一阶段可以通过in来获取这个输出作为本阶段的输入</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">//编写着色器源码</span></span><br><span class="line">	std::string vertexShader = </span><br><span class="line"><span class="string">R&quot;(#version 330 core				</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">layout(location = 0) in vec4 aPos;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">void main()</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    gl_Position = aPos;</span></span><br><span class="line"><span class="string">&#125;	</span></span><br><span class="line"><span class="string">)&quot;</span>;</span><br><span class="line"></span><br><span class="line">	std::string fragmentShader = </span><br><span class="line"><span class="string">R&quot;(#version 330 core</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">layout(location = 0) out vec4 FragColor;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">void main()</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    FragColor = vec4(1.0, 0.0, 0.0, 1.0);</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">)&quot;</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>语法细节：（待补充）</p>
+<p>准备工作完成，最后开始使用代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//编译着色器，通过编译链接vs和fs的源码，得到最终的着色器程序</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> shader = <span class="built_in">createShader</span>(vertexShader,fragmentShader);</span><br><span class="line"><span class="built_in">glUseProgram</span>(shader);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Loop until the user closes the window */</span></span><br><span class="line"><span class="keyword">while</span> (!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">&#123;</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">glDeleteProgram</span>(shader);	<span class="comment">//回收资源</span></span><br></pre></td></tr></table></figure>
+
+<p>不出意外的得到了一个大红色的三角形。</p>
+<p><img src="http://cdn.rhahr.asia/43bbc9affcedeeba559d48327483301.png"></p>
+
+    </div>
+
+    
+    
+    
+    
+     <div>
+     <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:24px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+     </div>
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Hah
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://rhahr.top/2024/10/29/OpenGL-D3-%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7/" title="设置顶点属性与编写着色器">http://rhahr.top/2024/10/29/OpenGL-D3-设置顶点属性/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/D2/" rel="tag"># D2</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/10/25/OpenGL-D2-%E9%A1%B6%E7%82%B9%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BB%98%E5%88%B6%E4%B8%89%E8%A7%92%E5%BD%A2/" rel="prev" title="顶点缓冲区与着色器">
+      <i class="fa fa-chevron-left"></i> 顶点缓冲区与着色器
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="lv-container" data-id="city" data-uid="MTAyMC81ODMwOS8zNDc3Mg=="></div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=188550&auto=1&height=66"></iframe>
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">顶点属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">什么是顶点属性？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9D%80%E8%89%B2%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">着色器</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Hah"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Hah</p>
+  <div class="site-description" itemprop="description">我没有为你伤春悲秋不配有憾事</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">70</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Jenwein" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Jenwein" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:rgw127310@gmail.com" title="E-Mail → mailto:rgw127310@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 2023-4 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hah</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">313k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:44</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+    <span id="busuanzi_container_site_pv">总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+    <span class="post-meta-divider">|</span>
+    <span id="busuanzi_container_site_uv">总访客数<span id="busuanzi_value_site_uv"></span>人</span>
+    <span class="post-meta-divider">|</span>
+<!-- 不蒜子计数初始值纠正 -->
+<script>
+$(document).ready(function() {
+
+    var int = setInterval(fixCount, 50);  // 50ms周期检测函数
+    var countOffset = 20000;  // 初始化首次数据
+
+    function fixCount() {            
+       if (document.getElementById("busuanzi_container_site_pv").style.display != "none")
+        {
+            $("#busuanzi_value_site_pv").html(parseInt($("#busuanzi_value_site_pv").html()) + countOffset); 
+            clearInterval(int);
+        }                  
+        if ($("#busuanzi_container_site_pv").css("display") != "none")
+        {
+            $("#busuanzi_value_site_uv").html(parseInt($("#busuanzi_value_site_uv").html()) + countOffset); // 加上初始数据 
+            clearInterval(int); // 停止检测
+        }  
+    }
+       	
+});
+</script> 
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+<script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+  window.livereOptions = {
+    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+  };
+  (function(d, s) {
+    var j, e = d.getElementsByTagName(s)[0];
+    if (typeof LivereTower === 'function') { return; }
+    j = d.createElement(s);
+    j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+    j.async = true;
+    e.parentNode.insertBefore(j, e);
+  })(document, 'script');
+});
+</script>
+
+    </div>
+</body>
+</html>

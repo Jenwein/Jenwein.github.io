@@ -195,7 +195,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/09/25/C++%E9%9D%A2%E8%AF%95100%E9%97%AE1-10/">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/10/29/OpenGL-D3-%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -209,7 +209,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/09/25/C++%E9%9D%A2%E8%AF%95100%E9%97%AE1-10/" class="post-title-link" itemprop="url">面试100问01</a>
+            <a href="/2024/10/29/OpenGL-D3-%E8%AE%BE%E7%BD%AE%E9%A1%B6%E7%82%B9%E5%B1%9E%E6%80%A7/" class="post-title-link" itemprop="url">设置顶点属性与编写着色器</a>
         </h2>
 
         <div class="post-meta">
@@ -221,7 +221,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2024-09-25 12:00:00 / 修改时间：08:56:42" itemprop="dateCreated datePublished" datetime="2024-09-25T12:00:00+08:00">2024-09-25</time>
+              <time title="创建时间：2024-10-29 22:00:00 / 修改时间：22:08:54" itemprop="dateCreated datePublished" datetime="2024-10-29T22:00:00+08:00">2024-10-29</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -229,11 +229,11 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+                  <a href="/categories/OpenGL/" itemprop="url" rel="index"><span itemprop="name">OpenGL</span></a>
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                  <a href="/categories/OpenGL/Cherno/" itemprop="url" rel="index"><span itemprop="name">Cherno</span></a>
                 </span>
             </span>
 
@@ -243,14 +243,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>7.3k</span>
+              <span>4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -262,213 +262,342 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="include双引号和尖括号的区别"><a href="#include双引号和尖括号的区别" class="headerlink" title="include双引号和尖括号的区别"></a>include双引号和尖括号的区别</h1><p>在C++中，<code>#include</code>指令使用双引号（<code>&quot;&quot;</code>）和尖括号（<code>&lt;&gt;</code>）的区别主要在于编译器搜索头文件的路径：</p>
-<ol>
-<li>**尖括号 (&lt;&gt;)**：<ul>
-<li>编译器会在标准库路径中搜索头文件。这些路径通常包含系统提供的头文件和编译器自带的标准库文件。</li>
-<li>例如，<code>#include &lt;iostream&gt;</code> 会让编译器在标准库路径中查找 <code>iostream</code> 头文件。</li>
-</ul>
-</li>
-<li>**双引号 (“”)**：<ul>
-<li>编译器首先会在当前源文件所在的目录中搜索头文件。如果在当前目录中找不到，才会转而在标准库路径中搜索。</li>
-<li>例如，<code>#include &quot;my_header.h&quot;</code> 会让编译器先在当前目录中查找 <code>my_header.h</code>，如果找不到，再去标准库路径中查找。</li>
-</ul>
-</li>
-</ol>
-<p><a target="_blank" rel="noopener" href="https://dev.devbf.com/posts/angle-brackets-or-double-quotes-which-should-you-use-in-c-includes-3e464/">这种区别的目的是为了区分标准库头文件和项目自定义头文件，确保编译器能够正确找到并包含所需的头文件</a><a target="_blank" rel="noopener" href="https://dev.devbf.com/posts/angle-brackets-or-double-quotes-which-should-you-use-in-c-includes-3e464/">1</a><a target="_blank" rel="noopener" href="https://www.daniweb.com/programming/software-development/threads/359946/include-vs-include">2</a><a target="_blank" rel="noopener" href="https://www.rightreaders.com/what-is-the-difference-between-using-angle-brackets-and-quotes-in-an-include-directive-include-include-filename/">3</a>。</p>
-<hr>
-<p>双引号是优先查找当前项目中的文件，是属于本项目的文件，如果查找不到，再去<strong>标准库路径</strong>查找，而尖括号只在外部查找</p>
-<h1 id="const的用法"><a href="#const的用法" class="headerlink" title="const的用法"></a>const的用法</h1><p><code>const</code> 关键字在 C++ 中用于声明常量，表示变量的值在初始化后不能被修改。它可以用于变量、指针、函数参数和成员函数等多种场景。</p>
-<h3 id="1-常量变量"><a href="#1-常量变量" class="headerlink" title="1. 常量变量"></a>1. 常量变量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> max_value = <span class="number">100</span>; max_value = <span class="number">200</span>; </span><br><span class="line"><span class="comment">// 错误，不能修改常量变量的值 </span></span><br></pre></td></tr></table></figure>
+          <h2 id="顶点属性"><a href="#顶点属性" class="headerlink" title="顶点属性"></a>顶点属性</h2><h3 id="什么是顶点属性？"><a href="#什么是顶点属性？" class="headerlink" title="什么是顶点属性？"></a>什么是顶点属性？</h3><p><strong>顶点属性</strong>（Vertex Attribute）在计算机图形学中，是指用来描述一个顶点特征的数据。这些数据可以是位置、颜色、法线、纹理坐标等等。简单来说，就是用来定义一个顶点在三维空间中的属性，以及它在渲染过程中应该如何被处理</p>
+<p>在之前的内容中已经创建了顶点缓冲区，也就是用来存放CPU传过来的顶点数据的缓冲区，有了数据，还需要告诉OpenGL如何解释这些数据，就需要用方法<code>	glVertexAttribPointer</code></p>
+<p>如果顶点只有位置属性，那么：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> position[<span class="number">6</span>] = &#123;</span><br><span class="line">		<span class="number">-0.5f</span>,  <span class="number">0.5f</span>,</span><br><span class="line">		<span class="number">-0.5f</span>, <span class="number">-0.5f</span>,</span><br><span class="line">		 <span class="number">0.5f</span>,  <span class="number">0.5f</span></span><br><span class="line">	&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h3 id="2-指针"><a href="#2-指针" class="headerlink" title="2. 指针"></a>2. 指针</h3><ul>
-<li><p><strong>指向常量的指针</strong>：指针指向的值不能被修改。</p>
-<p><code>const int *ptr = &amp;max_value; *ptr = 200; // 错误，不能修改指向的值 ptr = &amp;another_value; // 正确，可以修改指针本身 </code></p>
-</li>
-<li><p><strong>常量指针</strong>：指针本身不能被修改，但指向的值可以被修改。</p>
-<p><code>int *const ptr = &amp;max_value; *ptr = 200; // 正确，可以修改指向的值 ptr = &amp;another_value; // 错误，不能修改指针本身 </code></p>
-</li>
-<li><p><strong>指向常量的常量指针</strong>：指针本身和指向的值都不能被修改。</p>
-<p><code>const int *const ptr = &amp;max_value; *ptr = 200; // 错误，不能修改指向的值 ptr = &amp;another_value; // 错误，不能修改指针本身 </code></p>
-</li>
-</ul>
-<h3 id="3-常量函数参数"><a href="#3-常量函数参数" class="headerlink" title="3. 常量函数参数"></a>3. 常量函数参数</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">printValue</span><span class="params">(<span class="type">const</span> <span class="type">int</span> value)</span> </span></span><br><span class="line"><span class="function"></span>&#123;     <span class="comment">// value 不能被修改     </span></span><br><span class="line">	std::cout &lt;&lt; value &lt;&lt; std::endl; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p>设置属性：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glVertexAttribPointer</span>(<span class="number">0</span>, <span class="number">2</span>, GL_FLOAT, GL_FALSE, <span class="built_in">sizeof</span>(GL_FLOAT) * <span class="number">2</span>, (<span class="type">const</span> <span class="type">void</span>*)<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
 
-<h3 id="4-常量成员函数"><a href="#4-常量成员函数" class="headerlink" title="4. 常量成员函数"></a>4. 常量成员函数</h3><p>常量成员函数不能修改对象的成员变量。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getValue</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value; <span class="comment">// 正确，常量成员函数可以访问成员变量</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">setValue</span><span class="params">(<span class="type">int</span> val)</span> </span>&#123;</span><br><span class="line">        value = val; <span class="comment">// 正确，非常量成员函数可以修改成员变量</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> value;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>使用 <code>const</code> 关键字可以提高代码的安全性和可读性，防止意外修改数据。</p>
-<h1 id="常量指针和指针常量分别是什么意思"><a href="#常量指针和指针常量分别是什么意思" class="headerlink" title="常量指针和指针常量分别是什么意思"></a>常量指针和指针常量分别是什么意思</h1><p>在C++中，常量指针和指针常量是两个不同的概念，尽管它们的名称听起来很相似。以下是它们的区别：</p>
-<ol>
-<li><strong>常量指针（Pointer to Constant）</strong>：<ul>
-<li>定义形式：<code>const 数据类型 *指针变量名</code> 或 <code>数据类型 const *指针变量名</code></li>
-<li>含义：指针指向的内容是常量，不能通过该指针修改内容，但指针本身可以指向其他地址。</li>
-<li>例子：<code>const int *p; int a = 10; p = &amp;a;  // 允许 *p = 20; // 错误，不能修改指向内容 </code></li>
-</ul>
-</li>
-<li><strong>指针常量（Constant Pointer）</strong>：<ul>
-<li>定义形式：<code>数据类型 *const 指针变量名</code></li>
-<li>含义：指针本身是常量，不能改变指向的地址，但可以通过指针修改指向地址的内容。</li>
-<li>例子：<code>int *const p = &amp;a; int a = 10; *p = 20; // 允许，修改指向内容 int b = 30; p = &amp;b;  // 错误，不能改变指向地址 </code></li>
-</ul>
-</li>
-</ol>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weibo_dm/article/details/80445205">总结来说，<strong>常量指针</strong>限制的是指针指向的内容，而<strong>指针常量</strong>限制的是指针本身的地址</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/weibo_dm/article/details/80445205">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/337321951">2</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88+vs+%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F">3</a>。</p>
-<hr>
-<p>常量指针是指常量的指针，表示这个量是常量，不可被改变，但是指针的指向可以修改。</p>
-<p>指针常量表示这个指针本身是常量，意思这个指针不可被修改，但是指向的内容可以被修改</p>
-<h1 id="C-常用新特性有哪些，举例说明"><a href="#C-常用新特性有哪些，举例说明" class="headerlink" title="C++常用新特性有哪些，举例说明"></a>C++常用新特性有哪些，举例说明</h1><p>C++近年来引入了许多新特性，以下是一些常用且重要的特性及其示例：</p>
-<h3 id="C-11"><a href="#C-11" class="headerlink" title="C++11"></a>C++11</h3><ol>
-<li><p><strong>自动类型推导（auto）</strong></p>
-</li>
-<li><p><strong>范围for循环</strong>：</p>
-<p><strong>范围for循环</strong></p>
-</li>
-<li><p><strong>lambda表达式</strong>：</p>
-<p><code>auto add =  &#123; return a + b; &#125;; std::cout &lt;&lt; add(2, 3); // 输出 5 </code></p>
-</li>
-</ol>
-<h3 id="C-14"><a href="#C-14" class="headerlink" title="C++14"></a>C++14</h3><ol>
-<li><p><strong>泛型lambda</strong>：</p>
-<p><code>auto add =  &#123; return a + b; &#125;; </code></p>
-<p> <code>std::cout &lt;&lt; add(2, 3); // 输出 5 </code></p>
-<p> <code>std::cout &lt;&lt; add(2.5, 3.5); // 输出 6.0 </code> </p>
-</li>
-<li><p><strong>二进制字面量</strong>：</p>
-<p><code>int binary = 0b1010; // binary 的值是 10 </code></p>
-</li>
-</ol>
-<h3 id="C-17"><a href="#C-17" class="headerlink" title="C++17"></a>C++17</h3><ol>
-<li><p><strong>结构化绑定</strong>：</p>
-<p><code>std::tuple&lt;int, double, std::string&gt; t(1, 2.3, &quot;hello&quot;); </code></p>
-<p> <code>auto [i, d, s] = t; </code></p>
-<p> <code>std::cout &lt;&lt; i &lt;&lt; &quot;, &quot; &lt;&lt; d &lt;&lt; &quot;, &quot; &lt;&lt; s; // 输出 1, 2.3, hello </code> </p>
-</li>
-<li><p><strong>if constexpr</strong>：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::tuple&lt;<span class="type">int</span>, <span class="type">double</span>, std::string&gt; <span class="title">t</span><span class="params">(<span class="number">1</span>, <span class="number">2.3</span>, <span class="string">&quot;hello&quot;</span>)</span></span>;</span><br><span class="line"><span class="keyword">auto</span> [i, d, s] = t;</span><br><span class="line">std::cout &lt;&lt; i &lt;&lt; <span class="string">&quot;, &quot;</span> &lt;&lt; d &lt;&lt; <span class="string">&quot;, &quot;</span> &lt;&lt; s; <span class="comment">// 输出 1, 2.3, hello</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>std::optional</strong>：</p>
-<p><code>std::optional&lt;int&gt; opt; if (!opt) &#123;     opt = 42; &#125; std::cout &lt;&lt; *opt; // 输出 42 </code></p>
-</li>
-</ol>
-<h3 id="C-20"><a href="#C-20" class="headerlink" title="C++20"></a>C++20</h3><ol>
-<li><p><strong>协程（coroutines）</strong>：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;coroutine&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ReturnObject</span> &#123;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">promise_type</span> &#123;</span><br><span class="line">        <span class="function">ReturnObject <span class="title">get_return_object</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> &#123;&#125;; &#125;</span><br><span class="line">        <span class="function">std::suspend_never <span class="title">initial_suspend</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> &#123;&#125;; &#125;</span><br><span class="line">        <span class="function">std::suspend_never <span class="title">final_suspend</span><span class="params">()</span> <span class="keyword">noexcept</span> </span>&#123; <span class="keyword">return</span> &#123;&#125;; &#125;</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">return_void</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">unhandled_exception</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">ReturnObject <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Hello &quot;</span>;</span><br><span class="line">    <span class="keyword">co_await</span> std::suspend_always&#123;&#125;;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;world!\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">foo</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p><strong>概念（concepts）</strong>：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">concept</span> Integral = std::is_integral_v&lt;T&gt;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;Integral T&gt;</span></span><br><span class="line"><span class="function">T <span class="title">add</span><span class="params">(T a, T b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">add</span>(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">// 输出 3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ol>
-<p><a target="_blank" rel="noopener" href="https://www.cppstories.com/2017/01/cpp17features/">这些新特性大大增强了C++的表达能力和代码简洁性，帮助开发者编写更高效和可维护的代码</a><a target="_blank" rel="noopener" href="https://www.cppstories.com/2017/01/cpp17features/">1</a><a target="_blank" rel="noopener" href="https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md">2</a><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/features-of-c17-with-examples/">3</a>。</p>
-<h1 id="智能指针的使用有什么坑"><a href="#智能指针的使用有什么坑" class="headerlink" title="智能指针的使用有什么坑"></a>智能指针的使用有什么坑</h1><p>在C++中，智能指针（如<code>std::unique_ptr</code>、<code>std::shared_ptr</code>和<code>std::weak_ptr</code>）极大地简化了内存管理，但在使用过程中仍有一些常见的坑需要注意：</p>
-<h3 id="1-不必要地使用std-shared-ptr"><a href="#1-不必要地使用std-shared-ptr" class="headerlink" title="1. 不必要地使用std::shared_ptr"></a>1. 不必要地使用<code>std::shared_ptr</code></h3><p><strong>问题</strong>：在不需要共享所有权的情况下使用<code>std::shared_ptr</code>，会导致不必要的性能开销，因为<code>std::shared_ptr</code>需要维护引用计数。</p>
-<p><a target="_blank" rel="noopener" href="https://acodersjourney.com/top-10-dumb-mistakes-avoid-c-11-smart-pointers/"><strong>建议</strong>：默认使用<code>std::unique_ptr</code>，只有在确实需要共享所有权时才使用<code>std::shared_ptr</code></a><a target="_blank" rel="noopener" href="https://acodersjourney.com/top-10-dumb-mistakes-avoid-c-11-smart-pointers/">1</a>。</p>
-<p>在lambda中可以通过传入shared_from_this()的指针来保证std::shared_ptr的存活，是一种伪闭包的实现</p>
-<h3 id="2-循环引用"><a href="#2-循环引用" class="headerlink" title="2. 循环引用"></a>2. 循环引用</h3><p><strong>问题</strong>：两个或多个<code>std::shared_ptr</code>相互引用，导致内存泄漏，因为引用计数永远不会归零。</p>
-<p><strong>解决方案</strong>：使用<code>std::weak_ptr</code>打破循环引用。例如：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">    std::shared_ptr&lt;Node&gt; next;</span><br><span class="line">    std::weak_ptr&lt;Node&gt; prev; <span class="comment">// 使用 weak_ptr 打破循环引用</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-多线程环境中的线程安全问题"><a href="#3-多线程环境中的线程安全问题" class="headerlink" title="3. 多线程环境中的线程安全问题"></a>3. 多线程环境中的线程安全问题</h3><p><strong>问题</strong>：<code>std::shared_ptr</code>本身是线程安全的，但它管理的对象并不是。如果多个线程同时访问和修改对象，可能会导致数据竞争。</p>
-<p><a target="_blank" rel="noopener" href="https://acodersjourney.com/top-10-dumb-mistakes-avoid-c-11-smart-pointers/"><strong>建议</strong>：在多线程环境中，使用适当的同步机制（如互斥锁）来保护共享资源</a><a target="_blank" rel="noopener" href="https://acodersjourney.com/top-10-dumb-mistakes-avoid-c-11-smart-pointers/">1</a>。</p>
-<h3 id="4-自定义删除器的使用"><a href="#4-自定义删除器的使用" class="headerlink" title="4. 自定义删除器的使用"></a>4. 自定义删除器的使用</h3><p><strong>问题</strong>：在使用自定义删除器时，可能会忘记正确处理资源释放，导致资源泄漏。</p>
-<p><strong>建议</strong>：确保自定义删除器正确释放资源。例如：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::unique_ptr&lt;FILE, <span class="title">decltype</span><span class="params">(&amp;fclose)</span>&gt; <span class="title">filePtr</span><span class="params">(fopen(<span class="string">&quot;example.txt&quot;</span>, <span class="string">&quot;r&quot;</span>), &amp;fclose)</span></span>;</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
-
-<h3 id="5-不要混用原始指针和智能指针"><a href="#5-不要混用原始指针和智能指针" class="headerlink" title="5. 不要混用原始指针和智能指针"></a>5. 不要混用原始指针和智能指针</h3><p><strong>问题</strong>：混用原始指针和智能指针可能导致双重释放或未定义行为。</p>
-<p><strong>建议</strong>：一旦使用智能指针管理资源，就不要再使用原始指针。例如：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::unique_ptr&lt;<span class="type">int</span>&gt; ptr = std::<span class="built_in">make_unique</span>&lt;<span class="type">int</span>&gt;(<span class="number">10</span>); <span class="comment">// 不要再使用原始指针来管理同一资源 </span></span><br></pre></td></tr></table></figure>
-
-<h3 id="6-避免在容器中直接存储智能指针"><a href="#6-避免在容器中直接存储智能指针" class="headerlink" title="6. 避免在容器中直接存储智能指针"></a>6. 避免在容器中直接存储智能指针</h3><p><strong>问题</strong>：在容器中直接存储智能指针可能导致意外的资源管理问题。</p>
-<p><a target="_blank" rel="noopener" href="https://dev.to/jaehyun_park_52/understanding-smart-pointers-in-c-7g9"><strong>建议</strong>：尽量使用容器的智能指针版本（如<code>std::vector&gt;</code>）来管理资源</a><a target="_blank" rel="noopener" href="https://dev.to/jaehyun_park_52/understanding-smart-pointers-in-c-7g9">2</a>。</p>
-<h3 id="7-使用std-make-shared和std-make-unique"><a href="#7-使用std-make-shared和std-make-unique" class="headerlink" title="7. 使用std::make_shared和std::make_unique"></a>7. 使用<code>std::make_shared</code>和<code>std::make_unique</code></h3><p><strong>问题</strong>：直接使用<code>new</code>创建对象并赋值给智能指针，可能会导致异常安全问题。</p>
-<p><strong>建议</strong>：使用<code>std::make_shared</code>和<code>std::make_unique</code>来创建智能指针，确保异常安全。例如：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> ptr = std::<span class="built_in">make_shared</span>&lt;<span class="type">int</span>&gt;(<span class="number">10</span>); <span class="keyword">auto</span> uniquePtr = std::<span class="built_in">make_unique</span>&lt;<span class="type">int</span>&gt;(<span class="number">20</span>); </span><br></pre></td></tr></table></figure>
-
-<p>这些是使用智能指针时需要注意的一些常见问题和建议。希望这些信息对你有帮助！如果你有更多问题或需要进一步的解释，请随时告诉我。</p>
-<h1 id="什么是内存泄漏，有哪几种，怎么解决"><a href="#什么是内存泄漏，有哪几种，怎么解决" class="headerlink" title="什么是内存泄漏，有哪几种，怎么解决"></a>什么是内存泄漏，有哪几种，怎么解决</h1><p>内存泄漏是指程序在动态分配内存后未能正确释放，导致这些内存无法被重新分配和使用。内存泄漏会导致程序占用越来越多的内存，最终可能导致系统性能下降或程序崩溃。</p>
-<p>内存泄漏是指程序在动态分配内存后未能正确释放，导致内存无法被重新分配和使用。内存泄漏会导致程序占用越来越多的内存，最终可能导致系统崩溃或性能严重下降。</p>
-<h3 id="内存泄漏的几种类型"><a href="#内存泄漏的几种类型" class="headerlink" title="内存泄漏的几种类型"></a>内存泄漏的几种类型</h3><ol>
-<li><strong>堆内存泄漏</strong>：这是最常见的内存泄漏类型，发生在使用 <code>new</code> 或 <code>malloc</code> 分配内存后未能使用 <code>delete</code> 或 <code>free</code> 释放内存。</li>
-<li><strong>全局内存泄漏</strong>：全局变量或静态变量在程序结束前未能释放内存。</li>
-<li><strong>栈内存泄漏</strong>：虽然栈内存通常由编译器自动管理，但在某些情况下（如递归调用过深），也可能导致内存泄漏。</li>
-<li><strong>资源泄漏</strong>：不仅限于内存，还包括文件句柄、网络连接等资源未能正确释放。</li>
-</ol>
-<h3 id="解决内存泄漏的方法"><a href="#解决内存泄漏的方法" class="headerlink" title="解决内存泄漏的方法"></a>解决内存泄漏的方法</h3><ol>
-<li><strong>手动管理内存</strong>：确保每次使用 <code>new</code> 或 <code>malloc</code> 分配内存后，都有相应的 <code>delete</code> 或 <code>free</code> 释放内存。</li>
-<li><strong>使用智能指针</strong>：C++11 引入了智能指针（如 <code>std::unique_ptr</code> 和 <code>std::shared_ptr</code>），可以自动管理内存，减少内存泄漏的风险。</li>
-<li><a target="_blank" rel="noopener" href="https://www.pullrequest.com/blog/the-art-of-detecting-memory-leaks-in-c-applications/"><strong>工具检测</strong>：使用工具如 Valgrind、AddressSanitizer 或 Visual Studio 的内存分析工具来检测和修复内存泄漏</a><a target="_blank" rel="noopener" href="https://www.pullrequest.com/blog/the-art-of-detecting-memory-leaks-in-c-applications/">1</a><a target="_blank" rel="noopener" href="https://www.codewithc.com/memory-leaks-in-pointers/">2</a><a target="_blank" rel="noopener" href="https://codeknowcode.com/understanding-memory-leaks-in-c-detection-prevention-and-best-practices/">3</a>。</li>
-<li><strong>代码审查和测试</strong>：通过代码审查和单元测试，尽早发现和修复内存泄漏问题。</li>
-</ol>
-<h1 id="new-x2F-delete与malloc-x2F-free的区别是什么"><a href="#new-x2F-delete与malloc-x2F-free的区别是什么" class="headerlink" title="new&#x2F;delete与malloc&#x2F;free的区别是什么"></a>new&#x2F;delete与malloc&#x2F;free的区别是什么</h1><h1 id="引用作为函数的参数或者返回值好处在哪里"><a href="#引用作为函数的参数或者返回值好处在哪里" class="headerlink" title="引用作为函数的参数或者返回值好处在哪里"></a>引用作为函数的参数或者返回值好处在哪里</h1><p><strong>引用就是某一变量（目标）的别名，对引用的操作与对变量直接操作完全一样。</strong> </p>
-<p><strong>引用作为函数参数</strong> </p>
-<p>引用传参的好处： </p>
-<ol>
-<li><p>在函数内部会对此参数进行修改 </p>
-</li>
-<li><p>提高函数调用和运行效率</p>
-</li>
-</ol>
-<p><strong>引用作为函数返回值</strong></p>
-<ol>
-<li><p>以引用返回函数值，定义函数时需要在函数名前加 &amp; </p>
-</li>
-<li><p>用引用返回一个函数值的最大好处是：在内存中不产生被返回值的副本</p>
-</li>
-</ol>
-<p>引用作为返回值，<strong>必须遵守以下规则</strong>： </p>
-<ol>
-<li><strong>不能返回局部变量的引用</strong>。主要原因是局部变量会在函数返回后被销毁，因此被返回的引用就成为</li>
-</ol>
-<p>了”无所指”的引用，程序会进入未知状态。 </p>
-<ol start="2">
-<li><p><strong>不能返回函数内部new 分配的内存的引用</strong> 虽然不存在局部变量的被动销毁问题，可对于这种情况 （返回函数内部new分配内存的引用），又面临其它尴尬局面。例如，被函数返回的引用只是作为 一 个临时变量出现，而没有被赋予一个实际的变量，那么这个引用所指向的空间（由new分配）就 无法释放，造成memory leak。 </p>
-</li>
-<li><p><strong>引用与一些操作符的重载。</strong>流操作符&lt;&lt;和&gt;&gt;，这两个操作符常常希望被连续使用，例如：cout &lt;&lt; “hello” &lt;&lt; endl; 因此这两个操作符的返回值应该是一个仍然支持这两个操作符的流引用。</p>
-</li>
-</ol>
-<hr>
-<p>引用可以修改参数本身的值，如果想要对参数进行修改就要使用引用，作为返回值的引用则是减少拷贝，不会产生副本，不过要注意不能返回局部变量的引用，</p>
-<h1 id="哈希表的原理是什么"><a href="#哈希表的原理是什么" class="headerlink" title="哈希表的原理是什么"></a>哈希表的原理是什么</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">哈希表（Hash Table），也叫散列表，是一种根据关键码值（Key value）直接访问内存存储位置的数据结构。它通过一个称为哈希函数（Hash Function）的映射函数，将关键码值映射到表中的一个位置，从而加快查找速度</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</p>
-<h3 id="哈希表的基本原理"><a href="#哈希表的基本原理" class="headerlink" title="哈希表的基本原理"></a>哈希表的基本原理</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136"><strong>哈希函数</strong>：哈希函数将关键码值转换为数组的索引。理想的哈希函数应当计算简单且分布均匀，以减少冲突的概率</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136"><strong>哈希冲突</strong>：当两个不同的关键码值通过哈希函数得到相同的索引时，就会发生哈希冲突。常见的解决方法有开放定址法和链表法</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%8E%9F%E7%90%86">3</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136"><strong>查找和插入</strong>：通过哈希函数计算关键码值的哈希地址，然后直接访问该地址进行查找或插入操作。哈希表的查找和插入操作时间复杂度接近O(1)</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
-</ol>
-<h3 id="哈希表的优缺点"><a href="#哈希表的优缺点" class="headerlink" title="哈希表的优缺点"></a>哈希表的优缺点</h3><p><strong>优点</strong>：</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">查找和插入速度非常快，接近常量时间复杂度O(1)</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">编程实现相对简单，适用于需要快速查找的场景</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a>。</li>
+<li><p>第一个参数指定我们要配置的顶点属性。还记得我们在顶点着色器中使用<code>layout(location = 0)</code>定义了position顶点属性的位置值(Location)吗？layout就是这里的顶点属性的标号，对应position中的顶点，从前到后为位置，颜色，纹理，所以分别为0，1，2</p>
+</li>
+<li><p>第二个参数指定顶点属性的大小。顶点属性是一个<code>vec3</code>，它由3个值组成，所以大小是3。</p>
+</li>
+<li><p>第三个参数指定数据的类型，这里是GL_FLOAT(GLSL中<code>vec*</code>都是由浮点数值组成的)。</p>
+</li>
+<li><p>下个参数定义我们是否希望数据被标准化(Normalize)。如果我们设置为GL_TRUE，所有数据都会被映射到0（对于有符号型signed数据是-1）到1之间。我们把它设置为GL_FALSE。</p>
+</li>
+<li><p>第五个参数叫做步长(Stride)，它告诉我们在连续的顶点属性组之间的间隔。由于下个组位置数据在3个<code>float</code>之后，我们把步长设置为<code>3 * sizeof(float)</code>。要注意的是由于我们知道这个数组是紧密排列的（在两个顶点属性之间没有空隙）我们也可以设置为0来让OpenGL决定具体步长是多少（只有当数值是紧密排列时才可用）。一旦我们有更多的顶点属性，我们就必须更小心地定义每个顶点属性之间的间隔，我们在后面会看到更多的例子（译注: 这个参数的意思简单说就是从这个属性第二次出现的地方到整个数组0位置之间有多少字节）。</p>
+</li>
+<li><p>最后一个参数的类型是<code>void*</code>，所以需要我们进行这个奇怪的强制类型转换。它表示位置数据在缓冲中起始位置的偏移量(Offset)。由于位置数据在数组的开头，所以这里是0。我们会在后面详细解释这个参数。</p>
+<p><img src="https://learnopengl-cn.github.io/img/01/06/vertex_attribute_pointer_interleaved_textures.png" alt="img"></p>
+</li>
 </ul>
-<p><strong>缺点</strong>：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">基于数组实现，扩展困难。当哈希表接近满载时，性能可能会显著下降</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">需要处理哈希冲突，可能会增加实现的复杂性</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
-</ul>
-<h3 id="哈希冲突解决方法"><a href="#哈希冲突解决方法" class="headerlink" title="哈希冲突解决方法"></a>哈希冲突解决方法</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136"><strong>开放定址法</strong>：发生冲突时，通过某种探测序列找到下一个空闲位置</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005"><strong>链表法</strong>：每个数组位置存储一个链表，所有哈希值相同的元素都存储在该链表中</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%8E%9F%E7%90%86">3</a>。</li>
-</ol>
-<p>​                </p>
-<h1 id="什么是运行时多态"><a href="#什么是运行时多态" class="headerlink" title="什么是运行时多态"></a>什么是运行时多态</h1><p>运行时多态（Runtime Polymorphism），也称为动态多态，是面向对象编程中的一个重要特性。它允许程序在运行时决定调用哪个方法，从而实现灵活和可扩展的代码设计。</p>
-<h3 id="运行时多态的实现"><a href="#运行时多态的实现" class="headerlink" title="运行时多态的实现"></a>运行时多态的实现</h3><p>在C++中，运行时多态主要通过<strong>虚函数</strong>（virtual functions）和<strong>继承</strong>（inheritance）来实现。以下是实现运行时多态的关键步骤：</p>
-<ol>
-<li><strong>虚函数</strong>：在基类中声明虚函数，并在派生类中重写这些虚函数。</li>
-<li><strong>基类指针或引用</strong>：使用基类的指针或引用来指向派生类对象。</li>
-</ol>
-<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Base</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Base class show function&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Derived</span> : <span class="keyword">public</span> Base &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Derived class show function&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Base* b;</span><br><span class="line">    Derived d;</span><br><span class="line">    b = &amp;d;</span><br><span class="line">    b-&gt;<span class="built_in">show</span>();  <span class="comment">// 输出: Derived class show function</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>如果有其他属性：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> vertices[] = &#123;</span><br><span class="line">		<span class="comment">//位置			    //颜色             //纹理    </span></span><br><span class="line">		<span class="number">0.5f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>,  <span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>,  <span class="number">1.0f</span>,<span class="number">1.0f</span>,     <span class="comment">// 右上角</span></span><br><span class="line">		<span class="number">0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,  <span class="number">0.0f</span>, <span class="number">1.0f</span>, <span class="number">0.0f</span>,  <span class="number">1.0f</span>,<span class="number">0.0f</span>,     <span class="comment">// 右下角</span></span><br><span class="line">	   <span class="number">-0.5f</span>, <span class="number">-0.5f</span>, <span class="number">0.0f</span>,  <span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">1.0f</span>,  <span class="number">0.0f</span>,<span class="number">0.0f</span>,     <span class="comment">// 左下角</span></span><br><span class="line">	   <span class="number">-0.5f</span>,  <span class="number">0.5f</span>, <span class="number">0.0f</span>,  <span class="number">0.0f</span>, <span class="number">0.5f</span>, <span class="number">0.0f</span>,  <span class="number">0.0f</span>,<span class="number">1.0f</span>     <span class="comment">// 左上角</span></span><br><span class="line">	&#125;;</span><br></pre></td></tr></table></figure>
 
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xylitolz/article/details/115800775">在这个例子中，<code>Base</code>类中定义了一个虚函数<code>show</code>，而<code>Derived</code>类重写了这个函数。在<code>main</code>函数中，基类指针<code>b</code>指向派生类对象<code>d</code>，调用<code>b-&gt;show()</code>时，实际执行的是派生类<code>Derived</code>中的<code>show</code>函数</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/xylitolz/article/details/115800775">1</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43935710/article/details/103871715">2</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E8%BF%90%E8%A1%8C%E6%97%B6%E5%A4%9A%E6%80%81">3</a>。</p>
-<h3 id="运行时多态的优点"><a href="#运行时多态的优点" class="headerlink" title="运行时多态的优点"></a>运行时多态的优点</h3><ul>
-<li><strong>灵活性</strong>：允许在运行时决定调用哪个方法，使得代码更灵活。</li>
-<li><strong>可扩展性</strong>：可以通过继承和重写方法来扩展现有代码，而无需修改原有代码。</li>
+<p>设置顶点属性：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glVertexAttribPointer</span>(<span class="number">0</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="built_in">sizeof</span>(<span class="type">float</span>) * <span class="number">8</span>, (<span class="type">const</span> <span class="type">void</span>*)<span class="number">0</span>);	<span class="comment">//positon</span></span><br><span class="line"><span class="built_in">glVertexAttribPointer</span>(<span class="number">1</span>, <span class="number">3</span>, GL_FLOAT, GL_FALSE, <span class="built_in">sizeof</span>(<span class="type">float</span>) * <span class="number">8</span>, (<span class="type">const</span> <span class="type">void</span>*)(<span class="number">3</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>)));	<span class="comment">//color</span></span><br><span class="line"><span class="built_in">glVertexAttribPointer</span>(<span class="number">2</span>, <span class="number">2</span>, GL_FLOAT, GL_FALSE, <span class="built_in">sizeof</span>(<span class="type">float</span>) * <span class="number">8</span>, (<span class="type">const</span> <span class="type">void</span>*)(<span class="number">6</span> * <span class="built_in">sizeof</span>(<span class="type">float</span>)));	<span class="comment">//color</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="着色器"><a href="#着色器" class="headerlink" title="着色器"></a>着色器</h2><p>现在准备数据的事情都准备的差不多了，总结一下之前做了什么，有一个代表顶点位置的数组，创建了一个VBO用来存放CPU传过来的数据，并初始化VBO的数据为顶点位置的数据，然后设置顶点属性，告诉OpenGL以何种方式来读取数据，现在可以来编写着色器了。</p>
+<p>要把着色器代码变为着色器程序，类似于C++的程序的执行过程，同样需要编译链接，所以先来写一个方法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">static</span> <span class="type">unsigned</span> <span class="type">int</span> <span class="title">createShader</span><span class="params">(<span class="type">const</span> std::string&amp; vertexShader, <span class="type">const</span> std::string&amp; fragmentShader)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//创建一个着色器程序</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> program = <span class="built_in">glCreateProgram</span>();</span><br><span class="line">	<span class="comment">//编译着色器代码</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> vs = <span class="built_in">compileShader</span>(GL_VERTEX_SHADER, vertexShader);</span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> fs = <span class="built_in">compileShader</span>(GL_FRAGMENT_SHADER, fragmentShader);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//将得到的着色器代码文件附加到程序上</span></span><br><span class="line">	<span class="built_in">glAttachShader</span>(program, vs);</span><br><span class="line">	<span class="built_in">glAttachShader</span>(program, fs);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//链接程序</span></span><br><span class="line">	<span class="built_in">glLinkProgram</span>(program);</span><br><span class="line"></span><br><span class="line">	<span class="comment">//删除中间文件</span></span><br><span class="line">	<span class="built_in">glDeleteShader</span>(vs);</span><br><span class="line">	<span class="built_in">glDeleteShader</span>(fs);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> program;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先创建一个程序，然后编译着色器代码，编译后得到的vs和fs可以看作两个文件，将两个文件附加在program上后，链接程序，程序成功链接之后，就获得了一个可以执行的程序，之前的中间文件就不再需要可以直接删除。</p>
+<p>编译代码的部分重复较多，再抽象出一个函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//编译着色器代码</span></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">unsigned</span> <span class="type">int</span> <span class="title">compileShader</span><span class="params">(<span class="type">unsigned</span> <span class="type">int</span> type, <span class="type">const</span> std::string&amp; source)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">//创建着色器</span></span><br><span class="line">	<span class="type">unsigned</span> <span class="type">int</span> id = <span class="built_in">glCreateShader</span>(type);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//指定着色器源码（将源代码加载到着色器对象中）</span></span><br><span class="line">	<span class="type">const</span> <span class="type">char</span>* src = source.<span class="built_in">c_str</span>();</span><br><span class="line">	<span class="built_in">glShaderSource</span>(id, <span class="number">1</span>, &amp;src, <span class="literal">nullptr</span>);</span><br><span class="line">    <span class="comment">//id：指定要加载源代码的着色器对象的ID。1：表示只有一个字符串。</span></span><br><span class="line">    <span class="comment">//&amp;src：指向包含着色器源代码的字符串。nullptr：表示字符串以空字符结尾。</span></span><br><span class="line">	<span class="comment">//编译着色器代码</span></span><br><span class="line">	<span class="built_in">glCompileShader</span>(id);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//错误处理</span></span><br><span class="line">	<span class="type">int</span> result;</span><br><span class="line">	<span class="built_in">glGetShaderiv</span>(id, GL_COMPILE_STATUS, &amp;result);</span><br><span class="line">	<span class="keyword">if</span> (result == GL_FALSE)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">int</span> length;</span><br><span class="line">		<span class="built_in">glGetShaderiv</span>(id, GL_INFO_LOG_LENGTH, &amp;length);</span><br><span class="line">		<span class="type">char</span>* message = (<span class="type">char</span>*)<span class="built_in">alloca</span>(length*<span class="built_in">sizeof</span>(<span class="type">char</span>));</span><br><span class="line">		<span class="comment">//char* message = new char[length];</span></span><br><span class="line">		<span class="built_in">glGetShaderInfoLog</span>(id, length, &amp;length, message);</span><br><span class="line"></span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Failed to compile &quot;</span> &lt;&lt; (type == GL_VERTEX_SHADER ? <span class="string">&quot;vertex&quot;</span> : <span class="string">&quot;fragment&quot;</span>) &lt;&lt; <span class="string">&quot; shader! &quot;</span> &lt;&lt; std::endl;</span><br><span class="line">		std::cout &lt;&lt; message &lt;&lt; std::endl;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">glDeleteShader</span>(id);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> id;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>着色器代码的编译链接已经完成，现在可以着手着色器代码本身，着色器代码（GLSL）。GLSL需要记住之前提到的，着色器接收一个输入得到一个输出给下一个阶段，所以通过in接收上一阶段的数据处理，之后将结果通过out输出到下一阶段，下一阶段可以通过in来获取这个输出作为本阶段的输入</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">//编写着色器源码</span></span><br><span class="line">	std::string vertexShader = </span><br><span class="line"><span class="string">R&quot;(#version 330 core				</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">layout(location = 0) in vec4 aPos;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">void main()</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    gl_Position = aPos;</span></span><br><span class="line"><span class="string">&#125;	</span></span><br><span class="line"><span class="string">)&quot;</span>;</span><br><span class="line"></span><br><span class="line">	std::string fragmentShader = </span><br><span class="line"><span class="string">R&quot;(#version 330 core</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">layout(location = 0) out vec4 FragColor;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">void main()</span></span><br><span class="line"><span class="string">&#123;</span></span><br><span class="line"><span class="string">    FragColor = vec4(1.0, 0.0, 0.0, 1.0);</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string">)&quot;</span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>语法细节：（待补充）</p>
+<p>准备工作完成，最后开始使用代码</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//编译着色器，通过编译链接vs和fs的源码，得到最终的着色器程序</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> shader = <span class="built_in">createShader</span>(vertexShader,fragmentShader);</span><br><span class="line"><span class="built_in">glUseProgram</span>(shader);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* Loop until the user closes the window */</span></span><br><span class="line"><span class="keyword">while</span> (!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">&#123;</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">glDeleteProgram</span>(shader);	<span class="comment">//回收资源</span></span><br></pre></td></tr></table></figure>
+
+<p>不出意外的得到了一个大红色的三角形。</p>
+<p><img src="http://cdn.rhahr.asia/43bbc9affcedeeba559d48327483301.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/10/25/OpenGL-D2-%E9%A1%B6%E7%82%B9%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BB%98%E5%88%B6%E4%B8%89%E8%A7%92%E5%BD%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/10/25/OpenGL-D2-%E9%A1%B6%E7%82%B9%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BB%98%E5%88%B6%E4%B8%89%E8%A7%92%E5%BD%A2/" class="post-title-link" itemprop="url">顶点缓冲区与着色器</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-10-25 22:00:00" itemprop="dateCreated datePublished" datetime="2024-10-25T22:00:00+08:00">2024-10-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-10-29 22:08:47" itemprop="dateModified" datetime="2024-10-29T22:08:47+08:00">2024-10-29</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenGL/" itemprop="url" rel="index"><span itemprop="name">OpenGL</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenGL/Cherno/" itemprop="url" rel="index"><span itemprop="name">Cherno</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<ul>
+<li>顶点数组对象：Vertex Array Object，VAO</li>
+<li>顶点缓冲对象：Vertex Buffer Object，VBO</li>
+<li>元素缓冲对象：Element Buffer Object，EBO 或 索引缓冲对象 Index Buffer Object，IBO</li>
 </ul>
-<h3 id="运行时多态的缺点"><a href="#运行时多态的缺点" class="headerlink" title="运行时多态的缺点"></a>运行时多态的缺点</h3><ul>
-<li><strong>性能开销</strong>：由于需要在运行时决定调用哪个方法，可能会带来一些性能开销。</li>
-<li><strong>复杂性</strong>：需要理解和正确使用虚函数和继承，增加了代码的复杂性。</li>
+</blockquote>
+<p>OpenGL的工作主要负责将3D空间坐标转换为屏幕的2D像素，3D坐标转换到2D的过程叫做<strong>PipeLine</strong>，实际上指的是一堆原始图形数据途经一个输送管道，期间经过各种变化处理最终出现在屏幕的过程</p>
+<blockquote>
+<p>2D坐标和像素也是不同的，2D坐标精确表示一个点在2D空间中的位置，而2D像素是这个点的近似值，2D像素受到你的屏幕&#x2F;窗口分辨率的限制。</p>
+</blockquote>
+<p>渲染管线就是GPU执行的这个流水线，通过CPU将数据在应用阶段传送给GPU后，通过渲染管线的每个阶段，每个阶段都接收一个输入，产出一个输出，这些输入输出就是需要被渲染的顶点数据，输出数据给下一个阶段处理。</p>
+<blockquote>
+<p>所有这些阶段都是高度专门化的（它们都有一个特定的函数），并且很容易并行执行。正是由于它们具有并行执行的特性，当今大多数显卡都有成千上万的小处理核心，它们在GPU上为每一个（渲染管线）阶段运行各自的小程序，从而在图形渲染管线中快速处理你的数据。这些小程序叫做着色器(Shader)。<strong>OpenGL着色器是用OpenGL着色器语言</strong></p>
+</blockquote>
+<p><img src="https://learnopengl-cn.github.io/img/01/04/pipeline.png" alt="img"></p>
+<h2 id="顶点数据"><a href="#顶点数据" class="headerlink" title="顶点数据"></a>顶点数据</h2><p>顶点数据是一系列顶点的集合。一个顶点(Vertex)是一个3D坐标的数据的集合。而这样一个顶点的数据是用顶点属性(Vertex Attribute)表示的，它可以包含任何我们想用的数据</p>
+<blockquote>
+<p>为了让OpenGL知道我们的坐标和颜色值构成的到底是什么，OpenGL需要你去指定这些数据所表示的渲染类型。我们是希望把这些数据渲染成一系列的点？一系列的三角形？还是仅仅是一个长长的线？做出的这些提示叫做图元(Primitive)，任何一个绘制指令的调用都将把图元传递给OpenGL。这是其中的几个：</p>
+<ul>
+<li>GL_POINTS</li>
+<li>GL_TRIANGLES</li>
+<li>GL_LINE_STRIP</li>
 </ul>
-<p>​                     </p>
-<p>​                </p>
+</blockquote>
+<h2 id="渲染管线"><a href="#渲染管线" class="headerlink" title="渲染管线"></a>渲染管线</h2><p>怎么理解着色器，着色器就是渲染管线中的每个阶段运行的各自的小程序，下面简要介绍各个阶段的功能</p>
+<p>图形渲染管线的第一个部分是**&#x3D;&#x3D;顶点着色器&#x3D;&#x3D;**(Vertex Shader)，它把一个单独的顶点作为输入。顶点着色器主要的目的是把3D坐标转为另一种3D坐标（后面会解释），同时顶点着色器允许我们对顶点属性进行一些基本处理。</p>
+<p>顶点着色器阶段的输出可以选择性地传递给<strong>几何着色器</strong>(Geometry Shader)。几何着色器将一组顶点作为输入，这些顶点形成图元，并且能够通过发出新的顶点来形成新的(或其他)图元来生成其他形状。在这个例子中，它从给定的形状中生成第二个三角形。</p>
+<p><strong>图元装配</strong>(Primitive Assembly)阶段将顶点着色器（或几何着色器）输出的所有顶点作为输入（如果是GL_POINTS，那么就是一个顶点），并将所有的点装配成指定图元的形状；本节例子中是两个三角形。</p>
+<p>图元装配阶段的输出会被传入<strong>光栅化阶段</strong>(Rasterization Stage)，这里它会把图元映射为最终屏幕上相应的像素，生成供片段着色器(Fragment Shader)使用的片段(Fragment)。在片段着色器运行之前会执行裁切(Clipping)。裁切会丢弃超出你的视图以外的所有像素，用来提升执行效率。</p>
+<blockquote>
+<p>OpenGL中的一个片段是OpenGL渲染一个像素所需的所有数据。</p>
+</blockquote>
+<p>**&#x3D;&#x3D;片段着色器&#x3D;&#x3D;**的主要目的是计算一个像素的最终颜色，这也是所有OpenGL高级效果产生的地方。通常，片段着色器包含3D场景的数据（比如光照、阴影、光的颜色等等），这些数据可以被用来计算最终像素的颜色。</p>
+<p>在所有对应颜色值确定以后，最终的对象将会被传到最后一个阶段，我们叫做Alpha测试和混合(Blending)阶段。这个阶段检测片段的对应的深度（和模板(Stencil)）值（后面会讲），用它们来判断这个像素是其它物体的前面还是后面，决定是否应该丢弃。这个阶段也会检查alpha值（alpha值定义了一个物体的透明度）并对物体进行混合(Blend)。所以，即使在片段着色器中计算出来了一个像素输出的颜色，在渲染多个三角形的时候最后的像素颜色也可能完全不同。</p>
+<ul>
+<li>为每个像素&#x2F;片段运行片段着色器并且他们决定了颜色输出，顶点着色器为每个顶点运行，他们决定了屏幕上的位置。</li>
+</ul>
+<h2 id="顶点缓冲区-VB"><a href="#顶点缓冲区-VB" class="headerlink" title="顶点缓冲区-VB"></a>顶点缓冲区-VB</h2><p><em>OpenGL仅当3D坐标在3个轴（x、y和z）上-1.0到1.0的范围内时才处理它。所有在这个范围内的坐标叫做标准化设备坐标(Normalized Device Coordinates)，此范围内的坐标最终显示在屏幕上（在这个范围以外的坐标则不会显示）</em></p>
+<ul>
+<li><p>指定坐标时，一般有三个点，<code>x,y,z</code> 这个z指的时深度，也就是在右手坐标系中，z轴指向屏幕外的方向，z就相当于离你的距离，如果离得远可能被别的像素遮挡，就会被丢弃&#x2F;裁剪来节省资源。</p>
+</li>
+<li><p>顶点坐标已经在顶点着色器中处理过，它们就应该是<strong>标准化设备坐标</strong>了，标准化设备坐标是一个x、y和z值在-1.0到1.0的一小段空间。任何落在范围外的坐标都会被丢弃&#x2F;裁剪，不会显示在你的屏幕上。</p>
+</li>
+</ul>
+<p>光栅化阶段中，在使用<code>glViewPort</code>函数指定视口后，通过视口变换之后，NDC会变换为屏幕空间坐标。所得的屏幕空间坐标又会被变换为片段输入到片段着色器中。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> position[<span class="number">6</span>] = &#123;</span><br><span class="line">		<span class="number">-0.5f</span>,  <span class="number">0.5f</span>,</span><br><span class="line">		<span class="number">-0.5f</span>, <span class="number">-0.5f</span>,</span><br><span class="line">		 <span class="number">0.5f</span>,  <span class="number">0.5f</span></span><br><span class="line">	&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>定义顶点数据后，顶点着色器接收这些数据，在GPU上创建内存用于存储顶点数据：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*----用于将顶点数据上传GPU----*/</span></span><br><span class="line"><span class="comment">//GLenum -- 理解为slot</span></span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> buffer;					<span class="comment">//存储生成的缓冲区对象的ID</span></span><br><span class="line"><span class="built_in">glGenBuffers</span>(<span class="number">1</span>, &amp;buffer);				<span class="comment">//生成1个缓冲区，将ID存储在buffer变量中</span></span><br><span class="line"><span class="built_in">glBindBuffer</span>(GL_ARRAY_BUFFER,buffer);	<span class="comment">//绑定缓冲区对象到当前的OpenGL上下文中的GL_ARRAY_BUFFER上</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">glBufferData</span>(GL_ARRAY_BUFFER, <span class="built_in">sizeof</span>(position), position, GL_STATIC_DRAW);	<span class="comment">//为绑定到GL_ARRAY_BUFFER的缓冲区对象分配内存并初始化数据</span></span><br></pre></td></tr></table></figure>
+
+<p>这里的buffer也就是所谓的VBO顶点缓冲对象，这四行就是VBO的初始化，通过Genbuffer生成带有ID的缓冲区，ID给Buffer，通过bind绑定为GL_ARRAY_BUFFER的缓存类型。</p>
+<blockquote>
+<p>OpenGL允许我们同时绑定多个缓冲，只要它们是不同的缓冲类型.</p>
+<p>这里就可以直接把缓存类型当作某种插槽，也就是说可以将VBO同时插在多个插槽里</p>
+</blockquote>
+<p>从这一刻起，我们使用的任何（在GL_ARRAY_BUFFER目标上的）缓冲调用都会用来配置当前绑定的缓冲(VBO)。然后我们可以调用glBufferData函数，它会把之前定义的顶点数据复制到缓冲的内存中</p>
+<blockquote>
+<p>三角形的位置数据不会改变，每次渲染调用时都保持原样，所以它的使用类型最好是GL_STATIC_DRAW。如果，比如说一个缓冲中的数据将频繁被改变，那么使用的类型就是GL_DYNAMIC_DRAW或GL_STREAM_DRAW，这样就能确保显卡把数据放在能够高速写入的内存部分。</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/10/22/OpenGL-D1-%E5%88%9D%E5%A7%8B%E9%9C%80%E8%A6%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/10/22/OpenGL-D1-%E5%88%9D%E5%A7%8B%E9%9C%80%E8%A6%81/" class="post-title-link" itemprop="url">开始之前</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-10-22 22:00:00 / 修改时间：18:54:29" itemprop="dateCreated datePublished" datetime="2024-10-22T22:00:00+08:00">2024-10-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenGL/" itemprop="url" rel="index"><span itemprop="name">OpenGL</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenGL/Cherno/" itemprop="url" rel="index"><span itemprop="name">Cherno</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="开始之前"><a href="#开始之前" class="headerlink" title="开始之前"></a>开始之前</h1><p>配置好glfw和glew&#x2F;glad之后，仍需要一些初始环境，首先需要在main中实例化GLFW的窗口。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">glfwInit</span>();		<span class="comment">//初始化</span></span><br><span class="line">    <span class="comment">//配置GLFW</span></span><br><span class="line">    <span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MAJOR, <span class="number">3</span>);	</span><br><span class="line">    <span class="built_in">glfwWindowHint</span>(GLFW_CONTEXT_VERSION_MINOR, <span class="number">3</span>);</span><br><span class="line">    <span class="built_in">glfwWindowHint</span>(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);</span><br><span class="line">    <span class="comment">//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是初始化GLFW的内容，然后创建一个窗口对象</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">GLFWwindow* window = <span class="built_in">glfwCreateWindow</span>(<span class="number">800</span>, <span class="number">600</span>, <span class="string">&quot;LearnOpenGL&quot;</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line"><span class="keyword">if</span> (window == <span class="literal">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Failed to create GLFW window&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="built_in">glfwTerminate</span>();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">glfwMakeContextCurrent</span>(window);</span><br></pre></td></tr></table></figure>
+
+<p>然后初始化GLAD&#x2F;GLEW,之后就可以使用OpenGL的函数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//GLEW</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">glewInit</span>() != GLEW_OK)</span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;Error&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line"><span class="comment">//GLAD</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="built_in">gladLoadGLLoader</span>((GLADloadproc)glfwGetProcAddress))</span><br><span class="line">&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Failed to initialize GLAD&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="视口"><a href="#视口" class="headerlink" title="视口"></a>视口</h2><p>Viewport，定义渲染输出的区域，视口将窗口坐标映射到裁剪空间坐标，从而决定了渲染内容在窗口中的显示位置和大小，在开始渲染之前需要指定，可以将视口的维度设置的小于GLFW的维度，这样实际渲染的内容将在更小的窗口内，这样就可以将一些其他元素显示在OpenGL视口之外,默认则是整个GLFW。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">glViewport(0, 0, 800, 600);</span><br></pre></td></tr></table></figure>
+
+<p>视口需要会随着窗口大小改变，所以可以对窗口注册一个回调函数来处理：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">framebuffer_size_callback</span><span class="params">(GLFWwindow* window, <span class="type">int</span> width, <span class="type">int</span> height)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>在函数中定义</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">framebuffer_size_callback</span><span class="params">(GLFWwindow* window, <span class="type">int</span> width, <span class="type">int</span> height)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> viewportwidth = width - <span class="number">100</span>;</span><br><span class="line">	<span class="built_in">glViewport</span>(<span class="number">0</span>, <span class="number">0</span>, viewportwidth, height);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来就可以注册这个回调函数</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glfwSetFramebufferSizeCallback</span>(window, framebuffer_size_callback);</span><br></pre></td></tr></table></figure>
+
+<p>当窗口被第一次显示的时候framebuffer_size_callback也会被调用</p>
+<p>设置视口是有必要的，如果没有设置视口，那么拖动窗口的效果将是</p>
+<p><img src="http://cdn.rhahr.asia/7fae48ba00e94e61e06bd095d3da130.png"></p>
+<p>设置视口之后：</p>
+<p><img src="http://cdn.rhahr.asia/ef99e4ff8435c34e2bc4997cb64593e.png"></p>
+<p>效果很明显，视口定义了窗口坐标到裁剪空间坐标的映射关系。如果不设置视口，当窗口大小改变时，OpenGL仍然使用初始的视口设置，这会导致渲染内容无法正确适应新的窗口尺寸，从而出现内容缺失或变形的情况。</p>
+<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><p>之前的都只是设置窗口，设置显示，设置GLFW，接下来为渲染做准备工作。图形渲染需要一个RenderLoop</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Loop until the user closes the window */</span></span><br><span class="line">	<span class="keyword">while</span> (!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">/* Render here */</span></span><br><span class="line">		<span class="built_in">glClear</span>(GL_COLOR_BUFFER_BIT);<span class="comment">//每个渲染迭代钱总是清屏</span></span><br><span class="line">        </span><br><span class="line">		<span class="comment">/* Swap front and back buffers */</span></span><br><span class="line">		<span class="built_in">glfwSwapBuffers</span>(window);<span class="comment">//交换颜色缓冲</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">/* Poll for and process events */</span></span><br><span class="line">		<span class="built_in">glfwPollEvents</span>();<span class="comment">//检查有没有触发事件/更新窗口状态/调用回调</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="事后"><a href="#事后" class="headerlink" title="事后"></a>事后</h2><p>渲染循环结束后我们需要正确释放&#x2F;删除之前的分配的所有资源。我们可以在main函数的最后调用glfwTerminate函数来完成。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">glfwTerminate</span>();</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h2><p>希望能够在GLFW中实现一些输入控制，这可以通过使用GLFW的几个输入函数来完成。我们将会使用GLFW的glfwGetKey函数，它需要一个窗口以及一个按键作为输入。这个函数将会返回这个按键是否正在被按下。我们将创建一个processInput函数来让所有的输入代码保持整洁。</p>
+<p>比如，想要在按下<code>esc</code>之后退出</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">processInput</span><span class="params">(GLFWwindow* window)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (<span class="built_in">glfwGetKey</span>(window,GLFW_KEY_ESCAPE) == GLFW_PRESS)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">glfwSetWindowShouldClose</span>(window, <span class="literal">true</span>);		<span class="comment">//设置关闭状态为true</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>之后只需要在循环内调用该函数即可。</p>
+<h2 id="渲染"><a href="#渲染" class="headerlink" title="渲染"></a>渲染</h2><p>将所有的渲染操作放在渲染循环中</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 渲染循环</span></span><br><span class="line"><span class="keyword">while</span>(!<span class="built_in">glfwWindowShouldClose</span>(window))</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">glClear</span>(GL_COLOR_BUFFER_BIT);</span><br><span class="line">	<span class="built_in">glClearColor</span>(<span class="number">0.2f</span>, <span class="number">0.3f</span>, <span class="number">0.3f</span>, <span class="number">1.0f</span>);</span><br><span class="line">    <span class="comment">// 输入</span></span><br><span class="line">    <span class="built_in">processInput</span>(window);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 渲染指令</span></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 检查并调用事件，交换缓冲</span></span><br><span class="line">    <span class="built_in">glfwPollEvents</span>();</span><br><span class="line">    <span class="built_in">glfwSwapBuffers</span>(window);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://learnopengl-cn.github.io/01%20Getting%20started/03%20Hello%20Window/">https://learnopengl-cn.github.io/01%20Getting%20started/03%20Hello%20Window/</a></p>
+</blockquote>
 
       
     </div>
@@ -847,6 +976,300 @@
 <li><strong>发送方发送第三个报文段</strong>（序号201-300），接收方确认并通告窗口大小为100字节。</li>
 <li><strong>发送方发送第四个报文段</strong>（序号301-400），接收方确认并通告窗口大小为0字节，表示接收方缓冲区已满，等待处理完毕后再继续发送。</li>
 </ol>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/09/25/C++%E9%9D%A2%E8%AF%95100%E9%97%AE1-10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/09/25/C++%E9%9D%A2%E8%AF%95100%E9%97%AE1-10/" class="post-title-link" itemprop="url">面试100问01</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-09-25 12:00:00 / 修改时间：08:56:42" itemprop="dateCreated datePublished" datetime="2024-09-25T12:00:00+08:00">2024-09-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="include双引号和尖括号的区别"><a href="#include双引号和尖括号的区别" class="headerlink" title="include双引号和尖括号的区别"></a>include双引号和尖括号的区别</h1><p>在C++中，<code>#include</code>指令使用双引号（<code>&quot;&quot;</code>）和尖括号（<code>&lt;&gt;</code>）的区别主要在于编译器搜索头文件的路径：</p>
+<ol>
+<li>**尖括号 (&lt;&gt;)**：<ul>
+<li>编译器会在标准库路径中搜索头文件。这些路径通常包含系统提供的头文件和编译器自带的标准库文件。</li>
+<li>例如，<code>#include &lt;iostream&gt;</code> 会让编译器在标准库路径中查找 <code>iostream</code> 头文件。</li>
+</ul>
+</li>
+<li>**双引号 (“”)**：<ul>
+<li>编译器首先会在当前源文件所在的目录中搜索头文件。如果在当前目录中找不到，才会转而在标准库路径中搜索。</li>
+<li>例如，<code>#include &quot;my_header.h&quot;</code> 会让编译器先在当前目录中查找 <code>my_header.h</code>，如果找不到，再去标准库路径中查找。</li>
+</ul>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://dev.devbf.com/posts/angle-brackets-or-double-quotes-which-should-you-use-in-c-includes-3e464/">这种区别的目的是为了区分标准库头文件和项目自定义头文件，确保编译器能够正确找到并包含所需的头文件</a><a target="_blank" rel="noopener" href="https://dev.devbf.com/posts/angle-brackets-or-double-quotes-which-should-you-use-in-c-includes-3e464/">1</a><a target="_blank" rel="noopener" href="https://www.daniweb.com/programming/software-development/threads/359946/include-vs-include">2</a><a target="_blank" rel="noopener" href="https://www.rightreaders.com/what-is-the-difference-between-using-angle-brackets-and-quotes-in-an-include-directive-include-include-filename/">3</a>。</p>
+<hr>
+<p>双引号是优先查找当前项目中的文件，是属于本项目的文件，如果查找不到，再去<strong>标准库路径</strong>查找，而尖括号只在外部查找</p>
+<h1 id="const的用法"><a href="#const的用法" class="headerlink" title="const的用法"></a>const的用法</h1><p><code>const</code> 关键字在 C++ 中用于声明常量，表示变量的值在初始化后不能被修改。它可以用于变量、指针、函数参数和成员函数等多种场景。</p>
+<h3 id="1-常量变量"><a href="#1-常量变量" class="headerlink" title="1. 常量变量"></a>1. 常量变量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> max_value = <span class="number">100</span>; max_value = <span class="number">200</span>; </span><br><span class="line"><span class="comment">// 错误，不能修改常量变量的值 </span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-指针"><a href="#2-指针" class="headerlink" title="2. 指针"></a>2. 指针</h3><ul>
+<li><p><strong>指向常量的指针</strong>：指针指向的值不能被修改。</p>
+<p><code>const int *ptr = &amp;max_value; *ptr = 200; // 错误，不能修改指向的值 ptr = &amp;another_value; // 正确，可以修改指针本身 </code></p>
+</li>
+<li><p><strong>常量指针</strong>：指针本身不能被修改，但指向的值可以被修改。</p>
+<p><code>int *const ptr = &amp;max_value; *ptr = 200; // 正确，可以修改指向的值 ptr = &amp;another_value; // 错误，不能修改指针本身 </code></p>
+</li>
+<li><p><strong>指向常量的常量指针</strong>：指针本身和指向的值都不能被修改。</p>
+<p><code>const int *const ptr = &amp;max_value; *ptr = 200; // 错误，不能修改指向的值 ptr = &amp;another_value; // 错误，不能修改指针本身 </code></p>
+</li>
+</ul>
+<h3 id="3-常量函数参数"><a href="#3-常量函数参数" class="headerlink" title="3. 常量函数参数"></a>3. 常量函数参数</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">printValue</span><span class="params">(<span class="type">const</span> <span class="type">int</span> value)</span> </span></span><br><span class="line"><span class="function"></span>&#123;     <span class="comment">// value 不能被修改     </span></span><br><span class="line">	std::cout &lt;&lt; value &lt;&lt; std::endl; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-常量成员函数"><a href="#4-常量成员函数" class="headerlink" title="4. 常量成员函数"></a>4. 常量成员函数</h3><p>常量成员函数不能修改对象的成员变量。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getValue</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value; <span class="comment">// 正确，常量成员函数可以访问成员变量</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">setValue</span><span class="params">(<span class="type">int</span> val)</span> </span>&#123;</span><br><span class="line">        value = val; <span class="comment">// 正确，非常量成员函数可以修改成员变量</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> value;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>const</code> 关键字可以提高代码的安全性和可读性，防止意外修改数据。</p>
+<h1 id="常量指针和指针常量分别是什么意思"><a href="#常量指针和指针常量分别是什么意思" class="headerlink" title="常量指针和指针常量分别是什么意思"></a>常量指针和指针常量分别是什么意思</h1><p>在C++中，常量指针和指针常量是两个不同的概念，尽管它们的名称听起来很相似。以下是它们的区别：</p>
+<ol>
+<li><strong>常量指针（Pointer to Constant）</strong>：<ul>
+<li>定义形式：<code>const 数据类型 *指针变量名</code> 或 <code>数据类型 const *指针变量名</code></li>
+<li>含义：指针指向的内容是常量，不能通过该指针修改内容，但指针本身可以指向其他地址。</li>
+<li>例子：<code>const int *p; int a = 10; p = &amp;a;  // 允许 *p = 20; // 错误，不能修改指向内容 </code></li>
+</ul>
+</li>
+<li><strong>指针常量（Constant Pointer）</strong>：<ul>
+<li>定义形式：<code>数据类型 *const 指针变量名</code></li>
+<li>含义：指针本身是常量，不能改变指向的地址，但可以通过指针修改指向地址的内容。</li>
+<li>例子：<code>int *const p = &amp;a; int a = 10; *p = 20; // 允许，修改指向内容 int b = 30; p = &amp;b;  // 错误，不能改变指向地址 </code></li>
+</ul>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weibo_dm/article/details/80445205">总结来说，<strong>常量指针</strong>限制的是指针指向的内容，而<strong>指针常量</strong>限制的是指针本身的地址</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/weibo_dm/article/details/80445205">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/337321951">2</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88+vs+%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F">3</a>。</p>
+<hr>
+<p>常量指针是指常量的指针，表示这个量是常量，不可被改变，但是指针的指向可以修改。</p>
+<p>指针常量表示这个指针本身是常量，意思这个指针不可被修改，但是指向的内容可以被修改</p>
+<h1 id="C-常用新特性有哪些，举例说明"><a href="#C-常用新特性有哪些，举例说明" class="headerlink" title="C++常用新特性有哪些，举例说明"></a>C++常用新特性有哪些，举例说明</h1><p>C++近年来引入了许多新特性，以下是一些常用且重要的特性及其示例：</p>
+<h3 id="C-11"><a href="#C-11" class="headerlink" title="C++11"></a>C++11</h3><ol>
+<li><p><strong>自动类型推导（auto）</strong></p>
+</li>
+<li><p><strong>范围for循环</strong>：</p>
+<p><strong>范围for循环</strong></p>
+</li>
+<li><p><strong>lambda表达式</strong>：</p>
+<p><code>auto add =  &#123; return a + b; &#125;; std::cout &lt;&lt; add(2, 3); // 输出 5 </code></p>
+</li>
+</ol>
+<h3 id="C-14"><a href="#C-14" class="headerlink" title="C++14"></a>C++14</h3><ol>
+<li><p><strong>泛型lambda</strong>：</p>
+<p><code>auto add =  &#123; return a + b; &#125;; </code></p>
+<p> <code>std::cout &lt;&lt; add(2, 3); // 输出 5 </code></p>
+<p> <code>std::cout &lt;&lt; add(2.5, 3.5); // 输出 6.0 </code> </p>
+</li>
+<li><p><strong>二进制字面量</strong>：</p>
+<p><code>int binary = 0b1010; // binary 的值是 10 </code></p>
+</li>
+</ol>
+<h3 id="C-17"><a href="#C-17" class="headerlink" title="C++17"></a>C++17</h3><ol>
+<li><p><strong>结构化绑定</strong>：</p>
+<p><code>std::tuple&lt;int, double, std::string&gt; t(1, 2.3, &quot;hello&quot;); </code></p>
+<p> <code>auto [i, d, s] = t; </code></p>
+<p> <code>std::cout &lt;&lt; i &lt;&lt; &quot;, &quot; &lt;&lt; d &lt;&lt; &quot;, &quot; &lt;&lt; s; // 输出 1, 2.3, hello </code> </p>
+</li>
+<li><p><strong>if constexpr</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::tuple&lt;<span class="type">int</span>, <span class="type">double</span>, std::string&gt; <span class="title">t</span><span class="params">(<span class="number">1</span>, <span class="number">2.3</span>, <span class="string">&quot;hello&quot;</span>)</span></span>;</span><br><span class="line"><span class="keyword">auto</span> [i, d, s] = t;</span><br><span class="line">std::cout &lt;&lt; i &lt;&lt; <span class="string">&quot;, &quot;</span> &lt;&lt; d &lt;&lt; <span class="string">&quot;, &quot;</span> &lt;&lt; s; <span class="comment">// 输出 1, 2.3, hello</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>std::optional</strong>：</p>
+<p><code>std::optional&lt;int&gt; opt; if (!opt) &#123;     opt = 42; &#125; std::cout &lt;&lt; *opt; // 输出 42 </code></p>
+</li>
+</ol>
+<h3 id="C-20"><a href="#C-20" class="headerlink" title="C++20"></a>C++20</h3><ol>
+<li><p><strong>协程（coroutines）</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;coroutine&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ReturnObject</span> &#123;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">promise_type</span> &#123;</span><br><span class="line">        <span class="function">ReturnObject <span class="title">get_return_object</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> &#123;&#125;; &#125;</span><br><span class="line">        <span class="function">std::suspend_never <span class="title">initial_suspend</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> &#123;&#125;; &#125;</span><br><span class="line">        <span class="function">std::suspend_never <span class="title">final_suspend</span><span class="params">()</span> <span class="keyword">noexcept</span> </span>&#123; <span class="keyword">return</span> &#123;&#125;; &#125;</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">return_void</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">unhandled_exception</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">ReturnObject <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Hello &quot;</span>;</span><br><span class="line">    <span class="keyword">co_await</span> std::suspend_always&#123;&#125;;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;world!\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">foo</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p><strong>概念（concepts）</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">concept</span> Integral = std::is_integral_v&lt;T&gt;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;Integral T&gt;</span></span><br><span class="line"><span class="function">T <span class="title">add</span><span class="params">(T a, T b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">add</span>(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">// 输出 3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.cppstories.com/2017/01/cpp17features/">这些新特性大大增强了C++的表达能力和代码简洁性，帮助开发者编写更高效和可维护的代码</a><a target="_blank" rel="noopener" href="https://www.cppstories.com/2017/01/cpp17features/">1</a><a target="_blank" rel="noopener" href="https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md">2</a><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/features-of-c17-with-examples/">3</a>。</p>
+<h1 id="智能指针的使用有什么坑"><a href="#智能指针的使用有什么坑" class="headerlink" title="智能指针的使用有什么坑"></a>智能指针的使用有什么坑</h1><p>在C++中，智能指针（如<code>std::unique_ptr</code>、<code>std::shared_ptr</code>和<code>std::weak_ptr</code>）极大地简化了内存管理，但在使用过程中仍有一些常见的坑需要注意：</p>
+<h3 id="1-不必要地使用std-shared-ptr"><a href="#1-不必要地使用std-shared-ptr" class="headerlink" title="1. 不必要地使用std::shared_ptr"></a>1. 不必要地使用<code>std::shared_ptr</code></h3><p><strong>问题</strong>：在不需要共享所有权的情况下使用<code>std::shared_ptr</code>，会导致不必要的性能开销，因为<code>std::shared_ptr</code>需要维护引用计数。</p>
+<p><a target="_blank" rel="noopener" href="https://acodersjourney.com/top-10-dumb-mistakes-avoid-c-11-smart-pointers/"><strong>建议</strong>：默认使用<code>std::unique_ptr</code>，只有在确实需要共享所有权时才使用<code>std::shared_ptr</code></a><a target="_blank" rel="noopener" href="https://acodersjourney.com/top-10-dumb-mistakes-avoid-c-11-smart-pointers/">1</a>。</p>
+<p>在lambda中可以通过传入shared_from_this()的指针来保证std::shared_ptr的存活，是一种伪闭包的实现</p>
+<h3 id="2-循环引用"><a href="#2-循环引用" class="headerlink" title="2. 循环引用"></a>2. 循环引用</h3><p><strong>问题</strong>：两个或多个<code>std::shared_ptr</code>相互引用，导致内存泄漏，因为引用计数永远不会归零。</p>
+<p><strong>解决方案</strong>：使用<code>std::weak_ptr</code>打破循环引用。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">    std::shared_ptr&lt;Node&gt; next;</span><br><span class="line">    std::weak_ptr&lt;Node&gt; prev; <span class="comment">// 使用 weak_ptr 打破循环引用</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-多线程环境中的线程安全问题"><a href="#3-多线程环境中的线程安全问题" class="headerlink" title="3. 多线程环境中的线程安全问题"></a>3. 多线程环境中的线程安全问题</h3><p><strong>问题</strong>：<code>std::shared_ptr</code>本身是线程安全的，但它管理的对象并不是。如果多个线程同时访问和修改对象，可能会导致数据竞争。</p>
+<p><a target="_blank" rel="noopener" href="https://acodersjourney.com/top-10-dumb-mistakes-avoid-c-11-smart-pointers/"><strong>建议</strong>：在多线程环境中，使用适当的同步机制（如互斥锁）来保护共享资源</a><a target="_blank" rel="noopener" href="https://acodersjourney.com/top-10-dumb-mistakes-avoid-c-11-smart-pointers/">1</a>。</p>
+<h3 id="4-自定义删除器的使用"><a href="#4-自定义删除器的使用" class="headerlink" title="4. 自定义删除器的使用"></a>4. 自定义删除器的使用</h3><p><strong>问题</strong>：在使用自定义删除器时，可能会忘记正确处理资源释放，导致资源泄漏。</p>
+<p><strong>建议</strong>：确保自定义删除器正确释放资源。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::unique_ptr&lt;FILE, <span class="title">decltype</span><span class="params">(&amp;fclose)</span>&gt; <span class="title">filePtr</span><span class="params">(fopen(<span class="string">&quot;example.txt&quot;</span>, <span class="string">&quot;r&quot;</span>), &amp;fclose)</span></span>;</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+<h3 id="5-不要混用原始指针和智能指针"><a href="#5-不要混用原始指针和智能指针" class="headerlink" title="5. 不要混用原始指针和智能指针"></a>5. 不要混用原始指针和智能指针</h3><p><strong>问题</strong>：混用原始指针和智能指针可能导致双重释放或未定义行为。</p>
+<p><strong>建议</strong>：一旦使用智能指针管理资源，就不要再使用原始指针。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::unique_ptr&lt;<span class="type">int</span>&gt; ptr = std::<span class="built_in">make_unique</span>&lt;<span class="type">int</span>&gt;(<span class="number">10</span>); <span class="comment">// 不要再使用原始指针来管理同一资源 </span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-避免在容器中直接存储智能指针"><a href="#6-避免在容器中直接存储智能指针" class="headerlink" title="6. 避免在容器中直接存储智能指针"></a>6. 避免在容器中直接存储智能指针</h3><p><strong>问题</strong>：在容器中直接存储智能指针可能导致意外的资源管理问题。</p>
+<p><a target="_blank" rel="noopener" href="https://dev.to/jaehyun_park_52/understanding-smart-pointers-in-c-7g9"><strong>建议</strong>：尽量使用容器的智能指针版本（如<code>std::vector&gt;</code>）来管理资源</a><a target="_blank" rel="noopener" href="https://dev.to/jaehyun_park_52/understanding-smart-pointers-in-c-7g9">2</a>。</p>
+<h3 id="7-使用std-make-shared和std-make-unique"><a href="#7-使用std-make-shared和std-make-unique" class="headerlink" title="7. 使用std::make_shared和std::make_unique"></a>7. 使用<code>std::make_shared</code>和<code>std::make_unique</code></h3><p><strong>问题</strong>：直接使用<code>new</code>创建对象并赋值给智能指针，可能会导致异常安全问题。</p>
+<p><strong>建议</strong>：使用<code>std::make_shared</code>和<code>std::make_unique</code>来创建智能指针，确保异常安全。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> ptr = std::<span class="built_in">make_shared</span>&lt;<span class="type">int</span>&gt;(<span class="number">10</span>); <span class="keyword">auto</span> uniquePtr = std::<span class="built_in">make_unique</span>&lt;<span class="type">int</span>&gt;(<span class="number">20</span>); </span><br></pre></td></tr></table></figure>
+
+<p>这些是使用智能指针时需要注意的一些常见问题和建议。希望这些信息对你有帮助！如果你有更多问题或需要进一步的解释，请随时告诉我。</p>
+<h1 id="什么是内存泄漏，有哪几种，怎么解决"><a href="#什么是内存泄漏，有哪几种，怎么解决" class="headerlink" title="什么是内存泄漏，有哪几种，怎么解决"></a>什么是内存泄漏，有哪几种，怎么解决</h1><p>内存泄漏是指程序在动态分配内存后未能正确释放，导致这些内存无法被重新分配和使用。内存泄漏会导致程序占用越来越多的内存，最终可能导致系统性能下降或程序崩溃。</p>
+<p>内存泄漏是指程序在动态分配内存后未能正确释放，导致内存无法被重新分配和使用。内存泄漏会导致程序占用越来越多的内存，最终可能导致系统崩溃或性能严重下降。</p>
+<h3 id="内存泄漏的几种类型"><a href="#内存泄漏的几种类型" class="headerlink" title="内存泄漏的几种类型"></a>内存泄漏的几种类型</h3><ol>
+<li><strong>堆内存泄漏</strong>：这是最常见的内存泄漏类型，发生在使用 <code>new</code> 或 <code>malloc</code> 分配内存后未能使用 <code>delete</code> 或 <code>free</code> 释放内存。</li>
+<li><strong>全局内存泄漏</strong>：全局变量或静态变量在程序结束前未能释放内存。</li>
+<li><strong>栈内存泄漏</strong>：虽然栈内存通常由编译器自动管理，但在某些情况下（如递归调用过深），也可能导致内存泄漏。</li>
+<li><strong>资源泄漏</strong>：不仅限于内存，还包括文件句柄、网络连接等资源未能正确释放。</li>
+</ol>
+<h3 id="解决内存泄漏的方法"><a href="#解决内存泄漏的方法" class="headerlink" title="解决内存泄漏的方法"></a>解决内存泄漏的方法</h3><ol>
+<li><strong>手动管理内存</strong>：确保每次使用 <code>new</code> 或 <code>malloc</code> 分配内存后，都有相应的 <code>delete</code> 或 <code>free</code> 释放内存。</li>
+<li><strong>使用智能指针</strong>：C++11 引入了智能指针（如 <code>std::unique_ptr</code> 和 <code>std::shared_ptr</code>），可以自动管理内存，减少内存泄漏的风险。</li>
+<li><a target="_blank" rel="noopener" href="https://www.pullrequest.com/blog/the-art-of-detecting-memory-leaks-in-c-applications/"><strong>工具检测</strong>：使用工具如 Valgrind、AddressSanitizer 或 Visual Studio 的内存分析工具来检测和修复内存泄漏</a><a target="_blank" rel="noopener" href="https://www.pullrequest.com/blog/the-art-of-detecting-memory-leaks-in-c-applications/">1</a><a target="_blank" rel="noopener" href="https://www.codewithc.com/memory-leaks-in-pointers/">2</a><a target="_blank" rel="noopener" href="https://codeknowcode.com/understanding-memory-leaks-in-c-detection-prevention-and-best-practices/">3</a>。</li>
+<li><strong>代码审查和测试</strong>：通过代码审查和单元测试，尽早发现和修复内存泄漏问题。</li>
+</ol>
+<h1 id="new-x2F-delete与malloc-x2F-free的区别是什么"><a href="#new-x2F-delete与malloc-x2F-free的区别是什么" class="headerlink" title="new&#x2F;delete与malloc&#x2F;free的区别是什么"></a>new&#x2F;delete与malloc&#x2F;free的区别是什么</h1><h1 id="引用作为函数的参数或者返回值好处在哪里"><a href="#引用作为函数的参数或者返回值好处在哪里" class="headerlink" title="引用作为函数的参数或者返回值好处在哪里"></a>引用作为函数的参数或者返回值好处在哪里</h1><p><strong>引用就是某一变量（目标）的别名，对引用的操作与对变量直接操作完全一样。</strong> </p>
+<p><strong>引用作为函数参数</strong> </p>
+<p>引用传参的好处： </p>
+<ol>
+<li><p>在函数内部会对此参数进行修改 </p>
+</li>
+<li><p>提高函数调用和运行效率</p>
+</li>
+</ol>
+<p><strong>引用作为函数返回值</strong></p>
+<ol>
+<li><p>以引用返回函数值，定义函数时需要在函数名前加 &amp; </p>
+</li>
+<li><p>用引用返回一个函数值的最大好处是：在内存中不产生被返回值的副本</p>
+</li>
+</ol>
+<p>引用作为返回值，<strong>必须遵守以下规则</strong>： </p>
+<ol>
+<li><strong>不能返回局部变量的引用</strong>。主要原因是局部变量会在函数返回后被销毁，因此被返回的引用就成为</li>
+</ol>
+<p>了”无所指”的引用，程序会进入未知状态。 </p>
+<ol start="2">
+<li><p><strong>不能返回函数内部new 分配的内存的引用</strong> 虽然不存在局部变量的被动销毁问题，可对于这种情况 （返回函数内部new分配内存的引用），又面临其它尴尬局面。例如，被函数返回的引用只是作为 一 个临时变量出现，而没有被赋予一个实际的变量，那么这个引用所指向的空间（由new分配）就 无法释放，造成memory leak。 </p>
+</li>
+<li><p><strong>引用与一些操作符的重载。</strong>流操作符&lt;&lt;和&gt;&gt;，这两个操作符常常希望被连续使用，例如：cout &lt;&lt; “hello” &lt;&lt; endl; 因此这两个操作符的返回值应该是一个仍然支持这两个操作符的流引用。</p>
+</li>
+</ol>
+<hr>
+<p>引用可以修改参数本身的值，如果想要对参数进行修改就要使用引用，作为返回值的引用则是减少拷贝，不会产生副本，不过要注意不能返回局部变量的引用，</p>
+<h1 id="哈希表的原理是什么"><a href="#哈希表的原理是什么" class="headerlink" title="哈希表的原理是什么"></a>哈希表的原理是什么</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">哈希表（Hash Table），也叫散列表，是一种根据关键码值（Key value）直接访问内存存储位置的数据结构。它通过一个称为哈希函数（Hash Function）的映射函数，将关键码值映射到表中的一个位置，从而加快查找速度</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</p>
+<h3 id="哈希表的基本原理"><a href="#哈希表的基本原理" class="headerlink" title="哈希表的基本原理"></a>哈希表的基本原理</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136"><strong>哈希函数</strong>：哈希函数将关键码值转换为数组的索引。理想的哈希函数应当计算简单且分布均匀，以减少冲突的概率</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136"><strong>哈希冲突</strong>：当两个不同的关键码值通过哈希函数得到相同的索引时，就会发生哈希冲突。常见的解决方法有开放定址法和链表法</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%8E%9F%E7%90%86">3</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136"><strong>查找和插入</strong>：通过哈希函数计算关键码值的哈希地址，然后直接访问该地址进行查找或插入操作。哈希表的查找和插入操作时间复杂度接近O(1)</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
+</ol>
+<h3 id="哈希表的优缺点"><a href="#哈希表的优缺点" class="headerlink" title="哈希表的优缺点"></a>哈希表的优缺点</h3><p><strong>优点</strong>：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">查找和插入速度非常快，接近常量时间复杂度O(1)</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">编程实现相对简单，适用于需要快速查找的场景</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a>。</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">基于数组实现，扩展困难。当哈希表接近满载时，性能可能会显著下降</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">需要处理哈希冲突，可能会增加实现的复杂性</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
+</ul>
+<h3 id="哈希冲突解决方法"><a href="#哈希冲突解决方法" class="headerlink" title="哈希冲突解决方法"></a>哈希冲突解决方法</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136"><strong>开放定址法</strong>：发生冲突时，通过某种探测序列找到下一个空闲位置</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005"><strong>链表法</strong>：每个数组位置存储一个链表，所有哈希值相同的元素都存储在该链表中</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%8E%9F%E7%90%86">3</a>。</li>
+</ol>
+<p>​                </p>
+<h1 id="什么是运行时多态"><a href="#什么是运行时多态" class="headerlink" title="什么是运行时多态"></a>什么是运行时多态</h1><p>运行时多态（Runtime Polymorphism），也称为动态多态，是面向对象编程中的一个重要特性。它允许程序在运行时决定调用哪个方法，从而实现灵活和可扩展的代码设计。</p>
+<h3 id="运行时多态的实现"><a href="#运行时多态的实现" class="headerlink" title="运行时多态的实现"></a>运行时多态的实现</h3><p>在C++中，运行时多态主要通过<strong>虚函数</strong>（virtual functions）和<strong>继承</strong>（inheritance）来实现。以下是实现运行时多态的关键步骤：</p>
+<ol>
+<li><strong>虚函数</strong>：在基类中声明虚函数，并在派生类中重写这些虚函数。</li>
+<li><strong>基类指针或引用</strong>：使用基类的指针或引用来指向派生类对象。</li>
+</ol>
+<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Base</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Base class show function&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Derived</span> : <span class="keyword">public</span> Base &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Derived class show function&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Base* b;</span><br><span class="line">    Derived d;</span><br><span class="line">    b = &amp;d;</span><br><span class="line">    b-&gt;<span class="built_in">show</span>();  <span class="comment">// 输出: Derived class show function</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xylitolz/article/details/115800775">在这个例子中，<code>Base</code>类中定义了一个虚函数<code>show</code>，而<code>Derived</code>类重写了这个函数。在<code>main</code>函数中，基类指针<code>b</code>指向派生类对象<code>d</code>，调用<code>b-&gt;show()</code>时，实际执行的是派生类<code>Derived</code>中的<code>show</code>函数</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/xylitolz/article/details/115800775">1</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43935710/article/details/103871715">2</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E8%BF%90%E8%A1%8C%E6%97%B6%E5%A4%9A%E6%80%81">3</a>。</p>
+<h3 id="运行时多态的优点"><a href="#运行时多态的优点" class="headerlink" title="运行时多态的优点"></a>运行时多态的优点</h3><ul>
+<li><strong>灵活性</strong>：允许在运行时决定调用哪个方法，使得代码更灵活。</li>
+<li><strong>可扩展性</strong>：可以通过继承和重写方法来扩展现有代码，而无需修改原有代码。</li>
+</ul>
+<h3 id="运行时多态的缺点"><a href="#运行时多态的缺点" class="headerlink" title="运行时多态的缺点"></a>运行时多态的缺点</h3><ul>
+<li><strong>性能开销</strong>：由于需要在运行时决定调用哪个方法，可能会带来一些性能开销。</li>
+<li><strong>复杂性</strong>：需要理解和正确使用虚函数和继承，增加了代码的复杂性。</li>
+</ul>
+<p>​                     </p>
+<p>​                </p>
 
       
     </div>
@@ -1675,269 +2098,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/C++-%E8%99%9A%E7%BB%A7%E6%89%BF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/28/C++-%E8%99%9A%E7%BB%A7%E6%89%BF/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-06-28 18:16:05" itemprop="dateCreated datePublished" datetime="2024-06-28T18:16:05+08:00">2024-06-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-11 10:53:12" itemprop="dateModified" datetime="2024-06-11T10:53:12+08:00">2024-06-11</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/C++-%E4%BD%8D%E8%BF%90%E7%AE%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/28/C++-%E4%BD%8D%E8%BF%90%E7%AE%97/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-06-28 18:15:38" itemprop="dateCreated datePublished" datetime="2024-06-28T18:15:38+08:00">2024-06-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-13 17:00:52" itemprop="dateModified" datetime="2024-06-13T17:00:52+08:00">2024-06-13</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在 <code>epoll</code> 事件通知机制中，事件类型如 <code>EPOLLIN</code>、<code>EPOLLOUT</code> 等被定义为二进制中的单个位标志（bit flags）。这些标志是通过位掩码（bitmask）来表示的，而不是通过简单的数字相加。每种类型的事件都对应于整数值中的一个特定的位位置，而这些位位置是通过位运算来设置和检查的。</p>
-<p>例如，<code>EPOLLIN</code> 可能被定义为 <code>0x001</code>（二进制的 <code>0001</code>），而 <code>EPOLLOUT</code> 可能被定义为 <code>0x004</code>（二进制的 <code>0100</code>）。当一个文件描述符同时有可读和可写事件发生时，<code>epoll</code> 会将这两个事件的位掩码进行按位或运算（<code>|</code>），而不是数字相加。这样，即使两个事件同时发生，<code>EPOLLIN</code> 的位也会保持为 <code>1</code>。</p>
-<p>这里是如何通过按位或运算来组合事件的示例：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EPOLLIN:   0001 (二进制表示) EPOLLOUT:  0100 (二进制表示)            ---- 按位或结果: 0101 (二进制表示) </span><br></pre></td></tr></table></figure>
-
-<p>在这个例子中，即使 <code>EPOLLIN</code> 和 <code>EPOLLOUT</code> 同时发生，组合后的结果 <code>0101</code> 仍然在最低位有 <code>1</code>，这表示 <code>EPOLLIN</code> 事件发生了。因此，当我们使用按位与运算符 <code>&amp;</code> 检查 <code>evs[ii].events &amp; EPOLLIN</code> 时，只要 <code>EPOLLIN</code> 事件发生，无论是否有其他事件同时发生，结果都不会是 <code>0</code>。</p>
-<p>这就是为什么我们可以通过检查按位与运算的结果是否为非零来确定特定事件（如 <code>EPOLLIN</code>）是否发生，而不用担心其他事件的影响。</p>
-<p>正是通过位掩码（bitmask）的设计，我们可以确保即使多个事件同时发生，也能通过按位与运算（<code>&amp;</code>）得到正确的结果。位掩码是一种使用二进制位操作来表示和控制多个配置选项的技术。在 <code>epoll</code> 事件中，每个事件类型都有一个唯一的位掩码，这些掩码在设计时就确保了它们之间的二进制表示不会冲突。</p>
-<p>例如，<code>EPOLLIN</code> 和 <code>EPOLLOUT</code> 可能分别被定义为：</p>
-<ul>
-<li><code>EPOLLIN</code>: <code>0x001</code> 或 <code>0001</code>（二进制）</li>
-<li><code>EPOLLOUT</code>: <code>0x004</code> 或 <code>0100</code>（二进制）</li>
-</ul>
-<p>当我们想要检查 <code>EPOLLIN</code> 是否发生时，我们会这样做：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">evs[ii].<span class="property">events</span>:  xxxx (二进制表示，x代表任意值) </span><br><span class="line"><span class="attr">EPOLLIN</span>:         <span class="number">0001</span> (二进制表示)                  </span><br><span class="line">				---- </span><br><span class="line">&amp; 操作结果:       xx01 (二进制表示) </span><br></pre></td></tr></table></figure>
-
-<p>只要 <code>EPOLLIN</code> 对应的位是 <code>1</code>，无论 <code>xxxx</code> 中的其他位是什么值，按位与运算的结果的最低位都将是 <code>1</code>，这表明 <code>EPOLLIN</code> 事件发生了。</p>
-<p>这种设计允许我们使用单个整数值来存储和检查多个事件的发生情况，而不需要为每个事件单独使用一个变量。这样做不仅节省了空间，而且提高了效率，因为位运算通常比其他类型的运算更快。</p>
-<p>在实际编程中，这种技巧非常有用，因为它允许程序员以一种非常紧凑和高效的方式处理多个事件标志。这是系统编程中常用的一种模式，特别是在需要处理多种类型的输入&#x2F;输出事件时</p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/28/C++-%E5%A6%82%E4%BD%95%E5%86%99CPP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/06/28/C++-%E5%A6%82%E4%BD%95%E5%86%99CPP/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-06-28 18:15:38" itemprop="dateCreated datePublished" datetime="2024-06-28T18:15:38+08:00">2024-06-28</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-10 19:06:18" itemprop="dateModified" datetime="2024-06-10T19:06:18+08:00">2024-06-10</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2005,20 +2169,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-count">112</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-count">70</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">66</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -2062,12 +2226,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">303k</span>
+    <span title="站点总字数">313k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4:35</span>
+    <span title="站点阅读时长">4:44</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

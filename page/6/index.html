@@ -195,6 +195,342 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/11/%E7%AE%97%E6%B3%95-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/11/%E7%AE%97%E6%B3%95-%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" class="post-title-link" itemprop="url">二分查找</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-11 19:00:02" itemprop="dateCreated datePublished" datetime="2024-03-11T19:00:02+08:00">2024-03-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-12 17:35:10" itemprop="dateModified" datetime="2024-03-12T17:35:10+08:00">2024-03-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F/" itemprop="url" rel="index"><span itemprop="name">排序</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>483</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p> 二分查找的速度比简单查找快得多。<br> O(log n)比O(n)快。需要搜索的元素越多，前者比后者就快得越多。<br> 算法运行时间并不以秒为单位。<br> 算法运行时间是从其增速的角度度量的。<br> 算法运行时间用大O表示法表示。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">const</span> <span class="type">int</span> <span class="title">binary_search</span><span class="params">(std::vector&lt;<span class="type">int</span>&gt;&amp; vec,<span class="type">int</span>&amp; target)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">int</span> low = <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> high = vec.<span class="built_in">size</span>()<span class="number">-1</span>;</span><br><span class="line">	<span class="type">int</span>* mid = <span class="keyword">new</span> <span class="type">int</span>;	</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (low&lt;=high)</span><br><span class="line">	&#123;</span><br><span class="line">		*mid = (high + low) / <span class="number">2</span>;</span><br><span class="line">	<span class="keyword">if</span> (target &gt; vec[*mid])</span><br><span class="line">		low = *mid;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (target &lt; vec[*mid])</span><br><span class="line">		high = *mid;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (target == vec[*mid])</span><br><span class="line">		<span class="keyword">return</span> *mid;</span><br><span class="line">	<span class="keyword">else</span> </span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt; <span class="string">&quot;not find&quot;</span>;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/11/%E7%AE%97%E6%B3%95-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/11/%E7%AE%97%E6%B3%95-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/" class="post-title-link" itemprop="url">快速排序</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-11 19:00:02" itemprop="dateCreated datePublished" datetime="2024-03-11T19:00:02+08:00">2024-03-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-03-12 17:45:12" itemprop="dateModified" datetime="2024-03-12T17:45:12+08:00">2024-03-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/%E6%8E%92%E5%BA%8F/" itemprop="url" rel="index"><span itemprop="name">排序</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39181839/article/details/109478094">快速排序算法—图文详解，一篇就够了！_快速排序算法图解-CSDN博客</a></p>
+<p>快速排序，递归+分治,就是c语言中的qsort</p>
+<p>C++中std::sort并不是简单的快速排序，它对快速排序进行了优化。此外，它还结合了插入排序和推排序。系统会根据数据形式和数据量自动选择合适的排序方法。它每次排序中不只选择一种方法，比如给一个数据量较大的数组排序，开始采用快速排序，分段递归，分段之后每一段的数据量达到一个较小值后它就不继续往下递归，而是选择插入排序，如果递归的太深，他会选择推排序。</p>
+<p>自己实现快速排序：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">quicksort</span><span class="params">(std::vector&lt;<span class="type">int</span>&gt;&amp; vec,<span class="type">int</span> low,<span class="type">int</span> high)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (low &gt;= high)<span class="keyword">return</span>;<span class="comment">// 递归基</span></span><br><span class="line">	</span><br><span class="line">	<span class="type">int</span> pivot = vec[low];<span class="comment">//记录基准值pivot</span></span><br><span class="line">	</span><br><span class="line">	<span class="type">int</span> i = low, j = high;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (i &lt; j)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//从右向左找</span></span><br><span class="line">		<span class="keyword">while</span> (i &lt; j &amp;&amp; vec[j] &gt;= pivot) j--;</span><br><span class="line">		<span class="keyword">if</span> (i &lt; j) vec[i++] = vec[j];</span><br><span class="line">		<span class="comment">//从左向右找</span></span><br><span class="line">		<span class="keyword">while</span> (i &lt; j &amp;&amp; vec[i] &lt;= pivot) i++;</span><br><span class="line">		<span class="keyword">if</span> (i &lt; j)vec[j++] = vec[i];</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//此时left=right，用pivot替换这个位置的数字</span></span><br><span class="line">	vec[i] = pivot;<span class="comment">// 将基准值放到正确的位置</span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">quicksort</span>(vec, low, i - <span class="number">1</span>); <span class="comment">// 递归排序左子数组</span></span><br><span class="line">	<span class="built_in">quicksort</span>(vec, i + <span class="number">1</span>, high); <span class="comment">// 递归排序右子数组</span></span><br><span class="line"></span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Printvector</span><span class="params">(<span class="type">const</span> std::vector&lt;<span class="type">int</span>&gt;&amp; vec)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> value : vec)</span><br><span class="line">		std::cout &lt;&lt; value&lt;&lt;<span class="string">&quot; &quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	</span><br><span class="line">	std::vector&lt;<span class="type">int</span>&gt; vector=&#123;<span class="number">4</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">7</span>,<span class="number">3</span>,<span class="number">5</span>&#125;;</span><br><span class="line">	<span class="built_in">quicksort</span>(vector,<span class="number">0</span>,vector.<span class="built_in">size</span>()<span class="number">-1</span>);</span><br><span class="line">	<span class="built_in">Printvector</span>(vector);</span><br><span class="line"></span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>自己写的qsort比C++的std::sort快一点点（debug）</p>
+<p><img src="http://cdn.rhahr.icu/ca726a383dea8ea75f31a79c71fc86c.png"></p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/09/C++-Perfect%20Forwarding/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/09/C++-Perfect%20Forwarding/" class="post-title-link" itemprop="url">Perfect Forwarding</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-03-09 19:00:02 / 修改时间：18:51:33" itemprop="dateCreated datePublished" datetime="2024-03-09T19:00:02+08:00">2024-03-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="完美转发"><a href="#完美转发" class="headerlink" title="完美转发"></a>完美转发</h1><p>完美转发是指在模板函数中将接收到的参数无损地转发到另一个函数的能力。这是通过<code>std::forward</code>来实现的，它是一个特殊的模板函数，用于保持原始参数的值类别（左值或右值）。</p>
+<p>当你在模板函数中使用<code>std::forward&lt;Args&gt;(args)...</code>时，它会根据每个参数的原始值类别来转发这些参数。如果原始参数是左值，那么转发后它仍然是左值；如果原始参数是右值，那么转发后它也是右值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>... Args&gt; </span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">wrapper</span><span class="params">(Args&amp;&amp;... args)</span> </span>&#123;     </span><br><span class="line"><span class="comment">// 使用std::forward来完美转发参数   </span></span><br><span class="line"><span class="built_in">another_function</span>(std::forward&lt;Args&gt;(args)...); </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p>这种机制非常重要，因为它允许你编写通用代码，同时保持参数的优化（比如避免不必要的拷贝）。完美转发是现代C++中实现高效和灵活代码的关键技术之一。接下来一个一个解释。</p>
+<h2 id="万能引用"><a href="#万能引用" class="headerlink" title="万能引用"></a>万能引用</h2><p>万能引用，形如<code>T&amp;&amp; args</code> 乍一看这不就是右值引用吗，错啦~，这里还是写完整一点好</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt; </span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">wrapper</span><span class="params">(T&amp;&amp; args)</span> </span>&#123;     </span><br></pre></td></tr></table></figure>
+
+<p>上边的例子中</p>
+<p>右值引用是一个具体的类型才是右值引用，例如 <code>int&amp;&amp; a</code> ,万能引用则类型是由推导可知的</p>
+<p> 确实看起来像是一个右值引用，但它实际上是一个万能引用。这是因为 <code>T</code> 是一个模板参数，而不是一个具体的类型。当模板函数或方法中出现 <code>T&amp;&amp;</code> 时，其中的 <code>T</code> 是通过类型推导得到的，所以 <strong><code>T&amp;&amp;</code> 可以根据传入参数的类型变成左值引用或右值引用。</strong> 这就是万能引用的作用</p>
+<p>在模板类中，如果 <code>pushback</code> 函数被调用并传入一个右值，那么 <code>T</code> 将被推导为非引用类型，使得 <code>T&amp;&amp;</code> 成为一个右值引用。如果传入一个左值，<code>T</code> 将被推导为左值引用类型，使得 <code>T&amp;&amp;</code> 实际上成为一个左值引用。这就是万能引用的特性，它可以绑定到左值和右值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">relay</span><span class="params">(T&amp;&amp; arg)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">process</span>(std::forward&lt;T&gt;(arg)); <span class="comment">// 完美转发 arg</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">process</span><span class="params">(<span class="type">int</span>&amp; x)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 处理左值</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">process</span><span class="params">(<span class="type">int</span>&amp;&amp; x)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 处理右值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当你调用 <code>relay(a);</code> 并且 <code>a</code> 是一个左值时，<code>T</code> 推导为 <code>int&amp;</code>，使得 <code>T&amp;&amp;</code> 实际上变成了 <code>int&amp; &amp;&amp;</code>。根据<strong>引用折叠</strong>规则，这最终会折叠成 <code>int&amp;</code>，所以 <code>arg</code> 是一个左值引用。<code>std::forward&lt;T&gt;(arg)</code> 此时会按照左值处理 <code>arg</code>。</p>
+<p>当你调用 <code>relay(10);</code> 并且 <code>10</code> 是一个右值时，<code>T</code> 推导为 <code>int</code>，使得 <code>T&amp;&amp;</code> 实际上是 <code>int&amp;&amp;</code>，一个真正的右值引用。<code>std::forward&lt;T&gt;(arg)</code> 此时会按照右值处理 <code>arg</code>。</p>
+<p>这就是为什么 <code>T&amp;&amp; arg</code> 不总是右值引用，它取决于传入参数的类型。这种机制允许 <code>relay</code> 函数完美转发它的参数，无论它们是左值还是右值。</p>
+<blockquote>
+<p>实际上在移动语义中，也是一样的，如果类型是模板类型则会自动推导，但是传参进来的不管是左值还是右值都无所谓，因为有std::move</p>
+</blockquote>
+<p>那么什么是引用折叠呢？</p>
+<h3 id="引用折叠"><a href="#引用折叠" class="headerlink" title="引用折叠"></a>引用折叠</h3><p>引用折叠是C++中的一个规则，它处理在模板和类型推导中出现的多层引用的情况。在C++中，你不能直接创建引用的引用，比如 <code>int&amp;&amp; &amp;</code> 或 <code>int&amp; &amp;&amp;</code>。但在模板和自动类型推导中，这样的情况是可能发生的。引用折叠规则决定了这些多层引用如何被解析为单一的引用。</p>
+<p>引用折叠的规则很简单：</p>
+<ul>
+<li>如果在任何引用对中至少有一个是左值引用（<code>&amp;</code>），那么结果就是左值引用（<code>&amp;</code>）。</li>
+<li>如果两个引用都是右值引用（<code>&amp;&amp;</code>），那么结果就是右值引用（<code>&amp;&amp;</code>）。</li>
+</ul>
+<p>例如</p>
+<ul>
+<li><code>int&amp; &amp;&amp;</code> 折叠为 <code>int&amp;</code></li>
+<li><code>int&amp;&amp; &amp;</code> 折叠为 <code>int&amp;</code></li>
+<li><code>int&amp; &amp;</code> 折叠为 <code>int&amp;</code></li>
+<li><code>int&amp;&amp; &amp;&amp;</code> 折叠为 <code>int&amp;&amp;</code></li>
+</ul>
+<h2 id="std-forward"><a href="#std-forward" class="headerlink" title="std::forward"></a>std::forward</h2><p>简洁补一下forward</p>
+<p><code>std::forward</code> 是 C++11 引入的一个模板函数，它用于实现所谓的完美转发。完美转发允许你将函数的参数以原始的左值或右值形式传递给其他函数，这意味着保持参数的原始值类别（lvalue 或 rvalue）不变。</p>
+<p>当我们定义一个模板函数用于转发参数时，通常我们会希望保持原始参数的左值&#x2F;右值性质，并且将其转发给另一个函数。假设我们定义如下函数模板：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">wrapper</span><span class="params">(T&amp;&amp; arg)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">another_function</span>(arg);  <span class="comment">// 这里的arg永远是左值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的 <code>T&amp;&amp;</code> 是通用引用，它可以匹配任意左值或右值。但是问题在于，传给 <code>another_function</code> 的 <code>arg</code> 无论原始参数是左值还是右值，在 <code>wrapper</code> 函数内部，<code>arg</code> 始终是左值。这就是我们需要 <code>std::forward</code> 的地方。</p>
+<p><code>std::forward</code> 的作用就是，保持原有参数的左值&#x2F;右值性质，并正确地转发给另一个函数。所以上述代码应当修改为：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">wrapper</span><span class="params">(T&amp;&amp; arg)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">another_function</span>(std::forward&lt;T&gt;(arg));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在无论 <code>arg</code> 是左值还是右值，<code>std::forward&lt;T&gt;(arg)</code> 都能保持其原有性质，并正确地转发给 <code>another_function</code> 函数。这就是所谓的”完美转发”。</p>
+<p>总结一下，<code>std::forward</code> 是C++中实现”完美转发”的重要工具，它能够保持函数参数的原有性质（包括左值、右值特性），并且将其转发给另一个函数。</p>
+<h2 id="完美转发-x3D-x3D"><a href="#完美转发-x3D-x3D" class="headerlink" title="完美转发&#x3D;&#x3D;"></a>完美转发&#x3D;&#x3D;</h2><p>万能引用可以保持传入参数的属性不变，乍一看很鸡肋，刚才的例子中直接在main中调用process不也就直接调用了对应的左值右值版本的函数了吗，为什么还要调用 relay这个万能引用版本呢?</p>
+<p> 回想起之前学的可变参数模板就派上用场了</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">template</span>&lt;<span class="keyword">typename</span>...Args&gt;</span></span><br><span class="line"><span class="function">T&amp; <span class="title">emplaceback</span><span class="params">(Args&amp;&amp;...args)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (m_Size &gt;= m_Capacity)</span><br><span class="line">			<span class="built_in">ReAlloca</span>(m_Capacity + m_Capacity / <span class="number">2</span>);</span><br><span class="line">		<span class="keyword">new</span>(&amp;m_Data[m_Size]) <span class="built_in">T</span>(std::forward&lt;Args&gt;(args)...);</span><br><span class="line">    <span class="comment">//展开： std::forward&lt;Args&gt;(args1),std::forward&lt;Args&gt;(args2),...</span></span><br><span class="line">		<span class="keyword">return</span> m_Data[m_Size++];</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>完美转发 &#x3D; 万能引用 + std::forward</p>
+<p>第六行placement new语法new(memory) Type(Args),此处意为不使用new分配内存而是直接在m_Data[m_Size]（m_Data最后一个数据位置+1）处就地构造一个T类型的参数，参数是万能引用传过来的参数包args，参数包的可变数量可变类型的参数正好合适用完美转发来处理</p>
+<p>总之在我看来，完美转发就是通过万能引用来接受传入的参数并根据引用折叠规则来转换成想要的类型后，通过std::forward 正确的转发出去</p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/09/C++-new%20and%20delete/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1124,426 +1460,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/02/C++-variant/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/02/C++-variant/" class="post-title-link" itemprop="url">单一变量存放多类型数据</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-02 14:00:00" itemprop="dateCreated datePublished" datetime="2024-03-02T14:00:00+08:00">2024-03-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-06-10 20:12:07" itemprop="dateModified" datetime="2024-06-10T20:12:07+08:00">2024-06-10</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/C-17/" itemprop="url" rel="index"><span itemprop="name">C++17</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="std-variant"><a href="#std-variant" class="headerlink" title="std::variant"></a>std::variant</h2><p><code>std::variant</code> 是 C++17 中引入的一种标准库类型，用于表示一组可能的类型中的一个值。它类似于 C++11 中的 <code>boost::variant</code>，但是更加现代化和易于使用。实际上就是一种类型安全的union，但是内存占用更大，如果不是底层优化之类的应该使用variant，更安全</p>
-<p>在使用 <code>std::variant</code> 时，你首先需要包含 <code>&lt;variant&gt;</code> 头文件。<code>std::variant</code> 可以容纳多个不同的类型<del>，并且只占用所包含类型中最大的那个的内存空间。</del>。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;variant&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;optional&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::variant&lt;std::string, <span class="type">int</span>&gt; data;<span class="comment">//variant类型的变量data</span></span><br><span class="line">	data = <span class="string">&quot;aaa&quot;</span>;<span class="comment">//可以是string</span></span><br><span class="line">	std::string str=std::<span class="built_in">get</span>&lt;std::string&gt;(data);<span class="comment">//使用std::get&lt;&gt;()来取值</span></span><br><span class="line">	std::cout &lt;&lt; str&lt;&lt;<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">	<span class="comment">//std::cout&lt;&lt;data.index;//可以用index来得到类型序列号，string - 0，int - 1</span></span><br><span class="line">	</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">auto</span> value=std::<span class="built_in">get_if</span>&lt;std::string&gt;(&amp;data))<span class="comment">//get 这个数据 if是括号内类型则返回这个数据的指针，否则返回空指针</span></span><br><span class="line">	&#123;</span><br><span class="line">		std::cout &lt;&lt;<span class="string">&quot;value:&quot;</span> &lt;&lt; *value;</span><br><span class="line">	&#125;;</span><br><span class="line">	</span><br><span class="line">    data = <span class="number">2</span>;<span class="comment">//可以是int</span></span><br><span class="line">	std::cout &lt;&lt; std::<span class="built_in">get</span>&lt;<span class="type">int</span>&gt;(data);</span><br><span class="line">	</span><br><span class="line">	std::cin.<span class="built_in">get</span>();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以作为函数返回值，原先的optional作为可选的变量只能返回一个空字符，而如果是variant就可以在读取不成功的时候返回其他信息，例如返回错误代码来帮助修正</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum class</span> <span class="title class_">ErrorCode</span></span><br><span class="line">&#123;</span><br><span class="line">	None = <span class="number">0</span>, NotFound = <span class="number">1</span>, NoAccess = <span class="number">2</span></span><br><span class="line">&#125;;</span><br><span class="line">std::variant&lt;std::string, ErrorCode&gt;<span class="built_in">ReadFileAsString</span>()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//如果读取成功则返回那个字符串，否则返回ErrorCode</span></span><br><span class="line">	<span class="keyword">return</span>&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//不仅仅是返回一个空的可选值，告诉我们没有数据，而是根据ErrorCode来处理</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="std-visit"><a href="#std-visit" class="headerlink" title="std::visit"></a>std::visit</h2><p>std::visit<code>是C++17中引入的一个函数模板，它允许你访问存储在</code>std::variant<code>中的值。</code>std::variant<code>是一个可以存储多种不同类型的单一值的类型安全的联合体。使用</code>std::visit<code>，你可以对</code>std::variant&#96;中的当前值执行操作，而不必知道它的确切类型。</p>
-<p><code>std::visit</code>的工作原理是接受一个可调用对象（如函数、lambda表达式或函数对象）和一个或多个<code>std::variant</code>对象。它会调用可调用对象，传递给它当前激活的<code>std::variant</code>中的值。如果有多个<code>std::variant</code>，它会使用它们当前的值来调用可调用对象。</p>
-<p>这里有一个简单的例子来说明<code>std::visit</code>的用法：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;variant&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义一个variant，它可以存储int或double</span></span><br><span class="line">std::variant&lt;<span class="type">int</span>, <span class="type">double</span>&gt; myVariant;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 一个lambda表达式，用于访问variant中的值</span></span><br><span class="line"><span class="keyword">auto</span> printVisitor =  &#123;</span><br><span class="line">    std::cout &lt;&lt; value &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 给variant赋值为int</span></span><br><span class="line">    myVariant = <span class="number">10</span>;</span><br><span class="line">    <span class="comment">// 使用std::visit来访问并打印值</span></span><br><span class="line">    std::<span class="built_in">visit</span>(printVisitor, myVariant);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 给variant赋值为double</span></span><br><span class="line">    myVariant = <span class="number">3.14</span>;</span><br><span class="line">    <span class="comment">// 再次使用std::visit来访问并打印值</span></span><br><span class="line">    std::<span class="built_in">visit</span>(printVisitor, myVariant);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>在这个例子中，<code>myVariant</code>是一个可以存储<code>int</code>或<code>double</code>的<code>std::variant</code>。<code>printVisitor</code>是一个lambda表达式，它接受任何类型的值并打印它。我们使用<code>std::visit</code>来调用<code>printVisitor</code>，无论<code>myVariant</code>当前存储的是<code>int</code>还是<code>double</code>，都可以正确地打印出来。</p>
-<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/59905620/seek-to-understand-stdvisit-better"><code>std::visit</code>非常强大，因为它允许你编写类型无关的代码，并且可以安全地处理多种类型。这使得<code>std::variant</code>和<code>std::visit</code>成为处理多态性的强大工具，而不需要使用继承和虚函数</a></p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/02/C++-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/02/C++-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" class="post-title-link" itemprop="url">文件操作，流</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-02 14:00:00" itemprop="dateCreated datePublished" datetime="2024-03-02T14:00:00+08:00">2024-03-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-19 17:24:51" itemprop="dateModified" datetime="2024-05-19T17:24:51+08:00">2024-05-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>6.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>6 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h1><p>C++ 的文件流（fstream）以及相关的文件操作是用于在 C++ 中进行文件输入输出的机制。它们提供了一种方便的方式来读取和写入文件内容，包括文本文件和二进制文件。让我详细讲解一下：</p>
-<h3 id="文件流（fstream）类："><a href="#文件流（fstream）类：" class="headerlink" title="文件流（fstream）类："></a>文件流（fstream）类：</h3><p>在 C++ 中，文件流（fstream）类是用于文件输入输出的类，它继承自基类 <code>iostream</code>。有三个主要的文件流类：</p>
-<ol>
-<li><strong>ifstream</strong>：用于从文件中读取数据，通常用于读取文本文件或者二进制文件。</li>
-<li><strong>ofstream</strong>：用于向文件中写入数据，通常用于创建新文件或者覆盖已有文件的内容。</li>
-<li><strong>fstream</strong>：用于既可以读取也可以写入文件的操作，是 ifstream 和 ofstream 的结合。</li>
-</ol>
-<p>这些类都定义在 <code>&lt;fstream&gt;</code> 头文件中。</p>
-<h3 id="打开和关闭文件："><a href="#打开和关闭文件：" class="headerlink" title="打开和关闭文件："></a>打开和关闭文件：</h3><p>在进行文件操作之前，首先需要打开文件。使用文件流对象的 <code>open()</code> 方法来打开文件，指定文件名以及打开模式（读取、写入、追加等）。例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fstream&gt;</span></span></span><br><span class="line"></span><br><span class="line">std::ifstream inFile;</span><br><span class="line">inFile.<span class="built_in">open</span>(<span class="string">&quot;example.txt&quot;</span>);</span><br></pre></td></tr></table></figure>
-
-<p>打开文件后，完成文件操作后应该及时关闭文件以释放资源。使用文件流对象的 <code>close()</code> 方法来关闭文件。例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inFile.<span class="built_in">close</span>();</span><br></pre></td></tr></table></figure>
-
-<h3 id="读取文件内容："><a href="#读取文件内容：" class="headerlink" title="读取文件内容："></a>读取文件内容：</h3><p>使用文件流对象的 <code>&gt;&gt;</code> 或者 <code>getline()</code> 方法来从文件中读取内容。例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">std::string word;</span><br><span class="line">inFile &gt;&gt; word; <span class="comment">// 从文件中读取一个单词</span></span><br></pre></td></tr></table></figure>
-
-<p>或者：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">std::string line;</span><br><span class="line">std::<span class="built_in">getline</span>(inFile, line); <span class="comment">// 从文件中读取一行内容</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="写入文件内容："><a href="#写入文件内容：" class="headerlink" title="写入文件内容："></a>写入文件内容：</h3><p>使用文件流对象的 <code>&lt;&lt;</code> 方法来向文件中写入内容。例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">std::ofstream outFile;</span><br><span class="line">outFile.<span class="built_in">open</span>(<span class="string">&quot;output.txt&quot;</span>);</span><br><span class="line">outFile &lt;&lt; <span class="string">&quot;Hello, world!&quot;</span> &lt;&lt; std::endl; <span class="comment">// 写入一行内容到文件中</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="检查文件是否打开成功："><a href="#检查文件是否打开成功：" class="headerlink" title="检查文件是否打开成功："></a>检查文件是否打开成功：</h3><p>在进行文件操作之后，最好检查文件是否成功打开，以及在读取或写入文件时是否出现错误。可以使用文件流对象的 <code>is_open()</code> 方法来检查文件是否成功打开，以及 <code>fail()</code> 方法来检查是否发生了读取或写入错误。</p>
-<h3 id="二进制文件操作："><a href="#二进制文件操作：" class="headerlink" title="二进制文件操作："></a>二进制文件操作：</h3><p>除了文本文件之外，C++ 的文件操作也支持二进制文件。通过在打开文件时指定二进制模式来进行操作，例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">std::ifstream binFile;</span><br><span class="line">binFile.<span class="built_in">open</span>(<span class="string">&quot;binary.dat&quot;</span>, std::ios::binary);</span><br></pre></td></tr></table></figure>
-
-<p>然后可以使用 <code>read()</code> 和 <code>write()</code> 方法来读取和写入二进制数据。</p>
-<p>这些是 C++ 中文件流和文件操作的基本用法。通过这些机制，你可以方便地进行文件的读取、写入和处理。</p>
-<h2 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h2><p>文件描述符（File Descriptor，简称FD）是操作系统中用于访问文件和I&#x2F;O资源的抽象表示。在Unix和类Unix系统中，文件描述符是一个整数，它唯一地标识了进程已打开的文件、管道、网络连接等资源。这里的“文件”不仅指传统意义上的文件，还包括任何可进行I&#x2F;O操作的资源。</p>
-<h3 id="文件描述符的基本概念"><a href="#文件描述符的基本概念" class="headerlink" title="文件描述符的基本概念"></a>文件描述符的基本概念</h3><ul>
-<li><strong>整数索引</strong>：文件描述符是一个非负整数。当打开一个文件时，系统会返回一个文件描述符，用于后续的读写操作。</li>
-<li><strong>标准输入输出</strong>：程序启动时，默认会打开三个文件描述符：<code>0</code>（标准输入stdin）、<code>1</code>（标准输出stdout）、<code>2</code>（标准错误stderr）。</li>
-<li><strong>资源引用</strong>：文件描述符提供了一个统一的接口来引用各种类型的I&#x2F;O资源，如普通文件、目录、套接字等。</li>
-</ul>
-<h3 id="文件描述符的工作原理"><a href="#文件描述符的工作原理" class="headerlink" title="文件描述符的工作原理"></a>文件描述符的工作原理</h3><p>当一个进程打开或创建文件时，内核会创建一个文件描述符，并将其返回给进程。这个描述符实际上是一个索引，指向内核中的一个文件表项。这个表项包含了文件的各种信息，如当前的读写位置、文件的状态和访问权限等。</p>
-<h3 id="文件描述符的存储和管理"><a href="#文件描述符的存储和管理" class="headerlink" title="文件描述符的存储和管理"></a>文件描述符的存储和管理</h3><ul>
-<li><strong>进程文件描述符表</strong>：每个进程都有一个文件描述符表，用于跟踪该进程打开的所有文件描述符。</li>
-<li><strong>系统级文件表</strong>：系统维护一个全局的文件表，记录所有打开的文件的状态和属性。</li>
-<li><strong>inode表</strong>：文件系统维护一个inode表，存储文件的元数据，如文件大小、权限、创建和修改时间等。</li>
-</ul>
-<h3 id="文件描述符的使用场景"><a href="#文件描述符的使用场景" class="headerlink" title="文件描述符的使用场景"></a>文件描述符的使用场景</h3><ul>
-<li><strong>文件操作</strong>：通过文件描述符，进程可以对文件执行读写、定位、锁定等操作。</li>
-<li><strong>网络通信</strong>：套接字也会被分配文件描述符，进程可以通过它来进行网络数据的发送和接收。</li>
-<li><strong>进程间通信</strong>：管道和FIFO等IPC机制也使用文件描述符来传递数据。</li>
-</ul>
-<h3 id="文件描述符的限制"><a href="#文件描述符的限制" class="headerlink" title="文件描述符的限制"></a>文件描述符的限制</h3><ul>
-<li><strong>数量限制</strong>：每个进程能打开的文件描述符数量是有限的，这个限制可以通过系统调用或配置文件来调整。</li>
-<li><strong>生命周期</strong>：文件描述符在进程生命周期内有效，当进程终止时，它打开的所有文件描述符都会被自动关闭。</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_67596609/article/details/132224088">文件描述符是Linux&#x2F;Unix系统编程中的一个核心概念，理解它对于进行系统级编程至关重要。它提供了一个简洁的抽象，使得对各种类型的I&#x2F;O资源的操作变得统一和简单</a></p>
-<h1 id="流-stream"><a href="#流-stream" class="headerlink" title="流(stream)"></a>流(stream)</h1><p>在 C++ 中，流（stream）是一个抽象概念，表示数据的流动或者流向。流可以是输入流（input stream）或输出流（output stream），用于从某个源头读取数据或者向某个目的地写入数据。</p>
-<p>流的概念源自于 I&#x2F;O 设备（如键盘、屏幕、文件等）之间的数据传输过程。流将数据抽象为一系列的字符或字节，通过特定的方式从源头流向目的地。流可以是单向的（只能进行输入或输出）或者双向的（既可以进行输入也可以进行输出）。</p>
-<p>在 C++ 中，流被实现为一系列的类，分别用于处理不同类型的数据流。常见的流类包括：</p>
-<ol>
-<li><strong>输入流类（input stream classes）</strong>：用于从源头读取数据，例如键盘、文件等。常见的输入流类有 <code>std::istream</code>、<code>std::ifstream</code> 等。</li>
-<li><strong>输出流类（output stream classes）</strong>：用于向目的地写入数据，例如屏幕、文件等。常见的输出流类有 <code>std::ostream</code>、<code>std::ofstream</code> 等。</li>
-<li><strong>文件流类（file stream classes）</strong>：用于文件的输入输出操作。常见的文件流类有 <code>std::ifstream</code>、<code>std::ofstream</code>、<code>std::fstream</code> 等。</li>
-</ol>
-<p>这些流类提供了一系列的成员函数和操作符，用于从流中读取数据或者向流中写入数据。通过使用这些流类，你可以方便地进行文件操作、标准输入输出、字符串流等各种输入输出操作。</p>
-<p>总的来说，流是 C++ 中用于处理输入输出的抽象概念，通过流类来实现对数据的读取和写入，使得输入输出操作更加方便、灵活、可扩展。</p>
-<p>在 C++ 中，<code>&lt;&lt;</code> 是一个运算符，称为插入运算符（insertion operator），也叫做流插入运算符。它用于将数据插入到输出流中，向输出流中写入数据。</p>
-<p>通常情况下，<code>&lt;&lt;</code> 运算符用于将数据插入到流中，例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::cout &lt;&lt; <span class="string">&quot;Hello, world!&quot;</span>;</span><br></pre></td></tr></table></figure>
-
-<p>在这个例子中，<code>&lt;&lt;</code> 运算符将字符串 <code>&quot;Hello, world!&quot;</code> 插入到输出流 <code>std::cout</code> 中，使得该字符串被输出到屏幕上。</p>
-<p><code>&lt;&lt;</code> 运算符可以连续使用，允许将多个数据插入到同一个输出流中，例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> x = <span class="number">10</span>;</span><br><span class="line"><span class="type">double</span> y = <span class="number">3.14</span>;</span><br><span class="line">std::cout &lt;&lt; <span class="string">&quot;The value of x is: &quot;</span> &lt;&lt; x &lt;&lt; <span class="string">&quot;, and the value of y is: &quot;</span> &lt;&lt; y;</span><br></pre></td></tr></table></figure>
-
-<p>在这个例子中，<code>&lt;&lt;</code> 运算符将多个字符串和变量插入到输出流 <code>std::cout</code> 中，形成一个复合的输出语句。</p>
-<p>除了输出流 <code>std::cout</code> 外，<code>&lt;&lt;</code> 运算符还可以用于文件输出流 <code>std::ofstream</code>，将数据写入到文件中。例如：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">std::ofstream outFile;</span><br><span class="line">outFile.<span class="built_in">open</span>(<span class="string">&quot;output.txt&quot;</span>);</span><br><span class="line">outFile &lt;&lt; <span class="string">&quot;Hello, file!&quot;</span>;</span><br><span class="line">outFile.<span class="built_in">close</span>();</span><br></pre></td></tr></table></figure>
-
-<p>在这个例子中，<code>&lt;&lt;</code> 运算符将字符串 <code>&quot;Hello, file!&quot;</code> 插入到文件输出流 <code>outFile</code> 中，使得该字符串被写入到文件 “output.txt” 中。</p>
-<p>总的来说，<code>&lt;&lt;</code> 运算符是用于将数据插入到输出流中的符号，在 C++ 中常用于输出语句中，使得程序可以向屏幕、文件等目标输出数据。</p>
-<hr>
-<h3 id="2024-05-16-补输出缓冲"><a href="#2024-05-16-补输出缓冲" class="headerlink" title="2024-05-16 补	输出缓冲"></a>2024-05-16 补	输出缓冲</h3><p>流，字如其名，像是水流，cout，cerr以及自定义的流file这些看作水流本身，流式输入输出由运算符&lt;&lt;&#x2F;&gt;&gt;来指定水流方向。</p>
-<p>创建一个流式对象，例如输出文件流对象<code>ofstream outFile</code> ，对象outFile本身就是一个水流，当其与任意文件关联，也就是<code>outFile.open(&quot;filename&quot;)</code>，之后的操作都是对关联的文件的操作，<code>outFile &lt;&lt; &quot;Hello, file!&quot;;</code> 像是将字符串放在水流中outFile中，因为outFile关联了文件filename，所以水流的终点就是这个文件内部。</p>
-<p>水流并不是畅行无阻的，有时候中间会有水坝的存在(缓冲机制)，正常情况下，水（数据）会在水坝（缓冲区）中积累，直到达到一定的量，然后水坝会放水（刷新缓冲区），将积累的水（数据）一次性地流向下游（屏幕或文件）。</p>
-<p>IO操作是消耗性能的，缓冲机制就是减少IO的次数，它可以减少对下游（屏幕或文件）的写入操作次数，从而提高效率。如果没有缓冲区，每次向 <code>std::cout</code> 添加数据都会立即写入屏幕，这会导致大量的I&#x2F;O操作，降低程序的性能。</p>
-<p>C++中存在流操纵器用于控制输入&#x2F;出流，一个常见的 <code>unitbuf</code> 将导致输出在每次插入后进行刷新。也就是数据生成即立即输出，不会被缓存，<a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/io/manip/unitbuf">使用 <code>std::unitbuf</code> 会启用 <code>unitbuf</code> 标志，如同调用 <code>str.setf(std::ios_base::unitbuf)</code>。相反，使用 <code>std::nounitbuf</code> 会禁用 <code>unitbuf</code> 标志，如同调用 <code>str.unsetf(std::ios_base::unitbuf)</code></a> </p>
-<p>使用：<code>std::cout &lt;&lt; std::unitbuf; // 启用自动刷新</code> </p>
-<p>手动打开水坝QAQ，例如，如果你正在写一个需要实时日志记录的程序，你可能会希望日志信息能够立即显示在屏幕上或写入文件，而不是在程序崩溃或异常退出时可能丢失未刷新的数据</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;chrono&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 没有立即刷新的情况</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;开始计算...&quot;</span>;</span><br><span class="line">    std::this_thread::<span class="built_in">sleep_for</span>(std::chrono::<span class="built_in">seconds</span>(<span class="number">3</span>)); <span class="comment">// 模拟耗时操作</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;计算完成。\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 std::flush 手动刷新</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;开始计算...&quot;</span> &lt;&lt; std::flush;</span><br><span class="line">    std::this_thread::<span class="built_in">sleep_for</span>(std::chrono::<span class="built_in">seconds</span>(<span class="number">3</span>)); <span class="comment">// 模拟耗时操作</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;计算完成。\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 std::endl 自动刷新（包含换行符）</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;开始计算...&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    std::this_thread::<span class="built_in">sleep_for</span>(std::chrono::<span class="built_in">seconds</span>(<span class="number">3</span>)); <span class="comment">// 模拟耗时操作</span></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;计算完成。\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>在这个程序中，我们有三种不同的输出方式：</p>
-<ol>
-<li>第一种情况，我们只是简单地使用 <code>std::cout</code> 输出文本，没有立即刷新。你会注意到，“开始计算…” 和 “计算完成。” 几乎同时出现，因为在耗时操作期间，输出被缓存了。</li>
-<li>第二种情况，我们在输出 “开始计算…” 后立即使用 <code>std::flush</code> 刷新缓冲区。这会导致 “开始计算…” 立即出现，然后程序会等待3秒，最后输出 “计算完成。”。</li>
-<li>第三种情况，我们使用 <code>std::endl</code> 来结束输出。<code>std::endl</code> 会插入一个换行符并刷新缓冲区，所以 “开始计算…” 会立即出现，然后程序等待3秒，最后输出 “计算完成。”。</li>
-</ol>
-<p>标准输出流cout就有缓冲机制而标准错误流cerr则是立即刷新，缓冲区刷新还有其他情况：</p>
-<ul>
-<li>缓冲区满时。</li>
-<li>程序正常结束时，标准库会清理所有的I&#x2F;O流，包括刷新 <code>std::cout</code> 的缓冲区。</li>
-<li>当你输出一个换行符（<code>&#39;\n&#39;</code>）时，如果 <code>std::cout</code> 被设置为行缓冲模式，它会刷新缓冲区。这是很多环境的默认行为，尤其是当输出到终端时。</li>
-<li>使用流操纵符 <code>std::endl</code>，它会插入一个换行符并刷新缓冲区。</li>
-<li>显式调用 <code>std::flush</code>，它会刷新缓冲区而不输出任何字符</li>
-</ul>
-<blockquote>
-<p>输出流对象是字节的目标。 三个最重要的输出流类为 <code>ostream</code>、<code>ofstream</code> 和 <code>ostringstream</code>。</p>
-<p><code>ostream</code> 类通过派生类 <code>basic_ostream</code> 支持预定义的流对象：</p>
-<ul>
-<li><code>cout</code> 标准输出</li>
-<li>具有有限缓冲的 <code>cerr</code> 标准错误</li>
-<li><code>clog</code> 类似于 <code>cerr</code>，但具有完全缓冲</li>
-</ul>
-<p>很少从 <code>ostream</code> 构造对象；通常使用预定义的对象。 在某些情况下，可以在启动程序后重新分配预定义的对象。 可配置为缓冲或无缓冲操作的 <code>ostream</code> 类最适合于连续的文本模式输出。 基类 <code>ios</code> 的所有功能包含在 <code>ostream</code> 中。 如果构造 <code>ostream</code> 类的对象，则必须指定构造函数的 <code>streambuf</code> 对象。</p>
-<p><code>ofstream</code> 类支持磁盘文件输出。 如果需要一个只输出的磁盘，请构造 <code>ofstream</code> 类的对象。 在构造 <code>ofstream</code> 对象时或在调用该对象的 <code>open</code> 成员函数时，可以指定 <code>ofstream</code> 对象是否接受二进制或文本模式数据。 许多格式设置选项和成员函数适用于 <code>ofstream</code> 对象，包括基类 <code>ios</code> 和 <code>ostream</code> 的所有功能。</p>
-<p>如果在构造函数中指定文件名，则在构造对象时，将自动打开该文件。 另外，可以在调用默认构造函数后使用 <code>open</code> 成员函数。</p>
-<p>类似于运行时函数 <code>sprintf_s</code>，<code>ostringstream</code> 类支持向内存中的字符串进行输出。 若要通过使用 I&#x2F;O 流格式设置在内存中创建一个字符串，请构造 <code>ostringstream</code> 类的对象。</p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/02/C++-%E7%BB%93%E6%9E%84%E5%8C%96%E7%BB%91%E5%AE%9A/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/02/C++-%E7%BB%93%E6%9E%84%E5%8C%96%E7%BB%91%E5%AE%9A/" class="post-title-link" itemprop="url">struct binding(结构化绑定)</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-03-02 12:00:00 / 修改时间：11:17:51" itemprop="dateCreated datePublished" datetime="2024-03-02T12:00:00+08:00">2024-03-02</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/%E5%85%B6%E4%BB%96/" itemprop="url" rel="index"><span itemprop="name">其他</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="处理多返回值"><a href="#处理多返回值" class="headerlink" title="处理多返回值"></a>处理多返回值</h2><p>一般处理多返回值都是使用结构体，例如定义一个结构体person</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">person</span></span><br><span class="line">&#123;</span><br><span class="line">std::string name;</span><br><span class="line"><span class="type">int</span> age;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后用person来接受多返回值，除此之外还可以使用元组,但是何必为了一个只使用一次的变量俩定义一个结构体，所以可以使用C++17的结构化绑定(方法3)</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;tuple&gt;</span></span></span><br><span class="line"><span class="comment">//处理多返回值</span></span><br><span class="line"><span class="function">std::tuple&lt;std::string,<span class="type">int</span>&gt; <span class="title">CreatePerson</span><span class="params">()</span><span class="comment">//两个参数可以使用pair，但tuple可以有更多的参数</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span>&#123; <span class="string">&quot;A&quot;</span>,<span class="number">24</span> &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;<span class="comment">//1.只能通过成员序号才能取到值</span></span><br><span class="line">	<span class="keyword">auto</span> person = <span class="built_in">CreatePerson</span>();</span><br><span class="line">	std::string name=std::get &lt; <span class="number">0</span> &gt;(person);</span><br><span class="line">	<span class="type">int</span> age = std::<span class="built_in">get</span>&lt;<span class="number">1</span>&gt;(person);</span><br><span class="line"><span class="comment">//2.std::tie</span></span><br><span class="line">	std::string name;</span><br><span class="line">	<span class="type">int</span> age;</span><br><span class="line">	std::<span class="built_in">tie</span>(name,age)=<span class="built_in">CreatePerson</span>();</span><br><span class="line"><span class="comment">//3.结构化绑定 C++17</span></span><br><span class="line">	<span class="keyword">auto</span> [name, age] = <span class="built_in">CreatePerson</span>();</span><br><span class="line">	std::cout &lt;&lt; name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>注：</p>
-<p>批量赋值<br>std::tie会将变量的引用整合成一个tuple，从而实现批量赋值。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> i; <span class="type">double</span> d; string s;</span><br><span class="line"><span class="built_in">tie</span>(i, d, s) = t3;</span><br><span class="line"></span><br><span class="line">cout &lt;&lt; i &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; d &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; s &lt;&lt; endl;</span><br></pre></td></tr></table></figure>
-<p>还可以使用std::ignore忽略某些tuple中的某些返回值，如</p>
-<p><code>tie(i, ignore, s) = t3;</code></p>
-<blockquote>
-<p> 原文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_37809890/article/details/89367406">https://blog.csdn.net/m0_37809890/article/details/89367406</a></p>
-</blockquote>
-<blockquote>
-<p>详见<a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/structured_binding">Structured binding declaration (since C++17) - cppreference.com</a></p>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1611,20 +1531,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-count">112</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-count">70</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">66</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1668,12 +1588,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">303k</span>
+    <span title="站点总字数">313k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4:35</span>
+    <span title="站点阅读时长">4:44</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>

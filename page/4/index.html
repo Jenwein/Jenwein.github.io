@@ -195,6 +195,551 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/10/linux-process/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/10/linux-process/" class="post-title-link" itemprop="url">linux进程创建</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-10 12:00:00" itemprop="dateCreated datePublished" datetime="2024-04-10T12:00:00+08:00">2024-04-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-19 19:06:09" itemprop="dateModified" datetime="2024-05-19T19:06:09+08:00">2024-05-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/process/" itemprop="url" rel="index"><span itemprop="name">process</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>8.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>8 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="进程创建"><a href="#进程创建" class="headerlink" title="进程创建"></a>进程创建</h2><h3 id="fork（）"><a href="#fork（）" class="headerlink" title="fork（）"></a>fork（）</h3><p><code>fork</code> 是 Unix 和类 Unix（比如 Linux）操作系统中用来创建新进程的一个系统调用。当一个进程（通常称为父进程）调用 <code>fork</code> 时，它创建了一个新的进程（称为子进程）。子进程几乎是父进程的完整副本：它包含了父进程的数据、代码、堆和栈的复制。</p>
+<p>下面详细解释下 <code>fork</code> 的行为和用法：</p>
+<ol>
+<li><strong>如何工作：</strong><ul>
+<li><code>fork</code> 创建一个与当前进程几乎完全相同的新进程。</li>
+<li>子进程获得与父进程相同的数据副本（但是它拥有自己的数据空间）。</li>
+<li>两个进程（父子）继续从 <code>fork</code> 调用返回的地方独立运行。</li>
+</ul>
+</li>
+<li><strong>返回值：</strong><ul>
+<li>父进程中，<code>fork</code> 返回新创建的子进程的进程标识符（PID），如果 <code>fork</code> 调用失败，则返回 -1。</li>
+<li>在子进程中，<code>fork</code> 返回 0 表示成功创建。</li>
+<li>这种方式允许父进程和子进程检测谁是谁，并决定后续的行动。</li>
+</ul>
+</li>
+<li><strong>后续操作：</strong><ul>
+<li>一旦 <code>fork</code> 成功，两个进程就可能做一些完全不同的事情。</li>
+<li>子进程常常通过 <code>exec</code> 系列函数替换其进程映像来执行与父进程不同的程序。</li>
+<li>父进程可能继续创建更多的子进程，或者等待子进程的完成。</li>
+</ul>
+</li>
+<li><strong>资源共享：</strong><ul>
+<li><code>fork</code> 后，父子进程在初期共享相同的物理内存页，这是一种称为写时复制（Copy-On-Write, COW）的优化技术。</li>
+<li>如果一个进程尝试修改共享的内存，操作系统会为这个进程创建这个内存页的私有副本，保证不同进程的内存空间是隔离的。</li>
+</ul>
+</li>
+<li><strong>文件描述符：</strong><ul>
+<li><strong>子进程会继承父进程的文件描述符。如果父进程打开了文件或网络连接，子进程会共有这些资源的访问。</strong></li>
+<li>文件描述符计数会增加，确保除非所有相关进程都关闭了文件描述符，否则资源不会释放。</li>
+</ul>
+</li>
+<li><strong>进程状态：</strong><ul>
+<li><strong>子进程会继承父进程的进程状态。这包括信号处理方式、进程优先级以及控制终端等。</strong></li>
+</ul>
+</li>
+<li><strong>用例和限制：</strong><ul>
+<li><code>fork</code> 被广泛用于创建后台进程或者守护进程。</li>
+<li><code>fork</code> 在创建新进程时有一定资源消耗，尽管有 COW 技术，频繁的 <code>fork</code> 和执行可能会降低系统性能。</li>
+</ul>
+</li>
+</ol>
+<p>总结来讲，<code>fork</code> 是 Unix 系统进程创建中最基本和最重要的操作之一。通过 <code>fork</code> 调用，系统能够基于现存的进程创建新进程，这是构建多进程应用的基石。</p>
+<h3 id="信号和I-x2F-O的继承"><a href="#信号和I-x2F-O的继承" class="headerlink" title="信号和I&#x2F;O的继承"></a><strong>信号和I&#x2F;O的继承</strong></h3><p>进程的切换及创建主要是由fork和exec族函数实现的，一个是创建出子进程，另一个是用一个新的进程来取代当前进程</p>
+<ul>
+<li><strong>I&#x2F;O状态</strong>：在<code>exec</code>执行后，所有已经关闭的文件描述符（fd）会保持关闭状态。如果文件描述符在<code>exec</code>执行前没有被关闭，它们默认会保持打开状态，除非在打开文件时指定了<code>O_CLOEXEC</code>标志或者在<code>exec</code>之前显式地关闭它们。</li>
+<li><strong>信号处理</strong>：<code>fork</code>创建的子进程会继承父进程的信号处理方式。但是，当<code>exec</code>系列函数执行时，大多数信号的处理方式会被重置为默认值（<code>SIG_DFL</code>），除非信号处理方式被设置为忽略（<code>SIG_IGN</code>），这种情况下会被保留。这是因为新程序可能没有定义原先的信号处理函数，所以继承的信号处理函数地址可能在新程序中没有意义。</li>
+<li><strong>信号屏蔽字</strong>：<code>fork</code>之后，子进程会继承父进程的信号屏蔽字，即使在<code>exec</code>之后，这个信号屏蔽字也会被保留。</li>
+<li><strong>文件描述符</strong>：默认情况下，所有打开的文件描述符在<code>execv</code>执行后都会保持打开状态，除非在打开文件时指定了<code>O_CLOEXEC</code>标志，或者在<code>execv</code>之前显式地关闭它们。在你的代码中，由于使用了<code>close(i)</code>关闭了所有文件描述符，这些操作会影响到<code>execv</code>执行的新程序，因为新程序将不会继承这些已经关闭的文件描述符。</li>
+</ul>
+<h3 id="写时拷贝（COW）"><a href="#写时拷贝（COW）" class="headerlink" title="写时拷贝（COW）"></a>写时拷贝（COW）</h3><p>Copy-On-Write（写时复制）是操作系统在进行进程创建和内存管理时用到的一种优化技术。写时复制允许操作系统在必要时才复制内存数据，而不是在每次进程创建时都进行复制，从而提高效率和节省资源。</p>
+<p>具体来说，在一个进程执行 <code>fork()</code> 系统调用创建子进程时，操作系统并不立即将父进程的内存数据完全复制一份给子进程。相反，它会让父进程和子进程共享同一片物理内存区域，并<strong>设置这些内存区域为只读</strong>。这时，父子进程实际上是读取同一份数据。</p>
+<p>当其中一个进程<strong>尝试修改这些共享的内存数据时</strong>，操作系统会使用写时复制技术进行处理。在修改动作发生的那一刻，操作系统会<strong>创建一个新的内存页面的副本，然后将修改应用于这个副本上，同时更新该进程的内存页表</strong>，确保它指向这个新的、已修改的内存页。其它未被修改的部分仍然保持共享状态。这个过程对于进程本身是透明的，进程不会意识到内存的这种管理方式。</p>
+<p>写时复制技术的优点包括：</p>
+<ol>
+<li><strong>节约内存</strong>：只有在必要的情况下才复制内存页面，因而节约了大量内存资源。</li>
+<li><strong>提高效率</strong>：由于初始时不需要复制整个进程空间，<code>fork()</code> 调用可以迅速完成。</li>
+<li><strong>优化响应时间</strong>：复制操作是按需进行的，这可以减少进程创建或页面写入时的延迟。</li>
+<li><strong>方便内存管理</strong>：当多个进程读取相同的数据时，内存利用率更高。</li>
+</ol>
+<p>写时复制技术最常见的用途之一就是在 <code>fork()</code> 调用中。它也被虚拟化技术广泛采用，比如在虚拟机和容器技术中，来优化多个虚拟环境共享宿主机资源时的效率和性能。</p>
+<h3 id="进程映像"><a href="#进程映像" class="headerlink" title="进程映像"></a>进程映像</h3><p>进程映像（Process Image）指的是一个进程在操作系统中所拥有的，与其运行相关的所有资源和信息的集合。这包括但不限于：</p>
+<ol>
+<li><strong>程序代码</strong>（text segment）：执行的机器语言代码。</li>
+<li><strong>数据段</strong>（data segment）：包括全局变量、静态变量等。</li>
+<li><strong>堆</strong>（heap）：动态分配的内存，如 C 语言中通过 <code>malloc</code> 分配得到的内存。</li>
+<li><strong>栈</strong>（stack）：函数调用时使用的内存，包括局部变量、函数参数、返回地址等。</li>
+<li><strong>执行上下文</strong>（context）：包括程序计数器（PC）、寄存器、系统状态字等，这些是CPU执行指令时的当前状态信息。</li>
+<li><strong>文件描述符表</strong>：该进程打开的所有文件和网络连接的索引。</li>
+<li><strong>环境变量</strong>：例如 PATH、HOME 等。</li>
+<li><strong>信号处理方式</strong>：该进程对不同信号设置的处理函数。</li>
+<li><strong>控制终端信息</strong>：与进程关联的终端信息。</li>
+<li><strong>用户和组ID</strong>：进程运行所在的用户和组权限。</li>
+</ol>
+<p>进程映像实际上定义了一个进程的运营状态，它能够让操作系统知道如何管理和执行一个进程。当进程通过 <code>fork</code> 被复制时，这个映像也被复制（通过写时复制技术，Copy-On-Write），创建一个新的进程。当执行 <code>exec</code> 类系统调用时，当前进程的程序码和数据段会被新的内容替换，但是其它的部分，如打开的文件描述符等会保留下来。这样的设计允许进程在创造出新的执行流的同时，保持资源使用和环境设置的连续性。</p>
+<h2 id="僵尸进程"><a href="#僵尸进程" class="headerlink" title="僵尸进程"></a>僵尸进程</h2><p>如果父进程比子进程先退出，子进程将被1号进程（init）托管（这也是一种让程序在后台运行的方法）–孤儿进程。</p>
+<h3 id="什么是僵尸进程"><a href="#什么是僵尸进程" class="headerlink" title="什么是僵尸进程"></a>什么是僵尸进程</h3><p>僵尸进程（Zombie Process）是指已经结束执行但其进程描述符仍然存在的进程。这种情况发生在子进程已经完成执行并退出，但其父进程尚未通过<code>wait()</code>或<code>waitpid()</code>系统调用来读取子进程的退出状态。在这种情况下，子进程的进程ID和退出状态仍然保存在系统中，以便父进程可以查询。</p>
+<p>僵尸进程不占用除了进程表项之外的任何资源，不会消耗CPU时间，也不会占用内存空间。然而，因为每个进程都需要一个唯一的进程ID，如果系统中存在大量的僵尸进程，它们可能会耗尽可用的进程ID，从而阻止新的进程被创建。</p>
+<h3 id="僵尸进程的避免："><a href="#僵尸进程的避免：" class="headerlink" title="僵尸进程的避免："></a>僵尸进程的避免：</h3><ol>
+<li>子进程退出的时候，内核会向父进程发头SIGCHLD信号，如果父进程用signal(SIGCHLD,SIG_IGN)通知<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%86%85%E6%A0%B8?fromModule=lemma_inlink">内核</a>，表示自己对子进程的退出不感兴趣，那么子进程退出后会立即释放数据结构。</li>
+<li>父进程通过wait()&#x2F;waitpid()等函数等待子进程结束，在子进程退出之前，父进程将被阻塞待。</li>
+<li>如果父进程很忙，可以捕获SIGCHLD信号，在信号处理函数中调用wait()&#x2F;waitpid()。</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">示例一：</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span>  <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (fork()&gt;<span class="number">0</span>)</span><br><span class="line">  &#123; <span class="comment">// 父进程的流程。</span></span><br><span class="line">    <span class="type">int</span> sts;</span><br><span class="line">    <span class="type">pid_t</span> pid=<span class="built_in">wait</span>(&amp;sts);</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;已终止的子进程编号是：&quot;</span> &lt;&lt; pid &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">WIFEXITED</span>(sts)) &#123; cout &lt;&lt; <span class="string">&quot;子进程是正常退出的，退出状态是：&quot;</span> &lt;&lt; <span class="built_in">WEXITSTATUS</span>(sts) &lt;&lt; endl; &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123; cout &lt;&lt; <span class="string">&quot;子进程是异常退出的，终止它的信号是：&quot;</span> &lt;&lt; <span class="built_in">WTERMSIG</span>(sts) &lt;&lt; endl; &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123; <span class="comment">// 子进程的流程。</span></span><br><span class="line">    <span class="comment">//sleep(100);</span></span><br><span class="line">    <span class="type">int</span> *p=<span class="number">0</span>; *p=<span class="number">10</span>;<span class="comment">//会造成内存泄漏</span></span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个程序中：</p>
+<ul>
+<li><code>fork()</code>函数用于创建一个新的子进程。如果<code>fork()</code>返回值大于0，说明当前是父进程。</li>
+<li>父进程执行<code>wait()</code>函数，该函数阻塞父进程直到任一子进程结束。<code>wait()</code>返回结束子进程的PID，并通过<code>sts</code>参数传出子进程的退出状态。</li>
+<li><code>WIFEXITED(sts)</code>宏检查子进程是否正常退出。如果是，<code>WEXITSTATUS(sts)</code>宏可以获取子进程的退出代码。</li>
+<li><code>WTERMSIG(sts)</code>宏用于获取终止子进程的信号编号，如果子进程是因为信号而非正常退出的话。</li>
+<li>子进程中的代码尝试对一个空指针进行写操作，这将导致运行时错误（段错误），并使子进程异常终止。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/wait.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span>  <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">int</span> sig)</span>   <span class="comment">// 子进程退出的信号处理函数。</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="type">int</span> sts;</span><br><span class="line">  <span class="type">pid_t</span> pid=<span class="built_in">wait</span>(&amp;sts);</span><br><span class="line"></span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;已终止的子进程编号是：&quot;</span> &lt;&lt; pid &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">WIFEXITED</span>(sts)) &#123; cout &lt;&lt; <span class="string">&quot;子进程是正常退出的，退出状态是：&quot;</span> &lt;&lt; <span class="built_in">WEXITSTATUS</span>(sts) &lt;&lt; endl; &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123; cout &lt;&lt; <span class="string">&quot;子进程是异常退出的，终止它的信号是：&quot;</span> &lt;&lt; <span class="built_in">WTERMSIG</span>(sts) &lt;&lt; endl; &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="built_in">signal</span>(SIGCHLD,func);  <span class="comment">// 捕获子进程退出的信号。</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (fork()&gt;<span class="number">0</span>)</span><br><span class="line">  &#123; <span class="comment">// 父进程的流程。</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">    &#123;</span><br><span class="line">      cout &lt;&lt; <span class="string">&quot;父进程忙着执行任务。\n&quot;</span>;</span><br><span class="line">      <span class="built_in">sleep</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123; <span class="comment">// 子进程的流程。</span></span><br><span class="line">    <span class="built_in">sleep</span>(<span class="number">5</span>);</span><br><span class="line">    <span class="comment">// int *p=0; *p=10;</span></span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在这个程序中，<code>main</code>函数中的<code>fork()</code>调用创建了一个子进程。如果<code>fork()</code>返回值大于0，说明当前是父进程，父进程进入一个无限循环，模拟持续的工作。如果<code>fork()</code>返回0，说明当前是子进程，子进程休眠5秒后退出，并返回状态码1。</p>
+<p>父进程通过<code>signal()</code>函数注册了一个信号处理函数<code>func</code>，该函数会在子进程退出时被调用。在<code>func</code>函数中，<code>wait()</code>函数被用来等待子进程结束，并获取其退出状态。根据退出状态，<code>func</code>函数会打印子进程是正常退出还是异常退出，以及相应的退出状态码或终止信号。</p>
+<p>这个程序演示了如何在父进程中处理子进程的退出，确保资源得到正确释放，并获取子进程的退出信息</p>
+<h3 id="wait函数"><a href="#wait函数" class="headerlink" title="wait函数"></a>wait函数</h3><h4 id="wait函数-1"><a href="#wait函数-1" class="headerlink" title="wait函数"></a>wait函数</h4><p>是一个系统调用，它使父进程暂停执行，直到一个子进程结束或者该进程接收到一个指定的信号为止。如果父进程没有子进程或者它的子进程已经结束，则<code>wait</code>函数会立即返回。</p>
+<p><code>wait</code>函数的原型如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/wait.h&gt;</span>  </span></span><br><span class="line"><span class="type">pid_t</span> <span class="title function_">wait</span><span class="params">(<span class="type">int</span> *status)</span>; </span><br></pre></td></tr></table></figure>
+
+<p>这个函数接受一个参数：</p>
+<ul>
+<li><p>status:</p>
+<ul>
+<li>这是一个指向整数的指针，用于存储子进程退出时的状态信息。如果你对子进程的退出状态不感兴趣，可以将这个参数设置为<code>NULL</code>。</li>
+</ul>
+</li>
+</ul>
+<p><code>wait</code>函数的返回值是：</p>
+<ul>
+<li>成功时返回子进程的进程ID。</li>
+<li>如果调用进程没有子进程，返回-1，并且<code>errno</code>会被设置为<code>ECHILD</code>。</li>
+</ul>
+<p>当子进程结束时，它会返回一些状态信息，这些信息可以通过<code>status</code>参数获取。为了解析这些状态信息，通常会使用一些宏，例如：</p>
+<ul>
+<li><code>WIFEXITED(status)</code>：如果子进程正常结束，则返回非零值。</li>
+<li><code>WEXITSTATUS(status)</code>：如果<code>WIFEXITED</code>非零，这个宏可以获取子进程的返回值。</li>
+</ul>
+<p>这些宏帮助父进程确定子进程是如何结束的，例如，是正常退出还是因为收到了信号而结束。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/549981187"><code>wait</code>函数通常与<code>fork</code>函数一起使用，<code>fork</code>用于创建新的进程，而<code>wait</code>用于回收子进程的资源，防止子进程成为僵尸进程。</a></p>
+<h4 id="多个子进程"><a href="#多个子进程" class="headerlink" title="多个子进程"></a>多个子进程</h4><p>当一个父进程使用<code>wait</code>函数等待子进程结束时，如果没有指定特定的子进程ID，<code>wait</code>会等待任何一个子进程结束。一旦有任何一个子进程结束，<code>wait</code>函数就会返回该子进程的PID，并且如果提供了一个非空指针作为参数，它还会返回子进程的退出状态。</p>
+<p>如果父进程需要等待特定的子进程，或者想要同时管理多个子进程的结束，它可以使用<code>waitpid</code>函数。<code>waitpid</code>允许父进程指定一个特定的子进程ID来等待，或者通过传递特定的参数来等待任何子进程或某个进程组的子进程。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sl1248/article/details/50936823">例如，如果父进程想要等待任何一个子进程结束，它可以调用<code>waitpid(-1, &amp;status, 0);</code>。如果父进程想要非阻塞地检查子进程的状态，它可以使用<code>WNOHANG</code>选项，如<code>waitpid(-1, &amp;status, WNOHANG);</code>，这样父进程不会被阻塞，即使没有子进程结束</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/sl1248/article/details/50936823">1</a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/mindtechnist/p/17243761.html">2</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_59008960/article/details/123625060">3</a>。</p>
+<p>在处理多个子进程时，通常的做法是在一个循环中调用<code>waitpid</code>，并检查返回值来确定哪个子进程结束了。如果<code>waitpid</code>返回0，表示没有子进程已经结束；如果返回-1，表示出错，通常是因为没有更多的子进程要等待了</p>
+<h2 id="孤儿进程"><a href="#孤儿进程" class="headerlink" title="孤儿进程"></a>孤儿进程</h2><p>孤儿进程（Orphan Process）是指那些父进程已经结束或被终止，但子进程仍然在运行的进程。孤儿进程不会被系统立即终止，而是会被init进程（通常是系统中的第一个进程，PID为1）所收养。init进程会负责这些孤儿进程的管理工作，并在它们结束时收集它们的状态信息。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(fork()!=<span class="number">0</span>)</span><br><span class="line">       <span class="built_in">exit</span>(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="孤儿进程的特点："><a href="#孤儿进程的特点：" class="headerlink" title="孤儿进程的特点："></a>孤儿进程的特点：</h3><ul>
+<li><strong>父进程终止</strong>：当一个进程结束时，它的所有子进程将成为孤儿进程。</li>
+<li><strong>被init进程收养</strong>：孤儿进程会被系统的init进程收养，这意味着它们的父进程ID（PPID）将变为1。</li>
+<li><strong>资源回收</strong>：当孤儿进程最终结束运行时，init进程会回收它们使用的资源，并清理它们的状态信息。</li>
+</ul>
+<h3 id="孤儿进程的产生："><a href="#孤儿进程的产生：" class="headerlink" title="孤儿进程的产生："></a>孤儿进程的产生：</h3><p>通常，孤儿进程的产生是由于父进程在执行完毕或因为某些原因被终止，而没有等待（通过<code>wait</code>或<code>waitpid</code>系统调用）子进程结束。</p>
+<h3 id="孤儿进程的影响："><a href="#孤儿进程的影响：" class="headerlink" title="孤儿进程的影响："></a>孤儿进程的影响：</h3><p>孤儿进程通常不会对系统造成负面影响，因为它们会被init进程妥善管理。然而，如果有大量的孤儿进程被创建且长时间运行，它们可能会占用不必要的系统资源。</p>
+<h3 id="孤儿进程与僵尸进程的区别："><a href="#孤儿进程与僵尸进程的区别：" class="headerlink" title="孤儿进程与僵尸进程的区别："></a>孤儿进程与僵尸进程的区别：</h3><p>孤儿进程与僵尸进程不同。僵尸进程是已经结束但其状态信息尚未被父进程收集的进程。如果父进程没有调用<code>wait</code>或<code>waitpid</code>来收集子进程的状态信息，子进程将成为僵尸进程。相比之下，孤儿进程是那些父进程已经结束，但子进程仍在运行的进程。</p>
+<h3 id="孤儿进程的处理："><a href="#孤儿进程的处理：" class="headerlink" title="孤儿进程的处理："></a>孤儿进程的处理：</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/654235321">在大多数情况下，孤儿进程不需要特别处理，因为它们会被init进程自动收养和管理。但是，如果开发者希望避免产生孤儿进程，可以通过编程确保父进程在子进程结束之前一直运行，或者确保父进程适时地调用<code>wait</code>或<code>waitpid</code>来等待子进程结束</a></p>
+<h2 id="多进程与信号"><a href="#多进程与信号" class="headerlink" title="多进程与信号"></a>多进程与信号</h2><p>在多进程的服务程序中，如果子进程收到退出信号，子进程自行退出，如果父进程收到退出信号，则应该先向全部的子进程发送退出信号，然后自己再退出。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span>  <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">FathEXIT</span><span class="params">(<span class="type">int</span> sig)</span></span>;  <span class="comment">// 父进程的信号处理函数。</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ChldEXIT</span><span class="params">(<span class="type">int</span> sig)</span></span>;  <span class="comment">// 子进程的信号处理函数。</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// 忽略全部的信号，不希望被打扰。</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">1</span>;i&lt;<span class="number">65</span>;i++) <span class="built_in">signal</span>(i,SIG_IGN);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 设置信号,在shell状态下可用 &quot;kill 进程号&quot; 或 &quot;Ctrl+c&quot; 正常终止些进程</span></span><br><span class="line">  <span class="comment">// 但请不要用 &quot;kill -9 +进程号&quot; 强行终止</span></span><br><span class="line">  <span class="built_in">signal</span>(SIGTERM,FathEXIT); <span class="built_in">signal</span>(SIGINT,FathEXIT);  <span class="comment">// SIGTERM 15 SIGINT 2</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">if</span> (fork()&gt;<span class="number">0</span>) <span class="comment">// 父进程的流程。</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">sleep</span>(<span class="number">5</span>); <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>          <span class="comment">// 子进程的流程。</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="comment">// 子进程需要重新设置信号。</span></span><br><span class="line">      <span class="built_in">signal</span>(SIGTERM,ChldEXIT);   <span class="comment">// 子进程的退出函数与父进程不一样。</span></span><br><span class="line">      <span class="built_in">signal</span>(SIGINT ,SIG_IGN);    <span class="comment">// 子进程不需要捕获SIGINT信号。</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">      &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;子进程&quot;</span> &lt;&lt; <span class="built_in">getpid</span>() &lt;&lt; <span class="string">&quot;正在运行中。\n&quot;</span>; <span class="built_in">sleep</span>(<span class="number">3</span>); <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 父进程的信号处理函数。</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">FathEXIT</span><span class="params">(<span class="type">int</span> sig)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// 以下代码是为了防止信号处理函数在执行的过程中再次被信号中断。</span></span><br><span class="line">  <span class="built_in">signal</span>(SIGINT,SIG_IGN); <span class="built_in">signal</span>(SIGTERM,SIG_IGN);</span><br><span class="line"></span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;父进程退出，sig=&quot;</span> &lt;&lt; sig &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">  <span class="built_in">kill</span>(<span class="number">0</span>,SIGTERM);     <span class="comment">// 向全部的子进程发送15的信号，通知它们退出。</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 在这里增加释放资源的代码（全局的资源）。</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 子进程的信号处理函数。</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ChldEXIT</span><span class="params">(<span class="type">int</span> sig)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="comment">// 以下代码是为了防止信号处理函数在执行的过程中再次被信号中断。</span></span><br><span class="line">  <span class="built_in">signal</span>(SIGINT,SIG_IGN); <span class="built_in">signal</span>(SIGTERM,SIG_IGN);</span><br><span class="line"></span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;子进程&quot;</span> &lt;&lt; <span class="built_in">getpid</span>() &lt;&lt; <span class="string">&quot;退出，sig=&quot;</span> &lt;&lt; sig &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 在这里增加释放资源的代码（只释放子进程的资源）。</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="other"><a href="#other" class="headerlink" title="other"></a>other</h2><p>除了fork，操作系统中还有其他几种创建进程的方式，尤其在Unix-like系统中常见的有：</p>
+<ol>
+<li>**vfork()**：<ul>
+<li><code>vfork()</code> 和 <code>fork()</code> 非常相似，但它不会复制父进程的页表。</li>
+<li><code>vfork()</code> 的目的是父进程和子进程共享相同的物理内存。</li>
+<li>子进程会在父进程的上下文中运行，直到它调用 <code>exec()</code> 或 <code>exit()</code>。</li>
+<li>它的使用不如 <code>fork()</code> 那么广泛，因为如果不正确使用，很容易导致问题。</li>
+</ul>
+</li>
+<li>**clone()**：<ul>
+<li><code>clone()</code> 是 Linux 提供的一种更加灵活的创建进程的方式。</li>
+<li>它允许调用者指定共享哪些资源，如文件系统、信号处理器、用户命名空间等。</li>
+<li><code>clone()</code> 可以用来实现线程，因为线程是共享资源的轻量级进程。</li>
+</ul>
+</li>
+<li><strong>exec() 系列函数</strong>：<ul>
+<li><code>exec()</code> 并不是用来直接创建新的进程，而是用于在当前进程中加载一个新的可执行文件，替换当前进程映像。</li>
+<li>通常与 <code>fork()</code> 配合使用，子进程会通过 <code>fork()</code> 创建后立即调用 <code>exec()</code> 来运行不同的程序。</li>
+</ul>
+</li>
+<li><strong>posix_spawn() 和 posix_spawnp()</strong>:<ul>
+<li>这两个函数是 POSIX 标准提供的用于创建进程的函数。</li>
+<li>他们结合了 <code>fork()</code> 和 <code>exec()</code> 的步骤，可能在某些系统上比单独调用这两个步骤更高效。</li>
+</ul>
+</li>
+</ol>
+<p>与 <code>fork()</code> 的区别主要在于：</p>
+<ul>
+<li><strong>资源共享</strong>：<ul>
+<li><code>fork()</code> 会复制父进程的页表，子进程会获得父进程数据的一个副本；</li>
+<li><code>vfork()</code> 和父进程共享数据部分，直至 <code>exec()</code> 或 <code>exit()</code> 被调用；</li>
+<li><code>clone()</code> 可以详细指定共享何种资源，非常灵活。</li>
+</ul>
+</li>
+<li><strong>创建目的</strong>：<ul>
+<li><code>fork()</code> 创建的子进程通常会执行不同的任务或者进一步使用 <code>exec()</code> 加载新的程序；</li>
+<li><code>vfork()</code> 主要是为了快速创建子进程以执行新程序，强调共享父进程空间；</li>
+<li><code>clone()</code> 除了能创建进程外，还经常用来实现线程。</li>
+</ul>
+</li>
+<li><strong>效率和用途</strong>：<ul>
+<li><code>posix_spawn()</code> 提供了更高层次的接口，可能在某些系统上提供比 <code>fork()</code> 更高效的操作，它的用途更接近于 <code>fork()</code> 后跟随 <code>exec()</code> 的常见用法。</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/09/linux-signal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/09/linux-signal/" class="post-title-link" itemprop="url">linux信号</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-09 12:00:00" itemprop="dateCreated datePublished" datetime="2024-04-09T12:00:00+08:00">2024-04-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-19 19:12:35" itemprop="dateModified" datetime="2024-05-19T19:12:35+08:00">2024-05-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="kill-x2F-killall"><a href="#kill-x2F-killall" class="headerlink" title="kill&#x2F;killall"></a>kill&#x2F;killall</h1><p><code>kill</code> 和 <code>killall</code> 命令都是用于终止进程的工具，但它们的应用场景和方式有所不同：</p>
+<ol>
+<li><strong>kill 命令</strong>：<ul>
+<li><code>kill</code> 命令用于发送信号给指定的进程。</li>
+<li>通常，如果没有指定信号，<code>kill</code> 会发送 <code>SIGTERM</code>（信号 15），这是一个请求进程优雅终止的信号。</li>
+<li>如果进程没有响应 <code>SIGTERM</code>，可以使用 <code>SIGKILL</code>（信号 9），这是一个强制终止进程的信号，进程无法忽略。</li>
+<li>命令格式：<code>kill [信号] 进程ID</code>。例如，<code>kill -9 1234</code> 会强制终止进程 ID 为 1234 的进程。</li>
+</ul>
+</li>
+<li><strong>killall 命令</strong>：<ul>
+<li><code>killall</code> 命令用于终止所有与给定名称相匹配的进程。</li>
+<li>它不需要进程 ID，而是根据进程名称操作。</li>
+<li>如果进程名不完整或不正确，<code>killall</code> 可能会报错或不执行任何操作。</li>
+<li>命令格式：<code>killall [信号] 进程名称</code>。例如，<code>killall -9 nginx</code> 会强制终止所有名为 <code>nginx</code> 的进程。</li>
+</ul>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1847239">使用 <code>kill</code> 命令时，你需要知道进程的 ID，而使用 <code>killall</code> 时，你只需要知道进程的名称。<code>kill</code> 命令在你需要精确控制哪个进程被终止时更为合适，而 <code>killall</code> 在你想要快速停止所有同名进程时更加方便。然而，使用 <code>killall</code> 时需要小心，以免误杀其他同名进程</a></p>
+<p><code>kill</code> 和 <code>killall</code> 命令在技术上是用来向进程发送信号的。在 Unix-like 系统中，信号是进程间通信的一种方式，可以用来告知进程发生了某个事件。每种信号都有预定义的含义，比如：</p>
+<ul>
+<li><code>SIGTERM</code>（默认信号，通常是 15）：请求进程优雅地终止。</li>
+<li><code>SIGKILL</code>（信号 9）：立即强制终止进程。</li>
+</ul>
+<p>当我们说“杀死进程”时，通常是指发送 <code>SIGKILL</code> 信号，因为这个信号会导致进程立即停止执行。但是，进程可以捕获和处理其他信号（除了 <code>SIGKILL</code> 和 <code>SIGSTOP</code>），这意味着进程可以决定如何响应大多数信号，包括是否终止。</p>
+<p>所以，你可以将 <code>kill</code> 和 <code>killall</code> 看作是向进程发送各种信号的工具，而不仅仅是终止它们。这些命令的灵活性允许系统管理员以多种方式与进程交互，包括但不限于终止进程。</p>
+<p>文末会有一些常用信号。</p>
+<p>以下代码执行后会一直循环</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;signal.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// func 是一个信号处理函数，当接收到信号时会被调用</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(<span class="type">int</span> signum)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::cout&lt;&lt;<span class="string">&quot;get signal:&quot;</span>&lt;&lt;signum&lt;&lt;std::endl;</span><br><span class="line">	<span class="built_in">signal</span>(signum,SIG_DFL);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// func1 是另一个信号处理函数，用于处理 SIGALRM（定时器信号）</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func1</span><span class="params">(<span class="type">int</span> signum)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::cout&lt;&lt;<span class="string">&quot;alarm do \n&quot;</span>;</span><br><span class="line">	<span class="built_in">alarm</span>(<span class="number">5</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// func2 是第三个信号处理函数，用于处理 SIGINT（中断信号）</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func2</span> <span class="params">(<span class="type">int</span> signum)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::cout&lt;&lt;<span class="string">&quot;holt shit,sb&quot;</span>&lt;&lt;std::endl;</span><br><span class="line">	<span class="built_in">sleep</span>(<span class="number">1</span>);</span><br><span class="line">	std::cout&lt;&lt;<span class="string">&quot;really?\n&quot;</span>;</span><br><span class="line">	<span class="built_in">sleep</span>(<span class="number">1</span>);</span><br><span class="line">	std::cout&lt;&lt;<span class="string">&quot;OK QAQ\n&quot;</span>;</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">signal</span>(<span class="number">1</span>,func);<span class="comment">// 为 SIGHUP 信号设置 func 为处理函数</span></span><br><span class="line">	<span class="built_in">signal</span>(<span class="number">15</span>,func);<span class="comment">// 为 SIGTERM 信号设置 func 为处理函数</span></span><br><span class="line">	<span class="built_in">signal</span>(<span class="number">2</span>,func2); <span class="comment">// 为 SIGINT 信号设置 func2 为处理函数</span></span><br><span class="line">	<span class="built_in">signal</span>(<span class="number">3</span>,SIG_IGN); <span class="comment">// 忽略 SIGQUIT 信号</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">alarm</span>(<span class="number">5</span>); <span class="comment">// 设置一个 5 秒后的定时器</span></span><br><span class="line"></span><br><span class="line">	<span class="built_in">signal</span>(<span class="number">14</span>,func1);</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line">	std::cout&lt;&lt;<span class="string">&quot; do \n&quot;</span>; <span class="comment">// 主循环中打印消息</span></span><br><span class="line">	<span class="built_in">sleep</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p>请注意，程序中的 <code>func2</code> 函数包含不雅的语言，这在正式编程实践中是不推荐的。此外，<code>exit(0)</code> 在 <code>func2</code> 中被调用，这将导致程序在接收到 <code>SIGINT</code> 信号时立即退出。而 <code>func1</code> 函数在处理 <code>SIGALRM</code> 信号时重新设置了定时器，这将导致每 5 秒打印一次 “alarm do \n” 并再次设置定时器。<code>func</code> 函数在接收到 <code>SIGHUP</code> 或 <code>SIGTERM</code> 信号后，会将信号的处理方式恢复为默认。最后，<code>SIGQUIT</code> 信号被程序忽略。</p>
+<h1 id="常见信号"><a href="#常见信号" class="headerlink" title="常见信号"></a>常见信号</h1><p>常见的信号及其含义：</p>
+<ul>
+<li><code>SIGHUP</code> (1): 终端挂断或父进程终止时发送。</li>
+<li><code>SIGINT</code> (2): 当用户按下中断键（通常是 Ctrl-C）时发送。</li>
+<li><code>SIGQUIT</code> (3): 当用户按下退出键（通常是 Ctrl-\）时发送。</li>
+<li><code>SIGILL</code> (4): 非法指令。</li>
+<li><code>SIGABRT</code> (6): 由 <code>abort</code> 系统调用产生。</li>
+<li><code>SIGFPE</code> (8): 浮点异常。</li>
+<li><code>SIGKILL</code> (9): 强制终止进程，不能被捕获或忽略。</li>
+<li><code>SIGSEGV</code> (11): 无效的内存引用。</li>
+<li><code>SIGPIPE</code> (13): 向一个没有读端的管道写数据时发送。</li>
+<li><code>SIGALRM</code> (14): 由 <code>alarm</code> 系统调用产生的定时器信号。</li>
+<li><code>SIGTERM</code> (15): 请求终止进程，可以被捕获和处理。</li>
+<li><code>SIGUSR1</code> (10) 和 <code>SIGUSR2</code> (12): 用户定义信号。</li>
+<li><code>SIGCHLD</code> (17): 子进程停止或终止时发送。</li>
+<li><code>SIGCONT</code> (18): 使停止的进程继续执行。</li>
+<li><code>SIGSTOP</code> (19): 停止进程的执行，不能被捕获或忽略。</li>
+<li><code>SIGTSTP</code> (20): 由用户发送的停止信号（通常是 Ctrl-Z）。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/61882365">除了这些，还有许多其他信号，如 <code>SIGBUS</code>、<code>SIGPOLL</code>、<code>SIGPROF</code>、<code>SIGSYS</code>、<code>SIGTRAP</code> 等，以及一系列的实时信号 <code>SIGRTMIN</code> 到 <code>SIGRTMAX</code>。实时信号支持排队，不会丢失，而传统信号可能会丢失</a></p>
+<h3 id="补"><a href="#补" class="headerlink" title="补"></a>补</h3><p>signal(SIGPIPE, SIG_IGN); 是一个系统调用，用于处理信号。这里的 SIGPIPE 是一个信号，通常在进程向一个已经关闭的管道或者socket写入数据时发出。而 SIG_IGN 是一个宏，表示忽略信号的处理程序。</p>
+<p>具体来说，signal(SIGPIPE, SIG_IGN); 的作用是告诉系统忽略 SIGPIPE 信号。如果不忽略这个信号，当进程试图写入一个已经没有读端的管道时，默认行为是终止进程。通过设置 SIG_IGN，进程可以继续运行，不会因为 SIGPIPE 而被意外终止。</p>
+<p>这里有一些注意事项：</p>
+<p>●   signal 函数是一个较老的接口，现在通常推荐使用 sigaction 函数，因为它提供了更好的控制能力，并且在某些系统上不需要重置处理程序 。</p>
+<p>●   除了 SIGKILL 和 SIGSTOP 之外，大多数信号都可以被忽略。SIGKILL 和 SIGSTOP 是两个不能被捕获或忽略的信号。</p>
+<p>如果想恢复 SIGPIPE 信号的默认处理行为，可以使用</p>
+<p> signal(SIGPIPE, SIG_DFL);，</p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/07/linux-file/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/07/linux-file/" class="post-title-link" itemprop="url">linux文件操作</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-04-07 12:00:00 / 修改时间：20:52:47" itemprop="dateCreated datePublished" datetime="2024-04-07T12:00:00+08:00">2024-04-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/file/" itemprop="url" rel="index"><span itemprop="name">file</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><ol>
+<li>目录显示与切换</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">include &lt;iostream&gt;</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="type">char</span> path[<span class="number">256</span>];</span><br><span class="line"><span class="comment">//文件目录操作</span></span><br><span class="line"><span class="comment">//pwd：显示当前路径</span></span><br><span class="line"><span class="type">char</span> path1[<span class="number">256</span>];</span><br><span class="line"><span class="built_in">getcwd</span>(path1,<span class="number">256</span>);</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;path1= &quot;</span>&lt;&lt;path1&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">//pwd2：显示当前路径</span></span><br><span class="line"><span class="type">char</span> *path2=<span class="built_in">get_current_dir_name</span>();</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;path2= &quot;</span>&lt;&lt;path2&lt;&lt;std::endl;</span><br><span class="line"><span class="built_in">free</span>(path2);</span><br><span class="line"></span><br><span class="line"><span class="comment">//cd:切换当前工作路径</span></span><br><span class="line"><span class="type">const</span> <span class="type">char</span> *path3=<span class="string">&quot;/home/jenwein/dev/zgjcpp&quot;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">chdir</span>(path3)==<span class="number">0</span>)std::cout&lt;&lt;<span class="string">&quot;success to dir: &quot;</span>;</span><br><span class="line"><span class="built_in">getcwd</span>(path,<span class="number">256</span>);</span><br><span class="line">std::cout&lt;&lt;path&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">//mkdir：创建目录文件夹</span></span><br><span class="line"><span class="comment">//arg1-目录名 arg2-访问权限 成功返回0</span></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">mkdir</span>(<span class="string">&quot;/home/jenwein/dev/zgjcpp/dirope/testmkdir&quot;</span>,<span class="number">0755</span>)==<span class="number">0</span>)std::cout&lt;&lt;<span class="string">&quot;makedir success&quot;</span>;</span><br><span class="line"><span class="keyword">else</span> std::cout&lt;&lt;<span class="string">&quot;fail to makedir&quot;</span>&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">//rmdir：删除文件夹</span></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">rmdir</span>(<span class="string">&quot;/home/jenwein/dev/zgjcpp/dirope/testmkdir&quot;</span>)==<span class="number">0</span>)std::cout&lt;&lt;<span class="string">&quot;rmdir success&quot;</span>;</span><br><span class="line"><span class="keyword">else</span> std::cout&lt;&lt;<span class="string">&quot;fail to rmdir&quot;</span>&lt;&lt;std::endl;</span><br><span class="line">std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="2">
+<li>读取文件&#x2F;目录信息</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dirent.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>*argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(argc!=<span class="number">2</span>)</span><br><span class="line">&#123;</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;Using ./t2 &quot;</span>&lt;&lt;std::endl;</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DIR *dir;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>((dir=<span class="built_in">opendir</span>(argv[<span class="number">1</span>]))==<span class="literal">nullptr</span>)&#123;<span class="keyword">return</span> <span class="number">-1</span>;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">dirent</span>* <span class="built_in">stdinfo</span>(<span class="literal">nullptr</span>);</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">if</span>((stdinfo=<span class="built_in">readdir</span>(dir))==<span class="literal">nullptr</span>) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;filename = &quot;</span>&lt;&lt;stdinfo-&gt;d_name&lt;&lt;<span class="string">&quot;, filetype = &quot;</span>&lt;&lt;(<span class="type">int</span>)stdinfo-&gt;d_type&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">closedir</span>(dir);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li>错误显示</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cerrno&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//属于系统调用的函数才会设置errno，其值只有在库函数调用发生错误时才会被设置</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="type">int</span> iret=<span class="built_in">mkdir</span>(<span class="string">&quot;/home/jenwein/dev/zgjcpp/dirope/bbb/aaa&quot;</span>,<span class="number">0755</span>);</span><br><span class="line"></span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;iret= &quot;</span>&lt;&lt;iret&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line">std::cout&lt;&lt;errno&lt;&lt;<span class="string">&quot; : &quot;</span>&lt;&lt;<span class="built_in">strerror</span>(errno)&lt;&lt;std::endl;<span class="comment">//显示错误信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//显示最近一次系统错误的详细信息</span></span><br><span class="line"><span class="comment">//perror(strerror(errno));</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">for(int i=0;i&lt;150;i++)</span></span><br><span class="line"><span class="comment">std::cout&lt;&lt;i&lt;&lt;&quot; : &quot;&lt;&lt;strerror(i)&lt;&lt;std::endl;//打印所有linux中错误代码</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="4">
+<li>其他操作</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>*argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;std::cout&lt;&lt;<span class="string">&quot;Using ./file (file or dir) (option:newpath)&quot;</span>&lt;&lt;std::endl; <span class="keyword">return</span> <span class="number">-1</span>;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//access查看文件权限，主要用于判断文件或目录是否存在</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">access</span>(argv[<span class="number">1</span>],F_OK)!=<span class="number">0</span>)</span><br><span class="line">&#123;std::cout&lt;&lt;<span class="string">&quot;file/dir&quot;</span>&lt;&lt;argv[<span class="number">1</span>]&lt;&lt;<span class="string">&quot; not exist&quot;</span>&lt;&lt;std::endl;</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;&#125;</span><br><span class="line"></span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;file/dir&quot;</span>&lt;&lt;argv[<span class="number">1</span>]&lt;&lt;<span class="string">&quot; exist&quot;</span>&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">//读取文件的stat的各属性，名称，权限，修改时间。。。</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">stat</span> st;<span class="comment">//struct for dir or file ins</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">stat</span>(argv[<span class="number">1</span>],&amp;st)!=<span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;stat(&quot;</span>&lt;&lt;argv[<span class="number">1</span>]&lt;&lt;<span class="string">&quot;): &quot;</span>&lt;&lt;<span class="built_in">strerror</span>(errno)&lt;&lt;std::endl;</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">S_ISREG</span>(st.st_mode))</span><br><span class="line">std::cout&lt;&lt;argv[<span class="number">1</span>]&lt;&lt;<span class="string">&quot; is a file (&quot;</span>&lt;&lt;<span class="string">&quot;mtime&quot;</span>&lt;&lt;st.st_mtime&lt;&lt;<span class="string">&quot;,size= &quot;</span>&lt;&lt;st.st_size&lt;&lt;<span class="string">&quot;)\n&quot;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">S_ISDIR</span>(st.st_mode))</span><br><span class="line">std::cout&lt;&lt;argv[<span class="number">1</span>]&lt;&lt;<span class="string">&quot; is a dir (&quot;</span>&lt;&lt;<span class="string">&quot;mtime&quot;</span>&lt;&lt;st.st_mtime&lt;&lt;<span class="string">&quot;,size= &quot;</span>&lt;&lt;st.st_size&lt;&lt;<span class="string">&quot;)\n&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//rename file/dir 重命名文件</span></span><br><span class="line"><span class="keyword">if</span>(argc=<span class="number">3</span>)</span><br><span class="line">&#123;<span class="keyword">if</span>(<span class="built_in">rename</span>(argv[<span class="number">1</span>],argv[<span class="number">2</span>])==<span class="number">0</span>)</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;rename success&quot;</span>&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//remove file/dir 删除文件</span></span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;want rm the last dir/file?(y/n)&quot;</span>&lt;&lt;std::endl;</span><br><span class="line"><span class="type">char</span> s;</span><br><span class="line">std::cin&gt;&gt;s;</span><br><span class="line"><span class="keyword">if</span>(s==<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">&#123;<span class="keyword">if</span>(<span class="built_in">remove</span>(argv[<span class="number">3</span>])==<span class="number">0</span>);</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;rm success&quot;</span>&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> std::cout&lt;&lt;<span class="string">&quot;file to rm sth\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/07/linux-ftp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -604,119 +1149,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/07/linux-systemerror/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/04/07/linux-systemerror/" class="post-title-link" itemprop="url">linux进程调用</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-04-07 12:00:00" itemprop="dateCreated datePublished" datetime="2024-04-07T12:00:00+08:00">2024-04-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-19 18:53:09" itemprop="dateModified" datetime="2024-05-19T18:53:09+08:00">2024-05-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/process/" itemprop="url" rel="index"><span itemprop="name">process</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>608</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="errno"><a href="#errno" class="headerlink" title="errno"></a>errno</h1><h1 id="errno-1"><a href="#errno-1" class="headerlink" title="errno"></a>errno</h1><p><a target="_blank" rel="noopener" href="https://www.runoob.com/cprogramming/c-function-perror.html"><code>perror()</code> 是 C 语言标准库中的一个函数，定义在 &#96;&#96; 头文件中。它的作用是将最近的一个系统错误代码转换为可读的错误描述，并输出到标准错误流（<code>stderr</code>）。通常，参数 <code>str</code> 是一个自定义的字符串，用于在错误描述前添加额外的信息。如果 <code>str</code> 为 <code>NULL</code>，则 <code>perror()</code> 函数直接打印函数执行出错的消息。这在调试程序时非常有用，因为它提供了一个快速、简洁的方法来通知用户有关程序中特定库函数调用失败的原因</a></p>
-<p>在 Linux 中，错误信息通常与 <code>errno</code>（错误号）相关联，它是一个全局变量，用于存储系统调用的最后一个错误代码。每个错误代码都对应一个特定的错误情况。当系统调用失败时，可以通过 <code>errno</code> 获取错误原因，并使用 <code>perror</code> 或 <code>strerror</code> 函数将错误代码转换为人类可读的形式。</p>
-<p>以下是一些常见的 <code>errno</code> 错误代码及其含义：</p>
-<ul>
-<li><code>EPERM (1)</code>: 操作不允许</li>
-<li><code>ENOENT (2)</code>: 没有这样的文件或目录</li>
-<li><code>ESRCH (3)</code>: 没有这样的过程</li>
-<li><code>EINTR (4)</code>: 系统调用被中断</li>
-<li><code>EIO (5)</code>: I&#x2F;O 错误</li>
-<li><code>ENXIO (6)</code>: 没有这样的设备或地址</li>
-<li><code>E2BIG (7)</code>: 参数列表太长</li>
-<li><code>ENOEXEC (8)</code>: 执行格式错误</li>
-<li><code>EBADF (9)</code>: 坏的文件描述符</li>
-<li><code>ECHILD (10)</code>: 没有子进程</li>
-<li><code>EAGAIN (11)</code>: 资源暂时不可用</li>
-<li><code>ENOMEM (12)</code>: 内存溢出</li>
-<li><code>EACCES (13)</code>: 权限被拒绝</li>
-<li><code>EFAULT (14)</code>: 错误的地址</li>
-<li>……</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/07/linux-socket/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1016,6 +1448,119 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 此程序用于演示socket通信的服务端</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">//第一步相同</span></span><br><span class="line"><span class="comment">// 第1步：创建服务端的socket。 </span></span><br><span class="line">  <span class="type">int</span> listenfd = <span class="built_in">socket</span>(AF_INET,SOCK_STREAM,<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">if</span> (listenfd==<span class="number">-1</span>) </span><br><span class="line">  &#123; </span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;socket&quot;</span>); </span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">  &#125;</span><br><span class="line">-------------------------------</span><br><span class="line">  <span class="comment">/*第2步：把服务端用于通信的IP和端口绑定到socket上*/</span></span><br><span class="line">  <span class="comment">//a.准备ip与端口</span></span><br><span class="line">  <span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> servaddr;          <span class="comment">// 用于存放服务端IP和端口的数据结构。</span></span><br><span class="line">  <span class="built_in">memset</span>(&amp;servaddr,<span class="number">0</span>,<span class="built_in">sizeof</span>(servaddr));</span><br><span class="line">  servaddr.sin_family = AF_INET;                <span class="comment">// 指定协议。与客户端相同</span></span><br><span class="line">  servaddr.sin_addr.s_addr = <span class="built_in">htonl</span>(INADDR_ANY); <span class="comment">// 服务端任意网卡的IP都可以用于通讯，服务端可以与多个客户端建立连接。</span></span><br><span class="line">  servaddr.sin_port = <span class="built_in">htons</span>(<span class="built_in">atoi</span>(argv[<span class="number">1</span>]));     <span class="comment">// 指定通信端口，端口需要与客户端相同</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment">//b.绑定服务端的IP和端口到listenfd这个socket上(为socket分配ip和port)。</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">bind</span>(listenfd,(<span class="keyword">struct</span> sockaddr *)&amp;servaddr,<span class="built_in">sizeof</span>(servaddr)) != <span class="number">0</span> )</span><br><span class="line">  &#123; </span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;bind&quot;</span>); </span><br><span class="line">    <span class="built_in">close</span>(listenfd); </span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 第3步：把socket设置为可连接（监听）的状态。</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">listen</span>(listenfd,<span class="number">5</span>) != <span class="number">0</span> ) </span><br><span class="line">  &#123; </span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;listen&quot;</span>); </span><br><span class="line">    <span class="built_in">close</span>(listenfd); </span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 第4步：受理客户端的连接请求，如果没有客户端连上来，accept()函数将阻塞等待。</span></span><br><span class="line"><span class="comment">//accept利用监听套接字连接客户端</span></span><br><span class="line">  <span class="type">int</span> clientfd=<span class="built_in">accept</span>(listenfd,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">if</span> (clientfd==<span class="number">-1</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    	<span class="built_in">perror</span>(<span class="string">&quot;accept&quot;</span>); <span class="function">c</span></span><br><span class="line"><span class="function">        <span class="title">lose</span><span class="params">(listenfd)</span></span>; </span><br><span class="line">     	 <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;客户端已连接。\n&quot;</span>;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 第5步：与客户端通信，接收客户端发过来的报文后，回复ok。</span></span><br><span class="line">  <span class="type">char</span> buffer[<span class="number">1024</span>];</span><br><span class="line">  <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="type">int</span> iret;</span><br><span class="line">    <span class="built_in">memset</span>(buffer,<span class="number">0</span>,<span class="built_in">sizeof</span>(buffer));</span><br><span class="line">    <span class="comment">// 接收客户端的请求报文，如果客户端没有发送请求报文，recv()函数将阻塞等待。</span></span><br><span class="line">    <span class="comment">// 如果客户端已断开连接，recv()函数将返回0。</span></span><br><span class="line">    <span class="keyword">if</span> ( (iret=<span class="built_in">recv</span>(clientfd,buffer,<span class="built_in">sizeof</span>(buffer),<span class="number">0</span>))&lt;=<span class="number">0</span>) </span><br><span class="line">    &#123;</span><br><span class="line">       cout &lt;&lt; <span class="string">&quot;iret=&quot;</span> &lt;&lt; iret &lt;&lt; endl;  <span class="keyword">break</span>;   </span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;接收：&quot;</span> &lt;&lt; buffer &lt;&lt; endl;</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">strcpy</span>(buffer,<span class="string">&quot;ok&quot;</span>);  <span class="comment">// 生成回应报文内容。</span></span><br><span class="line">    <span class="comment">// 向客户端发送回应报文。</span></span><br><span class="line">    <span class="keyword">if</span> ( (iret=<span class="built_in">send</span>(clientfd,buffer,<span class="built_in">strlen</span>(buffer),<span class="number">0</span>))&lt;=<span class="number">0</span>) </span><br><span class="line">    &#123; </span><br><span class="line">      <span class="built_in">perror</span>(<span class="string">&quot;send&quot;</span>); <span class="keyword">break</span>; </span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;发送：&quot;</span> &lt;&lt; buffer &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 第6步：关闭socket，释放资源。</span></span><br><span class="line">  <span class="built_in">close</span>(listenfd);   <span class="comment">// 关闭服务端用于监听的socket。</span></span><br><span class="line">  <span class="built_in">close</span>(clientfd);   <span class="comment">// 关闭客户端连上来的socket。</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/07/linux-systemerror/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/07/linux-systemerror/" class="post-title-link" itemprop="url">linux进程调用</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-07 12:00:00" itemprop="dateCreated datePublished" datetime="2024-04-07T12:00:00+08:00">2024-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-19 18:53:09" itemprop="dateModified" datetime="2024-05-19T18:53:09+08:00">2024-05-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/process/" itemprop="url" rel="index"><span itemprop="name">process</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>608</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="errno"><a href="#errno" class="headerlink" title="errno"></a>errno</h1><h1 id="errno-1"><a href="#errno-1" class="headerlink" title="errno"></a>errno</h1><p><a target="_blank" rel="noopener" href="https://www.runoob.com/cprogramming/c-function-perror.html"><code>perror()</code> 是 C 语言标准库中的一个函数，定义在 &#96;&#96; 头文件中。它的作用是将最近的一个系统错误代码转换为可读的错误描述，并输出到标准错误流（<code>stderr</code>）。通常，参数 <code>str</code> 是一个自定义的字符串，用于在错误描述前添加额外的信息。如果 <code>str</code> 为 <code>NULL</code>，则 <code>perror()</code> 函数直接打印函数执行出错的消息。这在调试程序时非常有用，因为它提供了一个快速、简洁的方法来通知用户有关程序中特定库函数调用失败的原因</a></p>
+<p>在 Linux 中，错误信息通常与 <code>errno</code>（错误号）相关联，它是一个全局变量，用于存储系统调用的最后一个错误代码。每个错误代码都对应一个特定的错误情况。当系统调用失败时，可以通过 <code>errno</code> 获取错误原因，并使用 <code>perror</code> 或 <code>strerror</code> 函数将错误代码转换为人类可读的形式。</p>
+<p>以下是一些常见的 <code>errno</code> 错误代码及其含义：</p>
+<ul>
+<li><code>EPERM (1)</code>: 操作不允许</li>
+<li><code>ENOENT (2)</code>: 没有这样的文件或目录</li>
+<li><code>ESRCH (3)</code>: 没有这样的过程</li>
+<li><code>EINTR (4)</code>: 系统调用被中断</li>
+<li><code>EIO (5)</code>: I&#x2F;O 错误</li>
+<li><code>ENXIO (6)</code>: 没有这样的设备或地址</li>
+<li><code>E2BIG (7)</code>: 参数列表太长</li>
+<li><code>ENOEXEC (8)</code>: 执行格式错误</li>
+<li><code>EBADF (9)</code>: 坏的文件描述符</li>
+<li><code>ECHILD (10)</code>: 没有子进程</li>
+<li><code>EAGAIN (11)</code>: 资源暂时不可用</li>
+<li><code>ENOMEM (12)</code>: 内存溢出</li>
+<li><code>EACCES (13)</code>: 权限被拒绝</li>
+<li><code>EFAULT (14)</code>: 错误的地址</li>
+<li>……</li>
+</ul>
 
       
     </div>
@@ -1557,318 +2102,10 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/25/C++-set_intersection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/25/C++-set_intersection/" class="post-title-link" itemprop="url">集合运算</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-03-25 22:00:00 / 修改时间：17:36:37" itemprop="dateCreated datePublished" datetime="2024-03-25T22:00:00+08:00">2024-03-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/%E9%9B%86%E5%90%88/" itemprop="url" rel="index"><span itemprop="name">集合</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.9k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="集合运算（C-17）"><a href="#集合运算（C-17）" class="headerlink" title="集合运算（C++17）"></a>集合运算（C++17）</h2><blockquote>
-<p>.<a target="_blank" rel="noopener" href="https://blog.csdn.net/xiaozhidian/article/details/117554753">C++集合 STL集合 set集和–交集、并集、差集、对称差-CSDN博客</a></p>
-</blockquote>
-<p><code>std::set_intersection</code> 是 C++ 标准库中的一个算法，它用于计算两个已排序范围（通常是集合或向量）的交集，并将结果输出到另一个范围。这个算法假设两个输入范围都是按照升序排序的，并且输出范围也应该是已排序的。</p>
-<p>以下是 <code>std::set_intersection</code> 的基本用法：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iterator&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;set&gt;</span>  </span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;     </span><br><span class="line">    std::set&lt;<span class="type">int</span>&gt; set1 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;     </span><br><span class="line">    std::set&lt;<span class="type">int</span>&gt; set2 = &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>&#125;;     </span><br><span class="line">    std::set&lt;<span class="type">int</span>&gt; intersection;      </span><br><span class="line">    std::<span class="built_in">set_intersection</span>(set1.<span class="built_in">begin</span>(), set1.<span class="built_in">end</span>(),                           </span><br><span class="line">                          set2.<span class="built_in">begin</span>(), set2.<span class="built_in">end</span>(),                           std::<span class="built_in">inserter</span>(intersection, intersection.<span class="built_in">begin</span>()));      <span class="comment">// intersection 现在包含 &#123;4, 5&#125; &#125; </span></span><br></pre></td></tr></table></figure>
-
-<p>在这个例子中，<code>set1</code> 和 <code>set2</code> 是两个集合，我们想要找出它们的交集。<code>std::set_intersection</code> 被调用，并且传入了两个集合的开始和结束迭代器，以及一个插入迭代器，它指向结果集合 <code>intersection</code>。算法会遍历两个输入范围，并将两个范围都有的元素复制到输出范围。</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/algorithm/set_intersection">std::set_intersection - cppreference.com</a></p>
-</blockquote>
-<p>根据文档可知也可以自定义比较规则</p>
-<h3 id="插入迭代器"><a href="#插入迭代器" class="headerlink" title="插入迭代器"></a>插入迭代器</h3><p><code>std::inserter</code> 是一个插入迭代器，它在被赋值时会调用容器的 <code>insert</code> 方法。在这个例子中，它被用来将算法的结果插入到 <code>intersection</code> 集合中。由于 <code>std::set</code> 是一个有序容器，所以 <code>std::inserter</code> 只需要知道插入的目标容器，而不需要具体的位置。</p>
-<p><code>std::set_intersection</code> 可以用于任何类型的有序范围，不仅限于 <code>std::set</code>。它也可以用于 <code>std::vector</code>，只要这些向量是有序的。</p>
-<p><code>std::set_intersection</code> 的第五个参数是一个输出迭代器，它指定了算法的结果应该被插入到哪个容器中。这个参数通常是通过 <code>std::inserter</code> 函数创建的插入迭代器，它允许 <code>std::set_intersection</code> 将计算出的交集元素插入到指定的输出容器中。</p>
-<p>这里是一个例子，展示了如何使用 <code>std::inserter</code> 作为 <code>std::set_intersection</code> 的第五个参数：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">std::set&lt;<span class="type">int</span>&gt; set1 = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;; </span><br><span class="line">std::set&lt;<span class="type">int</span>&gt; set2 = &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>&#125;; </span><br><span class="line">std::set&lt;<span class="type">int</span>&gt; intersection;  </span><br><span class="line">std::<span class="built_in">set_intersection</span>(set1.<span class="built_in">begin</span>(), set1.<span class="built_in">end</span>(),                      </span><br><span class="line">                      set2.<span class="built_in">begin</span>(), set2.<span class="built_in">end</span>(),                       </span><br><span class="line">                      std::<span class="built_in">inserter</span>(intersection, intersection.<span class="built_in">begin</span>())); </span><br></pre></td></tr></table></figure>
-
-<p>在这个例子中，<code>std::inserter(intersection, intersection.begin())</code> 创建了一个插入迭代器，它会在 <code>intersection</code> 集合的开始位置插入元素。由于 <code>std::set</code> 是一个有序容器，实际上元素会被插入到正确的排序位置，而不是字面上的 <code>begin()</code> 位置。</p>
-<p>总结来说，<code>std::set_intersection</code> 的第五个参数需要一个输出迭代器，它定义了输出结果的存储位置</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/iterator/inserter">std::inserter - cppreference.com</a></p>
-</blockquote>
-<p><strong>&#x3D;&#x3D;第五个参数使用 std::back_inserter相当于是尾插法， std::front_inserter相当于是头插法,std::inserter则指定位置&#x3D;&#x3D;</strong></p>
-<p><u>请注意，直接在 <code>set1</code> 上调用 <code>std::set_difference</code> 是不安全的，因为它可能会在计算差集的过程中修改 <code>set1</code> ，导致未定义的行为。因此，使用一个临时变量来存储差集的结果是必要的。完成操作后，再将结果移动回 <code>set1</code> 是安全且有效的做法。</u></p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/25/Qt-%E7%88%B6%E5%AF%B9%E8%B1%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/25/Qt-%E7%88%B6%E5%AF%B9%E8%B1%A1/" class="post-title-link" itemprop="url">QT父对象</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-25 22:00:00" itemprop="dateCreated datePublished" datetime="2024-03-25T22:00:00+08:00">2024-03-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-25 09:04:07" itemprop="dateModified" datetime="2024-09-25T09:04:07+08:00">2024-09-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/QT/" itemprop="url" rel="index"><span itemprop="name">QT</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>939</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>父对象</strong>通常指的是在对象的层次结构中处于上一级的对象。在面向对象编程（OOP）的上下文中，父对象具有以下特点：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/LagerSwan/article/details/104212352"><strong>继承性</strong>：子对象（或子类）会继承父对象（或父类）的属性和方法。这意味着子对象可以使用父对象定义的功能，同时还可以有自己的特定功能</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/LagerSwan/article/details/104212352">1</a><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-inheritance.html">2</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-inheritance.html"><strong>层次结构</strong>：在一个层次结构中，父对象可以有多个子对象，但一个子对象通常只有一个父对象</a><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-inheritance.html">2</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-inheritance.html"><strong>封装性</strong>：父对象可以封装通用的属性和方法，子对象则可以扩展或修改这些属性和方法以满足特定需求</a><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-inheritance.html">2</a>。</li>
-</ul>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/LagerSwan/article/details/104212352">例如，在Qt框架中，如果你创建了一个<code>QPushButton</code>按钮，并将其放置在一个窗口<code>widget</code>中，那么这个窗口<code>widget</code>就是按钮的父对象。按钮会继承窗口的一些属性，如位置和可见性，同时也可以有自己的属性，如按钮文本和点击事件处理</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E7%88%B6%E5%AF%B9%E8%B1%A1+%E5%AE%9A%E4%B9%89">3</a>。</p>
-<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Parent_object">在更广泛的编程语境中，父对象的概念也可以指代给定属性或方法所属的对象</a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Parent_object">4</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/LagerSwan/article/details/104212352">。这有助于组织代码，使其更加模块化和可重用。</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/LagerSwan/article/details/104212352">1</a><a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-inheritance.html">2</a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/Parent_object">3</a></p>
-<p>在Qt中，当你为一个对象指定一个父对象后，父对象会负责管理其子对象的生命周期。这是通过Qt的<strong>对象树（Object Tree）</strong>机制来实现的。具体来说，父对象如何管理子对象的生命周期包括以下几个方面：</p>
-<ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_46577050/article/details/139334719"><strong>自动内存管理</strong>：当你创建一个对象并指定一个父对象时，这个新创建的对象会被自动添加到父对象的子对象列表中。当父对象被销毁时，它会自动销毁其所有的子对象。这样，程序员就不需要手动删除每个子对象，从而避免了内存泄漏的风险</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_46577050/article/details/139334719">1</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_46577050/article/details/139334719"><strong>析构过程</strong>：在父对象的析构函数中，会调用子对象的析构函数，确保子对象被正确地清理。如果子对象是在堆上分配的（使用<code>new</code>关键字创建的），则会调用<code>delete</code>来释放内存</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_46577050/article/details/139334719">1</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_46577050/article/details/139334719"><strong>延迟删除</strong>：在某些情况下，如果你需要删除一个QObject对象，推荐使用<code>QObject::deleteLater()</code>方法而不是直接使用<code>delete</code>。这个方法会将删除操作延迟到事件循环的下一个迭代，这通常是线程安全的，并且可以防止在对象正在处理事件时被删除的问题</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/hss2799/article/details/130086658">2</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/hss2799/article/details/130086658"><strong>关闭与删除</strong>：默认情况下，当一个QWidget窗口关闭时，它不会被自动删除，只是被隐藏。如果你希望在窗口关闭时自动删除窗口对象，可以在窗口的构造函数中设置<code>Qt::WA_DeleteOnClose</code>属性。这样，当窗口关闭时，Qt会自动调用窗口对象的析构函数来释放资源</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/hss2799/article/details/130086658">2</a>。</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/25/%E7%AE%97%E6%B3%95-%E8%B4%AA%E5%BF%83%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/25/%E7%AE%97%E6%B3%95-%E8%B4%AA%E5%BF%83%E6%B3%95/" class="post-title-link" itemprop="url">贪心法</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-03-25 19:00:02 / 修改时间：17:29:59" itemprop="dateCreated datePublished" datetime="2024-03-25T19:00:02+08:00">2024-03-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/%E8%B4%AA%E5%BF%83/" itemprop="url" rel="index"><span itemprop="name">贪心</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.1k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">func</span><span class="params">(std::set&lt;std::string&gt;&amp;states_needed, std::map&lt;std::string, std::set&lt;std::string&gt;&gt;&amp; stations, std::set&lt;std::string&gt;&amp; final_stations)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (!states_needed.<span class="built_in">empty</span>())</span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">	std::string best_station;<span class="comment">//存储在当前迭代中找到的最佳广播站的名称</span></span><br><span class="line">	std::set&lt;std::string&gt; states_covered;<span class="comment">//存储当前迭代中best_station能覆盖的州</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">const</span> <span class="keyword">auto</span>&amp; [station, states_for_station] : stations)</span><br><span class="line">	&#123;</span><br><span class="line">		std::set&lt;std::string&gt; covered;<span class="comment">//当前考虑的广播站能覆盖的、还未覆盖的州。</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//算states_needed和当前广播站能覆盖的州station_state的交集，并将结果存储在covered中。</span></span><br><span class="line">		std::<span class="built_in">set_intersection</span>(states_needed.<span class="built_in">begin</span>(), states_needed.<span class="built_in">end</span>(),</span><br><span class="line">		                      states_for_station.<span class="built_in">begin</span>(), states_for_station.<span class="built_in">end</span>(),</span><br><span class="line">			                  std::<span class="built_in">inserter</span>(covered, covered.<span class="built_in">begin</span>()));</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (covered.<span class="built_in">size</span>() &gt; states_covered.<span class="built_in">size</span>()) </span><br><span class="line">		&#123;</span><br><span class="line">			best_station = station;</span><br><span class="line">			states_covered = covered;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	std::set&lt;std::string&gt;temp;</span><br><span class="line"></span><br><span class="line">	std::<span class="built_in">set_difference</span>(states_needed.<span class="built_in">begin</span>(), states_needed.<span class="built_in">end</span>(), </span><br><span class="line">		                states_covered.<span class="built_in">begin</span>(), states_covered.<span class="built_in">end</span>(), </span><br><span class="line">		                std::<span class="built_in">inserter</span>(temp, temp.<span class="built_in">begin</span>()));</span><br><span class="line">	</span><br><span class="line">	states_needed=std::<span class="built_in">move</span>(temp);</span><br><span class="line"></span><br><span class="line">	final_stations.<span class="built_in">insert</span>(best_station);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	std::set&lt;std::string&gt;states_needed = &#123; <span class="string">&quot;mt&quot;</span>, <span class="string">&quot;wa&quot;</span>, <span class="string">&quot;or&quot;</span>, <span class="string">&quot;id&quot;</span>, <span class="string">&quot;nv&quot;</span>, <span class="string">&quot;ut&quot;</span>,<span class="string">&quot;ca&quot;</span>, <span class="string">&quot;az&quot;</span> &#125;;</span><br><span class="line">	std::map&lt;std::string, std::set&lt;std::string&gt;&gt;stations;</span><br><span class="line">	stations[<span class="string">&quot;kone&quot;</span>] = &#123;<span class="string">&quot;id&quot;</span>, <span class="string">&quot;nv&quot;</span>, <span class="string">&quot;ut&quot;</span> &#125;;</span><br><span class="line">	stations[<span class="string">&quot;ktwo&quot;</span>] = &#123; <span class="string">&quot;wa&quot;</span>, <span class="string">&quot;id&quot;</span>, <span class="string">&quot;mt&quot;</span> &#125;;</span><br><span class="line">	stations[<span class="string">&quot;kthree&quot;</span>] = &#123; <span class="string">&quot;or&quot;</span>, <span class="string">&quot;nv&quot;</span>, <span class="string">&quot;ca&quot;</span> &#125;;</span><br><span class="line">	stations[<span class="string">&quot;kfour&quot;</span>] = &#123; <span class="string">&quot;nv&quot;</span>, <span class="string">&quot;ut&quot;</span> &#125;;</span><br><span class="line">	stations[<span class="string">&quot;kfive&quot;</span>] = &#123; <span class="string">&quot;ca&quot;</span>, <span class="string">&quot;az&quot;</span> &#125;;</span><br><span class="line"></span><br><span class="line">	std::set&lt;std::string&gt;final_stations;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">func</span>(states_needed, stations, final_stations);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="type">const</span> std::string&amp; station : final_stations) &#123;</span><br><span class="line">		std::cout &lt;&lt; station &lt;&lt; std::endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-<blockquote>
-</blockquote>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1936,20 +2173,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-count">112</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-count">70</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">66</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1993,12 +2230,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">303k</span>
+    <span title="站点总字数">313k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">4:35</span>
+    <span title="站点阅读时长">4:44</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
