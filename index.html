@@ -618,6 +618,300 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/09/25/C++%E9%9D%A2%E8%AF%95100%E9%97%AE1-10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/09/25/C++%E9%9D%A2%E8%AF%95100%E9%97%AE1-10/" class="post-title-link" itemprop="url">面试100问01</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-09-25 12:00:00 / 修改时间：08:56:42" itemprop="dateCreated datePublished" datetime="2024-09-25T12:00:00+08:00">2024-09-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="include双引号和尖括号的区别"><a href="#include双引号和尖括号的区别" class="headerlink" title="include双引号和尖括号的区别"></a>include双引号和尖括号的区别</h1><p>在C++中，<code>#include</code>指令使用双引号（<code>&quot;&quot;</code>）和尖括号（<code>&lt;&gt;</code>）的区别主要在于编译器搜索头文件的路径：</p>
+<ol>
+<li>**尖括号 (&lt;&gt;)**：<ul>
+<li>编译器会在标准库路径中搜索头文件。这些路径通常包含系统提供的头文件和编译器自带的标准库文件。</li>
+<li>例如，<code>#include &lt;iostream&gt;</code> 会让编译器在标准库路径中查找 <code>iostream</code> 头文件。</li>
+</ul>
+</li>
+<li>**双引号 (“”)**：<ul>
+<li>编译器首先会在当前源文件所在的目录中搜索头文件。如果在当前目录中找不到，才会转而在标准库路径中搜索。</li>
+<li>例如，<code>#include &quot;my_header.h&quot;</code> 会让编译器先在当前目录中查找 <code>my_header.h</code>，如果找不到，再去标准库路径中查找。</li>
+</ul>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://dev.devbf.com/posts/angle-brackets-or-double-quotes-which-should-you-use-in-c-includes-3e464/">这种区别的目的是为了区分标准库头文件和项目自定义头文件，确保编译器能够正确找到并包含所需的头文件</a><a target="_blank" rel="noopener" href="https://dev.devbf.com/posts/angle-brackets-or-double-quotes-which-should-you-use-in-c-includes-3e464/">1</a><a target="_blank" rel="noopener" href="https://www.daniweb.com/programming/software-development/threads/359946/include-vs-include">2</a><a target="_blank" rel="noopener" href="https://www.rightreaders.com/what-is-the-difference-between-using-angle-brackets-and-quotes-in-an-include-directive-include-include-filename/">3</a>。</p>
+<hr>
+<p>双引号是优先查找当前项目中的文件，是属于本项目的文件，如果查找不到，再去<strong>标准库路径</strong>查找，而尖括号只在外部查找</p>
+<h1 id="const的用法"><a href="#const的用法" class="headerlink" title="const的用法"></a>const的用法</h1><p><code>const</code> 关键字在 C++ 中用于声明常量，表示变量的值在初始化后不能被修改。它可以用于变量、指针、函数参数和成员函数等多种场景。</p>
+<h3 id="1-常量变量"><a href="#1-常量变量" class="headerlink" title="1. 常量变量"></a>1. 常量变量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> max_value = <span class="number">100</span>; max_value = <span class="number">200</span>; </span><br><span class="line"><span class="comment">// 错误，不能修改常量变量的值 </span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-指针"><a href="#2-指针" class="headerlink" title="2. 指针"></a>2. 指针</h3><ul>
+<li><p><strong>指向常量的指针</strong>：指针指向的值不能被修改。</p>
+<p><code>const int *ptr = &amp;max_value; *ptr = 200; // 错误，不能修改指向的值 ptr = &amp;another_value; // 正确，可以修改指针本身 </code></p>
+</li>
+<li><p><strong>常量指针</strong>：指针本身不能被修改，但指向的值可以被修改。</p>
+<p><code>int *const ptr = &amp;max_value; *ptr = 200; // 正确，可以修改指向的值 ptr = &amp;another_value; // 错误，不能修改指针本身 </code></p>
+</li>
+<li><p><strong>指向常量的常量指针</strong>：指针本身和指向的值都不能被修改。</p>
+<p><code>const int *const ptr = &amp;max_value; *ptr = 200; // 错误，不能修改指向的值 ptr = &amp;another_value; // 错误，不能修改指针本身 </code></p>
+</li>
+</ul>
+<h3 id="3-常量函数参数"><a href="#3-常量函数参数" class="headerlink" title="3. 常量函数参数"></a>3. 常量函数参数</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">printValue</span><span class="params">(<span class="type">const</span> <span class="type">int</span> value)</span> </span></span><br><span class="line"><span class="function"></span>&#123;     <span class="comment">// value 不能被修改     </span></span><br><span class="line">	std::cout &lt;&lt; value &lt;&lt; std::endl; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<h3 id="4-常量成员函数"><a href="#4-常量成员函数" class="headerlink" title="4. 常量成员函数"></a>4. 常量成员函数</h3><p>常量成员函数不能修改对象的成员变量。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getValue</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value; <span class="comment">// 正确，常量成员函数可以访问成员变量</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">setValue</span><span class="params">(<span class="type">int</span> val)</span> </span>&#123;</span><br><span class="line">        value = val; <span class="comment">// 正确，非常量成员函数可以修改成员变量</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> value;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>const</code> 关键字可以提高代码的安全性和可读性，防止意外修改数据。</p>
+<h1 id="常量指针和指针常量分别是什么意思"><a href="#常量指针和指针常量分别是什么意思" class="headerlink" title="常量指针和指针常量分别是什么意思"></a>常量指针和指针常量分别是什么意思</h1><p>在C++中，常量指针和指针常量是两个不同的概念，尽管它们的名称听起来很相似。以下是它们的区别：</p>
+<ol>
+<li><strong>常量指针（Pointer to Constant）</strong>：<ul>
+<li>定义形式：<code>const 数据类型 *指针变量名</code> 或 <code>数据类型 const *指针变量名</code></li>
+<li>含义：指针指向的内容是常量，不能通过该指针修改内容，但指针本身可以指向其他地址。</li>
+<li>例子：<code>const int *p; int a = 10; p = &amp;a;  // 允许 *p = 20; // 错误，不能修改指向内容 </code></li>
+</ul>
+</li>
+<li><strong>指针常量（Constant Pointer）</strong>：<ul>
+<li>定义形式：<code>数据类型 *const 指针变量名</code></li>
+<li>含义：指针本身是常量，不能改变指向的地址，但可以通过指针修改指向地址的内容。</li>
+<li>例子：<code>int *const p = &amp;a; int a = 10; *p = 20; // 允许，修改指向内容 int b = 30; p = &amp;b;  // 错误，不能改变指向地址 </code></li>
+</ul>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weibo_dm/article/details/80445205">总结来说，<strong>常量指针</strong>限制的是指针指向的内容，而<strong>指针常量</strong>限制的是指针本身的地址</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/weibo_dm/article/details/80445205">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/337321951">2</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88+vs+%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F">3</a>。</p>
+<hr>
+<p>常量指针是指常量的指针，表示这个量是常量，不可被改变，但是指针的指向可以修改。</p>
+<p>指针常量表示这个指针本身是常量，意思这个指针不可被修改，但是指向的内容可以被修改</p>
+<h1 id="C-常用新特性有哪些，举例说明"><a href="#C-常用新特性有哪些，举例说明" class="headerlink" title="C++常用新特性有哪些，举例说明"></a>C++常用新特性有哪些，举例说明</h1><p>C++近年来引入了许多新特性，以下是一些常用且重要的特性及其示例：</p>
+<h3 id="C-11"><a href="#C-11" class="headerlink" title="C++11"></a>C++11</h3><ol>
+<li><p><strong>自动类型推导（auto）</strong></p>
+</li>
+<li><p><strong>范围for循环</strong>：</p>
+<p><strong>范围for循环</strong></p>
+</li>
+<li><p><strong>lambda表达式</strong>：</p>
+<p><code>auto add =  &#123; return a + b; &#125;; std::cout &lt;&lt; add(2, 3); // 输出 5 </code></p>
+</li>
+</ol>
+<h3 id="C-14"><a href="#C-14" class="headerlink" title="C++14"></a>C++14</h3><ol>
+<li><p><strong>泛型lambda</strong>：</p>
+<p><code>auto add =  &#123; return a + b; &#125;; </code></p>
+<p> <code>std::cout &lt;&lt; add(2, 3); // 输出 5 </code></p>
+<p> <code>std::cout &lt;&lt; add(2.5, 3.5); // 输出 6.0 </code> </p>
+</li>
+<li><p><strong>二进制字面量</strong>：</p>
+<p><code>int binary = 0b1010; // binary 的值是 10 </code></p>
+</li>
+</ol>
+<h3 id="C-17"><a href="#C-17" class="headerlink" title="C++17"></a>C++17</h3><ol>
+<li><p><strong>结构化绑定</strong>：</p>
+<p><code>std::tuple&lt;int, double, std::string&gt; t(1, 2.3, &quot;hello&quot;); </code></p>
+<p> <code>auto [i, d, s] = t; </code></p>
+<p> <code>std::cout &lt;&lt; i &lt;&lt; &quot;, &quot; &lt;&lt; d &lt;&lt; &quot;, &quot; &lt;&lt; s; // 输出 1, 2.3, hello </code> </p>
+</li>
+<li><p><strong>if constexpr</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::tuple&lt;<span class="type">int</span>, <span class="type">double</span>, std::string&gt; <span class="title">t</span><span class="params">(<span class="number">1</span>, <span class="number">2.3</span>, <span class="string">&quot;hello&quot;</span>)</span></span>;</span><br><span class="line"><span class="keyword">auto</span> [i, d, s] = t;</span><br><span class="line">std::cout &lt;&lt; i &lt;&lt; <span class="string">&quot;, &quot;</span> &lt;&lt; d &lt;&lt; <span class="string">&quot;, &quot;</span> &lt;&lt; s; <span class="comment">// 输出 1, 2.3, hello</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>std::optional</strong>：</p>
+<p><code>std::optional&lt;int&gt; opt; if (!opt) &#123;     opt = 42; &#125; std::cout &lt;&lt; *opt; // 输出 42 </code></p>
+</li>
+</ol>
+<h3 id="C-20"><a href="#C-20" class="headerlink" title="C++20"></a>C++20</h3><ol>
+<li><p><strong>协程（coroutines）</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;coroutine&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ReturnObject</span> &#123;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">promise_type</span> &#123;</span><br><span class="line">        <span class="function">ReturnObject <span class="title">get_return_object</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> &#123;&#125;; &#125;</span><br><span class="line">        <span class="function">std::suspend_never <span class="title">initial_suspend</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> &#123;&#125;; &#125;</span><br><span class="line">        <span class="function">std::suspend_never <span class="title">final_suspend</span><span class="params">()</span> <span class="keyword">noexcept</span> </span>&#123; <span class="keyword">return</span> &#123;&#125;; &#125;</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">return_void</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">unhandled_exception</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">ReturnObject <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Hello &quot;</span>;</span><br><span class="line">    <span class="keyword">co_await</span> std::suspend_always&#123;&#125;;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;world!\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">foo</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p><strong>概念（concepts）</strong>：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">concept</span> Integral = std::is_integral_v&lt;T&gt;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;Integral T&gt;</span></span><br><span class="line"><span class="function">T <span class="title">add</span><span class="params">(T a, T b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">add</span>(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">// 输出 3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.cppstories.com/2017/01/cpp17features/">这些新特性大大增强了C++的表达能力和代码简洁性，帮助开发者编写更高效和可维护的代码</a><a target="_blank" rel="noopener" href="https://www.cppstories.com/2017/01/cpp17features/">1</a><a target="_blank" rel="noopener" href="https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md">2</a><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/features-of-c17-with-examples/">3</a>。</p>
+<h1 id="智能指针的使用有什么坑"><a href="#智能指针的使用有什么坑" class="headerlink" title="智能指针的使用有什么坑"></a>智能指针的使用有什么坑</h1><p>在C++中，智能指针（如<code>std::unique_ptr</code>、<code>std::shared_ptr</code>和<code>std::weak_ptr</code>）极大地简化了内存管理，但在使用过程中仍有一些常见的坑需要注意：</p>
+<h3 id="1-不必要地使用std-shared-ptr"><a href="#1-不必要地使用std-shared-ptr" class="headerlink" title="1. 不必要地使用std::shared_ptr"></a>1. 不必要地使用<code>std::shared_ptr</code></h3><p><strong>问题</strong>：在不需要共享所有权的情况下使用<code>std::shared_ptr</code>，会导致不必要的性能开销，因为<code>std::shared_ptr</code>需要维护引用计数。</p>
+<p><a target="_blank" rel="noopener" href="https://acodersjourney.com/top-10-dumb-mistakes-avoid-c-11-smart-pointers/"><strong>建议</strong>：默认使用<code>std::unique_ptr</code>，只有在确实需要共享所有权时才使用<code>std::shared_ptr</code></a><a target="_blank" rel="noopener" href="https://acodersjourney.com/top-10-dumb-mistakes-avoid-c-11-smart-pointers/">1</a>。</p>
+<p>在lambda中可以通过传入shared_from_this()的指针来保证std::shared_ptr的存活，是一种伪闭包的实现</p>
+<h3 id="2-循环引用"><a href="#2-循环引用" class="headerlink" title="2. 循环引用"></a>2. 循环引用</h3><p><strong>问题</strong>：两个或多个<code>std::shared_ptr</code>相互引用，导致内存泄漏，因为引用计数永远不会归零。</p>
+<p><strong>解决方案</strong>：使用<code>std::weak_ptr</code>打破循环引用。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">    std::shared_ptr&lt;Node&gt; next;</span><br><span class="line">    std::weak_ptr&lt;Node&gt; prev; <span class="comment">// 使用 weak_ptr 打破循环引用</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-多线程环境中的线程安全问题"><a href="#3-多线程环境中的线程安全问题" class="headerlink" title="3. 多线程环境中的线程安全问题"></a>3. 多线程环境中的线程安全问题</h3><p><strong>问题</strong>：<code>std::shared_ptr</code>本身是线程安全的，但它管理的对象并不是。如果多个线程同时访问和修改对象，可能会导致数据竞争。</p>
+<p><a target="_blank" rel="noopener" href="https://acodersjourney.com/top-10-dumb-mistakes-avoid-c-11-smart-pointers/"><strong>建议</strong>：在多线程环境中，使用适当的同步机制（如互斥锁）来保护共享资源</a><a target="_blank" rel="noopener" href="https://acodersjourney.com/top-10-dumb-mistakes-avoid-c-11-smart-pointers/">1</a>。</p>
+<h3 id="4-自定义删除器的使用"><a href="#4-自定义删除器的使用" class="headerlink" title="4. 自定义删除器的使用"></a>4. 自定义删除器的使用</h3><p><strong>问题</strong>：在使用自定义删除器时，可能会忘记正确处理资源释放，导致资源泄漏。</p>
+<p><strong>建议</strong>：确保自定义删除器正确释放资源。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::unique_ptr&lt;FILE, <span class="title">decltype</span><span class="params">(&amp;fclose)</span>&gt; <span class="title">filePtr</span><span class="params">(fopen(<span class="string">&quot;example.txt&quot;</span>, <span class="string">&quot;r&quot;</span>), &amp;fclose)</span></span>;</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+<h3 id="5-不要混用原始指针和智能指针"><a href="#5-不要混用原始指针和智能指针" class="headerlink" title="5. 不要混用原始指针和智能指针"></a>5. 不要混用原始指针和智能指针</h3><p><strong>问题</strong>：混用原始指针和智能指针可能导致双重释放或未定义行为。</p>
+<p><strong>建议</strong>：一旦使用智能指针管理资源，就不要再使用原始指针。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::unique_ptr&lt;<span class="type">int</span>&gt; ptr = std::<span class="built_in">make_unique</span>&lt;<span class="type">int</span>&gt;(<span class="number">10</span>); <span class="comment">// 不要再使用原始指针来管理同一资源 </span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-避免在容器中直接存储智能指针"><a href="#6-避免在容器中直接存储智能指针" class="headerlink" title="6. 避免在容器中直接存储智能指针"></a>6. 避免在容器中直接存储智能指针</h3><p><strong>问题</strong>：在容器中直接存储智能指针可能导致意外的资源管理问题。</p>
+<p><a target="_blank" rel="noopener" href="https://dev.to/jaehyun_park_52/understanding-smart-pointers-in-c-7g9"><strong>建议</strong>：尽量使用容器的智能指针版本（如<code>std::vector&gt;</code>）来管理资源</a><a target="_blank" rel="noopener" href="https://dev.to/jaehyun_park_52/understanding-smart-pointers-in-c-7g9">2</a>。</p>
+<h3 id="7-使用std-make-shared和std-make-unique"><a href="#7-使用std-make-shared和std-make-unique" class="headerlink" title="7. 使用std::make_shared和std::make_unique"></a>7. 使用<code>std::make_shared</code>和<code>std::make_unique</code></h3><p><strong>问题</strong>：直接使用<code>new</code>创建对象并赋值给智能指针，可能会导致异常安全问题。</p>
+<p><strong>建议</strong>：使用<code>std::make_shared</code>和<code>std::make_unique</code>来创建智能指针，确保异常安全。例如：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> ptr = std::<span class="built_in">make_shared</span>&lt;<span class="type">int</span>&gt;(<span class="number">10</span>); <span class="keyword">auto</span> uniquePtr = std::<span class="built_in">make_unique</span>&lt;<span class="type">int</span>&gt;(<span class="number">20</span>); </span><br></pre></td></tr></table></figure>
+
+<p>这些是使用智能指针时需要注意的一些常见问题和建议。希望这些信息对你有帮助！如果你有更多问题或需要进一步的解释，请随时告诉我。</p>
+<h1 id="什么是内存泄漏，有哪几种，怎么解决"><a href="#什么是内存泄漏，有哪几种，怎么解决" class="headerlink" title="什么是内存泄漏，有哪几种，怎么解决"></a>什么是内存泄漏，有哪几种，怎么解决</h1><p>内存泄漏是指程序在动态分配内存后未能正确释放，导致这些内存无法被重新分配和使用。内存泄漏会导致程序占用越来越多的内存，最终可能导致系统性能下降或程序崩溃。</p>
+<p>内存泄漏是指程序在动态分配内存后未能正确释放，导致内存无法被重新分配和使用。内存泄漏会导致程序占用越来越多的内存，最终可能导致系统崩溃或性能严重下降。</p>
+<h3 id="内存泄漏的几种类型"><a href="#内存泄漏的几种类型" class="headerlink" title="内存泄漏的几种类型"></a>内存泄漏的几种类型</h3><ol>
+<li><strong>堆内存泄漏</strong>：这是最常见的内存泄漏类型，发生在使用 <code>new</code> 或 <code>malloc</code> 分配内存后未能使用 <code>delete</code> 或 <code>free</code> 释放内存。</li>
+<li><strong>全局内存泄漏</strong>：全局变量或静态变量在程序结束前未能释放内存。</li>
+<li><strong>栈内存泄漏</strong>：虽然栈内存通常由编译器自动管理，但在某些情况下（如递归调用过深），也可能导致内存泄漏。</li>
+<li><strong>资源泄漏</strong>：不仅限于内存，还包括文件句柄、网络连接等资源未能正确释放。</li>
+</ol>
+<h3 id="解决内存泄漏的方法"><a href="#解决内存泄漏的方法" class="headerlink" title="解决内存泄漏的方法"></a>解决内存泄漏的方法</h3><ol>
+<li><strong>手动管理内存</strong>：确保每次使用 <code>new</code> 或 <code>malloc</code> 分配内存后，都有相应的 <code>delete</code> 或 <code>free</code> 释放内存。</li>
+<li><strong>使用智能指针</strong>：C++11 引入了智能指针（如 <code>std::unique_ptr</code> 和 <code>std::shared_ptr</code>），可以自动管理内存，减少内存泄漏的风险。</li>
+<li><a target="_blank" rel="noopener" href="https://www.pullrequest.com/blog/the-art-of-detecting-memory-leaks-in-c-applications/"><strong>工具检测</strong>：使用工具如 Valgrind、AddressSanitizer 或 Visual Studio 的内存分析工具来检测和修复内存泄漏</a><a target="_blank" rel="noopener" href="https://www.pullrequest.com/blog/the-art-of-detecting-memory-leaks-in-c-applications/">1</a><a target="_blank" rel="noopener" href="https://www.codewithc.com/memory-leaks-in-pointers/">2</a><a target="_blank" rel="noopener" href="https://codeknowcode.com/understanding-memory-leaks-in-c-detection-prevention-and-best-practices/">3</a>。</li>
+<li><strong>代码审查和测试</strong>：通过代码审查和单元测试，尽早发现和修复内存泄漏问题。</li>
+</ol>
+<h1 id="new-x2F-delete与malloc-x2F-free的区别是什么"><a href="#new-x2F-delete与malloc-x2F-free的区别是什么" class="headerlink" title="new&#x2F;delete与malloc&#x2F;free的区别是什么"></a>new&#x2F;delete与malloc&#x2F;free的区别是什么</h1><h1 id="引用作为函数的参数或者返回值好处在哪里"><a href="#引用作为函数的参数或者返回值好处在哪里" class="headerlink" title="引用作为函数的参数或者返回值好处在哪里"></a>引用作为函数的参数或者返回值好处在哪里</h1><p><strong>引用就是某一变量（目标）的别名，对引用的操作与对变量直接操作完全一样。</strong> </p>
+<p><strong>引用作为函数参数</strong> </p>
+<p>引用传参的好处： </p>
+<ol>
+<li><p>在函数内部会对此参数进行修改 </p>
+</li>
+<li><p>提高函数调用和运行效率</p>
+</li>
+</ol>
+<p><strong>引用作为函数返回值</strong></p>
+<ol>
+<li><p>以引用返回函数值，定义函数时需要在函数名前加 &amp; </p>
+</li>
+<li><p>用引用返回一个函数值的最大好处是：在内存中不产生被返回值的副本</p>
+</li>
+</ol>
+<p>引用作为返回值，<strong>必须遵守以下规则</strong>： </p>
+<ol>
+<li><strong>不能返回局部变量的引用</strong>。主要原因是局部变量会在函数返回后被销毁，因此被返回的引用就成为</li>
+</ol>
+<p>了”无所指”的引用，程序会进入未知状态。 </p>
+<ol start="2">
+<li><p><strong>不能返回函数内部new 分配的内存的引用</strong> 虽然不存在局部变量的被动销毁问题，可对于这种情况 （返回函数内部new分配内存的引用），又面临其它尴尬局面。例如，被函数返回的引用只是作为 一 个临时变量出现，而没有被赋予一个实际的变量，那么这个引用所指向的空间（由new分配）就 无法释放，造成memory leak。 </p>
+</li>
+<li><p><strong>引用与一些操作符的重载。</strong>流操作符&lt;&lt;和&gt;&gt;，这两个操作符常常希望被连续使用，例如：cout &lt;&lt; “hello” &lt;&lt; endl; 因此这两个操作符的返回值应该是一个仍然支持这两个操作符的流引用。</p>
+</li>
+</ol>
+<hr>
+<p>引用可以修改参数本身的值，如果想要对参数进行修改就要使用引用，作为返回值的引用则是减少拷贝，不会产生副本，不过要注意不能返回局部变量的引用，</p>
+<h1 id="哈希表的原理是什么"><a href="#哈希表的原理是什么" class="headerlink" title="哈希表的原理是什么"></a>哈希表的原理是什么</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">哈希表（Hash Table），也叫散列表，是一种根据关键码值（Key value）直接访问内存存储位置的数据结构。它通过一个称为哈希函数（Hash Function）的映射函数，将关键码值映射到表中的一个位置，从而加快查找速度</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</p>
+<h3 id="哈希表的基本原理"><a href="#哈希表的基本原理" class="headerlink" title="哈希表的基本原理"></a>哈希表的基本原理</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136"><strong>哈希函数</strong>：哈希函数将关键码值转换为数组的索引。理想的哈希函数应当计算简单且分布均匀，以减少冲突的概率</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136"><strong>哈希冲突</strong>：当两个不同的关键码值通过哈希函数得到相同的索引时，就会发生哈希冲突。常见的解决方法有开放定址法和链表法</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%8E%9F%E7%90%86">3</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136"><strong>查找和插入</strong>：通过哈希函数计算关键码值的哈希地址，然后直接访问该地址进行查找或插入操作。哈希表的查找和插入操作时间复杂度接近O(1)</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
+</ol>
+<h3 id="哈希表的优缺点"><a href="#哈希表的优缺点" class="headerlink" title="哈希表的优缺点"></a>哈希表的优缺点</h3><p><strong>优点</strong>：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">查找和插入速度非常快，接近常量时间复杂度O(1)</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">编程实现相对简单，适用于需要快速查找的场景</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a>。</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">基于数组实现，扩展困难。当哈希表接近满载时，性能可能会显著下降</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">需要处理哈希冲突，可能会增加实现的复杂性</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
+</ul>
+<h3 id="哈希冲突解决方法"><a href="#哈希冲突解决方法" class="headerlink" title="哈希冲突解决方法"></a>哈希冲突解决方法</h3><ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136"><strong>开放定址法</strong>：发生冲突时，通过某种探测序列找到下一个空闲位置</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005"><strong>链表法</strong>：每个数组位置存储一个链表，所有哈希值相同的元素都存储在该链表中</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%8E%9F%E7%90%86">3</a>。</li>
+</ol>
+<p>​                </p>
+<h1 id="什么是运行时多态"><a href="#什么是运行时多态" class="headerlink" title="什么是运行时多态"></a>什么是运行时多态</h1><p>运行时多态（Runtime Polymorphism），也称为动态多态，是面向对象编程中的一个重要特性。它允许程序在运行时决定调用哪个方法，从而实现灵活和可扩展的代码设计。</p>
+<h3 id="运行时多态的实现"><a href="#运行时多态的实现" class="headerlink" title="运行时多态的实现"></a>运行时多态的实现</h3><p>在C++中，运行时多态主要通过<strong>虚函数</strong>（virtual functions）和<strong>继承</strong>（inheritance）来实现。以下是实现运行时多态的关键步骤：</p>
+<ol>
+<li><strong>虚函数</strong>：在基类中声明虚函数，并在派生类中重写这些虚函数。</li>
+<li><strong>基类指针或引用</strong>：使用基类的指针或引用来指向派生类对象。</li>
+</ol>
+<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Base</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Base class show function&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Derived</span> : <span class="keyword">public</span> Base &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Derived class show function&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Base* b;</span><br><span class="line">    Derived d;</span><br><span class="line">    b = &amp;d;</span><br><span class="line">    b-&gt;<span class="built_in">show</span>();  <span class="comment">// 输出: Derived class show function</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xylitolz/article/details/115800775">在这个例子中，<code>Base</code>类中定义了一个虚函数<code>show</code>，而<code>Derived</code>类重写了这个函数。在<code>main</code>函数中，基类指针<code>b</code>指向派生类对象<code>d</code>，调用<code>b-&gt;show()</code>时，实际执行的是派生类<code>Derived</code>中的<code>show</code>函数</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/xylitolz/article/details/115800775">1</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43935710/article/details/103871715">2</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E8%BF%90%E8%A1%8C%E6%97%B6%E5%A4%9A%E6%80%81">3</a>。</p>
+<h3 id="运行时多态的优点"><a href="#运行时多态的优点" class="headerlink" title="运行时多态的优点"></a>运行时多态的优点</h3><ul>
+<li><strong>灵活性</strong>：允许在运行时决定调用哪个方法，使得代码更灵活。</li>
+<li><strong>可扩展性</strong>：可以通过继承和重写方法来扩展现有代码，而无需修改原有代码。</li>
+</ul>
+<h3 id="运行时多态的缺点"><a href="#运行时多态的缺点" class="headerlink" title="运行时多态的缺点"></a>运行时多态的缺点</h3><ul>
+<li><strong>性能开销</strong>：由于需要在运行时决定调用哪个方法，可能会带来一些性能开销。</li>
+<li><strong>复杂性</strong>：需要理解和正确使用虚函数和继承，增加了代码的复杂性。</li>
+</ul>
+<p>​                     </p>
+<p>​                </p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/09/25/Http%E4%B8%8EHttps/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -976,300 +1270,6 @@
 <li><strong>发送方发送第三个报文段</strong>（序号201-300），接收方确认并通告窗口大小为100字节。</li>
 <li><strong>发送方发送第四个报文段</strong>（序号301-400），接收方确认并通告窗口大小为0字节，表示接收方缓冲区已满，等待处理完毕后再继续发送。</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/09/25/C++%E9%9D%A2%E8%AF%95100%E9%97%AE1-10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/09/25/C++%E9%9D%A2%E8%AF%95100%E9%97%AE1-10/" class="post-title-link" itemprop="url">面试100问01</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-09-25 12:00:00 / 修改时间：08:56:42" itemprop="dateCreated datePublished" datetime="2024-09-25T12:00:00+08:00">2024-09-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>7.3k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>7 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="include双引号和尖括号的区别"><a href="#include双引号和尖括号的区别" class="headerlink" title="include双引号和尖括号的区别"></a>include双引号和尖括号的区别</h1><p>在C++中，<code>#include</code>指令使用双引号（<code>&quot;&quot;</code>）和尖括号（<code>&lt;&gt;</code>）的区别主要在于编译器搜索头文件的路径：</p>
-<ol>
-<li>**尖括号 (&lt;&gt;)**：<ul>
-<li>编译器会在标准库路径中搜索头文件。这些路径通常包含系统提供的头文件和编译器自带的标准库文件。</li>
-<li>例如，<code>#include &lt;iostream&gt;</code> 会让编译器在标准库路径中查找 <code>iostream</code> 头文件。</li>
-</ul>
-</li>
-<li>**双引号 (“”)**：<ul>
-<li>编译器首先会在当前源文件所在的目录中搜索头文件。如果在当前目录中找不到，才会转而在标准库路径中搜索。</li>
-<li>例如，<code>#include &quot;my_header.h&quot;</code> 会让编译器先在当前目录中查找 <code>my_header.h</code>，如果找不到，再去标准库路径中查找。</li>
-</ul>
-</li>
-</ol>
-<p><a target="_blank" rel="noopener" href="https://dev.devbf.com/posts/angle-brackets-or-double-quotes-which-should-you-use-in-c-includes-3e464/">这种区别的目的是为了区分标准库头文件和项目自定义头文件，确保编译器能够正确找到并包含所需的头文件</a><a target="_blank" rel="noopener" href="https://dev.devbf.com/posts/angle-brackets-or-double-quotes-which-should-you-use-in-c-includes-3e464/">1</a><a target="_blank" rel="noopener" href="https://www.daniweb.com/programming/software-development/threads/359946/include-vs-include">2</a><a target="_blank" rel="noopener" href="https://www.rightreaders.com/what-is-the-difference-between-using-angle-brackets-and-quotes-in-an-include-directive-include-include-filename/">3</a>。</p>
-<hr>
-<p>双引号是优先查找当前项目中的文件，是属于本项目的文件，如果查找不到，再去<strong>标准库路径</strong>查找，而尖括号只在外部查找</p>
-<h1 id="const的用法"><a href="#const的用法" class="headerlink" title="const的用法"></a>const的用法</h1><p><code>const</code> 关键字在 C++ 中用于声明常量，表示变量的值在初始化后不能被修改。它可以用于变量、指针、函数参数和成员函数等多种场景。</p>
-<h3 id="1-常量变量"><a href="#1-常量变量" class="headerlink" title="1. 常量变量"></a>1. 常量变量</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> max_value = <span class="number">100</span>; max_value = <span class="number">200</span>; </span><br><span class="line"><span class="comment">// 错误，不能修改常量变量的值 </span></span><br></pre></td></tr></table></figure>
-
-<h3 id="2-指针"><a href="#2-指针" class="headerlink" title="2. 指针"></a>2. 指针</h3><ul>
-<li><p><strong>指向常量的指针</strong>：指针指向的值不能被修改。</p>
-<p><code>const int *ptr = &amp;max_value; *ptr = 200; // 错误，不能修改指向的值 ptr = &amp;another_value; // 正确，可以修改指针本身 </code></p>
-</li>
-<li><p><strong>常量指针</strong>：指针本身不能被修改，但指向的值可以被修改。</p>
-<p><code>int *const ptr = &amp;max_value; *ptr = 200; // 正确，可以修改指向的值 ptr = &amp;another_value; // 错误，不能修改指针本身 </code></p>
-</li>
-<li><p><strong>指向常量的常量指针</strong>：指针本身和指向的值都不能被修改。</p>
-<p><code>const int *const ptr = &amp;max_value; *ptr = 200; // 错误，不能修改指向的值 ptr = &amp;another_value; // 错误，不能修改指针本身 </code></p>
-</li>
-</ul>
-<h3 id="3-常量函数参数"><a href="#3-常量函数参数" class="headerlink" title="3. 常量函数参数"></a>3. 常量函数参数</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">printValue</span><span class="params">(<span class="type">const</span> <span class="type">int</span> value)</span> </span></span><br><span class="line"><span class="function"></span>&#123;     <span class="comment">// value 不能被修改     </span></span><br><span class="line">	std::cout &lt;&lt; value &lt;&lt; std::endl; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-
-<h3 id="4-常量成员函数"><a href="#4-常量成员函数" class="headerlink" title="4. 常量成员函数"></a>4. 常量成员函数</h3><p>常量成员函数不能修改对象的成员变量。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getValue</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value; <span class="comment">// 正确，常量成员函数可以访问成员变量</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">setValue</span><span class="params">(<span class="type">int</span> val)</span> </span>&#123;</span><br><span class="line">        value = val; <span class="comment">// 正确，非常量成员函数可以修改成员变量</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> value;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>使用 <code>const</code> 关键字可以提高代码的安全性和可读性，防止意外修改数据。</p>
-<h1 id="常量指针和指针常量分别是什么意思"><a href="#常量指针和指针常量分别是什么意思" class="headerlink" title="常量指针和指针常量分别是什么意思"></a>常量指针和指针常量分别是什么意思</h1><p>在C++中，常量指针和指针常量是两个不同的概念，尽管它们的名称听起来很相似。以下是它们的区别：</p>
-<ol>
-<li><strong>常量指针（Pointer to Constant）</strong>：<ul>
-<li>定义形式：<code>const 数据类型 *指针变量名</code> 或 <code>数据类型 const *指针变量名</code></li>
-<li>含义：指针指向的内容是常量，不能通过该指针修改内容，但指针本身可以指向其他地址。</li>
-<li>例子：<code>const int *p; int a = 10; p = &amp;a;  // 允许 *p = 20; // 错误，不能修改指向内容 </code></li>
-</ul>
-</li>
-<li><strong>指针常量（Constant Pointer）</strong>：<ul>
-<li>定义形式：<code>数据类型 *const 指针变量名</code></li>
-<li>含义：指针本身是常量，不能改变指向的地址，但可以通过指针修改指向地址的内容。</li>
-<li>例子：<code>int *const p = &amp;a; int a = 10; *p = 20; // 允许，修改指向内容 int b = 30; p = &amp;b;  // 错误，不能改变指向地址 </code></li>
-</ul>
-</li>
-</ol>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weibo_dm/article/details/80445205">总结来说，<strong>常量指针</strong>限制的是指针指向的内容，而<strong>指针常量</strong>限制的是指针本身的地址</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/weibo_dm/article/details/80445205">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/337321951">2</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88+vs+%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F">3</a>。</p>
-<hr>
-<p>常量指针是指常量的指针，表示这个量是常量，不可被改变，但是指针的指向可以修改。</p>
-<p>指针常量表示这个指针本身是常量，意思这个指针不可被修改，但是指向的内容可以被修改</p>
-<h1 id="C-常用新特性有哪些，举例说明"><a href="#C-常用新特性有哪些，举例说明" class="headerlink" title="C++常用新特性有哪些，举例说明"></a>C++常用新特性有哪些，举例说明</h1><p>C++近年来引入了许多新特性，以下是一些常用且重要的特性及其示例：</p>
-<h3 id="C-11"><a href="#C-11" class="headerlink" title="C++11"></a>C++11</h3><ol>
-<li><p><strong>自动类型推导（auto）</strong></p>
-</li>
-<li><p><strong>范围for循环</strong>：</p>
-<p><strong>范围for循环</strong></p>
-</li>
-<li><p><strong>lambda表达式</strong>：</p>
-<p><code>auto add =  &#123; return a + b; &#125;; std::cout &lt;&lt; add(2, 3); // 输出 5 </code></p>
-</li>
-</ol>
-<h3 id="C-14"><a href="#C-14" class="headerlink" title="C++14"></a>C++14</h3><ol>
-<li><p><strong>泛型lambda</strong>：</p>
-<p><code>auto add =  &#123; return a + b; &#125;; </code></p>
-<p> <code>std::cout &lt;&lt; add(2, 3); // 输出 5 </code></p>
-<p> <code>std::cout &lt;&lt; add(2.5, 3.5); // 输出 6.0 </code> </p>
-</li>
-<li><p><strong>二进制字面量</strong>：</p>
-<p><code>int binary = 0b1010; // binary 的值是 10 </code></p>
-</li>
-</ol>
-<h3 id="C-17"><a href="#C-17" class="headerlink" title="C++17"></a>C++17</h3><ol>
-<li><p><strong>结构化绑定</strong>：</p>
-<p><code>std::tuple&lt;int, double, std::string&gt; t(1, 2.3, &quot;hello&quot;); </code></p>
-<p> <code>auto [i, d, s] = t; </code></p>
-<p> <code>std::cout &lt;&lt; i &lt;&lt; &quot;, &quot; &lt;&lt; d &lt;&lt; &quot;, &quot; &lt;&lt; s; // 输出 1, 2.3, hello </code> </p>
-</li>
-<li><p><strong>if constexpr</strong>：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::tuple&lt;<span class="type">int</span>, <span class="type">double</span>, std::string&gt; <span class="title">t</span><span class="params">(<span class="number">1</span>, <span class="number">2.3</span>, <span class="string">&quot;hello&quot;</span>)</span></span>;</span><br><span class="line"><span class="keyword">auto</span> [i, d, s] = t;</span><br><span class="line">std::cout &lt;&lt; i &lt;&lt; <span class="string">&quot;, &quot;</span> &lt;&lt; d &lt;&lt; <span class="string">&quot;, &quot;</span> &lt;&lt; s; <span class="comment">// 输出 1, 2.3, hello</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>std::optional</strong>：</p>
-<p><code>std::optional&lt;int&gt; opt; if (!opt) &#123;     opt = 42; &#125; std::cout &lt;&lt; *opt; // 输出 42 </code></p>
-</li>
-</ol>
-<h3 id="C-20"><a href="#C-20" class="headerlink" title="C++20"></a>C++20</h3><ol>
-<li><p><strong>协程（coroutines）</strong>：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;coroutine&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ReturnObject</span> &#123;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">promise_type</span> &#123;</span><br><span class="line">        <span class="function">ReturnObject <span class="title">get_return_object</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> &#123;&#125;; &#125;</span><br><span class="line">        <span class="function">std::suspend_never <span class="title">initial_suspend</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> &#123;&#125;; &#125;</span><br><span class="line">        <span class="function">std::suspend_never <span class="title">final_suspend</span><span class="params">()</span> <span class="keyword">noexcept</span> </span>&#123; <span class="keyword">return</span> &#123;&#125;; &#125;</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">return_void</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">        <span class="function"><span class="type">void</span> <span class="title">unhandled_exception</span><span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">ReturnObject <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Hello &quot;</span>;</span><br><span class="line">    <span class="keyword">co_await</span> std::suspend_always&#123;&#125;;</span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;world!\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">foo</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p><strong>概念（concepts）</strong>：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="keyword">concept</span> Integral = std::is_integral_v&lt;T&gt;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt;Integral T&gt;</span></span><br><span class="line"><span class="function">T <span class="title">add</span><span class="params">(T a, T b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::cout &lt;&lt; <span class="built_in">add</span>(<span class="number">1</span>, <span class="number">2</span>); <span class="comment">// 输出 3</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ol>
-<p><a target="_blank" rel="noopener" href="https://www.cppstories.com/2017/01/cpp17features/">这些新特性大大增强了C++的表达能力和代码简洁性，帮助开发者编写更高效和可维护的代码</a><a target="_blank" rel="noopener" href="https://www.cppstories.com/2017/01/cpp17features/">1</a><a target="_blank" rel="noopener" href="https://github.com/AnthonyCalandra/modern-cpp-features/blob/master/CPP17.md">2</a><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/features-of-c17-with-examples/">3</a>。</p>
-<h1 id="智能指针的使用有什么坑"><a href="#智能指针的使用有什么坑" class="headerlink" title="智能指针的使用有什么坑"></a>智能指针的使用有什么坑</h1><p>在C++中，智能指针（如<code>std::unique_ptr</code>、<code>std::shared_ptr</code>和<code>std::weak_ptr</code>）极大地简化了内存管理，但在使用过程中仍有一些常见的坑需要注意：</p>
-<h3 id="1-不必要地使用std-shared-ptr"><a href="#1-不必要地使用std-shared-ptr" class="headerlink" title="1. 不必要地使用std::shared_ptr"></a>1. 不必要地使用<code>std::shared_ptr</code></h3><p><strong>问题</strong>：在不需要共享所有权的情况下使用<code>std::shared_ptr</code>，会导致不必要的性能开销，因为<code>std::shared_ptr</code>需要维护引用计数。</p>
-<p><a target="_blank" rel="noopener" href="https://acodersjourney.com/top-10-dumb-mistakes-avoid-c-11-smart-pointers/"><strong>建议</strong>：默认使用<code>std::unique_ptr</code>，只有在确实需要共享所有权时才使用<code>std::shared_ptr</code></a><a target="_blank" rel="noopener" href="https://acodersjourney.com/top-10-dumb-mistakes-avoid-c-11-smart-pointers/">1</a>。</p>
-<p>在lambda中可以通过传入shared_from_this()的指针来保证std::shared_ptr的存活，是一种伪闭包的实现</p>
-<h3 id="2-循环引用"><a href="#2-循环引用" class="headerlink" title="2. 循环引用"></a>2. 循环引用</h3><p><strong>问题</strong>：两个或多个<code>std::shared_ptr</code>相互引用，导致内存泄漏，因为引用计数永远不会归零。</p>
-<p><strong>解决方案</strong>：使用<code>std::weak_ptr</code>打破循环引用。例如：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Node</span> &#123;</span><br><span class="line">    std::shared_ptr&lt;Node&gt; next;</span><br><span class="line">    std::weak_ptr&lt;Node&gt; prev; <span class="comment">// 使用 weak_ptr 打破循环引用</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-多线程环境中的线程安全问题"><a href="#3-多线程环境中的线程安全问题" class="headerlink" title="3. 多线程环境中的线程安全问题"></a>3. 多线程环境中的线程安全问题</h3><p><strong>问题</strong>：<code>std::shared_ptr</code>本身是线程安全的，但它管理的对象并不是。如果多个线程同时访问和修改对象，可能会导致数据竞争。</p>
-<p><a target="_blank" rel="noopener" href="https://acodersjourney.com/top-10-dumb-mistakes-avoid-c-11-smart-pointers/"><strong>建议</strong>：在多线程环境中，使用适当的同步机制（如互斥锁）来保护共享资源</a><a target="_blank" rel="noopener" href="https://acodersjourney.com/top-10-dumb-mistakes-avoid-c-11-smart-pointers/">1</a>。</p>
-<h3 id="4-自定义删除器的使用"><a href="#4-自定义删除器的使用" class="headerlink" title="4. 自定义删除器的使用"></a>4. 自定义删除器的使用</h3><p><strong>问题</strong>：在使用自定义删除器时，可能会忘记正确处理资源释放，导致资源泄漏。</p>
-<p><strong>建议</strong>：确保自定义删除器正确释放资源。例如：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">std::unique_ptr&lt;FILE, <span class="title">decltype</span><span class="params">(&amp;fclose)</span>&gt; <span class="title">filePtr</span><span class="params">(fopen(<span class="string">&quot;example.txt&quot;</span>, <span class="string">&quot;r&quot;</span>), &amp;fclose)</span></span>;</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
-
-<h3 id="5-不要混用原始指针和智能指针"><a href="#5-不要混用原始指针和智能指针" class="headerlink" title="5. 不要混用原始指针和智能指针"></a>5. 不要混用原始指针和智能指针</h3><p><strong>问题</strong>：混用原始指针和智能指针可能导致双重释放或未定义行为。</p>
-<p><strong>建议</strong>：一旦使用智能指针管理资源，就不要再使用原始指针。例如：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::unique_ptr&lt;<span class="type">int</span>&gt; ptr = std::<span class="built_in">make_unique</span>&lt;<span class="type">int</span>&gt;(<span class="number">10</span>); <span class="comment">// 不要再使用原始指针来管理同一资源 </span></span><br></pre></td></tr></table></figure>
-
-<h3 id="6-避免在容器中直接存储智能指针"><a href="#6-避免在容器中直接存储智能指针" class="headerlink" title="6. 避免在容器中直接存储智能指针"></a>6. 避免在容器中直接存储智能指针</h3><p><strong>问题</strong>：在容器中直接存储智能指针可能导致意外的资源管理问题。</p>
-<p><a target="_blank" rel="noopener" href="https://dev.to/jaehyun_park_52/understanding-smart-pointers-in-c-7g9"><strong>建议</strong>：尽量使用容器的智能指针版本（如<code>std::vector&gt;</code>）来管理资源</a><a target="_blank" rel="noopener" href="https://dev.to/jaehyun_park_52/understanding-smart-pointers-in-c-7g9">2</a>。</p>
-<h3 id="7-使用std-make-shared和std-make-unique"><a href="#7-使用std-make-shared和std-make-unique" class="headerlink" title="7. 使用std::make_shared和std::make_unique"></a>7. 使用<code>std::make_shared</code>和<code>std::make_unique</code></h3><p><strong>问题</strong>：直接使用<code>new</code>创建对象并赋值给智能指针，可能会导致异常安全问题。</p>
-<p><strong>建议</strong>：使用<code>std::make_shared</code>和<code>std::make_unique</code>来创建智能指针，确保异常安全。例如：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> ptr = std::<span class="built_in">make_shared</span>&lt;<span class="type">int</span>&gt;(<span class="number">10</span>); <span class="keyword">auto</span> uniquePtr = std::<span class="built_in">make_unique</span>&lt;<span class="type">int</span>&gt;(<span class="number">20</span>); </span><br></pre></td></tr></table></figure>
-
-<p>这些是使用智能指针时需要注意的一些常见问题和建议。希望这些信息对你有帮助！如果你有更多问题或需要进一步的解释，请随时告诉我。</p>
-<h1 id="什么是内存泄漏，有哪几种，怎么解决"><a href="#什么是内存泄漏，有哪几种，怎么解决" class="headerlink" title="什么是内存泄漏，有哪几种，怎么解决"></a>什么是内存泄漏，有哪几种，怎么解决</h1><p>内存泄漏是指程序在动态分配内存后未能正确释放，导致这些内存无法被重新分配和使用。内存泄漏会导致程序占用越来越多的内存，最终可能导致系统性能下降或程序崩溃。</p>
-<p>内存泄漏是指程序在动态分配内存后未能正确释放，导致内存无法被重新分配和使用。内存泄漏会导致程序占用越来越多的内存，最终可能导致系统崩溃或性能严重下降。</p>
-<h3 id="内存泄漏的几种类型"><a href="#内存泄漏的几种类型" class="headerlink" title="内存泄漏的几种类型"></a>内存泄漏的几种类型</h3><ol>
-<li><strong>堆内存泄漏</strong>：这是最常见的内存泄漏类型，发生在使用 <code>new</code> 或 <code>malloc</code> 分配内存后未能使用 <code>delete</code> 或 <code>free</code> 释放内存。</li>
-<li><strong>全局内存泄漏</strong>：全局变量或静态变量在程序结束前未能释放内存。</li>
-<li><strong>栈内存泄漏</strong>：虽然栈内存通常由编译器自动管理，但在某些情况下（如递归调用过深），也可能导致内存泄漏。</li>
-<li><strong>资源泄漏</strong>：不仅限于内存，还包括文件句柄、网络连接等资源未能正确释放。</li>
-</ol>
-<h3 id="解决内存泄漏的方法"><a href="#解决内存泄漏的方法" class="headerlink" title="解决内存泄漏的方法"></a>解决内存泄漏的方法</h3><ol>
-<li><strong>手动管理内存</strong>：确保每次使用 <code>new</code> 或 <code>malloc</code> 分配内存后，都有相应的 <code>delete</code> 或 <code>free</code> 释放内存。</li>
-<li><strong>使用智能指针</strong>：C++11 引入了智能指针（如 <code>std::unique_ptr</code> 和 <code>std::shared_ptr</code>），可以自动管理内存，减少内存泄漏的风险。</li>
-<li><a target="_blank" rel="noopener" href="https://www.pullrequest.com/blog/the-art-of-detecting-memory-leaks-in-c-applications/"><strong>工具检测</strong>：使用工具如 Valgrind、AddressSanitizer 或 Visual Studio 的内存分析工具来检测和修复内存泄漏</a><a target="_blank" rel="noopener" href="https://www.pullrequest.com/blog/the-art-of-detecting-memory-leaks-in-c-applications/">1</a><a target="_blank" rel="noopener" href="https://www.codewithc.com/memory-leaks-in-pointers/">2</a><a target="_blank" rel="noopener" href="https://codeknowcode.com/understanding-memory-leaks-in-c-detection-prevention-and-best-practices/">3</a>。</li>
-<li><strong>代码审查和测试</strong>：通过代码审查和单元测试，尽早发现和修复内存泄漏问题。</li>
-</ol>
-<h1 id="new-x2F-delete与malloc-x2F-free的区别是什么"><a href="#new-x2F-delete与malloc-x2F-free的区别是什么" class="headerlink" title="new&#x2F;delete与malloc&#x2F;free的区别是什么"></a>new&#x2F;delete与malloc&#x2F;free的区别是什么</h1><h1 id="引用作为函数的参数或者返回值好处在哪里"><a href="#引用作为函数的参数或者返回值好处在哪里" class="headerlink" title="引用作为函数的参数或者返回值好处在哪里"></a>引用作为函数的参数或者返回值好处在哪里</h1><p><strong>引用就是某一变量（目标）的别名，对引用的操作与对变量直接操作完全一样。</strong> </p>
-<p><strong>引用作为函数参数</strong> </p>
-<p>引用传参的好处： </p>
-<ol>
-<li><p>在函数内部会对此参数进行修改 </p>
-</li>
-<li><p>提高函数调用和运行效率</p>
-</li>
-</ol>
-<p><strong>引用作为函数返回值</strong></p>
-<ol>
-<li><p>以引用返回函数值，定义函数时需要在函数名前加 &amp; </p>
-</li>
-<li><p>用引用返回一个函数值的最大好处是：在内存中不产生被返回值的副本</p>
-</li>
-</ol>
-<p>引用作为返回值，<strong>必须遵守以下规则</strong>： </p>
-<ol>
-<li><strong>不能返回局部变量的引用</strong>。主要原因是局部变量会在函数返回后被销毁，因此被返回的引用就成为</li>
-</ol>
-<p>了”无所指”的引用，程序会进入未知状态。 </p>
-<ol start="2">
-<li><p><strong>不能返回函数内部new 分配的内存的引用</strong> 虽然不存在局部变量的被动销毁问题，可对于这种情况 （返回函数内部new分配内存的引用），又面临其它尴尬局面。例如，被函数返回的引用只是作为 一 个临时变量出现，而没有被赋予一个实际的变量，那么这个引用所指向的空间（由new分配）就 无法释放，造成memory leak。 </p>
-</li>
-<li><p><strong>引用与一些操作符的重载。</strong>流操作符&lt;&lt;和&gt;&gt;，这两个操作符常常希望被连续使用，例如：cout &lt;&lt; “hello” &lt;&lt; endl; 因此这两个操作符的返回值应该是一个仍然支持这两个操作符的流引用。</p>
-</li>
-</ol>
-<hr>
-<p>引用可以修改参数本身的值，如果想要对参数进行修改就要使用引用，作为返回值的引用则是减少拷贝，不会产生副本，不过要注意不能返回局部变量的引用，</p>
-<h1 id="哈希表的原理是什么"><a href="#哈希表的原理是什么" class="headerlink" title="哈希表的原理是什么"></a>哈希表的原理是什么</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">哈希表（Hash Table），也叫散列表，是一种根据关键码值（Key value）直接访问内存存储位置的数据结构。它通过一个称为哈希函数（Hash Function）的映射函数，将关键码值映射到表中的一个位置，从而加快查找速度</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</p>
-<h3 id="哈希表的基本原理"><a href="#哈希表的基本原理" class="headerlink" title="哈希表的基本原理"></a>哈希表的基本原理</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136"><strong>哈希函数</strong>：哈希函数将关键码值转换为数组的索引。理想的哈希函数应当计算简单且分布均匀，以减少冲突的概率</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136"><strong>哈希冲突</strong>：当两个不同的关键码值通过哈希函数得到相同的索引时，就会发生哈希冲突。常见的解决方法有开放定址法和链表法</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%8E%9F%E7%90%86">3</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136"><strong>查找和插入</strong>：通过哈希函数计算关键码值的哈希地址，然后直接访问该地址进行查找或插入操作。哈希表的查找和插入操作时间复杂度接近O(1)</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
-</ol>
-<h3 id="哈希表的优缺点"><a href="#哈希表的优缺点" class="headerlink" title="哈希表的优缺点"></a>哈希表的优缺点</h3><p><strong>优点</strong>：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">查找和插入速度非常快，接近常量时间复杂度O(1)</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">编程实现相对简单，适用于需要快速查找的场景</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a>。</li>
-</ul>
-<p><strong>缺点</strong>：</p>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">基于数组实现，扩展困难。当哈希表接近满载时，性能可能会显著下降</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">1</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136">需要处理哈希冲突，可能会增加实现的复杂性</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
-</ul>
-<h3 id="哈希冲突解决方法"><a href="#哈希冲突解决方法" class="headerlink" title="哈希冲突解决方法"></a>哈希冲突解决方法</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/duan19920101/article/details/51579136"><strong>开放定址法</strong>：发生冲突时，通过某种探测序列找到下一个空闲位置</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a>。</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005"><strong>链表法</strong>：每个数组位置存储一个链表，所有哈希值相同的元素都存储在该链表中</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/63142005">2</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%8E%9F%E7%90%86">3</a>。</li>
-</ol>
-<p>​                </p>
-<h1 id="什么是运行时多态"><a href="#什么是运行时多态" class="headerlink" title="什么是运行时多态"></a>什么是运行时多态</h1><p>运行时多态（Runtime Polymorphism），也称为动态多态，是面向对象编程中的一个重要特性。它允许程序在运行时决定调用哪个方法，从而实现灵活和可扩展的代码设计。</p>
-<h3 id="运行时多态的实现"><a href="#运行时多态的实现" class="headerlink" title="运行时多态的实现"></a>运行时多态的实现</h3><p>在C++中，运行时多态主要通过<strong>虚函数</strong>（virtual functions）和<strong>继承</strong>（inheritance）来实现。以下是实现运行时多态的关键步骤：</p>
-<ol>
-<li><strong>虚函数</strong>：在基类中声明虚函数，并在派生类中重写这些虚函数。</li>
-<li><strong>基类指针或引用</strong>：使用基类的指针或引用来指向派生类对象。</li>
-</ol>
-<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Base</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">void</span> <span class="title">show</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Base class show function&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Derived</span> : <span class="keyword">public</span> Base &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">show</span><span class="params">()</span> <span class="keyword">override</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;Derived class show function&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Base* b;</span><br><span class="line">    Derived d;</span><br><span class="line">    b = &amp;d;</span><br><span class="line">    b-&gt;<span class="built_in">show</span>();  <span class="comment">// 输出: Derived class show function</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xylitolz/article/details/115800775">在这个例子中，<code>Base</code>类中定义了一个虚函数<code>show</code>，而<code>Derived</code>类重写了这个函数。在<code>main</code>函数中，基类指针<code>b</code>指向派生类对象<code>d</code>，调用<code>b-&gt;show()</code>时，实际执行的是派生类<code>Derived</code>中的<code>show</code>函数</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/xylitolz/article/details/115800775">1</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43935710/article/details/103871715">2</a><a target="_blank" rel="noopener" href="https://bing.com/search?q=%E8%BF%90%E8%A1%8C%E6%97%B6%E5%A4%9A%E6%80%81">3</a>。</p>
-<h3 id="运行时多态的优点"><a href="#运行时多态的优点" class="headerlink" title="运行时多态的优点"></a>运行时多态的优点</h3><ul>
-<li><strong>灵活性</strong>：允许在运行时决定调用哪个方法，使得代码更灵活。</li>
-<li><strong>可扩展性</strong>：可以通过继承和重写方法来扩展现有代码，而无需修改原有代码。</li>
-</ul>
-<h3 id="运行时多态的缺点"><a href="#运行时多态的缺点" class="headerlink" title="运行时多态的缺点"></a>运行时多态的缺点</h3><ul>
-<li><strong>性能开销</strong>：由于需要在运行时决定调用哪个方法，可能会带来一些性能开销。</li>
-<li><strong>复杂性</strong>：需要理解和正确使用虚函数和继承，增加了代码的复杂性。</li>
-</ul>
-<p>​                     </p>
-<p>​                </p>
 
       
     </div>
