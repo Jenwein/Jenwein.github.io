@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.0.0-beta.4/libs/cn/index.js"></script>
+
 <!--pjax：防止跳转页面音乐暂停-->
  <script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script>
   <meta charset="UTF-8">
@@ -259,8 +261,8 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2024/04/10/linux-process/" itemprop="url">
-            <span itemprop="name">linux进程创建</span>
+          <a class="post-title-link" href="/2024/04/10/linux-shell/" itemprop="url">
+            <span itemprop="name">常见命令</span>
           </a>
       </div>
 
@@ -279,8 +281,8 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2024/04/10/linux-shell/" itemprop="url">
-            <span itemprop="name">常见命令</span>
+          <a class="post-title-link" href="/2024/04/10/linux-process/" itemprop="url">
+            <span itemprop="name">linux进程创建</span>
           </a>
       </div>
 
@@ -319,26 +321,6 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2024/04/07/linux-ftp/" itemprop="url">
-            <span itemprop="name">FTP协议</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2024-04-07T12:00:00+08:00"
-              content="2024-04-07">
-          04-07
-        </time>
-      </div>
-
-      <div class="post-title">
           <a class="post-title-link" href="/2024/04/07/linux-file/" itemprop="url">
             <span itemprop="name">linux文件操作</span>
           </a>
@@ -359,8 +341,8 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2024/04/07/linux-socket/" itemprop="url">
-            <span itemprop="name">linux网络编程</span>
+          <a class="post-title-link" href="/2024/04/07/linux-ftp/" itemprop="url">
+            <span itemprop="name">FTP协议</span>
           </a>
       </div>
 
@@ -381,6 +363,26 @@
       <div class="post-title">
           <a class="post-title-link" href="/2024/04/07/linux-system/" itemprop="url">
             <span itemprop="name">linux进程调用</span>
+          </a>
+      </div>
+
+    </header>
+  </article>
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2024-04-07T12:00:00+08:00"
+              content="2024-04-07">
+          04-07
+        </time>
+      </div>
+
+      <div class="post-title">
+          <a class="post-title-link" href="/2024/04/07/linux-socket/" itemprop="url">
+            <span itemprop="name">linux网络编程</span>
           </a>
       </div>
 
@@ -720,5 +722,18 @@ window.addEventListener('pjax:success', () => {
 
 
     </div>
+
+  
+      <script>
+          new CozeWebSDK.WebChatClient({
+            config: {
+              bot_id: '7471691871526764559',
+            },
+            componentProps: {
+              title: 'Coze',
+            },
+          });
+      </script>
+    
 </body>
 </html>

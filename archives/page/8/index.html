@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.0.0-beta.4/libs/cn/index.js"></script>
+
 <!--pjax：防止跳转页面音乐暂停-->
  <script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script>
   <meta charset="UTF-8">
@@ -279,26 +281,6 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2024/02/02/C++-function/" itemprop="url">
-            <span itemprop="name">function</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2024-02-02T22:00:00+08:00"
-              content="2024-02-02">
-          02-02
-        </time>
-      </div>
-
-      <div class="post-title">
           <a class="post-title-link" href="/2024/02/02/C++-lambda/" itemprop="url">
             <span itemprop="name">函数指针与匿名函数</span>
           </a>
@@ -321,6 +303,26 @@
       <div class="post-title">
           <a class="post-title-link" href="/2024/02/02/C++-namespace/" itemprop="url">
             <span itemprop="name">命名空间namespace</span>
+          </a>
+      </div>
+
+    </header>
+  </article>
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2024-02-02T22:00:00+08:00"
+              content="2024-02-02">
+          02-02
+        </time>
+      </div>
+
+      <div class="post-title">
+          <a class="post-title-link" href="/2024/02/02/C++-function/" itemprop="url">
+            <span itemprop="name">function</span>
           </a>
       </div>
 
@@ -720,5 +722,18 @@ window.addEventListener('pjax:success', () => {
 
 
     </div>
+
+  
+      <script>
+          new CozeWebSDK.WebChatClient({
+            config: {
+              bot_id: '7471691871526764559',
+            },
+            componentProps: {
+              title: 'Coze',
+            },
+          });
+      </script>
+    
 </body>
 </html>

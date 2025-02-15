@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.0.0-beta.4/libs/cn/index.js"></script>
+
 <!--pjax：防止跳转页面音乐暂停-->
  <script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script>
   <meta charset="UTF-8">
@@ -401,8 +403,8 @@
       <i class="fa fa-chevron-left"></i> 命名空间namespace
     </a></div>
       <div class="post-nav-item">
-    <a href="/2024/02/02/C++-function/" rel="next" title="function">
-      function <i class="fa fa-chevron-right"></i>
+    <a href="/2024/02/02/C++-find_if/" rel="next" title="find_if">
+      find_if <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -734,5 +736,18 @@ NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
 </script>
 
     </div>
+
+  
+      <script>
+          new CozeWebSDK.WebChatClient({
+            config: {
+              bot_id: '7471691871526764559',
+            },
+            componentProps: {
+              title: 'Coze',
+            },
+          });
+      </script>
+    
 </body>
 </html>

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.0.0-beta.4/libs/cn/index.js"></script>
+
 <!--pjax：防止跳转页面音乐暂停-->
  <script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script>
   <meta charset="UTF-8">
@@ -550,12 +552,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/04/07/linux-system/" rel="prev" title="linux进程调用">
+    <a href="/2024/04/07/linux-systemerror/" rel="prev" title="linux进程调用">
       <i class="fa fa-chevron-left"></i> linux进程调用
     </a></div>
       <div class="post-nav-item">
-    <a href="/2024/04/07/linux-file/" rel="next" title="linux文件操作">
-      linux文件操作 <i class="fa fa-chevron-right"></i>
+    <a href="/2024/04/07/linux-system/" rel="next" title="linux进程调用">
+      linux进程调用 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -887,5 +889,18 @@ NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
 </script>
 
     </div>
+
+  
+      <script>
+          new CozeWebSDK.WebChatClient({
+            config: {
+              bot_id: '7471691871526764559',
+            },
+            componentProps: {
+              title: 'Coze',
+            },
+          });
+      </script>
+    
 </body>
 </html>

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.0.0-beta.4/libs/cn/index.js"></script>
+
 <!--pjax：防止跳转页面音乐暂停-->
  <script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script>
   <meta charset="UTF-8">
@@ -359,8 +361,8 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2024/09/24/%E7%89%9B%E5%AE%A2%E6%A8%A1%E6%8B%9F2/" itemprop="url">
-            <span itemprop="name">牛客模拟2</span>
+          <a class="post-title-link" href="/2024/09/24/%E7%89%9B%E5%AE%A2%E6%A8%A1%E6%8B%9F1/" itemprop="url">
+            <span itemprop="name">牛客模拟1</span>
           </a>
       </div>
 
@@ -379,8 +381,8 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2024/09/24/%E7%89%9B%E5%AE%A2%E6%A8%A1%E6%8B%9F1/" itemprop="url">
-            <span itemprop="name">牛客模拟1</span>
+          <a class="post-title-link" href="/2024/09/24/%E7%89%9B%E5%AE%A2%E6%A8%A1%E6%8B%9F2/" itemprop="url">
+            <span itemprop="name">牛客模拟2</span>
           </a>
       </div>
 
@@ -720,5 +722,18 @@ window.addEventListener('pjax:success', () => {
 
 
     </div>
+
+  
+      <script>
+          new CozeWebSDK.WebChatClient({
+            config: {
+              bot_id: '7471691871526764559',
+            },
+            componentProps: {
+              title: 'Coze',
+            },
+          });
+      </script>
+    
 </body>
 </html>

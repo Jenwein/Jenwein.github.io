@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.0.0-beta.4/libs/cn/index.js"></script>
+
 <!--pjax：防止跳转页面音乐暂停-->
  <script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script>
   <meta charset="UTF-8">
@@ -1647,178 +1649,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/09/24/%E7%89%9B%E5%AE%A2%E6%A8%A1%E6%8B%9F2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/09/24/%E7%89%9B%E5%AE%A2%E6%A8%A1%E6%8B%9F2/" class="post-title-link" itemprop="url">牛客模拟2</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-09-24 13:00:00" itemprop="dateCreated datePublished" datetime="2024-09-24T13:00:00+08:00">2024-09-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-25 08:57:52" itemprop="dateModified" datetime="2024-09-25T08:57:52+08:00">2024-09-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E9%9D%A2%E8%AF%95/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.6k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="说一说常用的-Linux-命令"><a href="#说一说常用的-Linux-命令" class="headerlink" title="说一说常用的 Linux 命令"></a>说一说常用的 Linux 命令</h1><ul>
-<li><p>cd         切换目录</p>
-</li>
-<li><p>pwd         显示当前工作目录</p>
-</li>
-<li><p>touch     创建空文件</p>
-</li>
-<li><p>mkdir     创建一个新目录</p>
-<ul>
-<li>-p    创建多级目录</li>
-</ul>
-</li>
-<li><p>cp        复制文件或者目录</p>
-<ul>
-<li>-r    递归处理，将指定目录下的文件与子目录一并拷贝</li>
-</ul>
-</li>
-<li><p>mv        移动文件或目录、文件或目录改名</p>
-</li>
-<li><p>rm         删除文件</p>
-<ul>
-<li>-r    同时删除该目录下的所有文件</li>
-<li>-f    强制删除文件或目录</li>
-</ul>
-</li>
-<li><p>cat        显示文本文件内容</p>
-</li>
-<li><p>more        分页显示文本内容，可前后翻页，空格向后翻页，b向前翻页</p>
-</li>
-<li><p>head        查看文本开头部分，默认十行</p>
-<ul>
-<li>-[num]    查看文本开头部分指定行数</li>
-</ul>
-</li>
-<li><p>tail    查看文本结尾部分，默认十行</p>
-<ul>
-<li>-[num]    查看文本结尾部分指定行数</li>
-<li>-f        循环滚动读取文件并动态显示在屏幕上，根据文件属性追踪    </li>
-<li>-F        循环滚动读取文件并动态显示在屏幕上，文件文件名追踪</li>
-</ul>
-</li>
-<li><p>wc        统计文本行数，字数，字符数</p>
-<ul>
-<li>-m    字符数</li>
-<li>-w    文本字数</li>
-<li>-l    文本行数</li>
-</ul>
-</li>
-<li><p>find    &#x2F; -name 在文件系统的指定目录下查找指定的文件</p>
-</li>
-<li><p>grep        在指定的文件中查找指定内容的行</p>
-</li>
-<li><p>ln        建立链接文件</p>
-</li>
-<li><p>scp  远程传输文件</p>
-</li>
-</ul>
-<h1 id="谈谈InnoDB引擎中的锁"><a href="#谈谈InnoDB引擎中的锁" class="headerlink" title="谈谈InnoDB引擎中的锁"></a>谈谈InnoDB引擎中的锁</h1><p>InnoDB是MySQL数据库中最常用的引擎之一，它采用了多版本并发控制（MVCC）来管理事务的并发访问。在InnoDB中，锁是实现MVCC的重要组件之一。</p>
-<p>InnoDB中的锁可以分为共享锁和排他锁。</p>
-<p>共享锁（S锁）允许多个事务同时持有同一份数据对象的锁，但是不能同时持有排他锁（X锁）。</p>
-<p>排他锁（X锁）则只允许一个事务持有该数据对象的锁，其他事务无法获得该锁，直到该事务释放该锁。</p>
-<p>意向锁（Intention Lock）：用于协调共享锁和排他锁之间的竞争。当一个事务获取共享锁或排他锁时，必须先获取对应的意向锁。意向锁是一种轻量级锁，不会阻塞其他事务的读取操作，只会阻塞其他事务的修改操作。</p>
-<p>在InnoDB中，行级锁是最常用的锁类型。当一个事务需要修改某一行数据时，它会先获取该行的排他锁。如果该行已经被其他事务持有锁，则当前事务会被阻塞，直到该锁被释放。如果一个事务只需要读取某一行数据，它会获取该行的共享锁。多个事务可以同时持有同一行的共享锁，但是任何一个事务持有了该行的排他锁，其他事务无法再获取该行的共享锁。</p>
-<p>除了行级锁外，InnoDB还支持表级锁和页级锁。表级锁会锁定整张表，而页级锁会锁定表中的一页数据。但是表级锁和页级锁可能会导致并发性能下降，因此在实际应用中尽量避免使用。</p>
-<h1 id="UDP协议的特点有哪些？"><a href="#UDP协议的特点有哪些？" class="headerlink" title="UDP协议的特点有哪些？"></a>UDP协议的特点有哪些？</h1><p>  一、UDP是无连接的，即通信时不需要创建连接（发送数据结束时也没有连接可以释放）所以减小了开销和发送数据前的时延；</p>
-<p>二、UDP采用最大努力交付，不保证可靠交付，因此主机不需要维护复杂的连接状态；</p>
-<p>三、UDP是面向报文的，只在应用层交下来的报文前增加了首部后就向下交付IP层；</p>
-<p>四、UDP是无阻塞控制的，即使网络中存在阻塞，也不会影响发送端的发送频率</p>
-<p>五、UDP支持一对一、一对多、多对一、多对多的交互通信</p>
-<p>六、UDP的首部开销小，只有8个字节，它比TCP的20个字节的首部要短。</p>
-<h1 id="TCP-x2F-IP四层模型是什么？"><a href="#TCP-x2F-IP四层模型是什么？" class="headerlink" title="TCP&#x2F;IP四层模型是什么？"></a>TCP&#x2F;IP四层模型是什么？</h1><p>第一层：应用层，主要有负责web浏览器的HTTP协议， 文件传输的FTP协议，负责电子邮件的SMTP协议，负责域名系统的DNS等。<br>第二层：传输层，主要是有可靠传输的TCP协议，特别高效的UDP协议。主要负责传输应用层的数据包。<br>第三层：网络层，主要是IP协议。主要负责寻址（找到目标设备的位置）<br>第四层：数据链路层，主要是负责转换数字信号和物理二进制信号。</p>
-<h1 id="大数相乘"><a href="#大数相乘" class="headerlink" title="大数相乘"></a>大数相乘</h1><p>以字符串的形式读入两个数字，编写一个函数计算它们的乘积，以字符串形式返回。</p>
-<p>数据范围： 读入的数字大小满足 <img src="https://www.nowcoder.com/equation?tex=0%20%5Cle%20n%20%5Cle%20%2010%5E%7B1000%7D" alt="img"></p>
-<p>要求：空间复杂度 <img src="https://www.nowcoder.com/equation?tex=O(m)" alt="O(m)">，时间复杂度 <img src="https://www.nowcoder.com/equation?tex=O(m%5E2)" alt="O(m^2)">（假设m是n的长度）</p>
-<h1 id="合并二叉树"><a href="#合并二叉树" class="headerlink" title="合并二叉树"></a>合并二叉树</h1><p>已知两颗二叉树，将它们合并成一颗二叉树。合并规则是：都存在的结点，就将结点值加起来，否则空的位置就由另一个树的结点来代替。例如：<br>两颗二叉树是:<br>                                                                    Tree 1</p>
-<p><img src="https://uploadfiles.nowcoder.com/images/20210928/382300087_1632821337680/9E290CFD3730B9B08A5CEFF25799608F" alt="img"></p>
-<p>​                                                                        Tree 2<br><img src="https://uploadfiles.nowcoder.com/images/20210928/382300087_1632821376266/DD0A63560E770A8510049C5182E6E622" alt="img"><br>​                                                                    合并后的树为<br><img src="https://uploadfiles.nowcoder.com/images/20210928/382300087_1632821404541/9CB750F8909D5985C0D01D8B71AD58BA" alt="img"></p>
-<p>数据范围：树上节点数量满足 <img src="https://www.nowcoder.com/equation?tex=0%20%5Cle%20n%20%5Cle%20500" alt="img">，树上节点的值一定在32位整型范围内。</p>
-<p>进阶：空间复杂度 <img src="https://www.nowcoder.com/equation?tex=O(1)" alt="img"> ，时间复杂度 <img src="https://www.nowcoder.com/equation?tex=O(n)" alt="img"></p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/09/24/%E7%89%9B%E5%AE%A2%E6%A8%A1%E6%8B%9F1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2002,6 +1832,178 @@
 <li><strong>书签</strong>：GET请求生成的URL可以被书签保存，而POST请求不可以。</li>
 <li><strong>编码方式</strong>：GET请求只能进行URL编码，而POST请求支持多种编码方式</li>
 </ul>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/09/24/%E7%89%9B%E5%AE%A2%E6%A8%A1%E6%8B%9F2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/09/24/%E7%89%9B%E5%AE%A2%E6%A8%A1%E6%8B%9F2/" class="post-title-link" itemprop="url">牛客模拟2</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-09-24 13:00:00" itemprop="dateCreated datePublished" datetime="2024-09-24T13:00:00+08:00">2024-09-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-25 08:57:52" itemprop="dateModified" datetime="2024-09-25T08:57:52+08:00">2024-09-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="说一说常用的-Linux-命令"><a href="#说一说常用的-Linux-命令" class="headerlink" title="说一说常用的 Linux 命令"></a>说一说常用的 Linux 命令</h1><ul>
+<li><p>cd         切换目录</p>
+</li>
+<li><p>pwd         显示当前工作目录</p>
+</li>
+<li><p>touch     创建空文件</p>
+</li>
+<li><p>mkdir     创建一个新目录</p>
+<ul>
+<li>-p    创建多级目录</li>
+</ul>
+</li>
+<li><p>cp        复制文件或者目录</p>
+<ul>
+<li>-r    递归处理，将指定目录下的文件与子目录一并拷贝</li>
+</ul>
+</li>
+<li><p>mv        移动文件或目录、文件或目录改名</p>
+</li>
+<li><p>rm         删除文件</p>
+<ul>
+<li>-r    同时删除该目录下的所有文件</li>
+<li>-f    强制删除文件或目录</li>
+</ul>
+</li>
+<li><p>cat        显示文本文件内容</p>
+</li>
+<li><p>more        分页显示文本内容，可前后翻页，空格向后翻页，b向前翻页</p>
+</li>
+<li><p>head        查看文本开头部分，默认十行</p>
+<ul>
+<li>-[num]    查看文本开头部分指定行数</li>
+</ul>
+</li>
+<li><p>tail    查看文本结尾部分，默认十行</p>
+<ul>
+<li>-[num]    查看文本结尾部分指定行数</li>
+<li>-f        循环滚动读取文件并动态显示在屏幕上，根据文件属性追踪    </li>
+<li>-F        循环滚动读取文件并动态显示在屏幕上，文件文件名追踪</li>
+</ul>
+</li>
+<li><p>wc        统计文本行数，字数，字符数</p>
+<ul>
+<li>-m    字符数</li>
+<li>-w    文本字数</li>
+<li>-l    文本行数</li>
+</ul>
+</li>
+<li><p>find    &#x2F; -name 在文件系统的指定目录下查找指定的文件</p>
+</li>
+<li><p>grep        在指定的文件中查找指定内容的行</p>
+</li>
+<li><p>ln        建立链接文件</p>
+</li>
+<li><p>scp  远程传输文件</p>
+</li>
+</ul>
+<h1 id="谈谈InnoDB引擎中的锁"><a href="#谈谈InnoDB引擎中的锁" class="headerlink" title="谈谈InnoDB引擎中的锁"></a>谈谈InnoDB引擎中的锁</h1><p>InnoDB是MySQL数据库中最常用的引擎之一，它采用了多版本并发控制（MVCC）来管理事务的并发访问。在InnoDB中，锁是实现MVCC的重要组件之一。</p>
+<p>InnoDB中的锁可以分为共享锁和排他锁。</p>
+<p>共享锁（S锁）允许多个事务同时持有同一份数据对象的锁，但是不能同时持有排他锁（X锁）。</p>
+<p>排他锁（X锁）则只允许一个事务持有该数据对象的锁，其他事务无法获得该锁，直到该事务释放该锁。</p>
+<p>意向锁（Intention Lock）：用于协调共享锁和排他锁之间的竞争。当一个事务获取共享锁或排他锁时，必须先获取对应的意向锁。意向锁是一种轻量级锁，不会阻塞其他事务的读取操作，只会阻塞其他事务的修改操作。</p>
+<p>在InnoDB中，行级锁是最常用的锁类型。当一个事务需要修改某一行数据时，它会先获取该行的排他锁。如果该行已经被其他事务持有锁，则当前事务会被阻塞，直到该锁被释放。如果一个事务只需要读取某一行数据，它会获取该行的共享锁。多个事务可以同时持有同一行的共享锁，但是任何一个事务持有了该行的排他锁，其他事务无法再获取该行的共享锁。</p>
+<p>除了行级锁外，InnoDB还支持表级锁和页级锁。表级锁会锁定整张表，而页级锁会锁定表中的一页数据。但是表级锁和页级锁可能会导致并发性能下降，因此在实际应用中尽量避免使用。</p>
+<h1 id="UDP协议的特点有哪些？"><a href="#UDP协议的特点有哪些？" class="headerlink" title="UDP协议的特点有哪些？"></a>UDP协议的特点有哪些？</h1><p>  一、UDP是无连接的，即通信时不需要创建连接（发送数据结束时也没有连接可以释放）所以减小了开销和发送数据前的时延；</p>
+<p>二、UDP采用最大努力交付，不保证可靠交付，因此主机不需要维护复杂的连接状态；</p>
+<p>三、UDP是面向报文的，只在应用层交下来的报文前增加了首部后就向下交付IP层；</p>
+<p>四、UDP是无阻塞控制的，即使网络中存在阻塞，也不会影响发送端的发送频率</p>
+<p>五、UDP支持一对一、一对多、多对一、多对多的交互通信</p>
+<p>六、UDP的首部开销小，只有8个字节，它比TCP的20个字节的首部要短。</p>
+<h1 id="TCP-x2F-IP四层模型是什么？"><a href="#TCP-x2F-IP四层模型是什么？" class="headerlink" title="TCP&#x2F;IP四层模型是什么？"></a>TCP&#x2F;IP四层模型是什么？</h1><p>第一层：应用层，主要有负责web浏览器的HTTP协议， 文件传输的FTP协议，负责电子邮件的SMTP协议，负责域名系统的DNS等。<br>第二层：传输层，主要是有可靠传输的TCP协议，特别高效的UDP协议。主要负责传输应用层的数据包。<br>第三层：网络层，主要是IP协议。主要负责寻址（找到目标设备的位置）<br>第四层：数据链路层，主要是负责转换数字信号和物理二进制信号。</p>
+<h1 id="大数相乘"><a href="#大数相乘" class="headerlink" title="大数相乘"></a>大数相乘</h1><p>以字符串的形式读入两个数字，编写一个函数计算它们的乘积，以字符串形式返回。</p>
+<p>数据范围： 读入的数字大小满足 <img src="https://www.nowcoder.com/equation?tex=0%20%5Cle%20n%20%5Cle%20%2010%5E%7B1000%7D" alt="img"></p>
+<p>要求：空间复杂度 <img src="https://www.nowcoder.com/equation?tex=O(m)" alt="O(m)">，时间复杂度 <img src="https://www.nowcoder.com/equation?tex=O(m%5E2)" alt="O(m^2)">（假设m是n的长度）</p>
+<h1 id="合并二叉树"><a href="#合并二叉树" class="headerlink" title="合并二叉树"></a>合并二叉树</h1><p>已知两颗二叉树，将它们合并成一颗二叉树。合并规则是：都存在的结点，就将结点值加起来，否则空的位置就由另一个树的结点来代替。例如：<br>两颗二叉树是:<br>                                                                    Tree 1</p>
+<p><img src="https://uploadfiles.nowcoder.com/images/20210928/382300087_1632821337680/9E290CFD3730B9B08A5CEFF25799608F" alt="img"></p>
+<p>​                                                                        Tree 2<br><img src="https://uploadfiles.nowcoder.com/images/20210928/382300087_1632821376266/DD0A63560E770A8510049C5182E6E622" alt="img"><br>​                                                                    合并后的树为<br><img src="https://uploadfiles.nowcoder.com/images/20210928/382300087_1632821404541/9CB750F8909D5985C0D01D8B71AD58BA" alt="img"></p>
+<p>数据范围：树上节点数量满足 <img src="https://www.nowcoder.com/equation?tex=0%20%5Cle%20n%20%5Cle%20500" alt="img">，树上节点的值一定在32位整型范围内。</p>
+<p>进阶：空间复杂度 <img src="https://www.nowcoder.com/equation?tex=O(1)" alt="img"> ，时间复杂度 <img src="https://www.nowcoder.com/equation?tex=O(n)" alt="img"></p>
 
       
     </div>
@@ -2405,5 +2407,18 @@ window.addEventListener('pjax:success', () => {
 
 
     </div>
+
+  
+      <script>
+          new CozeWebSDK.WebChatClient({
+            config: {
+              bot_id: '7471691871526764559',
+            },
+            componentProps: {
+              title: 'Coze',
+            },
+          });
+      </script>
+    
 </body>
 </html>

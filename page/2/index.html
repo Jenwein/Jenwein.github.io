@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+<script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.0.0-beta.4/libs/cn/index.js"></script>
+
 <!--pjax：防止跳转页面音乐暂停-->
  <script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script>
   <meta charset="UTF-8">
@@ -1251,7 +1253,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/08/Qt-%E9%94%AE%E9%BC%A0%E5%93%8D%E5%BA%94%E4%BA%8B%E4%BB%B6/">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/06/08/Qt-%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BF%A1%E5%8F%B7%E5%92%8C%E6%A7%BD/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -1265,7 +1267,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/06/08/Qt-%E9%94%AE%E9%BC%A0%E5%93%8D%E5%BA%94%E4%BA%8B%E4%BB%B6/" class="post-title-link" itemprop="url">QT-键鼠响应</a>
+            <a href="/2024/06/08/Qt-%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BF%A1%E5%8F%B7%E5%92%8C%E6%A7%BD/" class="post-title-link" itemprop="url">QT-信号与槽</a>
         </h2>
 
         <div class="post-meta">
@@ -1275,16 +1277,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2024-06-08 12:00:00" itemprop="dateCreated datePublished" datetime="2024-06-08T12:00:00+08:00">2024-06-08</time>
+              <time title="创建时间：2024-06-08 12:00:00 / 修改时间：11:01:15" itemprop="dateCreated datePublished" datetime="2024-06-08T12:00:00+08:00">2024-06-08</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-25 09:04:47" itemprop="dateModified" datetime="2024-09-25T09:04:47+08:00">2024-09-25</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1305,7 +1301,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
+              <span>1.4k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -1324,8 +1320,45 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;mainwindow.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QtWidgets&gt;</span></span></span><br><span class="line"><span class="comment">//接受一个QWidget类型的指针parent作为参数，这个参数通常用于设置窗口的父子关系。构造函数使用初始化列表语法:来调用基类QMainWindow的构造函数，并将parent传递给它。这样，MainWindow就被初始化为一个QMainWindow对象。</span></span><br><span class="line">MainWindow::<span class="built_in">MainWindow</span>(QWidget *parent)</span><br><span class="line">    : <span class="built_in">QMainWindow</span>(parent)   <span class="comment">//初始化列表，QWidget类型的parent初始化QWidget为基类的QMainWindow</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//设置了鼠标跟踪为开启状态。当鼠标跟踪开启时，即使没有按键被按下，窗口也会接收到鼠标移动事件。</span></span><br><span class="line">    <span class="built_in">setMouseTracking</span>(<span class="literal">true</span>);</span><br><span class="line">    <span class="comment">//创建了一个QPushButton对象，按钮上的文字是&quot;Quit&quot;。this指针表示这个按钮是MainWindow的子对象，这意味着按钮的生命周期将由MainWindow管理</span></span><br><span class="line">    <span class="keyword">auto</span> *quitBtn = <span class="keyword">new</span> <span class="built_in">QPushButton</span>(<span class="string">&quot;Quit&quot;</span>,<span class="keyword">this</span>);</span><br><span class="line">    <span class="comment">//设置了按钮的位置和大小</span></span><br><span class="line">    quitBtn-&gt;<span class="built_in">setGeometry</span>(<span class="number">50</span>,<span class="number">25</span>,<span class="number">100</span>,<span class="number">50</span>);</span><br><span class="line">    <span class="comment">//连接了quitBtn的clicked信号到全局QApplication对象的quit槽。这意味着当按钮被点击时，QApplication::quit函数会被调用，导致应用程序退出</span></span><br><span class="line">    <span class="built_in">connect</span>(quitBtn,&amp;QPushButton::clicked,qApp,&amp;QApplication::quit);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::keyPressEvent</span><span class="params">(QKeyEvent* event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(event-&gt;<span class="built_in">key</span>()==Qt::Key_Escape)</span><br><span class="line">    &#123;</span><br><span class="line">        qApp-&gt;<span class="built_in">quit</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MainWindow::mouseMoveEvent</span><span class="params">(QMouseEvent *event)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> x = event-&gt;<span class="built_in">pos</span>().<span class="built_in">x</span>();</span><br><span class="line">    <span class="type">int</span> y = event-&gt;<span class="built_in">pos</span>().<span class="built_in">y</span>();</span><br><span class="line">    QString text = <span class="string">&quot;position:&quot;</span>+QString::<span class="built_in">number</span>(x)+<span class="string">&quot;,&quot;</span>+QString::<span class="built_in">number</span>(y);</span><br><span class="line">    <span class="keyword">this</span>-&gt;<span class="built_in">statusBar</span>()-&gt;<span class="built_in">showMessage</span>(text);</span><br><span class="line">&#125;</span><br><span class="line">MainWindow::~<span class="built_in">MainWindow</span>()</span><br><span class="line">&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+          <h2 id="信号与槽"><a href="#信号与槽" class="headerlink" title="信号与槽"></a>信号与槽</h2><p>一旦信号和槽通过 <code>connect</code> 函数连接起来，每当信号被 <code>emit</code> 发射，它就会触发槽函数的执行。这是Qt事件驱动编程的核心机制，允许对象之间以松耦合的方式进行通信。</p>
+<p>槽函数的调用是由emit显式发送信号函数来触发的。</p>
+<p><strong>自定义信号</strong>:</p>
+<ul>
+<li>在类的声明中，使用 <code>signals:</code> 关键字来定义信号。</li>
+<li>信号没有返回值，可以有参数。</li>
+<li>信号是函数的声明，不需要定义实现。</li>
+<li>使用 <code>emit</code> 关键字来发射信号。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// .h 文件</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QObject&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span> : <span class="keyword">public</span> QObject &#123;</span><br><span class="line">    Q_OBJECT</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyClass</span>(QObject *parent = <span class="literal">nullptr</span>);</span><br><span class="line"></span><br><span class="line">signals:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">mySignal</span><span class="params">(<span class="type">int</span> value)</span></span>; <span class="comment">// 自定义信号</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
+<p><strong>自定义槽</strong>:</p>
+<ul>
+<li>在类的声明中，使用 <code>slots:</code> 或者 <code>public/private/protected slots:</code> 来定义槽函数。</li>
+<li>槽函数的实现与普通成员函数相同。</li>
+<li>槽函数通常没有返回值，参数需要与信号匹配。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;MyClass.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;QDebug&gt;</span></span></span><br><span class="line"></span><br><span class="line">MyClass::<span class="built_in">MyClass</span>(QObject *parent) : <span class="built_in">QObject</span>(parent) &#123;</span><br><span class="line">    <span class="comment">// 连接信号和槽</span></span><br><span class="line">    <span class="built_in">connect</span>(<span class="keyword">this</span>, &amp;MyClass::mySignal, <span class="keyword">this</span>, &amp;MyClass::mySlot);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 自定义槽函数</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MyClass::mySlot</span><span class="params">(<span class="type">int</span> value)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;Signal received with value:&quot;</span> &lt;&lt; value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>连接信号和槽</strong>:</p>
+<ul>
+<li>使用 <code>QObject::connect</code> 函数来连接信号和槽。</li>
+<li><code>connect</code> 的参数包括信号发送者、信号、信号接收者和槽函数。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">connect</span>(sender, &amp;SenderClass::signalName, receiver, &amp;ReceiverClass::slotName);</span><br></pre></td></tr></table></figure>
+
+<p><strong>发射信号</strong>:</p>
+<ul>
+<li>使用 <code>emit</code> 关键字来发射信号，触发连接的槽函数。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">emit <span class="title">mySignal</span><span class="params">(<span class="number">123</span>)</span></span>; <span class="comment">// 发射信号，传递参数值123</span></span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/dodamce/article/details/138028733">类必须包含 <code>Q_OBJECT</code> 宏，这样 Qt 的元对象系统才能正常工作，支持信号和槽的功能</a></p>
+<h3 id="why"><a href="#why" class="headerlink" title="why?"></a>why?</h3><ol>
+<li><strong>为什么信号函数不允许有返回值？</strong> 信号函数不允许有返回值是因为它们的目的是通知其他对象某个事件发生了，而不是进行计算并返回一个值。信号的设计是为了触发槽函数的执行，而槽函数可以有返回值。信号的作用是通知，而不是询问。</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/xuechanba/article/details/117553260"><strong>信号函数的参数有什么作用？</strong> 信号函数的参数用于传递与信号相关的数据。例如，如果你有一个信号表示温度变化，参数可能就是新的温度值。这样，当信号被发射时，槽函数可以接收这个值并据此做出反应</a></li>
+<li><strong>没有参数的信号如何工作？</strong> 没有参数的信号简单地通知接收者某个事件发生了，而不提供额外的数据。例如，一个按钮被点击的信号可能不需要参数，因为接收者只需要知道按钮被点击了，而不需要其他信息。</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_33154343/article/details/96829473"><strong>使用emit发射信号是什么意思？</strong> <code>emit</code>是Qt中的一个关键字，用于发射信号。当你想通知其他对象某个事件发生时，你会在你的代码中使用<code>emit</code>来发射相应的信号。这样，所有连接到该信号的槽函数都会被调用</a></li>
+</ol>
 
       
     </div>
@@ -1649,5 +1682,18 @@ window.addEventListener('pjax:success', () => {
 
 
     </div>
+
+  
+      <script>
+          new CozeWebSDK.WebChatClient({
+            config: {
+              bot_id: '7471691871526764559',
+            },
+            componentProps: {
+              title: 'Coze',
+            },
+          });
+      </script>
+    
 </body>
 </html>
