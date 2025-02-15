@@ -611,119 +611,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/07/linux-file/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/04/07/linux-file/" class="post-title-link" itemprop="url">linux文件操作</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-04-07 12:00:00 / 修改时间：20:52:47" itemprop="dateCreated datePublished" datetime="2024-04-07T12:00:00+08:00">2024-04-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/file/" itemprop="url" rel="index"><span itemprop="name">file</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>3.8k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>3 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><ol>
-<li>目录显示与切换</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">include &lt;iostream&gt;</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="type">char</span> path[<span class="number">256</span>];</span><br><span class="line"><span class="comment">//文件目录操作</span></span><br><span class="line"><span class="comment">//pwd：显示当前路径</span></span><br><span class="line"><span class="type">char</span> path1[<span class="number">256</span>];</span><br><span class="line"><span class="built_in">getcwd</span>(path1,<span class="number">256</span>);</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;path1= &quot;</span>&lt;&lt;path1&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">//pwd2：显示当前路径</span></span><br><span class="line"><span class="type">char</span> *path2=<span class="built_in">get_current_dir_name</span>();</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;path2= &quot;</span>&lt;&lt;path2&lt;&lt;std::endl;</span><br><span class="line"><span class="built_in">free</span>(path2);</span><br><span class="line"></span><br><span class="line"><span class="comment">//cd:切换当前工作路径</span></span><br><span class="line"><span class="type">const</span> <span class="type">char</span> *path3=<span class="string">&quot;/home/jenwein/dev/zgjcpp&quot;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">chdir</span>(path3)==<span class="number">0</span>)std::cout&lt;&lt;<span class="string">&quot;success to dir: &quot;</span>;</span><br><span class="line"><span class="built_in">getcwd</span>(path,<span class="number">256</span>);</span><br><span class="line">std::cout&lt;&lt;path&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">//mkdir：创建目录文件夹</span></span><br><span class="line"><span class="comment">//arg1-目录名 arg2-访问权限 成功返回0</span></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">mkdir</span>(<span class="string">&quot;/home/jenwein/dev/zgjcpp/dirope/testmkdir&quot;</span>,<span class="number">0755</span>)==<span class="number">0</span>)std::cout&lt;&lt;<span class="string">&quot;makedir success&quot;</span>;</span><br><span class="line"><span class="keyword">else</span> std::cout&lt;&lt;<span class="string">&quot;fail to makedir&quot;</span>&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">//rmdir：删除文件夹</span></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">rmdir</span>(<span class="string">&quot;/home/jenwein/dev/zgjcpp/dirope/testmkdir&quot;</span>)==<span class="number">0</span>)std::cout&lt;&lt;<span class="string">&quot;rmdir success&quot;</span>;</span><br><span class="line"><span class="keyword">else</span> std::cout&lt;&lt;<span class="string">&quot;fail to rmdir&quot;</span>&lt;&lt;std::endl;</span><br><span class="line">std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="2">
-<li>读取文件&#x2F;目录信息</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dirent.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>*argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(argc!=<span class="number">2</span>)</span><br><span class="line">&#123;</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;Using ./t2 &quot;</span>&lt;&lt;std::endl;</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DIR *dir;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>((dir=<span class="built_in">opendir</span>(argv[<span class="number">1</span>]))==<span class="literal">nullptr</span>)&#123;<span class="keyword">return</span> <span class="number">-1</span>;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">dirent</span>* <span class="built_in">stdinfo</span>(<span class="literal">nullptr</span>);</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">if</span>((stdinfo=<span class="built_in">readdir</span>(dir))==<span class="literal">nullptr</span>) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;filename = &quot;</span>&lt;&lt;stdinfo-&gt;d_name&lt;&lt;<span class="string">&quot;, filetype = &quot;</span>&lt;&lt;(<span class="type">int</span>)stdinfo-&gt;d_type&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">closedir</span>(dir);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="3">
-<li>错误显示</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cerrno&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//属于系统调用的函数才会设置errno，其值只有在库函数调用发生错误时才会被设置</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="type">int</span> iret=<span class="built_in">mkdir</span>(<span class="string">&quot;/home/jenwein/dev/zgjcpp/dirope/bbb/aaa&quot;</span>,<span class="number">0755</span>);</span><br><span class="line"></span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;iret= &quot;</span>&lt;&lt;iret&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line">std::cout&lt;&lt;errno&lt;&lt;<span class="string">&quot; : &quot;</span>&lt;&lt;<span class="built_in">strerror</span>(errno)&lt;&lt;std::endl;<span class="comment">//显示错误信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//显示最近一次系统错误的详细信息</span></span><br><span class="line"><span class="comment">//perror(strerror(errno));</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">for(int i=0;i&lt;150;i++)</span></span><br><span class="line"><span class="comment">std::cout&lt;&lt;i&lt;&lt;&quot; : &quot;&lt;&lt;strerror(i)&lt;&lt;std::endl;//打印所有linux中错误代码</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<ol start="4">
-<li>其他操作</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>*argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;std::cout&lt;&lt;<span class="string">&quot;Using ./file (file or dir) (option:newpath)&quot;</span>&lt;&lt;std::endl; <span class="keyword">return</span> <span class="number">-1</span>;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//access查看文件权限，主要用于判断文件或目录是否存在</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">access</span>(argv[<span class="number">1</span>],F_OK)!=<span class="number">0</span>)</span><br><span class="line">&#123;std::cout&lt;&lt;<span class="string">&quot;file/dir&quot;</span>&lt;&lt;argv[<span class="number">1</span>]&lt;&lt;<span class="string">&quot; not exist&quot;</span>&lt;&lt;std::endl;</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;&#125;</span><br><span class="line"></span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;file/dir&quot;</span>&lt;&lt;argv[<span class="number">1</span>]&lt;&lt;<span class="string">&quot; exist&quot;</span>&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">//读取文件的stat的各属性，名称，权限，修改时间。。。</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">stat</span> st;<span class="comment">//struct for dir or file ins</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">stat</span>(argv[<span class="number">1</span>],&amp;st)!=<span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;stat(&quot;</span>&lt;&lt;argv[<span class="number">1</span>]&lt;&lt;<span class="string">&quot;): &quot;</span>&lt;&lt;<span class="built_in">strerror</span>(errno)&lt;&lt;std::endl;</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">S_ISREG</span>(st.st_mode))</span><br><span class="line">std::cout&lt;&lt;argv[<span class="number">1</span>]&lt;&lt;<span class="string">&quot; is a file (&quot;</span>&lt;&lt;<span class="string">&quot;mtime&quot;</span>&lt;&lt;st.st_mtime&lt;&lt;<span class="string">&quot;,size= &quot;</span>&lt;&lt;st.st_size&lt;&lt;<span class="string">&quot;)\n&quot;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">S_ISDIR</span>(st.st_mode))</span><br><span class="line">std::cout&lt;&lt;argv[<span class="number">1</span>]&lt;&lt;<span class="string">&quot; is a dir (&quot;</span>&lt;&lt;<span class="string">&quot;mtime&quot;</span>&lt;&lt;st.st_mtime&lt;&lt;<span class="string">&quot;,size= &quot;</span>&lt;&lt;st.st_size&lt;&lt;<span class="string">&quot;)\n&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//rename file/dir 重命名文件</span></span><br><span class="line"><span class="keyword">if</span>(argc=<span class="number">3</span>)</span><br><span class="line">&#123;<span class="keyword">if</span>(<span class="built_in">rename</span>(argv[<span class="number">1</span>],argv[<span class="number">2</span>])==<span class="number">0</span>)</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;rename success&quot;</span>&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//remove file/dir 删除文件</span></span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;want rm the last dir/file?(y/n)&quot;</span>&lt;&lt;std::endl;</span><br><span class="line"><span class="type">char</span> s;</span><br><span class="line">std::cin&gt;&gt;s;</span><br><span class="line"><span class="keyword">if</span>(s==<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">&#123;<span class="keyword">if</span>(<span class="built_in">remove</span>(argv[<span class="number">3</span>])==<span class="number">0</span>);</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;rm success&quot;</span>&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> std::cout&lt;&lt;<span class="string">&quot;file to rm sth\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/07/linux-ftp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -966,7 +853,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/07/linux-system/">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/07/linux-file/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -980,7 +867,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/04/07/linux-system/" class="post-title-link" itemprop="url">linux进程调用</a>
+            <a href="/2024/04/07/linux-file/" class="post-title-link" itemprop="url">linux文件操作</a>
         </h2>
 
         <div class="post-meta">
@@ -990,16 +877,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2024-04-07 12:00:00" itemprop="dateCreated datePublished" datetime="2024-04-07T12:00:00+08:00">2024-04-07</time>
+              <time title="创建时间：2024-04-07 12:00:00 / 修改时间：20:52:47" itemprop="dateCreated datePublished" datetime="2024-04-07T12:00:00+08:00">2024-04-07</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-20 19:14:53" itemprop="dateModified" datetime="2024-05-20T19:14:53+08:00">2024-05-20</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1010,7 +891,7 @@
                 </span>
                   ，
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/process/" itemprop="url" rel="index"><span itemprop="name">process</span></a>
+                  <a href="/categories/linux/file/" itemprop="url" rel="index"><span itemprop="name">file</span></a>
                 </span>
             </span>
 
@@ -1020,14 +901,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.2k</span>
+              <span>3.8k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>3 分钟</span>
             </span>
 
         </div>
@@ -1039,80 +920,32 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="进程调用"><a href="#进程调用" class="headerlink" title="进程调用"></a>进程调用</h1><p>在 Linux 中，<code>system</code> 函数和 <code>execl</code> 函数都是用于执行系统命令的函数，但它们在使用和行为上有一些关键的区别：</p>
-<ol>
-<li><strong>system 函数</strong>：<ul>
-<li><code>system</code> 函数通过创建一个新的子进程来执行指定的命令，然后等待该命令执行完成。</li>
-<li>它实际上是调用 <code>/bin/sh -c command</code> 来执行命令，其中 <code>command</code> 是传递给 <code>system</code> 函数的字符串。</li>
-<li>在命令执行期间，<code>SIGCHLD</code> 信号会被阻塞，而 <code>SIGINT</code> 和 <code>SIGQUIT</code> 信号会被忽略。</li>
-<li><code>system</code> 函数的返回值是命令执行后的状态码。如果命令成功执行，返回值通常是命令的退出状态。如果 <code>system</code> 函数本身失败，则返回 <code>-1</code>。</li>
-<li>只有一个参数，即要执行的命令字符串。</li>
-<li>函数原型：<code>int system(const char *command);</code></li>
-<li>如果 <code>command</code> 是 <code>NULL</code>，则 <code>system</code> 函数会检查 shell 是否可用，如果可用则返回非零值。</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/457019360">如果 <code>command</code> 不是 <code>NULL</code>，则 <code>system</code> 函数会执行命令，并返回命令的退出状态码。</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/457019360">1</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/linluan33/article/details/8097916">2</a></li>
-</ul>
-</li>
-<li><strong>execl 函数</strong>：<ul>
-<li><code>execl</code> 函数用于在当前进程中执行一个新的程序，它会替换当前进程的映像、数据、堆和栈。</li>
-<li>这意味着，一旦 <code>execl</code> 成功执行，当前进程的执行代码将变为新程序的代码，原来的程序将不再存在。</li>
-<li><code>execl</code> 函数需要指定新程序的路径和传递给新程序的参数列表，参数列表的最后必须是 <code>NULL</code>。</li>
-<li>如果 <code>execl</code> 调用成功，它不会返回；如果调用失败，它会返回 <code>-1</code> 并设置 <code>errno</code> 以指示错误原因。</li>
-<li>需要多个参数：第一个是可执行文件的路径，接下来是传递给程序的参数列表，最后必须以 <code>NULL</code> 结尾。</li>
-<li>函数原型：<code>int execl(const char *path, const char *arg, ..., (char *)NULL);</code></li>
-<li>第一个参数 <code>path</code> 是要执行的程序的路径。</li>
-<li>第二个参数 <code>arg</code> 是程序的第一个参数（通常是程序的名称）。</li>
-<li>后续参数可以根据需要传递给程序，最后一个参数必须是 <code>NULL</code>，以标识参数列表的结束。</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/457019360">如果 <code>execl</code> 调用成功，它不会返回；如果调用失败，它会返回 <code>-1</code> 并设置 <code>errno</code> 以指示错误原因。</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_53133879/article/details/125092300">3</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44786250/article/details/105329417">4</a></li>
-</ul>
-</li>
+          <h2 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h2><ol>
+<li>目录显示与切换</li>
 </ol>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Cccarl/p/6639089.html">简单来说，<code>system</code> 函数适合于需要执行外部命令并等待其完成的情况，而 <code>execl</code> 函数适合于需要替换当前进程为一个全新程序的情况。</a></p>
-<p>system创建新的子进程来执行指定的命令，执行完成后返回原进程</p>
-<p>execl创建新的进程并替换（取代）当前进程打的数据堆栈等，原程序将不再存在</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44786250/article/details/105329417">Linux编程之exec类函数（参数详解+示例）_exec函数 调用带命令行参数的可执行文件 示例-CSDN博客</a></p>
-</blockquote>
-<h1 id="return和exit"><a href="#return和exit" class="headerlink" title="return和exit"></a>return和exit</h1><p><code>return</code> 和 <code>exit</code> 都用于结束函数执行，但它们的用途和影响范围有所不同：</p>
-<ol>
-<li><strong>return</strong>：<ul>
-<li><code>return</code> 用于从当前函数返回一个值到调用函数。</li>
-<li>它只会结束当前函数的执行，并将控制权交回给调用该函数的代码。</li>
-<li>如果 <code>return</code> 用在 <code>main</code> 函数中，它会结束整个程序，因为 <code>main</code> 是程序的入口点。</li>
-</ul>
-</li>
-<li><strong>exit</strong>：<ul>
-<li><code>exit</code> 是一个标准库函数，定义在 <code>&lt;stdlib.h&gt;</code> 中，用于立即终止程序的执行。</li>
-<li>它会关闭所有使用的文件描述符，终止进程，并将控制权交还给操作系统。</li>
-<li><code>exit</code> 可以在程序的任何地方调用，不仅限于 <code>main</code> 函数。</li>
-<li><code>exit</code> 还会执行一些清理操作，比如调用通过 <code>atexit</code> 注册的函数。</li>
-</ul>
-</li>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">include &lt;iostream&gt;</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="type">char</span> path[<span class="number">256</span>];</span><br><span class="line"><span class="comment">//文件目录操作</span></span><br><span class="line"><span class="comment">//pwd：显示当前路径</span></span><br><span class="line"><span class="type">char</span> path1[<span class="number">256</span>];</span><br><span class="line"><span class="built_in">getcwd</span>(path1,<span class="number">256</span>);</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;path1= &quot;</span>&lt;&lt;path1&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">//pwd2：显示当前路径</span></span><br><span class="line"><span class="type">char</span> *path2=<span class="built_in">get_current_dir_name</span>();</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;path2= &quot;</span>&lt;&lt;path2&lt;&lt;std::endl;</span><br><span class="line"><span class="built_in">free</span>(path2);</span><br><span class="line"></span><br><span class="line"><span class="comment">//cd:切换当前工作路径</span></span><br><span class="line"><span class="type">const</span> <span class="type">char</span> *path3=<span class="string">&quot;/home/jenwein/dev/zgjcpp&quot;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">chdir</span>(path3)==<span class="number">0</span>)std::cout&lt;&lt;<span class="string">&quot;success to dir: &quot;</span>;</span><br><span class="line"><span class="built_in">getcwd</span>(path,<span class="number">256</span>);</span><br><span class="line">std::cout&lt;&lt;path&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">//mkdir：创建目录文件夹</span></span><br><span class="line"><span class="comment">//arg1-目录名 arg2-访问权限 成功返回0</span></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">mkdir</span>(<span class="string">&quot;/home/jenwein/dev/zgjcpp/dirope/testmkdir&quot;</span>,<span class="number">0755</span>)==<span class="number">0</span>)std::cout&lt;&lt;<span class="string">&quot;makedir success&quot;</span>;</span><br><span class="line"><span class="keyword">else</span> std::cout&lt;&lt;<span class="string">&quot;fail to makedir&quot;</span>&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">//rmdir：删除文件夹</span></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">rmdir</span>(<span class="string">&quot;/home/jenwein/dev/zgjcpp/dirope/testmkdir&quot;</span>)==<span class="number">0</span>)std::cout&lt;&lt;<span class="string">&quot;rmdir success&quot;</span>;</span><br><span class="line"><span class="keyword">else</span> std::cout&lt;&lt;<span class="string">&quot;fail to rmdir&quot;</span>&lt;&lt;std::endl;</span><br><span class="line">std::cin.<span class="built_in">get</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="2">
+<li>读取文件&#x2F;目录信息</li>
 </ol>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/noble/p/4144166.html">总结来说，<code>return</code> 是用于从函数返回，而 <code>exit</code> 是用于立即结束整个程序的执行。如果你在 <code>main</code> 函数中使用 <code>return</code>，它和 <code>exit</code> 有相似的效果，因为它们都会导致程序终止。但在其他函数中，<code>return</code> 只会结束当前函数，而 <code>exit</code> 会结束整个程序。</a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/noble/p/4144166.html">1</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/lb543210/article/details/81435694">2</a></p>
-<h2 id="进程终止"><a href="#进程终止" class="headerlink" title="进程终止"></a>进程终止</h2><p>有8种方式可以中止进程，其中5种为正常终止，它们是：</p>
-<p>1）在main()函数用return返回；</p>
-<p>2）在任意函数中调用exit()函数；</p>
-<p>3）在任意函数中调用_exit()或_Exit()函数；</p>
-<p>4）最后一个线程从其启动例程（线程主函数）用return返回；</p>
-<p>5）在最后一个线程中调用pthread_exit()返回；</p>
-<p>异常终止有3种方式，它们是：</p>
-<p>6）调用abort()函数中止；</p>
-<p>7）接收到一个信号；</p>
-<p>8）最后一个线程对取消请求做出响应</p>
-<h3 id="一、进程终止的状态"><a href="#一、进程终止的状态" class="headerlink" title="一、进程终止的状态"></a>一、进程终止的状态</h3><p>在main()函数中，return的返回值即终止状态，如果没有return语句或调用exit()，那么该进程的终止状态是0。</p>
-<p>在Shell中，查看进程终止的状态：<code>echo $?</code></p>
-<p>正常终止进程的3个函数（<code>exit()</code>和<code>_Exit()</code>是由ISO C说明的，<code>_exit()</code>是由POSIX说明的）。</p>
-<p><code>void exit(int status);</code></p>
-<p><code>void _exit(int status);</code></p>
-<p><code>void _Exit(int status);</code></p>
-<p>status也是进程终止的状态。</p>
-<p>如果进程被异常终止，终止状态为非0。  服务程序的调度、日志和监控</p>
-<h3 id="二、资源释放的问题"><a href="#二、资源释放的问题" class="headerlink" title="二、资源释放的问题"></a>二、资源释放的问题</h3><p>return表示函数返回，会调用局部对象的析构函数，main()函数中的return还会调用全局对象的析构函数。</p>
-<p>**exit()<strong>表示终止进程，</strong>&#x3D;&#x3D;不会调用局部对象的析构函数，只调用全局对象的析构函数&#x3D;&#x3D;**。</p>
-<p><code>exit()</code>会执行清理工作，然后退出，<code>_exit()</code>和<code>_Exit()</code>直接退出，不会执行任何清理工作。</p>
-<h3 id="三、进程的终止函数"><a href="#三、进程的终止函数" class="headerlink" title="三、进程的终止函数"></a>三、进程的终止函数</h3><p>进程可以用atexit()函数登记终止函数（最多32个），这些函数将由exit()自动调用。</p>
-<p><code>int atexit(void (*function)(void));</code></p>
-<p><code>exit()</code>调用终止函数的顺序与登记时相反。 进程退出前的收尾工作</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dirent.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>*argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(argc!=<span class="number">2</span>)</span><br><span class="line">&#123;</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;Using ./t2 &quot;</span>&lt;&lt;std::endl;</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">DIR *dir;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>((dir=<span class="built_in">opendir</span>(argv[<span class="number">1</span>]))==<span class="literal">nullptr</span>)&#123;<span class="keyword">return</span> <span class="number">-1</span>;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">dirent</span>* <span class="built_in">stdinfo</span>(<span class="literal">nullptr</span>);</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">if</span>((stdinfo=<span class="built_in">readdir</span>(dir))==<span class="literal">nullptr</span>) <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;filename = &quot;</span>&lt;&lt;stdinfo-&gt;d_name&lt;&lt;<span class="string">&quot;, filetype = &quot;</span>&lt;&lt;(<span class="type">int</span>)stdinfo-&gt;d_type&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">closedir</span>(dir);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="3">
+<li>错误显示</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cerrno&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">//属于系统调用的函数才会设置errno，其值只有在库函数调用发生错误时才会被设置</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="type">int</span> iret=<span class="built_in">mkdir</span>(<span class="string">&quot;/home/jenwein/dev/zgjcpp/dirope/bbb/aaa&quot;</span>,<span class="number">0755</span>);</span><br><span class="line"></span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;iret= &quot;</span>&lt;&lt;iret&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line">std::cout&lt;&lt;errno&lt;&lt;<span class="string">&quot; : &quot;</span>&lt;&lt;<span class="built_in">strerror</span>(errno)&lt;&lt;std::endl;<span class="comment">//显示错误信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//显示最近一次系统错误的详细信息</span></span><br><span class="line"><span class="comment">//perror(strerror(errno));</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">for(int i=0;i&lt;150;i++)</span></span><br><span class="line"><span class="comment">std::cout&lt;&lt;i&lt;&lt;&quot; : &quot;&lt;&lt;strerror(i)&lt;&lt;std::endl;//打印所有linux中错误代码</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<ol start="4">
+<li>其他操作</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>*argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"><span class="keyword">if</span>(argc&lt;<span class="number">2</span>)&#123;std::cout&lt;&lt;<span class="string">&quot;Using ./file (file or dir) (option:newpath)&quot;</span>&lt;&lt;std::endl; <span class="keyword">return</span> <span class="number">-1</span>;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//access查看文件权限，主要用于判断文件或目录是否存在</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">access</span>(argv[<span class="number">1</span>],F_OK)!=<span class="number">0</span>)</span><br><span class="line">&#123;std::cout&lt;&lt;<span class="string">&quot;file/dir&quot;</span>&lt;&lt;argv[<span class="number">1</span>]&lt;&lt;<span class="string">&quot; not exist&quot;</span>&lt;&lt;std::endl;</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;&#125;</span><br><span class="line"></span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;file/dir&quot;</span>&lt;&lt;argv[<span class="number">1</span>]&lt;&lt;<span class="string">&quot; exist&quot;</span>&lt;&lt;std::endl;</span><br><span class="line"></span><br><span class="line"><span class="comment">//读取文件的stat的各属性，名称，权限，修改时间。。。</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">stat</span> st;<span class="comment">//struct for dir or file ins</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">stat</span>(argv[<span class="number">1</span>],&amp;st)!=<span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;stat(&quot;</span>&lt;&lt;argv[<span class="number">1</span>]&lt;&lt;<span class="string">&quot;): &quot;</span>&lt;&lt;<span class="built_in">strerror</span>(errno)&lt;&lt;std::endl;</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">S_ISREG</span>(st.st_mode))</span><br><span class="line">std::cout&lt;&lt;argv[<span class="number">1</span>]&lt;&lt;<span class="string">&quot; is a file (&quot;</span>&lt;&lt;<span class="string">&quot;mtime&quot;</span>&lt;&lt;st.st_mtime&lt;&lt;<span class="string">&quot;,size= &quot;</span>&lt;&lt;st.st_size&lt;&lt;<span class="string">&quot;)\n&quot;</span>;</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">S_ISDIR</span>(st.st_mode))</span><br><span class="line">std::cout&lt;&lt;argv[<span class="number">1</span>]&lt;&lt;<span class="string">&quot; is a dir (&quot;</span>&lt;&lt;<span class="string">&quot;mtime&quot;</span>&lt;&lt;st.st_mtime&lt;&lt;<span class="string">&quot;,size= &quot;</span>&lt;&lt;st.st_size&lt;&lt;<span class="string">&quot;)\n&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//rename file/dir 重命名文件</span></span><br><span class="line"><span class="keyword">if</span>(argc=<span class="number">3</span>)</span><br><span class="line">&#123;<span class="keyword">if</span>(<span class="built_in">rename</span>(argv[<span class="number">1</span>],argv[<span class="number">2</span>])==<span class="number">0</span>)</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;rename success&quot;</span>&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//remove file/dir 删除文件</span></span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;want rm the last dir/file?(y/n)&quot;</span>&lt;&lt;std::endl;</span><br><span class="line"><span class="type">char</span> s;</span><br><span class="line">std::cin&gt;&gt;s;</span><br><span class="line"><span class="keyword">if</span>(s==<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line">&#123;<span class="keyword">if</span>(<span class="built_in">remove</span>(argv[<span class="number">3</span>])==<span class="number">0</span>);</span><br><span class="line">std::cout&lt;&lt;<span class="string">&quot;rm success&quot;</span>&lt;&lt;std::endl;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> std::cout&lt;&lt;<span class="string">&quot;file to rm sth\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -1432,6 +1265,173 @@
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 此程序用于演示socket通信的服务端</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="comment">//第一步相同</span></span><br><span class="line"><span class="comment">// 第1步：创建服务端的socket。 </span></span><br><span class="line">  <span class="type">int</span> listenfd = <span class="built_in">socket</span>(AF_INET,SOCK_STREAM,<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">if</span> (listenfd==<span class="number">-1</span>) </span><br><span class="line">  &#123; </span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;socket&quot;</span>); </span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">  &#125;</span><br><span class="line">-------------------------------</span><br><span class="line">  <span class="comment">/*第2步：把服务端用于通信的IP和端口绑定到socket上*/</span></span><br><span class="line">  <span class="comment">//a.准备ip与端口</span></span><br><span class="line">  <span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> servaddr;          <span class="comment">// 用于存放服务端IP和端口的数据结构。</span></span><br><span class="line">  <span class="built_in">memset</span>(&amp;servaddr,<span class="number">0</span>,<span class="built_in">sizeof</span>(servaddr));</span><br><span class="line">  servaddr.sin_family = AF_INET;                <span class="comment">// 指定协议。与客户端相同</span></span><br><span class="line">  servaddr.sin_addr.s_addr = <span class="built_in">htonl</span>(INADDR_ANY); <span class="comment">// 服务端任意网卡的IP都可以用于通讯，服务端可以与多个客户端建立连接。</span></span><br><span class="line">  servaddr.sin_port = <span class="built_in">htons</span>(<span class="built_in">atoi</span>(argv[<span class="number">1</span>]));     <span class="comment">// 指定通信端口，端口需要与客户端相同</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment">//b.绑定服务端的IP和端口到listenfd这个socket上(为socket分配ip和port)。</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">bind</span>(listenfd,(<span class="keyword">struct</span> sockaddr *)&amp;servaddr,<span class="built_in">sizeof</span>(servaddr)) != <span class="number">0</span> )</span><br><span class="line">  &#123; </span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;bind&quot;</span>); </span><br><span class="line">    <span class="built_in">close</span>(listenfd); </span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 第3步：把socket设置为可连接（监听）的状态。</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">listen</span>(listenfd,<span class="number">5</span>) != <span class="number">0</span> ) </span><br><span class="line">  &#123; </span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;listen&quot;</span>); </span><br><span class="line">    <span class="built_in">close</span>(listenfd); </span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 第4步：受理客户端的连接请求，如果没有客户端连上来，accept()函数将阻塞等待。</span></span><br><span class="line"><span class="comment">//accept利用监听套接字连接客户端</span></span><br><span class="line">  <span class="type">int</span> clientfd=<span class="built_in">accept</span>(listenfd,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">  <span class="keyword">if</span> (clientfd==<span class="number">-1</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    	<span class="built_in">perror</span>(<span class="string">&quot;accept&quot;</span>); <span class="function">c</span></span><br><span class="line"><span class="function">        <span class="title">lose</span><span class="params">(listenfd)</span></span>; </span><br><span class="line">     	 <span class="keyword">return</span> <span class="number">-1</span>; </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  cout &lt;&lt; <span class="string">&quot;客户端已连接。\n&quot;</span>;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 第5步：与客户端通信，接收客户端发过来的报文后，回复ok。</span></span><br><span class="line">  <span class="type">char</span> buffer[<span class="number">1024</span>];</span><br><span class="line">  <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="type">int</span> iret;</span><br><span class="line">    <span class="built_in">memset</span>(buffer,<span class="number">0</span>,<span class="built_in">sizeof</span>(buffer));</span><br><span class="line">    <span class="comment">// 接收客户端的请求报文，如果客户端没有发送请求报文，recv()函数将阻塞等待。</span></span><br><span class="line">    <span class="comment">// 如果客户端已断开连接，recv()函数将返回0。</span></span><br><span class="line">    <span class="keyword">if</span> ( (iret=<span class="built_in">recv</span>(clientfd,buffer,<span class="built_in">sizeof</span>(buffer),<span class="number">0</span>))&lt;=<span class="number">0</span>) </span><br><span class="line">    &#123;</span><br><span class="line">       cout &lt;&lt; <span class="string">&quot;iret=&quot;</span> &lt;&lt; iret &lt;&lt; endl;  <span class="keyword">break</span>;   </span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;接收：&quot;</span> &lt;&lt; buffer &lt;&lt; endl;</span><br><span class="line"> </span><br><span class="line">    <span class="built_in">strcpy</span>(buffer,<span class="string">&quot;ok&quot;</span>);  <span class="comment">// 生成回应报文内容。</span></span><br><span class="line">    <span class="comment">// 向客户端发送回应报文。</span></span><br><span class="line">    <span class="keyword">if</span> ( (iret=<span class="built_in">send</span>(clientfd,buffer,<span class="built_in">strlen</span>(buffer),<span class="number">0</span>))&lt;=<span class="number">0</span>) </span><br><span class="line">    &#123; </span><br><span class="line">      <span class="built_in">perror</span>(<span class="string">&quot;send&quot;</span>); <span class="keyword">break</span>; </span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;发送：&quot;</span> &lt;&lt; buffer &lt;&lt; endl;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">// 第6步：关闭socket，释放资源。</span></span><br><span class="line">  <span class="built_in">close</span>(listenfd);   <span class="comment">// 关闭服务端用于监听的socket。</span></span><br><span class="line">  <span class="built_in">close</span>(clientfd);   <span class="comment">// 关闭客户端连上来的socket。</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/07/linux-system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/04/07/linux-system/" class="post-title-link" itemprop="url">linux进程调用</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-07 12:00:00" itemprop="dateCreated datePublished" datetime="2024-04-07T12:00:00+08:00">2024-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-05-20 19:14:53" itemprop="dateModified" datetime="2024-05-20T19:14:53+08:00">2024-05-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/process/" itemprop="url" rel="index"><span itemprop="name">process</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="进程调用"><a href="#进程调用" class="headerlink" title="进程调用"></a>进程调用</h1><p>在 Linux 中，<code>system</code> 函数和 <code>execl</code> 函数都是用于执行系统命令的函数，但它们在使用和行为上有一些关键的区别：</p>
+<ol>
+<li><strong>system 函数</strong>：<ul>
+<li><code>system</code> 函数通过创建一个新的子进程来执行指定的命令，然后等待该命令执行完成。</li>
+<li>它实际上是调用 <code>/bin/sh -c command</code> 来执行命令，其中 <code>command</code> 是传递给 <code>system</code> 函数的字符串。</li>
+<li>在命令执行期间，<code>SIGCHLD</code> 信号会被阻塞，而 <code>SIGINT</code> 和 <code>SIGQUIT</code> 信号会被忽略。</li>
+<li><code>system</code> 函数的返回值是命令执行后的状态码。如果命令成功执行，返回值通常是命令的退出状态。如果 <code>system</code> 函数本身失败，则返回 <code>-1</code>。</li>
+<li>只有一个参数，即要执行的命令字符串。</li>
+<li>函数原型：<code>int system(const char *command);</code></li>
+<li>如果 <code>command</code> 是 <code>NULL</code>，则 <code>system</code> 函数会检查 shell 是否可用，如果可用则返回非零值。</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/457019360">如果 <code>command</code> 不是 <code>NULL</code>，则 <code>system</code> 函数会执行命令，并返回命令的退出状态码。</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/457019360">1</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/linluan33/article/details/8097916">2</a></li>
+</ul>
+</li>
+<li><strong>execl 函数</strong>：<ul>
+<li><code>execl</code> 函数用于在当前进程中执行一个新的程序，它会替换当前进程的映像、数据、堆和栈。</li>
+<li>这意味着，一旦 <code>execl</code> 成功执行，当前进程的执行代码将变为新程序的代码，原来的程序将不再存在。</li>
+<li><code>execl</code> 函数需要指定新程序的路径和传递给新程序的参数列表，参数列表的最后必须是 <code>NULL</code>。</li>
+<li>如果 <code>execl</code> 调用成功，它不会返回；如果调用失败，它会返回 <code>-1</code> 并设置 <code>errno</code> 以指示错误原因。</li>
+<li>需要多个参数：第一个是可执行文件的路径，接下来是传递给程序的参数列表，最后必须以 <code>NULL</code> 结尾。</li>
+<li>函数原型：<code>int execl(const char *path, const char *arg, ..., (char *)NULL);</code></li>
+<li>第一个参数 <code>path</code> 是要执行的程序的路径。</li>
+<li>第二个参数 <code>arg</code> 是程序的第一个参数（通常是程序的名称）。</li>
+<li>后续参数可以根据需要传递给程序，最后一个参数必须是 <code>NULL</code>，以标识参数列表的结束。</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/457019360">如果 <code>execl</code> 调用成功，它不会返回；如果调用失败，它会返回 <code>-1</code> 并设置 <code>errno</code> 以指示错误原因。</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_53133879/article/details/125092300">3</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44786250/article/details/105329417">4</a></li>
+</ul>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Cccarl/p/6639089.html">简单来说，<code>system</code> 函数适合于需要执行外部命令并等待其完成的情况，而 <code>execl</code> 函数适合于需要替换当前进程为一个全新程序的情况。</a></p>
+<p>system创建新的子进程来执行指定的命令，执行完成后返回原进程</p>
+<p>execl创建新的进程并替换（取代）当前进程打的数据堆栈等，原程序将不再存在</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44786250/article/details/105329417">Linux编程之exec类函数（参数详解+示例）_exec函数 调用带命令行参数的可执行文件 示例-CSDN博客</a></p>
+</blockquote>
+<h1 id="return和exit"><a href="#return和exit" class="headerlink" title="return和exit"></a>return和exit</h1><p><code>return</code> 和 <code>exit</code> 都用于结束函数执行，但它们的用途和影响范围有所不同：</p>
+<ol>
+<li><strong>return</strong>：<ul>
+<li><code>return</code> 用于从当前函数返回一个值到调用函数。</li>
+<li>它只会结束当前函数的执行，并将控制权交回给调用该函数的代码。</li>
+<li>如果 <code>return</code> 用在 <code>main</code> 函数中，它会结束整个程序，因为 <code>main</code> 是程序的入口点。</li>
+</ul>
+</li>
+<li><strong>exit</strong>：<ul>
+<li><code>exit</code> 是一个标准库函数，定义在 <code>&lt;stdlib.h&gt;</code> 中，用于立即终止程序的执行。</li>
+<li>它会关闭所有使用的文件描述符，终止进程，并将控制权交还给操作系统。</li>
+<li><code>exit</code> 可以在程序的任何地方调用，不仅限于 <code>main</code> 函数。</li>
+<li><code>exit</code> 还会执行一些清理操作，比如调用通过 <code>atexit</code> 注册的函数。</li>
+</ul>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/noble/p/4144166.html">总结来说，<code>return</code> 是用于从函数返回，而 <code>exit</code> 是用于立即结束整个程序的执行。如果你在 <code>main</code> 函数中使用 <code>return</code>，它和 <code>exit</code> 有相似的效果，因为它们都会导致程序终止。但在其他函数中，<code>return</code> 只会结束当前函数，而 <code>exit</code> 会结束整个程序。</a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/noble/p/4144166.html">1</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/lb543210/article/details/81435694">2</a></p>
+<h2 id="进程终止"><a href="#进程终止" class="headerlink" title="进程终止"></a>进程终止</h2><p>有8种方式可以中止进程，其中5种为正常终止，它们是：</p>
+<p>1）在main()函数用return返回；</p>
+<p>2）在任意函数中调用exit()函数；</p>
+<p>3）在任意函数中调用_exit()或_Exit()函数；</p>
+<p>4）最后一个线程从其启动例程（线程主函数）用return返回；</p>
+<p>5）在最后一个线程中调用pthread_exit()返回；</p>
+<p>异常终止有3种方式，它们是：</p>
+<p>6）调用abort()函数中止；</p>
+<p>7）接收到一个信号；</p>
+<p>8）最后一个线程对取消请求做出响应</p>
+<h3 id="一、进程终止的状态"><a href="#一、进程终止的状态" class="headerlink" title="一、进程终止的状态"></a>一、进程终止的状态</h3><p>在main()函数中，return的返回值即终止状态，如果没有return语句或调用exit()，那么该进程的终止状态是0。</p>
+<p>在Shell中，查看进程终止的状态：<code>echo $?</code></p>
+<p>正常终止进程的3个函数（<code>exit()</code>和<code>_Exit()</code>是由ISO C说明的，<code>_exit()</code>是由POSIX说明的）。</p>
+<p><code>void exit(int status);</code></p>
+<p><code>void _exit(int status);</code></p>
+<p><code>void _Exit(int status);</code></p>
+<p>status也是进程终止的状态。</p>
+<p>如果进程被异常终止，终止状态为非0。  服务程序的调度、日志和监控</p>
+<h3 id="二、资源释放的问题"><a href="#二、资源释放的问题" class="headerlink" title="二、资源释放的问题"></a>二、资源释放的问题</h3><p>return表示函数返回，会调用局部对象的析构函数，main()函数中的return还会调用全局对象的析构函数。</p>
+<p>**exit()<strong>表示终止进程，</strong>&#x3D;&#x3D;不会调用局部对象的析构函数，只调用全局对象的析构函数&#x3D;&#x3D;**。</p>
+<p><code>exit()</code>会执行清理工作，然后退出，<code>_exit()</code>和<code>_Exit()</code>直接退出，不会执行任何清理工作。</p>
+<h3 id="三、进程的终止函数"><a href="#三、进程的终止函数" class="headerlink" title="三、进程的终止函数"></a>三、进程的终止函数</h3><p>进程可以用atexit()函数登记终止函数（最多32个），这些函数将由exit()自动调用。</p>
+<p><code>int atexit(void (*function)(void));</code></p>
+<p><code>exit()</code>调用终止函数的顺序与登记时相反。 进程退出前的收尾工作</p>
 
       
     </div>
@@ -2205,7 +2205,7 @@
 <div class="copyright">
   
   &copy; 2023-4 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

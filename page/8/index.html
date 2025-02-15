@@ -462,6 +462,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/02/02/C++-find_if/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/02/02/C++-find_if/" class="post-title-link" itemprop="url">find_if</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2024-02-02 22:00:00 / 修改时间：22:33:28" itemprop="dateCreated datePublished" datetime="2024-02-02T22:00:00+08:00">2024-02-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/headfile/" itemprop="url" rel="index"><span itemprop="name">headfile</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/C/headfile/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="find-if"><a href="#find-if" class="headerlink" title="find_if"></a>find_if</h2><p><code>std::find_if</code> 是 C++ 标准库 <code>&lt;algorithm&gt;</code> 头文件中的一个函数，用于在指定范围内查找满足指定条件的第一个元素。它是一个通用的查找算法，非常灵活，可以应用于各种容器和迭代器。</p>
+<p><code>find_if</code> 的函数签名如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">cppCopy code</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt; <span class="keyword">class</span> InputIt, <span class="keyword">class</span> UnaryPredicate &gt;</span></span><br><span class="line"><span class="function">InputIt <span class="title">find_if</span><span class="params">( InputIt first, InputIt last, UnaryPredicate p )</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>其中：</p>
+<ul>
+<li><code>first</code> 和 <code>last</code> 是表示查找范围的迭代器，表示一个左闭右开的区间 <code>[first, last)</code>。</li>
+<li><code>p</code> 是一个一元谓词（Unary Predicate），是一个可调用的对象，它接受一个参数并返回一个 <code>bool</code> 类型的值。</li>
+</ul>
+<p><code>find_if</code> 函数会在范围 <code>[first, last)</code> 中查找第一个使谓词 <code>p</code> 返回 <code>true</code> 的元素，并返回指向该元素的迭代器。如果没有找到符合条件的元素，返回 <code>last</code>。</p>
+<p>下面是一个简单的例子，演示如何使用 <code>std::find_if</code>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">cppCopy code</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; numbers = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 find_if 查找第一个大于 5 的元素</span></span><br><span class="line">    <span class="keyword">auto</span> it = std::<span class="built_in">find_if</span>(numbers.<span class="built_in">begin</span>(), numbers.<span class="built_in">end</span>(), [](<span class="type">int</span> x) &#123;</span><br><span class="line">        <span class="keyword">return</span> x &gt; <span class="number">5</span>;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (it != numbers.<span class="built_in">end</span>()) &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;First element greater than 5: &quot;</span> &lt;&lt; *it &lt;&lt; std::endl;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;No element greater than 5 found.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，Lambda 表达式作为谓词传递给 <code>std::find_if</code>，用于查找第一个大于 5 的元素。如果找到符合条件的元素，将其值输出；否则，输出未找到的消息。</p>
+<p><code>std::find_if</code> 是一个非常常用的算法，用于在容器中查找满足特定条件的元素。</p>
+<p>什么是谓词？</p>
+<blockquote>
+<p>[函数| HahのBlog (rhahr.top)](&lt;<a target="_blank" rel="noopener" href="https://www.rhahr.top/2024/02/02/C++-%E5%87%BD%E6%95%B0/">https://www.rhahr.top/2024/02/02/C++-函数/</a>)</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/02/02/C++-function/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -619,116 +729,6 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;functional&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">add</span><span class="params">(<span class="type">int</span> a, <span class="type">int</span> b)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> a + b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 使用 std::bind 创建一个绑定了第二个参数的可调用对象</span></span><br><span class="line">    <span class="keyword">auto</span> add_five = std::<span class="built_in">bind</span>(add, std::placeholders::_1, <span class="number">5</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 std::function 存储这个可调用对象</span></span><br><span class="line">    std::function&lt;<span class="type">int</span>(<span class="type">int</span>)&gt; func = add_five;</span><br><span class="line"></span><br><span class="line">    std::cout &lt;&lt; <span class="string">&quot;Result: &quot;</span> &lt;&lt; <span class="built_in">func</span>(<span class="number">10</span>) &lt;&lt; std::endl; <span class="comment">// 输出 15</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <p>在这个例子中，<code>std::bind</code> 创建了一个绑定了第二个参数的可调用对象 <code>add_five</code>，然后将其存储在 <code>std::function</code> 中。</p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/02/02/C++-find_if/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/02/02/C++-find_if/" class="post-title-link" itemprop="url">find_if</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2024-02-02 22:00:00 / 修改时间：22:33:28" itemprop="dateCreated datePublished" datetime="2024-02-02T22:00:00+08:00">2024-02-02</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/" itemprop="url" rel="index"><span itemprop="name">C++</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/headfile/" itemprop="url" rel="index"><span itemprop="name">headfile</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/C/headfile/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="find-if"><a href="#find-if" class="headerlink" title="find_if"></a>find_if</h2><p><code>std::find_if</code> 是 C++ 标准库 <code>&lt;algorithm&gt;</code> 头文件中的一个函数，用于在指定范围内查找满足指定条件的第一个元素。它是一个通用的查找算法，非常灵活，可以应用于各种容器和迭代器。</p>
-<p><code>find_if</code> 的函数签名如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">cppCopy code</span></span><br><span class="line"><span class="function"><span class="keyword">template</span>&lt; <span class="keyword">class</span> InputIt, <span class="keyword">class</span> UnaryPredicate &gt;</span></span><br><span class="line"><span class="function">InputIt <span class="title">find_if</span><span class="params">( InputIt first, InputIt last, UnaryPredicate p )</span></span>;</span><br></pre></td></tr></table></figure>
-
-<p>其中：</p>
-<ul>
-<li><code>first</code> 和 <code>last</code> 是表示查找范围的迭代器，表示一个左闭右开的区间 <code>[first, last)</code>。</li>
-<li><code>p</code> 是一个一元谓词（Unary Predicate），是一个可调用的对象，它接受一个参数并返回一个 <code>bool</code> 类型的值。</li>
-</ul>
-<p><code>find_if</code> 函数会在范围 <code>[first, last)</code> 中查找第一个使谓词 <code>p</code> 返回 <code>true</code> 的元素，并返回指向该元素的迭代器。如果没有找到符合条件的元素，返回 <code>last</code>。</p>
-<p>下面是一个简单的例子，演示如何使用 <code>std::find_if</code>：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">cppCopy code</span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    std::vector&lt;<span class="type">int</span>&gt; numbers = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 使用 find_if 查找第一个大于 5 的元素</span></span><br><span class="line">    <span class="keyword">auto</span> it = std::<span class="built_in">find_if</span>(numbers.<span class="built_in">begin</span>(), numbers.<span class="built_in">end</span>(), [](<span class="type">int</span> x) &#123;</span><br><span class="line">        <span class="keyword">return</span> x &gt; <span class="number">5</span>;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (it != numbers.<span class="built_in">end</span>()) &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;First element greater than 5: &quot;</span> &lt;&lt; *it &lt;&lt; std::endl;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;No element greater than 5 found.&quot;</span> &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>在这个例子中，Lambda 表达式作为谓词传递给 <code>std::find_if</code>，用于查找第一个大于 5 的元素。如果找到符合条件的元素，将其值输出；否则，输出未找到的消息。</p>
-<p><code>std::find_if</code> 是一个非常常用的算法，用于在容器中查找满足特定条件的元素。</p>
-<p>什么是谓词？</p>
-<blockquote>
-<p>[函数| HahのBlog (rhahr.top)](&lt;<a target="_blank" rel="noopener" href="https://www.rhahr.top/2024/02/02/C++-%E5%87%BD%E6%95%B0/">https://www.rhahr.top/2024/02/02/C++-函数/</a>)</p>
-</blockquote>
 
       
     </div>
@@ -1710,7 +1710,7 @@
 <div class="copyright">
   
   &copy; 2023-4 – 
-  <span itemprop="copyrightYear">2024</span>
+  <span itemprop="copyrightYear">2025</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
