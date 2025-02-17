@@ -984,7 +984,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/07/linux-system/">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/07/linux-systemerror/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -998,7 +998,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/04/07/linux-system/" class="post-title-link" itemprop="url">linux进程调用</a>
+            <a href="/2024/04/07/linux-systemerror/" class="post-title-link" itemprop="url">linux进程调用</a>
         </h2>
 
         <div class="post-meta">
@@ -1016,7 +1016,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-20 19:14:53" itemprop="dateModified" datetime="2024-05-20T19:14:53+08:00">2024-05-20</time>
+                <time title="修改时间：2024-05-19 18:53:09" itemprop="dateModified" datetime="2024-05-19T18:53:09+08:00">2024-05-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1038,14 +1038,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.2k</span>
+              <span>608</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -1057,80 +1057,26 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="进程调用"><a href="#进程调用" class="headerlink" title="进程调用"></a>进程调用</h1><p>在 Linux 中，<code>system</code> 函数和 <code>execl</code> 函数都是用于执行系统命令的函数，但它们在使用和行为上有一些关键的区别：</p>
-<ol>
-<li><strong>system 函数</strong>：<ul>
-<li><code>system</code> 函数通过创建一个新的子进程来执行指定的命令，然后等待该命令执行完成。</li>
-<li>它实际上是调用 <code>/bin/sh -c command</code> 来执行命令，其中 <code>command</code> 是传递给 <code>system</code> 函数的字符串。</li>
-<li>在命令执行期间，<code>SIGCHLD</code> 信号会被阻塞，而 <code>SIGINT</code> 和 <code>SIGQUIT</code> 信号会被忽略。</li>
-<li><code>system</code> 函数的返回值是命令执行后的状态码。如果命令成功执行，返回值通常是命令的退出状态。如果 <code>system</code> 函数本身失败，则返回 <code>-1</code>。</li>
-<li>只有一个参数，即要执行的命令字符串。</li>
-<li>函数原型：<code>int system(const char *command);</code></li>
-<li>如果 <code>command</code> 是 <code>NULL</code>，则 <code>system</code> 函数会检查 shell 是否可用，如果可用则返回非零值。</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/457019360">如果 <code>command</code> 不是 <code>NULL</code>，则 <code>system</code> 函数会执行命令，并返回命令的退出状态码。</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/457019360">1</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/linluan33/article/details/8097916">2</a></li>
+          <h1 id="errno"><a href="#errno" class="headerlink" title="errno"></a>errno</h1><h1 id="errno-1"><a href="#errno-1" class="headerlink" title="errno"></a>errno</h1><p><a target="_blank" rel="noopener" href="https://www.runoob.com/cprogramming/c-function-perror.html"><code>perror()</code> 是 C 语言标准库中的一个函数，定义在 &#96;&#96; 头文件中。它的作用是将最近的一个系统错误代码转换为可读的错误描述，并输出到标准错误流（<code>stderr</code>）。通常，参数 <code>str</code> 是一个自定义的字符串，用于在错误描述前添加额外的信息。如果 <code>str</code> 为 <code>NULL</code>，则 <code>perror()</code> 函数直接打印函数执行出错的消息。这在调试程序时非常有用，因为它提供了一个快速、简洁的方法来通知用户有关程序中特定库函数调用失败的原因</a></p>
+<p>在 Linux 中，错误信息通常与 <code>errno</code>（错误号）相关联，它是一个全局变量，用于存储系统调用的最后一个错误代码。每个错误代码都对应一个特定的错误情况。当系统调用失败时，可以通过 <code>errno</code> 获取错误原因，并使用 <code>perror</code> 或 <code>strerror</code> 函数将错误代码转换为人类可读的形式。</p>
+<p>以下是一些常见的 <code>errno</code> 错误代码及其含义：</p>
+<ul>
+<li><code>EPERM (1)</code>: 操作不允许</li>
+<li><code>ENOENT (2)</code>: 没有这样的文件或目录</li>
+<li><code>ESRCH (3)</code>: 没有这样的过程</li>
+<li><code>EINTR (4)</code>: 系统调用被中断</li>
+<li><code>EIO (5)</code>: I&#x2F;O 错误</li>
+<li><code>ENXIO (6)</code>: 没有这样的设备或地址</li>
+<li><code>E2BIG (7)</code>: 参数列表太长</li>
+<li><code>ENOEXEC (8)</code>: 执行格式错误</li>
+<li><code>EBADF (9)</code>: 坏的文件描述符</li>
+<li><code>ECHILD (10)</code>: 没有子进程</li>
+<li><code>EAGAIN (11)</code>: 资源暂时不可用</li>
+<li><code>ENOMEM (12)</code>: 内存溢出</li>
+<li><code>EACCES (13)</code>: 权限被拒绝</li>
+<li><code>EFAULT (14)</code>: 错误的地址</li>
+<li>……</li>
 </ul>
-</li>
-<li><strong>execl 函数</strong>：<ul>
-<li><code>execl</code> 函数用于在当前进程中执行一个新的程序，它会替换当前进程的映像、数据、堆和栈。</li>
-<li>这意味着，一旦 <code>execl</code> 成功执行，当前进程的执行代码将变为新程序的代码，原来的程序将不再存在。</li>
-<li><code>execl</code> 函数需要指定新程序的路径和传递给新程序的参数列表，参数列表的最后必须是 <code>NULL</code>。</li>
-<li>如果 <code>execl</code> 调用成功，它不会返回；如果调用失败，它会返回 <code>-1</code> 并设置 <code>errno</code> 以指示错误原因。</li>
-<li>需要多个参数：第一个是可执行文件的路径，接下来是传递给程序的参数列表，最后必须以 <code>NULL</code> 结尾。</li>
-<li>函数原型：<code>int execl(const char *path, const char *arg, ..., (char *)NULL);</code></li>
-<li>第一个参数 <code>path</code> 是要执行的程序的路径。</li>
-<li>第二个参数 <code>arg</code> 是程序的第一个参数（通常是程序的名称）。</li>
-<li>后续参数可以根据需要传递给程序，最后一个参数必须是 <code>NULL</code>，以标识参数列表的结束。</li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/457019360">如果 <code>execl</code> 调用成功，它不会返回；如果调用失败，它会返回 <code>-1</code> 并设置 <code>errno</code> 以指示错误原因。</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_53133879/article/details/125092300">3</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44786250/article/details/105329417">4</a></li>
-</ul>
-</li>
-</ol>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Cccarl/p/6639089.html">简单来说，<code>system</code> 函数适合于需要执行外部命令并等待其完成的情况，而 <code>execl</code> 函数适合于需要替换当前进程为一个全新程序的情况。</a></p>
-<p>system创建新的子进程来执行指定的命令，执行完成后返回原进程</p>
-<p>execl创建新的进程并替换（取代）当前进程打的数据堆栈等，原程序将不再存在</p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44786250/article/details/105329417">Linux编程之exec类函数（参数详解+示例）_exec函数 调用带命令行参数的可执行文件 示例-CSDN博客</a></p>
-</blockquote>
-<h1 id="return和exit"><a href="#return和exit" class="headerlink" title="return和exit"></a>return和exit</h1><p><code>return</code> 和 <code>exit</code> 都用于结束函数执行，但它们的用途和影响范围有所不同：</p>
-<ol>
-<li><strong>return</strong>：<ul>
-<li><code>return</code> 用于从当前函数返回一个值到调用函数。</li>
-<li>它只会结束当前函数的执行，并将控制权交回给调用该函数的代码。</li>
-<li>如果 <code>return</code> 用在 <code>main</code> 函数中，它会结束整个程序，因为 <code>main</code> 是程序的入口点。</li>
-</ul>
-</li>
-<li><strong>exit</strong>：<ul>
-<li><code>exit</code> 是一个标准库函数，定义在 <code>&lt;stdlib.h&gt;</code> 中，用于立即终止程序的执行。</li>
-<li>它会关闭所有使用的文件描述符，终止进程，并将控制权交还给操作系统。</li>
-<li><code>exit</code> 可以在程序的任何地方调用，不仅限于 <code>main</code> 函数。</li>
-<li><code>exit</code> 还会执行一些清理操作，比如调用通过 <code>atexit</code> 注册的函数。</li>
-</ul>
-</li>
-</ol>
-<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/noble/p/4144166.html">总结来说，<code>return</code> 是用于从函数返回，而 <code>exit</code> 是用于立即结束整个程序的执行。如果你在 <code>main</code> 函数中使用 <code>return</code>，它和 <code>exit</code> 有相似的效果，因为它们都会导致程序终止。但在其他函数中，<code>return</code> 只会结束当前函数，而 <code>exit</code> 会结束整个程序。</a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/noble/p/4144166.html">1</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/lb543210/article/details/81435694">2</a></p>
-<h2 id="进程终止"><a href="#进程终止" class="headerlink" title="进程终止"></a>进程终止</h2><p>有8种方式可以中止进程，其中5种为正常终止，它们是：</p>
-<p>1）在main()函数用return返回；</p>
-<p>2）在任意函数中调用exit()函数；</p>
-<p>3）在任意函数中调用_exit()或_Exit()函数；</p>
-<p>4）最后一个线程从其启动例程（线程主函数）用return返回；</p>
-<p>5）在最后一个线程中调用pthread_exit()返回；</p>
-<p>异常终止有3种方式，它们是：</p>
-<p>6）调用abort()函数中止；</p>
-<p>7）接收到一个信号；</p>
-<p>8）最后一个线程对取消请求做出响应</p>
-<h3 id="一、进程终止的状态"><a href="#一、进程终止的状态" class="headerlink" title="一、进程终止的状态"></a>一、进程终止的状态</h3><p>在main()函数中，return的返回值即终止状态，如果没有return语句或调用exit()，那么该进程的终止状态是0。</p>
-<p>在Shell中，查看进程终止的状态：<code>echo $?</code></p>
-<p>正常终止进程的3个函数（<code>exit()</code>和<code>_Exit()</code>是由ISO C说明的，<code>_exit()</code>是由POSIX说明的）。</p>
-<p><code>void exit(int status);</code></p>
-<p><code>void _exit(int status);</code></p>
-<p><code>void _Exit(int status);</code></p>
-<p>status也是进程终止的状态。</p>
-<p>如果进程被异常终止，终止状态为非0。  服务程序的调度、日志和监控</p>
-<h3 id="二、资源释放的问题"><a href="#二、资源释放的问题" class="headerlink" title="二、资源释放的问题"></a>二、资源释放的问题</h3><p>return表示函数返回，会调用局部对象的析构函数，main()函数中的return还会调用全局对象的析构函数。</p>
-<p>**exit()<strong>表示终止进程，</strong>&#x3D;&#x3D;不会调用局部对象的析构函数，只调用全局对象的析构函数&#x3D;&#x3D;**。</p>
-<p><code>exit()</code>会执行清理工作，然后退出，<code>_exit()</code>和<code>_Exit()</code>直接退出，不会执行任何清理工作。</p>
-<h3 id="三、进程的终止函数"><a href="#三、进程的终止函数" class="headerlink" title="三、进程的终止函数"></a>三、进程的终止函数</h3><p>进程可以用atexit()函数登记终止函数（最多32个），这些函数将由exit()自动调用。</p>
-<p><code>int atexit(void (*function)(void));</code></p>
-<p><code>exit()</code>调用终止函数的顺序与登记时相反。 进程退出前的收尾工作</p>
 
       
     </div>
@@ -1470,7 +1416,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/07/linux-systemerror/">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/04/07/linux-system/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -1484,7 +1430,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/04/07/linux-systemerror/" class="post-title-link" itemprop="url">linux进程调用</a>
+            <a href="/2024/04/07/linux-system/" class="post-title-link" itemprop="url">linux进程调用</a>
         </h2>
 
         <div class="post-meta">
@@ -1502,7 +1448,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-05-19 18:53:09" itemprop="dateModified" datetime="2024-05-19T18:53:09+08:00">2024-05-19</time>
+                <time title="修改时间：2024-05-20 19:14:53" itemprop="dateModified" datetime="2024-05-20T19:14:53+08:00">2024-05-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1524,14 +1470,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>608</span>
+              <span>2.2k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -1543,26 +1489,80 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="errno"><a href="#errno" class="headerlink" title="errno"></a>errno</h1><h1 id="errno-1"><a href="#errno-1" class="headerlink" title="errno"></a>errno</h1><p><a target="_blank" rel="noopener" href="https://www.runoob.com/cprogramming/c-function-perror.html"><code>perror()</code> 是 C 语言标准库中的一个函数，定义在 &#96;&#96; 头文件中。它的作用是将最近的一个系统错误代码转换为可读的错误描述，并输出到标准错误流（<code>stderr</code>）。通常，参数 <code>str</code> 是一个自定义的字符串，用于在错误描述前添加额外的信息。如果 <code>str</code> 为 <code>NULL</code>，则 <code>perror()</code> 函数直接打印函数执行出错的消息。这在调试程序时非常有用，因为它提供了一个快速、简洁的方法来通知用户有关程序中特定库函数调用失败的原因</a></p>
-<p>在 Linux 中，错误信息通常与 <code>errno</code>（错误号）相关联，它是一个全局变量，用于存储系统调用的最后一个错误代码。每个错误代码都对应一个特定的错误情况。当系统调用失败时，可以通过 <code>errno</code> 获取错误原因，并使用 <code>perror</code> 或 <code>strerror</code> 函数将错误代码转换为人类可读的形式。</p>
-<p>以下是一些常见的 <code>errno</code> 错误代码及其含义：</p>
-<ul>
-<li><code>EPERM (1)</code>: 操作不允许</li>
-<li><code>ENOENT (2)</code>: 没有这样的文件或目录</li>
-<li><code>ESRCH (3)</code>: 没有这样的过程</li>
-<li><code>EINTR (4)</code>: 系统调用被中断</li>
-<li><code>EIO (5)</code>: I&#x2F;O 错误</li>
-<li><code>ENXIO (6)</code>: 没有这样的设备或地址</li>
-<li><code>E2BIG (7)</code>: 参数列表太长</li>
-<li><code>ENOEXEC (8)</code>: 执行格式错误</li>
-<li><code>EBADF (9)</code>: 坏的文件描述符</li>
-<li><code>ECHILD (10)</code>: 没有子进程</li>
-<li><code>EAGAIN (11)</code>: 资源暂时不可用</li>
-<li><code>ENOMEM (12)</code>: 内存溢出</li>
-<li><code>EACCES (13)</code>: 权限被拒绝</li>
-<li><code>EFAULT (14)</code>: 错误的地址</li>
-<li>……</li>
+          <h1 id="进程调用"><a href="#进程调用" class="headerlink" title="进程调用"></a>进程调用</h1><p>在 Linux 中，<code>system</code> 函数和 <code>execl</code> 函数都是用于执行系统命令的函数，但它们在使用和行为上有一些关键的区别：</p>
+<ol>
+<li><strong>system 函数</strong>：<ul>
+<li><code>system</code> 函数通过创建一个新的子进程来执行指定的命令，然后等待该命令执行完成。</li>
+<li>它实际上是调用 <code>/bin/sh -c command</code> 来执行命令，其中 <code>command</code> 是传递给 <code>system</code> 函数的字符串。</li>
+<li>在命令执行期间，<code>SIGCHLD</code> 信号会被阻塞，而 <code>SIGINT</code> 和 <code>SIGQUIT</code> 信号会被忽略。</li>
+<li><code>system</code> 函数的返回值是命令执行后的状态码。如果命令成功执行，返回值通常是命令的退出状态。如果 <code>system</code> 函数本身失败，则返回 <code>-1</code>。</li>
+<li>只有一个参数，即要执行的命令字符串。</li>
+<li>函数原型：<code>int system(const char *command);</code></li>
+<li>如果 <code>command</code> 是 <code>NULL</code>，则 <code>system</code> 函数会检查 shell 是否可用，如果可用则返回非零值。</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/457019360">如果 <code>command</code> 不是 <code>NULL</code>，则 <code>system</code> 函数会执行命令，并返回命令的退出状态码。</a><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/457019360">1</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/linluan33/article/details/8097916">2</a></li>
 </ul>
+</li>
+<li><strong>execl 函数</strong>：<ul>
+<li><code>execl</code> 函数用于在当前进程中执行一个新的程序，它会替换当前进程的映像、数据、堆和栈。</li>
+<li>这意味着，一旦 <code>execl</code> 成功执行，当前进程的执行代码将变为新程序的代码，原来的程序将不再存在。</li>
+<li><code>execl</code> 函数需要指定新程序的路径和传递给新程序的参数列表，参数列表的最后必须是 <code>NULL</code>。</li>
+<li>如果 <code>execl</code> 调用成功，它不会返回；如果调用失败，它会返回 <code>-1</code> 并设置 <code>errno</code> 以指示错误原因。</li>
+<li>需要多个参数：第一个是可执行文件的路径，接下来是传递给程序的参数列表，最后必须以 <code>NULL</code> 结尾。</li>
+<li>函数原型：<code>int execl(const char *path, const char *arg, ..., (char *)NULL);</code></li>
+<li>第一个参数 <code>path</code> 是要执行的程序的路径。</li>
+<li>第二个参数 <code>arg</code> 是程序的第一个参数（通常是程序的名称）。</li>
+<li>后续参数可以根据需要传递给程序，最后一个参数必须是 <code>NULL</code>，以标识参数列表的结束。</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/457019360">如果 <code>execl</code> 调用成功，它不会返回；如果调用失败，它会返回 <code>-1</code> 并设置 <code>errno</code> 以指示错误原因。</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_53133879/article/details/125092300">3</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44786250/article/details/105329417">4</a></li>
+</ul>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Cccarl/p/6639089.html">简单来说，<code>system</code> 函数适合于需要执行外部命令并等待其完成的情况，而 <code>execl</code> 函数适合于需要替换当前进程为一个全新程序的情况。</a></p>
+<p>system创建新的子进程来执行指定的命令，执行完成后返回原进程</p>
+<p>execl创建新的进程并替换（取代）当前进程打的数据堆栈等，原程序将不再存在</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44786250/article/details/105329417">Linux编程之exec类函数（参数详解+示例）_exec函数 调用带命令行参数的可执行文件 示例-CSDN博客</a></p>
+</blockquote>
+<h1 id="return和exit"><a href="#return和exit" class="headerlink" title="return和exit"></a>return和exit</h1><p><code>return</code> 和 <code>exit</code> 都用于结束函数执行，但它们的用途和影响范围有所不同：</p>
+<ol>
+<li><strong>return</strong>：<ul>
+<li><code>return</code> 用于从当前函数返回一个值到调用函数。</li>
+<li>它只会结束当前函数的执行，并将控制权交回给调用该函数的代码。</li>
+<li>如果 <code>return</code> 用在 <code>main</code> 函数中，它会结束整个程序，因为 <code>main</code> 是程序的入口点。</li>
+</ul>
+</li>
+<li><strong>exit</strong>：<ul>
+<li><code>exit</code> 是一个标准库函数，定义在 <code>&lt;stdlib.h&gt;</code> 中，用于立即终止程序的执行。</li>
+<li>它会关闭所有使用的文件描述符，终止进程，并将控制权交还给操作系统。</li>
+<li><code>exit</code> 可以在程序的任何地方调用，不仅限于 <code>main</code> 函数。</li>
+<li><code>exit</code> 还会执行一些清理操作，比如调用通过 <code>atexit</code> 注册的函数。</li>
+</ul>
+</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/noble/p/4144166.html">总结来说，<code>return</code> 是用于从函数返回，而 <code>exit</code> 是用于立即结束整个程序的执行。如果你在 <code>main</code> 函数中使用 <code>return</code>，它和 <code>exit</code> 有相似的效果，因为它们都会导致程序终止。但在其他函数中，<code>return</code> 只会结束当前函数，而 <code>exit</code> 会结束整个程序。</a><a target="_blank" rel="noopener" href="https://www.cnblogs.com/noble/p/4144166.html">1</a><a target="_blank" rel="noopener" href="https://blog.csdn.net/lb543210/article/details/81435694">2</a></p>
+<h2 id="进程终止"><a href="#进程终止" class="headerlink" title="进程终止"></a>进程终止</h2><p>有8种方式可以中止进程，其中5种为正常终止，它们是：</p>
+<p>1）在main()函数用return返回；</p>
+<p>2）在任意函数中调用exit()函数；</p>
+<p>3）在任意函数中调用_exit()或_Exit()函数；</p>
+<p>4）最后一个线程从其启动例程（线程主函数）用return返回；</p>
+<p>5）在最后一个线程中调用pthread_exit()返回；</p>
+<p>异常终止有3种方式，它们是：</p>
+<p>6）调用abort()函数中止；</p>
+<p>7）接收到一个信号；</p>
+<p>8）最后一个线程对取消请求做出响应</p>
+<h3 id="一、进程终止的状态"><a href="#一、进程终止的状态" class="headerlink" title="一、进程终止的状态"></a>一、进程终止的状态</h3><p>在main()函数中，return的返回值即终止状态，如果没有return语句或调用exit()，那么该进程的终止状态是0。</p>
+<p>在Shell中，查看进程终止的状态：<code>echo $?</code></p>
+<p>正常终止进程的3个函数（<code>exit()</code>和<code>_Exit()</code>是由ISO C说明的，<code>_exit()</code>是由POSIX说明的）。</p>
+<p><code>void exit(int status);</code></p>
+<p><code>void _exit(int status);</code></p>
+<p><code>void _Exit(int status);</code></p>
+<p>status也是进程终止的状态。</p>
+<p>如果进程被异常终止，终止状态为非0。  服务程序的调度、日志和监控</p>
+<h3 id="二、资源释放的问题"><a href="#二、资源释放的问题" class="headerlink" title="二、资源释放的问题"></a>二、资源释放的问题</h3><p>return表示函数返回，会调用局部对象的析构函数，main()函数中的return还会调用全局对象的析构函数。</p>
+<p>**exit()<strong>表示终止进程，</strong>&#x3D;&#x3D;不会调用局部对象的析构函数，只调用全局对象的析构函数&#x3D;&#x3D;**。</p>
+<p><code>exit()</code>会执行清理工作，然后退出，<code>_exit()</code>和<code>_Exit()</code>直接退出，不会执行任何清理工作。</p>
+<h3 id="三、进程的终止函数"><a href="#三、进程的终止函数" class="headerlink" title="三、进程的终止函数"></a>三、进程的终止函数</h3><p>进程可以用atexit()函数登记终止函数（最多32个），这些函数将由exit()自动调用。</p>
+<p><code>int atexit(void (*function)(void));</code></p>
+<p><code>exit()</code>调用终止函数的顺序与登记时相反。 进程退出前的收尾工作</p>
 
       
     </div>

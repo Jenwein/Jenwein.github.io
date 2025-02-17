@@ -731,107 +731,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/24/Qt-%E4%B8%BB%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Hah">
-      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="HahのBlog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/03/24/Qt-%E4%B8%BB%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" class="post-title-link" itemprop="url">QT事件循环</a>
-        </h2>
-
-        <div class="post-meta">
-        
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2024-03-24 22:00:00" itemprop="dateCreated datePublished" datetime="2024-03-24T22:00:00+08:00">2024-03-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2024-09-25 09:02:45" itemprop="dateModified" datetime="2024-09-25T09:02:45+08:00">2024-09-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/QT/" itemprop="url" rel="index"><span itemprop="name">QT</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>755</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在Qt中，事件循环（Event Loop）是一个核心概念，它负责接收和分发应用程序中的各种事件。事件循环确保应用程序保持响应，并在适当的时候处理事件。下面是对Qt事件循环的详细讲解：</p>
-<h3 id="事件循环的作用"><a href="#事件循环的作用" class="headerlink" title="事件循环的作用"></a>事件循环的作用</h3><p>事件循环是Qt事件驱动系统的核心。它运行一个持续的循环，等待事件的发生（如用户输入、定时器触发、网络消息等），并将这些事件分发给相应的对象进行处理。这个机制使得应用程序能够同时处理多种操作，而不会阻塞用户界面。</p>
-<h3 id="事件循环的工作流程"><a href="#事件循环的工作流程" class="headerlink" title="事件循环的工作流程"></a>事件循环的工作流程</h3><ol>
-<li><strong>启动事件循环</strong>：当你在<code>main</code>函数中调用<code>QApplication::exec()</code>时，事件循环开始运行。这个调用会阻塞，直到事件循环结束，通常是当主窗口关闭时。</li>
-<li><strong>等待事件</strong>：事件循环会等待操作系统或者应用程序产生事件。</li>
-<li><strong>事件的分发</strong>：一旦事件发生，事件循环会从事件队列中取出事件，并根据事件类型将其分发给相应的事件处理器。</li>
-<li><strong>事件处理</strong>：事件处理器（通常是一个对象的成员函数）会处理事件。例如，一个按钮被点击会产生一个点击事件，事件循环将这个事件发送给按钮对象，按钮对象通过调用其<code>clicked()</code>槽函数来响应这个事件。</li>
-<li><strong>继续循环</strong>：处理完事件后，事件循环会继续等待新的事件。</li>
-</ol>
-<h3 id="自定义事件处理"><a href="#自定义事件处理" class="headerlink" title="自定义事件处理"></a>自定义事件处理</h3><p>Qt允许你自定义事件处理器。你可以通过重写<code>QObject</code>的<code>event()</code>函数或者特定事件的处理函数（如<code>mousePressEvent()</code>）来自定义事件的处理方式。</p>
-<h3 id="事件循环的结束"><a href="#事件循环的结束" class="headerlink" title="事件循环的结束"></a>事件循环的结束</h3><p>事件循环会一直运行，直到调用了<code>QApplication::quit()</code>，这通常发生在主窗口关闭时。调用<code>quit()</code>会导致<code>exec()</code>返回，从而结束事件循环，程序随后退出。</p>
-<h3 id="事件循环的重要性"><a href="#事件循环的重要性" class="headerlink" title="事件循环的重要性"></a>事件循环的重要性</h3><p>理解事件循环对于编写响应式的Qt应用程序至关重要。它不仅关系到用户界面的响应性，还涉及到程序的正确性和效率。正确地使用事件循环可以避免界面冻结和应用程序崩溃。</p>
-
-      
-    </div>
-
-    
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/24/Qt-%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E4%B8%8E%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -915,6 +814,107 @@
 </ol>
 <p>这些模块之间的关系是层次化的，高层模块依赖于低层模块。例如，QtWidgets依赖于QtGui和QtCore，而QtGui则依赖于QtCore。这种层次结构使得开发者可以根据需要选择合适的模块来构建应用程序。</p>
 <p>此外，Qt还有其他模块，如Qt3D、QtWebEngine等，它们提供了更专业的功能。每个模块都包含了一系列相关的类，这些类通过继承关系相互联系，共同构成了Qt的类层次结构。</p>
+
+      
+    </div>
+
+    
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rhahr.top/2024/03/24/Qt-%E4%B8%BB%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Hah">
+      <meta itemprop="description" content="我没有为你伤春悲秋不配有憾事">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="HahのBlog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/03/24/Qt-%E4%B8%BB%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF/" class="post-title-link" itemprop="url">QT事件循环</a>
+        </h2>
+
+        <div class="post-meta">
+        
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-03-24 22:00:00" itemprop="dateCreated datePublished" datetime="2024-03-24T22:00:00+08:00">2024-03-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-09-25 09:02:45" itemprop="dateModified" datetime="2024-09-25T09:02:45+08:00">2024-09-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/QT/" itemprop="url" rel="index"><span itemprop="name">QT</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>755</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在Qt中，事件循环（Event Loop）是一个核心概念，它负责接收和分发应用程序中的各种事件。事件循环确保应用程序保持响应，并在适当的时候处理事件。下面是对Qt事件循环的详细讲解：</p>
+<h3 id="事件循环的作用"><a href="#事件循环的作用" class="headerlink" title="事件循环的作用"></a>事件循环的作用</h3><p>事件循环是Qt事件驱动系统的核心。它运行一个持续的循环，等待事件的发生（如用户输入、定时器触发、网络消息等），并将这些事件分发给相应的对象进行处理。这个机制使得应用程序能够同时处理多种操作，而不会阻塞用户界面。</p>
+<h3 id="事件循环的工作流程"><a href="#事件循环的工作流程" class="headerlink" title="事件循环的工作流程"></a>事件循环的工作流程</h3><ol>
+<li><strong>启动事件循环</strong>：当你在<code>main</code>函数中调用<code>QApplication::exec()</code>时，事件循环开始运行。这个调用会阻塞，直到事件循环结束，通常是当主窗口关闭时。</li>
+<li><strong>等待事件</strong>：事件循环会等待操作系统或者应用程序产生事件。</li>
+<li><strong>事件的分发</strong>：一旦事件发生，事件循环会从事件队列中取出事件，并根据事件类型将其分发给相应的事件处理器。</li>
+<li><strong>事件处理</strong>：事件处理器（通常是一个对象的成员函数）会处理事件。例如，一个按钮被点击会产生一个点击事件，事件循环将这个事件发送给按钮对象，按钮对象通过调用其<code>clicked()</code>槽函数来响应这个事件。</li>
+<li><strong>继续循环</strong>：处理完事件后，事件循环会继续等待新的事件。</li>
+</ol>
+<h3 id="自定义事件处理"><a href="#自定义事件处理" class="headerlink" title="自定义事件处理"></a>自定义事件处理</h3><p>Qt允许你自定义事件处理器。你可以通过重写<code>QObject</code>的<code>event()</code>函数或者特定事件的处理函数（如<code>mousePressEvent()</code>）来自定义事件的处理方式。</p>
+<h3 id="事件循环的结束"><a href="#事件循环的结束" class="headerlink" title="事件循环的结束"></a>事件循环的结束</h3><p>事件循环会一直运行，直到调用了<code>QApplication::quit()</code>，这通常发生在主窗口关闭时。调用<code>quit()</code>会导致<code>exec()</code>返回，从而结束事件循环，程序随后退出。</p>
+<h3 id="事件循环的重要性"><a href="#事件循环的重要性" class="headerlink" title="事件循环的重要性"></a>事件循环的重要性</h3><p>理解事件循环对于编写响应式的Qt应用程序至关重要。它不仅关系到用户界面的响应性，还涉及到程序的正确性和效率。正确地使用事件循环可以避免界面冻结和应用程序崩溃。</p>
 
       
     </div>
